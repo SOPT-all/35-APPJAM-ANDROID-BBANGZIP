@@ -10,9 +10,14 @@ class BbangZipApp : Application() {
         super.onCreate()
 
         setDarkMode()
+        setTimber()
     }
 
     private fun setDarkMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+    }
+
+    private fun setTimber() {
+        if (BuildConfig.DEBUG) Timber.plant(Timber.DebugTree())
     }
 }
