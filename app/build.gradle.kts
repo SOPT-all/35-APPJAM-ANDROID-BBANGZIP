@@ -17,11 +17,11 @@ val properties =
     }
 
 android {
-    namespace = "org.andsopt.android.bbangzip"
+    namespace = "org.android.bbangzip"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "org.andsopt.android.bbangzip"
+        applicationId = "org.android.bbangzip"
         minSdk = 28
         targetSdk = 34
         versionCode = 1
@@ -30,6 +30,7 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "BASE_URL", properties["base.url"].toString())
+        buildConfigField("String", "KAKAO_NATIVE_APP_KEY", properties["kakao.native.app.key"].toString())
     }
 
     buildTypes {

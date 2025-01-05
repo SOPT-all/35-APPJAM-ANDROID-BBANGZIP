@@ -1,4 +1,4 @@
-package org.andsopt.android.bbangzip.ui.theme
+package org.android.bbangzip.ui.theme
 
 import android.app.Activity
 import android.os.Build

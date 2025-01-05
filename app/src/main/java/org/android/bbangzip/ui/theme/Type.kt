@@ -1,4 +1,4 @@
-package org.andsopt.android.bbangzip.ui.theme
+package org.android.bbangzip.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

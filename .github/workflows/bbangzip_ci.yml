@@ -45,8 +45,10 @@ jobs:
       - name: Access local properties
         env:
           BASE_URL: ${{ secrets.BASE_URL }}
+          KAKAO_NATIVE_APP_KEY: ${{ secrets.KAKAO_NATIVE_APP_KEY }}
         run: |
           echo "base.url=\"$BASE_URL\"" >> local.properties
+          echo "kakao.native.app.key=\"$KAKAO_NATIVE_APP_KEY\"" >> local.properties
 
       - name: Lint Check
         run: ./gradlew ktlintCheck -PcompileSdkVersion=34
