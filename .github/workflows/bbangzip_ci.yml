@@ -1,0 +1,118 @@
+name: BBANGZIP PR Builder
+on:
+  pull_request:
+    branches: [ develop, main ]
+    types: [ opened, reopened ]
+
+defaults:
+  run:
+    shell: bash
+    working-directory: .
+
+jobs:
+  build:
+    name: CI
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Gradle cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Change gradlew permissions
+        run: chmod +x ./gradlew
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Touch local properties
+        run: touch local.properties
+
+      - name: Access local properties
+        env:
+          BASE_URL: ${{ secrets.BASE_URL }}
+        run: |
+          echo "base.url=\"$BASE_URL\"" >> local.properties
+
+      - name: Lint Check
+        run: ./gradlew ktlintCheck -PcompileSdkVersion=34
+
+      - name: Build with Gradle
+        run: ./gradlew build -PcompileSdkVersion=34
+
+      - name: Discord Notify - PR Success
+        if: ${{ success() }}
+        uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: BBANGZIP_BOT
+          DISCORD_EMBEDS: |
+            [
+              { 
+                "author": {
+                  "name": "${{ github.event.pull_request.user.login }}",
+                  "icon_url": "${{ github.event.pull_request.user.avatar_url }}"
+                },
+                "title": "🍞 PR 성공! 코드리뷰 달아주셔~ 🍞\n#${{ github.event.pull_request.number }} : ${{ github.event.pull_request.title }}",
+                "color": 10478271,
+                "description": "${{ github.event.pull_request.html_url }}",
+                "fields": [
+                  {
+                    "name": "Base Branch",
+                    "value": "${{ github.base_ref }}",
+                    "inline": true
+                  },
+                  {
+                    "name": "Compare Branch",
+                    "value": "${{ github.head_ref }}",
+                    "inline": true
+                  }
+                ]
+              }
+            ]
+
+      - name: Discord Notify - PR Failure
+        if: ${{ failure() }}
+        uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: BBANGZIP_BOT
+          DISCORD_EMBEDS: |
+            [
+              { 
+                "author": {
+                  "name": "${{ github.event.pull_request.user.login }}",
+                  "url": "https://github.com/pknu-wap/WAPP/blob/main/image/icon.png?raw=true",
+                  "icon_url": "${{ github.event.pull_request.user.avatar_url }}"
+                },
+                "title": "❌ PR 실패😭 에러 확인해줘! ❌\n#${{ github.event.pull_request.number }} : ${{ github.event.pull_request.title }}",
+                "color": 13458524,
+                "description": "${{ github.event.pull_request.html_url }}",
+                "fields": [
+                  {
+                    "name": "Base Branch",
+                    "value": "${{ github.base_ref }}",
+                    "inline": true
+                  },
+                  {
+                    "name": "Compare Branch",
+                    "value": "${{ github.head_ref }}",
+                    "inline": true
+                  }
+                ]
+              }
+            ]
