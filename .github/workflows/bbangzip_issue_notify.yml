@@ -1,0 +1,36 @@
+name: BBANGZIP Issue Notify
+on:
+  issues:
+    types:
+      - opened
+
+jobs:
+  create-issue:
+    name: Discord Notify - Issue Opened
+    runs-on: ubuntu-latest
+    steps:
+      - name: Discord Notify - Issue Opened
+        uses: Ilshidur/action-discord@0.3.2
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          DISCORD_USERNAME: BBANGZIP_BOT
+          DISCORD_EMBEDS: |
+            [
+                { 
+                  "title": "✨ 이슈 왔다! ✨\n${{ github.event.issue.title }}",
+                  "color": 10478271,
+                  "description": "${{ github.event.issue.html_url }}",
+                  "fields": [
+                    {
+                      "name": "Issue Number",
+                      "value": "#${{ github.event.issue.number }}",
+                      "inline": true
+                    },
+                    {
+                      "name": "Author",
+                      "value": "${{ github.event.issue.user.login }}",
+                      "inline": true
+                    }
+                  ]
+                }
+              ]
