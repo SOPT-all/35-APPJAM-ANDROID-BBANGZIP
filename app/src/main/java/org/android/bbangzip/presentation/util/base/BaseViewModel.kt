@@ -46,9 +46,22 @@ abstract class BaseViewModel<Event : BaseContract.Event, State : BaseContract.St
     inline fun launch(crossinline action: suspend CoroutineScope.() -> Unit): Job =
         viewModelScope.launch(coroutineExceptionHandler) {
             setLoading(true)
-            action(this)
-            setLoading(false)
+            runCatching {
+                action(this)
+            }.onSuccess {
+                setSuccess(true)
+            }.also {
+                setLoading(false)
+            }
         }
+
+    private val _success: Channel<Boolean> = Channel()
+    val success = _success.receiveAsFlow()
+    fun setSuccess(success: Boolean = false) {
+        viewModelScope.launch {
+            _success.send(success)
+        }
+    }
 
     private val _loading: Channel<Boolean> = Channel()
     val loading = _loading.receiveAsFlow()
