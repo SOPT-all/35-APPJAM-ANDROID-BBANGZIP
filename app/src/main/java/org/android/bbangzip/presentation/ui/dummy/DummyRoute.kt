@@ -33,7 +33,8 @@ fun DummyRoute(
                 },
             )
         else -> {
-            // TODO 로딩화면
+            // TODO 삭제
+            DummyScreen(dummyState = dummyState)
         }
     }
 }
