@@ -45,38 +45,39 @@ class DummyViewModel @Inject constructor(
     private fun initDataLoad() {
         runBlocking {
             launch {
-                // TODO 초기 데이터 로드
+                fetchDummy()
+                fetchDummy2()
             }
         }
     }
 
-    private fun fetchDummy() {
-        launch {
-            fetchDummyUseCase().onSuccess { data ->
-                updateState(DummyContract.DummyReduce.UpdateDummy(
+    private suspend fun fetchDummy() {
+        fetchDummyUseCase().onSuccess { data ->
+            updateState(
+                DummyContract.DummyReduce.UpdateDummy(
                     Dummy(
                         dummyA = data.dummyName,
                         dummyB = data.dummyName + "이런 식으로 넣어요"
                     )
-                ))
-            }.onFailure {
-                setSideEffect(DummyContract.DummySideEffect.ShowSnackBar("오류남"))
-            }
+                )
+            )
+        }.onFailure {
+            setSideEffect(DummyContract.DummySideEffect.ShowSnackBar("오류남"))
         }
     }
 
-    private fun fetchDummy2() { // fetchDummy()와 다른 API라고 가정
-        launch {
-            fetchDummyUseCase().onSuccess { data ->
-                updateState(DummyContract.DummyReduce.UpdateDummy(
+    private suspend fun fetchDummy2() { // fetchDummy()와 다른 API라고 가정
+        fetchDummyUseCase().onSuccess { data ->
+            updateState(
+                DummyContract.DummyReduce.UpdateDummy(
                     Dummy(
                         dummyA = data.dummyName,
                         dummyB = data.dummyName + "이런 식으로 넣어요"
                     )
-                ))
-            }.onFailure {
-                setSideEffect(DummyContract.DummySideEffect.ShowSnackBar("오류남"))
-            }
+                )
+            )
+        }.onFailure {
+            setSideEffect(DummyContract.DummySideEffect.ShowSnackBar("오류남"))
         }
     }
 }
