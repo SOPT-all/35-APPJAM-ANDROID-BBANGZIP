@@ -4,9 +4,8 @@ import androidx.compose.runtime.Composable
 import org.android.bbangzip.presentation.ui.dummy.DummyContract.DummyState
 
 @Composable
-fun DummyScreen (
+fun DummyScreen(
     dummyState: DummyState,
-    onClickNextBtn: (String) -> Unit = {}
-){
-
+    onClickNextBtn: (String) -> Unit = {},
+) {
 }

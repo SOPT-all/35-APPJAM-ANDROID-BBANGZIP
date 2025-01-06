@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun DummyRoute(
     snackbarHostState: SnackbarHostState,
-    viewModel: DummyViewModel = hiltViewModel()
+    viewModel: DummyViewModel = hiltViewModel(),
 ) {
     val dummyState by viewModel.uiState.collectAsStateWithLifecycle()
     val success by viewModel.loading.collectAsStateWithLifecycle(false)
@@ -25,12 +25,13 @@ fun DummyRoute(
     }
 
     when (success) {
-        true -> DummyScreen(
-            dummyState = dummyState,
-            onClickNextBtn = { dummy ->
-                viewModel.setEvent(DummyContract.DummyEvent.OnClickNextBtn(dummy = dummy))
-            }
-        )
+        true ->
+            DummyScreen(
+                dummyState = dummyState,
+                onClickNextBtn = { dummy ->
+                    viewModel.setEvent(DummyContract.DummyEvent.OnClickNextBtn(dummy = dummy))
+                },
+            )
         else -> {
             // TODO 로딩화면
         }
