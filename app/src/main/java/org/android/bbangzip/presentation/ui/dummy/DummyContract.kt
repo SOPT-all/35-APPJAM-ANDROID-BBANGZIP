@@ -9,7 +9,7 @@ class DummyContract {
     @Parcelize
     data class DummyState(
         val loading: Boolean = false,
-        val dummy: Dummy,
+        val dummy: Dummy? = null,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
