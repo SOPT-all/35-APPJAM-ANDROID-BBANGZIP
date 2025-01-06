@@ -26,11 +26,11 @@ fun MainNavHost(
             modifier
                 .fillMaxSize()
                 .padding(padding)
-                .background(MaterialTheme.colorScheme.surfaceDim)
+                .background(MaterialTheme.colorScheme.surfaceDim),
     ) {
         NavHost(
             navController = navigator.navHostController,
-            startDestination = navigator.startDestination
+            startDestination = navigator.startDestination,
         ) {
             friendNavGraph()
 

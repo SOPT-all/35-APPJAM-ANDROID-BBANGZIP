@@ -18,17 +18,17 @@ import org.android.bbangzip.ui.theme.BBANGZIPTheme
 
 @Composable
 fun MainScreen(
-    navigator: MainNavigator = rememberMainNavigator()
+    navigator: MainNavigator = rememberMainNavigator(),
 ) {
     MainScreenContent(
-        navigator = navigator
+        navigator = navigator,
     )
 }
 
 @Composable
 private fun MainScreenContent(
     modifier: Modifier = Modifier,
-    navigator: MainNavigator
+    navigator: MainNavigator,
 ) {
     Scaffold(
         modifier = modifier.padding(WindowInsets.navigationBars.asPaddingValues()),
@@ -41,14 +41,15 @@ private fun MainScreenContent(
         bottomBar = {
             BottomNavigationBar(
                 isVisible = navigator.showBottomBar(),
-                modifier = Modifier
-                    .background(Color.Green)
-                    .padding(top = 8.dp, bottom = 10.dp),
+                modifier =
+                    Modifier
+                        .background(Color.Green)
+                        .padding(top = 8.dp, bottom = 10.dp),
                 bottomNaviBarItems = BottomNavigationType.entries.toImmutableList(),
                 currentNaviBarItemSelected = navigator.currentBottomNavigationBarItem,
-                onBottomNaviBarItemSelected = { navigator.navigateBottomNavigation(it) }
+                onBottomNaviBarItemSelected = { navigator.navigateBottomNavigation(it) },
             )
-        }
+        },
     )
 }
 

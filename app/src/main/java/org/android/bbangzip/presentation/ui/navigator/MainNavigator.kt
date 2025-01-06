@@ -3,7 +3,6 @@ package org.android.bbangzip.presentation.ui.navigator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
-import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
@@ -19,7 +18,7 @@ import org.android.bbangzip.presentation.ui.todo.navigateTodo
 import timber.log.Timber
 
 class MainNavigator(
-    val navHostController: NavHostController
+    val navHostController: NavHostController,
 ) {
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
@@ -27,12 +26,12 @@ class MainNavigator(
     val startDestination = BottomNavigationType.SUBJECT.route
 
     val currentBottomNavigationBarItem: BottomNavigationType?
-        @Composable get() = BottomNavigationType.find { mainBottomNavigationRoute ->
-            currentDestination?.route == mainBottomNavigationRoute::class.qualifiedName
-        }
+        @Composable get() =
+            BottomNavigationType.find { mainBottomNavigationRoute ->
+                currentDestination?.route == mainBottomNavigationRoute::class.qualifiedName
+            }
 
     fun navigateBottomNavigation(bottomNavigationType: BottomNavigationType) {
-        Timber.d("[navigation] start -> ${bottomNavigationType.route}")
         Timber.d("[navigation] currentDestination -> ${navHostController.currentDestination}")
         navOptions {
             popUpTo(BottomNavigationRoute.Subject::class.qualifiedName.orEmpty()) {
@@ -67,9 +66,10 @@ class MainNavigator(
         navHostController.currentDestination?.route == T::class.qualifiedName
 
     @Composable
-    fun showBottomBar(): Boolean = BottomNavigationType.any {
-        currentDestination?.route == it::class.qualifiedName
-    }
+    fun showBottomBar(): Boolean =
+        BottomNavigationType.any {
+            currentDestination?.route == it::class.qualifiedName
+        }
 }
 
 @Composable

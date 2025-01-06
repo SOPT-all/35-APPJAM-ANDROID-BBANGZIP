@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun MyScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text("todo 탭")
 }

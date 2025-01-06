@@ -34,7 +34,7 @@ fun BottomNavigationBar(
     bottomNaviBarItems: List<BottomNavigationType>,
     currentNaviBarItemSelected: BottomNavigationType?,
     onBottomNaviBarItemSelected: (BottomNavigationType) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     AnimatedVisibility(visible = isVisible) {
         Row(
@@ -70,7 +70,7 @@ private fun BottomNavigationItem(
             modifier.noRippleClickable {
                 onBottomNaviBarItemSelected(bottomNaviType)
             },
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Icon(
             painter = painterResource(id = bottomNaviIcon),
@@ -80,18 +80,19 @@ private fun BottomNavigationItem(
                     Color.Gray
                 } else {
                     Color.White
-                }
+                },
         )
 
         Spacer(modifier = Modifier.height(spacing))
 
         Text(
             text = stringResource(bottomNaviTitle),
-            color = if (isSelected) {
-                Color.Gray
-            } else {
-                Color.White
-            }
+            color =
+                if (isSelected) {
+                    Color.Gray
+                } else {
+                    Color.White
+                },
         )
     }
 }
@@ -102,9 +103,10 @@ fun BottomNavigationBarPreview() {
     BBANGZIPTheme {
         BottomNavigationBar(
             isVisible = true,
-            modifier = Modifier
-                .background(Color.Blue)
-                .padding(top = 5.dp, bottom = 10.dp),
+            modifier =
+                Modifier
+                    .background(Color.Blue)
+                    .padding(top = 5.dp, bottom = 10.dp),
             bottomNaviBarItems = BottomNavigationType.entries.toImmutableList(),
             currentNaviBarItemSelected = BottomNavigationType.DUMMY,
             onBottomNaviBarItemSelected = {},

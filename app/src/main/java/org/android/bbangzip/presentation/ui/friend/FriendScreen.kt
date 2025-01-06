@@ -6,7 +6,7 @@ import androidx.compose.ui.Modifier
 
 @Composable
 fun FriendScreen(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Text("Friend 탭")
 }

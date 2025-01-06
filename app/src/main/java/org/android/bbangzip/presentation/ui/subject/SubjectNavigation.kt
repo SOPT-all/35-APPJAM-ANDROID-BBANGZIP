@@ -9,7 +9,7 @@ import org.android.bbangzip.presentation.model.BottomNavigationRoute
 fun NavController.navigateSubject(navOptions: NavOptions) {
     navigate(
         route = BottomNavigationRoute.Subject,
-        navOptions = navOptions
+        navOptions = navOptions,
     )
 }
 

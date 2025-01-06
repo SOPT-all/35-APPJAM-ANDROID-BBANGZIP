@@ -15,28 +15,29 @@ enum class BottomNavigationType(
     SUBJECT(
         bottomNaviIcon = R.drawable.ic_dummy_24,
         bottomNaviTitle = R.string.dummy,
-        route = BottomNavigationRoute.Subject
+        route = BottomNavigationRoute.Subject,
     ),
     TODO(
         bottomNaviIcon = R.drawable.ic_dummy_24,
         bottomNaviTitle = R.string.dummy,
-        route = BottomNavigationRoute.Todo
+        route = BottomNavigationRoute.Todo,
     ),
     FRIEND(
         bottomNaviIcon = R.drawable.ic_dummy_24,
         bottomNaviTitle = R.string.dummy,
-        route = BottomNavigationRoute.Friend
+        route = BottomNavigationRoute.Friend,
     ),
     MY(
         bottomNaviIcon = R.drawable.ic_dummy_24,
         bottomNaviTitle = R.string.dummy,
-        route = BottomNavigationRoute.My
+        route = BottomNavigationRoute.My,
     ),
     DUMMY(
         bottomNaviIcon = R.drawable.ic_dummy_24,
         bottomNaviTitle = R.string.dummy,
-        route = BottomNavigationRoute.Dummy
-    );
+        route = BottomNavigationRoute.Dummy,
+    ),
+    ;
 
     companion object {
         @Composable

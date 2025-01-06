@@ -5,8 +5,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 
 @Composable
-fun SubjectScreen (
-    modifier: Modifier = Modifier
-){
+fun SubjectScreen(
+    modifier: Modifier = Modifier,
+) {
     Text("subject 탭")
 }

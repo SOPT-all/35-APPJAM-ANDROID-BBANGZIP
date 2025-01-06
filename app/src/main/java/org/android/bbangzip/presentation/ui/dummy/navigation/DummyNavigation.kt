@@ -8,18 +8,17 @@ import androidx.navigation.compose.composable
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
 import org.android.bbangzip.presentation.ui.dummy.DummyRoute
 
-
 fun NavController.navigateDummy(navOptions: NavOptions) {
     navigate(
         route = BottomNavigationRoute.Dummy,
-        navOptions = navOptions
+        navOptions = navOptions,
     )
 }
 
 fun NavGraphBuilder.dummyNavGraph() {
     composable<BottomNavigationRoute.Dummy> {
         DummyRoute(
-            snackbarHostState = SnackbarHostState()
+            snackbarHostState = SnackbarHostState(),
         )
     }
 }
