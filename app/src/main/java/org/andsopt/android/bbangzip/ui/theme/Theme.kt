@@ -11,12 +11,13 @@ fun BBANGZIPTheme(
 ) {
     val bbangZipColors = defaultBbangZipColors
     val bbangZipTypography = defaultBbangZipTypography
-
+    val bbangZipOpacity = defaultBbangZipOpacity
     MaterialTheme(
         content = {
             CompositionLocalProvider(
                 LocalBbangZipColors provides bbangZipColors,
-                LocalBbangZipTypography provides bbangZipTypography
+                LocalBbangZipTypography provides bbangZipTypography,
+                LocalBbangZipOpacity provides bbangZipOpacity
             ) {
                 content()
             }

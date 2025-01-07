@@ -13,4 +13,9 @@ object BbangZipTheme {
     @Composable
     @ReadOnlyComposable
     get() = LocalBbangZipTypography.current
+
+    val opacity: BbangZipOpacity
+        @Composable
+        @ReadOnlyComposable
+        get() = LocalBbangZipOpacity.current
 }
