@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.navigator
 
+import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
@@ -31,14 +32,17 @@ class MainNavigator(
                 currentDestination?.route == mainBottomNavigationRoute::class.qualifiedName
             }
 
+    @SuppressLint("RestrictedApi")
     fun navigateBottomNavigation(bottomNavigationType: BottomNavigationType) {
         Timber.d("[navigation] currentDestination -> ${navHostController.currentDestination}")
         navOptions {
             popUpTo(BottomNavigationRoute.Subject::class.qualifiedName.orEmpty()) {
                 saveState = true
+                Timber.d("[navigation] restoreState -> $saveState")
             }
             launchSingleTop = true
             restoreState = true
+            Timber.d("[navigation] restoreState -> $restoreState")
         }.let { navOptions ->
             when (bottomNavigationType) {
                 BottomNavigationType.SUBJECT -> navHostController.navigateSubject(navOptions)
@@ -49,6 +53,8 @@ class MainNavigator(
                 else -> Unit
             }
             Timber.d("[navigation] currentDestination -> ${navHostController.currentDestination}")
+
+            Timber.d("[navigation] currentBackStack -> ${navHostController.currentBackStack.value}")
         }
     }
 

@@ -8,5 +8,5 @@ import androidx.compose.ui.Modifier
 fun MyScreen(
     modifier: Modifier = Modifier,
 ) {
-    Text("todo 탭")
+    Text("my 탭")
 }

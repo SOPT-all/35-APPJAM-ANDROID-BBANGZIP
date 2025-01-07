@@ -14,7 +14,7 @@ fun DummyRoute(
     viewModel: DummyViewModel = hiltViewModel(),
 ) {
     val dummyState by viewModel.uiState.collectAsStateWithLifecycle()
-    val success by viewModel.loading.collectAsStateWithLifecycle(false)
+    val success by viewModel.success.collectAsStateWithLifecycle(false)
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->

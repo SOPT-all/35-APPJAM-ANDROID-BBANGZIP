@@ -18,7 +18,7 @@ import org.android.bbangzip.ui.theme.BBANGZIPTheme
 
 @Composable
 fun MainScreen(
-    navigator: MainNavigator = rememberMainNavigator(),
+    navigator: MainNavigator,
 ) {
     MainScreenContent(
         navigator = navigator,
@@ -57,6 +57,6 @@ private fun MainScreenContent(
 @Composable
 fun MainPreview() {
     BBANGZIPTheme {
-        MainScreen()
+        MainScreen(navigator = rememberMainNavigator())
     }
 }

@@ -3,7 +3,6 @@ package org.android.bbangzip.presentation.ui.dummy
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.runBlocking
 import org.android.bbangzip.domain.usecase.FetchDummyUseCase
 import org.android.bbangzip.presentation.model.Dummy
 import org.android.bbangzip.presentation.util.base.BaseViewModel
@@ -47,28 +46,25 @@ class DummyViewModel
             }
         }
 
-        private fun initDataLoad() {
-            runBlocking {
-                launch {
-                    fetchDummy()
-                    fetchDummy2()
-                }
-            }
+        private suspend fun initDataLoad() {
+            fetchDummy()
+            fetchDummy2()
         }
 
         private suspend fun fetchDummy() {
-            fetchDummyUseCase().onSuccess { data ->
-                updateState(
-                    DummyContract.DummyReduce.UpdateDummy(
-                        Dummy(
-                            dummyA = data.dummyName,
-                            dummyB = data.dummyName + "이런 식으로 넣어요",
+            fetchDummyUseCase()
+                .onSuccess { data ->
+                    updateState(
+                        DummyContract.DummyReduce.UpdateDummy(
+                            Dummy(
+                                dummyA = data.dummyName,
+                                dummyB = data.dummyName + "이런 식으로 넣어요",
+                            ),
                         ),
-                    ),
-                )
-            }.onFailure {
-                setSideEffect(DummyContract.DummySideEffect.ShowSnackBar("오류남"))
-            }
+                    )
+                }.onFailure {
+                    setSideEffect(DummyContract.DummySideEffect.ShowSnackBar("오류남"))
+                }
         }
 
         private suspend fun fetchDummy2() { // fetchDummy()와 다른 API라고 가정
