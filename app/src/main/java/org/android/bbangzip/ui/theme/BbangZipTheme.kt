@@ -1,4 +1,4 @@
-package org.andsopt.android.bbangzip.ui.theme
+package org.android.bbangzip.ui.theme
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.ReadOnlyComposable

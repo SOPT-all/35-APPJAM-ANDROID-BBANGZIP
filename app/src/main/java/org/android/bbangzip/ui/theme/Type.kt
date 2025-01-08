@@ -1,4 +1,4 @@
-package org.andsopt.android.bbangzip.ui.theme
+package org.android.bbangzip.ui.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
