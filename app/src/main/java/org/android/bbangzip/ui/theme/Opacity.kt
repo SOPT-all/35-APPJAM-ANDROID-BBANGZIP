@@ -3,7 +3,6 @@ package org.android.bbangzip.ui.theme
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
 
-
 @Immutable
 data class BbangZipOpacity(
     val opacity0: Float,
@@ -23,22 +22,23 @@ data class BbangZipOpacity(
     val opacity100: Float,
 )
 
-val defaultBbangZipOpacity = BbangZipOpacity(
-    opacity0 = 0f,
-    opacity5 = 0.05f,
-    opacity8 = 0.08f,
-    opacity12 = 0.12f,
-    opacity16 = 0.16f,
-    opacity22 = 0.22f,
-    opacity28 = 0.28f,
-    opacity35 = 0.35f,
-    opacity43 = 0.43f,
-    opacity52 = 0.52f,
-    opacity61 = 0.61f,
-    opacity74 = 0.74f,
-    opacity88 = 0.88f,
-    opacity97 = 0.97f,
-    opacity100 = 1f
-)
+val defaultBbangZipOpacity =
+    BbangZipOpacity(
+        opacity0 = 0f,
+        opacity5 = 0.05f,
+        opacity8 = 0.08f,
+        opacity12 = 0.12f,
+        opacity16 = 0.16f,
+        opacity22 = 0.22f,
+        opacity28 = 0.28f,
+        opacity35 = 0.35f,
+        opacity43 = 0.43f,
+        opacity52 = 0.52f,
+        opacity61 = 0.61f,
+        opacity74 = 0.74f,
+        opacity88 = 0.88f,
+        opacity97 = 0.97f,
+        opacity100 = 1f,
+    )
 
 val LocalBbangZipOpacity = staticCompositionLocalOf { defaultBbangZipOpacity }

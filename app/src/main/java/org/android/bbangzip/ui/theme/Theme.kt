@@ -4,10 +4,9 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 
-
 @Composable
 fun BBANGZIPTheme(
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val bbangZipColors = defaultBbangZipColors
     val bbangZipTypography = defaultBbangZipTypography
@@ -17,10 +16,10 @@ fun BBANGZIPTheme(
             CompositionLocalProvider(
                 LocalBbangZipColors provides bbangZipColors,
                 LocalBbangZipTypography provides bbangZipTypography,
-                LocalBbangZipOpacity provides bbangZipOpacity
+                LocalBbangZipOpacity provides bbangZipOpacity,
             ) {
                 content()
             }
-        }
+        },
     )
 }
