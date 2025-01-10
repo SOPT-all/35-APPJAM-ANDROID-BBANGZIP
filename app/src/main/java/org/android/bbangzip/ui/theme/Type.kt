@@ -204,14 +204,24 @@ val defaultBbangZipTypography =
                 fontFamily = PretendardSmall,
             ),
         // Headline 2
-        headline2Bold = TextStyle(fontSize = 17.sp, lineHeight = 24.sp, fontFamily = PretendardBold),
+        headline2Bold =
+            TextStyle(
+                fontSize = 17.sp,
+                lineHeight = 24.sp,
+                fontFamily = PretendardBold,
+            ),
         headline2Medium =
             TextStyle(
                 fontSize = 17.sp,
                 lineHeight = 24.sp,
                 fontFamily = PretendardMedium,
             ),
-        headline2Small = TextStyle(fontSize = 17.sp, lineHeight = 24.sp, fontFamily = PretendardSmall),
+        headline2Small =
+            TextStyle(
+                fontSize = 17.sp,
+                lineHeight = 24.sp,
+                fontFamily = PretendardSmall,
+            ),
         // Body 1
         body1Bold =
             TextStyle(

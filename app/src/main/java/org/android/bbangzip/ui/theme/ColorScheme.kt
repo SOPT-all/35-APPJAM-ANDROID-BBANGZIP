@@ -9,16 +9,16 @@ data class BbangZipColors(
     // Primary
     val primaryLight_3D3730: Color,
     val primaryNormal_282119: Color,
-    val primaryHeavy_1B1611: Color,
+    val primaryStrong_1B1611: Color,
     // Secondary
-    val secondaryLight_FFD480: Color,
-    val secondaryNormal_FFC161: Color,
+    val secondaryNormal_FFCD80: Color,
+    val secondaryStrong_FFC161: Color,
     val secondaryHeavy_FFB84A: Color,
     // Label
     val labelStrong_000000: Color,
     val labelNormal_282119: Color,
-    val labelNeutral_282119_74: Color,
-    val labelAlternative_282119_52: Color,
+    val labelNeutral_282119_88: Color,
+    val labelAlternative_282119_61: Color,
     val labelAssistive_282119_28: Color,
     val labelDisable_282119_12: Color,
     // Background
@@ -57,16 +57,16 @@ val defaultBbangZipColors =
         // Primary
         primaryLight_3D3730 = Neutral40,
         primaryNormal_282119 = Neutral30,
-        primaryHeavy_1B1611 = Neutral15,
+        primaryStrong_1B1611 = Neutral15,
         // Secondary
-        secondaryLight_FFD480 = Yellow70,
-        secondaryNormal_FFC161 = Yellow60,
+        secondaryNormal_FFCD80 = Yellow70,
+        secondaryStrong_FFC161 = Yellow60,
         secondaryHeavy_FFB84A = Yellow50,
         // Label
         labelStrong_000000 = Common0,
         labelNormal_282119 = Neutral30,
-        labelNeutral_282119_74 = Neutral30.copy(alpha = 0.74f),
-        labelAlternative_282119_52 = Neutral30.copy(alpha = 0.52f),
+        labelNeutral_282119_88 = Neutral30.copy(alpha = 0.88f),
+        labelAlternative_282119_61 = Neutral30.copy(alpha = 0.61f),
         labelAssistive_282119_28 = Neutral30.copy(alpha = 0.28f),
         labelDisable_282119_12 = Neutral30.copy(alpha = 0.12f),
         // Background
