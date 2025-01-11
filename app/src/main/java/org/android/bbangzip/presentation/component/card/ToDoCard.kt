@@ -121,7 +121,7 @@ fun ToDoInfo(
                     .padding(horizontal = 12.dp, vertical = 2.dp)
             ) {
                 Text(text = "D+5", style = BbangZipTheme.typography.caption1Medium, color = BbangZipTheme.colors.staticWhite_FFFFFF)
-            }
+            }// TODO 칩 구현
 
             Spacer(modifier = Modifier.width(8.dp))
 
