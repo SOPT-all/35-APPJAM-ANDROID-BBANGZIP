@@ -128,7 +128,7 @@ fun ToDoInfo(
             Text(
                 text = "${data.deadline}까지",
                 style = BbangZipTheme.typography.caption1Bold,
-                color = BbangZipTheme.colors.labelNormal_282119
+                color = BbangZipTheme.colors.labelAlternative_282119_61
             )
         }
     }
