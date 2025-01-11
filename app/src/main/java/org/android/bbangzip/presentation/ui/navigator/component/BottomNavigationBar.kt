@@ -3,6 +3,22 @@ package org.android.bbangzip.presentation.ui.navigator.component
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandHorizontally
+import androidx.compose.animation.expandIn
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.scaleIn
+import androidx.compose.animation.scaleOut
+import androidx.compose.animation.shrinkHorizontally
+import androidx.compose.animation.shrinkOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.animation.slideIn
+import androidx.compose.animation.slideInHorizontally
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOut
+import androidx.compose.animation.slideOutHorizontally
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -23,6 +39,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.center
 import androidx.compose.ui.unit.dp
 import okhttp3.internal.toImmutableList
 import org.android.bbangzip.R
@@ -41,7 +58,11 @@ fun BottomNavigationBar(
     onBottomNaviBarItemSelected: (BottomNavigationType) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    AnimatedVisibility(visible = isVisible) {
+    AnimatedVisibility(
+        visible = isVisible,
+        enter = slideInVertically(),
+        exit = slideOutVertically(),
+        ) {
         Box(
             modifier =
                 modifier
