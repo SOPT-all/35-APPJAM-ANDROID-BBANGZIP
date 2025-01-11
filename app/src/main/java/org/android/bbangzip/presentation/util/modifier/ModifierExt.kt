@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import org.android.bbangzip.presentation.model.ShadowConfig
 
 @Composable
 fun Modifier.noRippleClickable(
@@ -60,5 +61,15 @@ fun Modifier.dropShadow(
         canvas.translate(offsetX.toPx(), offsetY.toPx())
         canvas.drawOutline(shadowOutline, paint)
         canvas.restore()
+    }
+}
+
+@Composable
+fun Modifier.applyShadows(
+    shadowOptions: List<ShadowConfig>,
+    shape: Shape
+): Modifier {
+    return shadowOptions.fold(this) { acc, shadowConfig ->
+        acc.dropShadow(shape = shape, color = shadowConfig.color, blur = shadowConfig.blur, offsetY = shadowConfig.offsetY, offsetX = shadowConfig.offsetX, spread = shadowConfig.spread)
     }
 }
