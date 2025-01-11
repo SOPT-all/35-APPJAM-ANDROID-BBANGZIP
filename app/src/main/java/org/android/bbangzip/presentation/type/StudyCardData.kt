@@ -10,8 +10,6 @@ sealed interface StudyCardData {
         val finishPage: Int,
         val deadline: String,
         val remainingDays: Int,
-        val isFinished: Boolean,
-        val todoItemType: String
     ) : StudyCardData
 
     data class SubjectCardData(
