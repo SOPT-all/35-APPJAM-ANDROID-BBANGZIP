@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.ui.navigator
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
@@ -8,14 +7,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import okhttp3.internal.toImmutableList
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.navigator.component.BottomNavigationBar
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
-import org.android.bbangzip.ui.theme.defaultBbangZipColors
 
 @Composable
 fun MainScreen(
@@ -32,7 +28,7 @@ private fun MainScreenContent(
     navigator: MainNavigator,
 ) {
     Scaffold(
-//        modifier = modifier.padding(WindowInsets.navigationBars.asPaddingValues()),
+        modifier = modifier.padding(WindowInsets.navigationBars.asPaddingValues()),
         content = { padding ->
             MainNavHost(
                 navigator = navigator,

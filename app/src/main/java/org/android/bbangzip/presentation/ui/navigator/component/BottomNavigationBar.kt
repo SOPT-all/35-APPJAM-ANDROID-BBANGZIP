@@ -9,7 +9,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -20,7 +19,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -32,7 +30,6 @@ import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.util.modifier.dropShadow
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
-import org.android.bbangzip.ui.theme.BbangZipColors
 import org.android.bbangzip.ui.theme.defaultBbangZipColors
 import org.android.bbangzip.ui.theme.defaultBbangZipTypography
 
@@ -46,23 +43,24 @@ fun BottomNavigationBar(
 ) {
     AnimatedVisibility(visible = isVisible) {
         Box(
-            modifier = modifier
-                .fillMaxWidth()
-                .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF)
-                .dropShadow(
-                    offsetY = (-4).dp,
-                    shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
-                ),
+            modifier =
+                modifier
+                    .fillMaxWidth()
+                    .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF)
+                    .dropShadow(
+                        offsetY = (-4).dp,
+                        shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+                    ),
         ) {
             Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clip(
-                        shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp)
-                    )
-                    .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF)
-                    .padding(top = 12.dp, bottom = 8.dp, start = 12.dp, end = 12.dp)
-                ,
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .clip(
+                            shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+                        )
+                        .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF)
+                        .padding(top = 12.dp, bottom = 8.dp, start = 12.dp, end = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {

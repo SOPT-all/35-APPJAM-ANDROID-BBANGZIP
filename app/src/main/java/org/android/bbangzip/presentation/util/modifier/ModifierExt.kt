@@ -40,14 +40,15 @@ fun Modifier.dropShadow(
     blur: Dp = 4.dp,
     offsetY: Dp = 4.dp,
     offsetX: Dp = 0.dp,
-    spread: Dp = 0.dp
+    spread: Dp = 0.dp,
 ) = this.drawBehind {
     val shadowSize = Size(size.width + spread.toPx(), size.height + spread.toPx())
     val shadowOutline = shape.createOutline(shadowSize, layoutDirection, this)
 
-    val paint = Paint().apply {
-        this.color = color
-    }
+    val paint =
+        Paint().apply {
+            this.color = color
+        }
 
     if (blur.toPx() > 0) {
         paint.asFrameworkPaint().apply {
