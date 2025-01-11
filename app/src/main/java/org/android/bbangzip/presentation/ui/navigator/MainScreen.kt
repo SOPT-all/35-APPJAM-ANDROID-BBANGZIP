@@ -15,6 +15,7 @@ import okhttp3.internal.toImmutableList
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.navigator.component.BottomNavigationBar
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
+import org.android.bbangzip.ui.theme.defaultBbangZipColors
 
 @Composable
 fun MainScreen(
@@ -31,7 +32,7 @@ private fun MainScreenContent(
     navigator: MainNavigator,
 ) {
     Scaffold(
-        modifier = modifier.padding(WindowInsets.navigationBars.asPaddingValues()),
+//        modifier = modifier.padding(WindowInsets.navigationBars.asPaddingValues()),
         content = { padding ->
             MainNavHost(
                 navigator = navigator,
@@ -41,10 +42,6 @@ private fun MainScreenContent(
         bottomBar = {
             BottomNavigationBar(
                 isVisible = navigator.showBottomBar(),
-                modifier =
-                    Modifier
-                        .background(Color.Green)
-                        .padding(top = 8.dp, bottom = 10.dp),
                 bottomNaviBarItems = BottomNavigationType.entries.toImmutableList(),
                 currentNaviBarItemSelected = navigator.currentBottomNavigationBarItem,
                 onBottomNaviBarItemSelected = { navigator.navigateBottomNavigation(it) },

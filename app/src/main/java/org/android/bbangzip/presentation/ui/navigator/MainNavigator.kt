@@ -49,7 +49,6 @@ class MainNavigator(
                 BottomNavigationType.TODO -> navHostController.navigateTodo(navOptions)
                 BottomNavigationType.FRIEND -> navHostController.navigateFriend(navOptions)
                 BottomNavigationType.MY -> navHostController.navigateMy(navOptions)
-                BottomNavigationType.DUMMY -> navHostController.navigateDummy(navOptions)
                 else -> Unit
             }
             Timber.d("[navigation] currentDestination -> ${navHostController.currentDestination}")
