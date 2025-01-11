@@ -21,7 +21,7 @@ sealed interface StudyCardStateType {
     data object DEFAULT : StudyCardStateType {
         @Composable override fun getStyle() = StudyCardStyle(
             background = BbangZipTheme.colors.backgroundNormal_FFFFFF,
-            borderColor = BbangZipTheme.colors.fillNormal_68645E_08,
+            borderColor = BbangZipTheme.colors.lineAlternative_68645E_08,
             borderWidth = 1.dp,
             radius = 24.dp,
             shadowOptions = listOf(
@@ -53,7 +53,7 @@ sealed interface StudyCardStateType {
     data object CHECKABLE : StudyCardStateType {
         @Composable override fun getStyle() = StudyCardStyle(
             background = BbangZipTheme.colors.backgroundAlternative_F5F5F5,
-            borderColor = BbangZipTheme.colors.fillNormal_68645E_08,
+            borderColor = BbangZipTheme.colors.lineAlternative_68645E_08,
             borderWidth = 1.dp,
             radius = 24.dp,
             shadowOptions = listOf(
@@ -85,7 +85,7 @@ sealed interface StudyCardStateType {
     data object CHECKED : StudyCardStateType {
         @Composable override fun getStyle() = StudyCardStyle(
             background = BbangZipTheme.colors.backgroundAlternative_F5F5F5,
-            borderColor = BbangZipTheme.colors.fillNormal_68645E_08,
+            borderColor = BbangZipTheme.colors.lineStrong_68645E_52,
             borderWidth = 3.dp,
             radius = 24.dp,
             shadowOptions = listOf(
@@ -119,7 +119,7 @@ sealed interface ToDoCardStateType : StudyCardStateType {
     data object COMPLETE : ToDoCardStateType {
         @Composable override fun getStyle() = StudyCardStyle(
             background = BbangZipTheme.colors.backgroundNormal_FFFFFF,
-            borderColor = BbangZipTheme.colors.fillNormal_68645E_08,
+            borderColor = BbangZipTheme.colors.lineAlternative_68645E_08,
             borderWidth = 1.dp,
             radius = 24.dp,
             shadowOptions = listOf(

@@ -18,15 +18,12 @@ fun StudyCardSlot(
     data: StudyCardData,
     modifier: Modifier = Modifier,
 ) {
-    val style =stateType.getStyle()
     when (studyType) {
         StudyCardType.TODO -> {
             val todoDate = data as? StudyCardData.TodoCardData ?: throw IllegalArgumentException("Invalid data for TODO card")
-
                 ToDoCard(
-                    style = style,
+                    stateType = stateType,
                     data = todoDate,
-                    isComplete = stateType == ToDoCardStateType.COMPLETE,
                     modifier = modifier
                 )
         }
@@ -34,7 +31,7 @@ fun StudyCardSlot(
         StudyCardType.SUBJECT -> {
             val subjectData = data as? StudyCardData.SubjectCardData ?: throw IllegalArgumentException("Invalid data for SUBJECT card")
             SubjectCard(
-                style = style,
+                stateType = stateType,
                 data = subjectData,
                 modifier = modifier
             )
