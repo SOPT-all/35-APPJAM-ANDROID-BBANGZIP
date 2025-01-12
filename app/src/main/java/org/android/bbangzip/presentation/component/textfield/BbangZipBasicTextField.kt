@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -46,8 +45,8 @@ fun BbangZipBasicTextField(
     onDeleteButtonClick: () -> Unit = { },
 ) {
     BbangZipTextFieldSlot(
-        modifier = modifier
-            .fillMaxWidth()
+        columnModifier = modifier,
+        rowModifier = Modifier
             .background(color = bbangZipTextFieldInputState.getBackgroundColor(), shape = RoundedCornerShape(20.dp))
             .border(width = 1.dp, color = bbangZipTextFieldInputState.getBorderColor(), shape = RoundedCornerShape(20.dp))
             .padding(start = 16.dp, end = 12.dp, top = 16.dp, bottom = 16.dp),

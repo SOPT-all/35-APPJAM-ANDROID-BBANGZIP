@@ -12,15 +12,19 @@ import androidx.compose.ui.Modifier
 @Composable
 fun BbangZipTextFieldSlot(
     modifier: Modifier = Modifier,
+    rowModifier: Modifier = Modifier,
+    columnModifier: Modifier = Modifier,
     leadingIcon: @Composable (RowScope.() -> Unit) = {},
     content: @Composable (RowScope.() -> Unit) = {},
     characterCount: @Composable (RowScope.() -> Unit) = {},
     trailingIcon: @Composable (RowScope.() -> Unit) = {},
     guideline: @Composable (ColumnScope.() -> Unit) = {}
 ) {
-    Column {
+    Column(
+        modifier = columnModifier.then(modifier)
+    ){
         Row(
-            modifier = modifier,
+            modifier = rowModifier.then(modifier),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.Center
         ) {

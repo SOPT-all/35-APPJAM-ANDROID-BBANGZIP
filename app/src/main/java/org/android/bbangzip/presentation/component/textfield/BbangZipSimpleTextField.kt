@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -30,7 +29,6 @@ import org.android.bbangzip.R
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 import org.android.bbangzip.ui.theme.defaultBbangZipColors
-import org.android.bbangzip.ui.theme.defaultBbangZipTypography
 
 @Composable
 fun BbangZipSimpleTextField(
@@ -44,11 +42,12 @@ fun BbangZipSimpleTextField(
     onValueChange: (String) -> Unit = { },
 ) {
     BbangZipTextFieldSlot(
-        modifier = modifier
-            .fillMaxWidth()
+        columnModifier = modifier,
+        rowModifier = Modifier
             .background(color = bbangZipTextFieldInputState.getBackgroundColor(), shape = RoundedCornerShape(20.dp))
             .border(width = 1.dp, color = bbangZipTextFieldInputState.getBorderColor(), shape = RoundedCornerShape(20.dp))
             .padding(start = 16.dp, end = 12.dp, top = 18.dp, bottom = 18.dp),
+
         leadingIcon = {
             Icon(
                 imageVector = ImageVector.vectorResource(leadingIcon),
@@ -57,13 +56,14 @@ fun BbangZipSimpleTextField(
                 tint = bbangZipTextFieldInputState.getIconColor()
             )
         },
+
         content = {
             BasicTextField(
                 modifier = Modifier
                     .weight(1f)
                     .padding(start = 8.dp)
                     .focusRequester(FocusRequester())
-                    .onFocusChanged { if(it.isFocused) onClickTextField() },
+                    .onFocusChanged { if (it.isFocused) onClickTextField() },
                 value = value,
                 onValueChange = { onValueChange(it) },
                 cursorBrush = SolidColor(BbangZipTheme.colors.labelNormal_282119),
@@ -82,11 +82,14 @@ fun BbangZipSimpleTextField(
                 }
             )
         },
+
         guideline = {
             Text(
                 text = stringResource(id = guideline),
-                modifier = Modifier.padding(start = 8.dp, top = 4.dp),
-                color = bbangZipTextFieldInputState.getGuidelineColor(),
+                modifier = Modifier
+                    .padding(start = 8.dp, top = 4.dp),
+                color = bbangZipTextFieldInputState
+                    .getGuidelineColor(),
                 style = BbangZipTheme.typography.caption2Medium
             )
         }
