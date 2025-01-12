@@ -130,8 +130,9 @@ fun BbangZipBasicTextFieldPreview() {
             validationState = when {
                 text.isEmpty() -> BbangZipTextFieldInputState.Empty
                 text.length == 1 -> BbangZipTextFieldInputState.Typing
+                text.length == 3 -> BbangZipTextFieldInputState.Complete
                 5 < text.length -> BbangZipTextFieldInputState.Error
-                else -> BbangZipTextFieldInputState.Success
+                else -> BbangZipTextFieldInputState.Field
             }
         }
 
