@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.ui.navigator.component
 
-import android.content.res.Resources.Theme
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
@@ -24,7 +23,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -37,8 +35,6 @@ import org.android.bbangzip.presentation.util.modifier.dropShadow
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
-import org.android.bbangzip.ui.theme.defaultBbangZipColors
-import org.android.bbangzip.ui.theme.defaultBbangZipTypography
 
 @Composable
 fun BottomNavigationBar(
