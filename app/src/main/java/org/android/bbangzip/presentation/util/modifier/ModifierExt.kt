@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import org.android.bbangzip.presentation.model.ShadowConfig
+import org.android.bbangzip.ui.theme.model.ShadowConfig
 
 @Composable
 fun Modifier.noRippleClickable(

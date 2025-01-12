@@ -1,4 +1,4 @@
-package org.android.bbangzip.presentation.model
+package org.android.bbangzip.ui.theme.model
 
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp

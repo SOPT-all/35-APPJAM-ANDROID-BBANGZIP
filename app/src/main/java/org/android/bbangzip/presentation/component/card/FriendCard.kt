@@ -22,7 +22,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
-import org.android.bbangzip.presentation.component.card.model.BbangZipCardData
+import org.android.bbangzip.presentation.model.card.FriendCardModel
 import org.android.bbangzip.presentation.type.BbangZipCardStateType
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -30,7 +30,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun FriendCard(
     stateType: BbangZipCardStateType,
-    data: BbangZipCardData.FriendCardData,
+    data: FriendCardModel,
     modifier: Modifier = Modifier,
 ) {
     val style = stateType.getStyle()

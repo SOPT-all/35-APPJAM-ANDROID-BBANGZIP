@@ -24,7 +24,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
-import org.android.bbangzip.presentation.component.card.model.BbangZipCardData
+import org.android.bbangzip.presentation.component.chip.BbangZipChip
+import org.android.bbangzip.presentation.model.card.SubjectCardModel
 import org.android.bbangzip.presentation.type.BbangZipCardStateType
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
@@ -33,19 +34,25 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun SubjectCard(
     stateType: BbangZipCardStateType,
-    data: BbangZipCardData.SubjectCardData,
+    data: SubjectCardModel,
     modifier: Modifier = Modifier,
 ) {
     val style = stateType.getStyle()
 
     Box(
         modifier =
-            modifier
-                .applyShadows(shadowOptions = style.shadowOptions, shape = RoundedCornerShape(style.radius))
-                .height(190.dp) // TODO 기기대응 어케할지 물어보기
-                .border(width = style.borderWidth, color = style.borderColor, shape = RoundedCornerShape(size = style.radius))
-                .background(color = style.background, shape = RoundedCornerShape(size = style.radius))
-                .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
+        modifier
+            .applyShadows(
+                shadowOptions = style.shadowOptions,
+                shape = RoundedCornerShape(style.radius)
+            )
+            .border(
+                width = style.borderWidth,
+                color = style.borderColor,
+                shape = RoundedCornerShape(size = style.radius)
+            )
+            .background(color = style.background, shape = RoundedCornerShape(size = style.radius))
+            .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -64,53 +71,47 @@ fun SubjectCard(
 
 @Composable
 fun SubjectInfo(
-    data: BbangZipCardData.SubjectCardData,
+    data: SubjectCardModel,
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier.fillMaxHeight(),
+        modifier = modifier,
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
+
+        Text(
+            text = data.subjectName,
+            style = BbangZipTheme.typography.body1Bold,
+            color = BbangZipTheme.colors.labelNormal_282119,
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+        Text(
+            text = data.examName,
+            style = BbangZipTheme.typography.label2Bold,
+            color = BbangZipTheme.colors.labelNeutral_282119_88,
+        )
+
+        Spacer(modifier = Modifier.height(4.dp))
+
+
+        BbangZipChip(
+            text = "D-${data.pendingCount}",
+            backgroundColor = BbangZipTheme.colors.statusPositive_3D3730
+        )
+
+        Spacer(modifier = Modifier.height(44.dp))
         Column {
-            Text(
-                text = data.subjectName,
-                style = BbangZipTheme.typography.body1Bold,
-                color = BbangZipTheme.colors.labelNormal_282119,
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(
-                text = data.examName,
-                style = BbangZipTheme.typography.label2Bold,
-                color = BbangZipTheme.colors.labelNeutral_282119_88,
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Box(
-                contentAlignment = Alignment.Center,
-                modifier =
-                    Modifier
-                        .background(color = BbangZipTheme.colors.statusPositive_3D3730, shape = RoundedCornerShape(11.dp))
-                        .padding(horizontal = 12.dp, vertical = 2.dp),
-            ) {
-                Text(
-                    text = "D-24",
-                    style = BbangZipTheme.typography.caption1Medium,
-                    color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                )
-            } // TODO 칩구현
-        }
-        Column {
-            StudyStateCountCircle(
+            BbangZipPushIcon(
                 backgroundColor = BbangZipTheme.colors.statusDestructive_FF8345,
                 count = data.pendingCount,
                 text = "밀린 공부",
             )
+
             Spacer(modifier = Modifier.height(4.dp))
 
-            StudyStateCountCircle(
+            BbangZipPushIcon(
                 backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
                 count = data.inProgressCount,
                 text = "진행 중인 공부",
@@ -120,7 +121,7 @@ fun SubjectInfo(
 }
 
 @Composable
-fun StudyStateCountCircle(
+fun BbangZipPushIcon(
     backgroundColor: Color,
     count: Int,
     text: String,
@@ -130,9 +131,9 @@ fun StudyStateCountCircle(
         Box(
             contentAlignment = Alignment.Center,
             modifier =
-                modifier
-                    .background(color = backgroundColor, shape = CircleShape)
-                    .padding(horizontal = 6.dp, vertical = 3.dp),
+            modifier
+                .background(color = backgroundColor, shape = CircleShape)
+                .padding(horizontal = 6.dp, vertical = 3.dp),
         ) {
             Text(
                 text = count.toString(),
@@ -159,40 +160,40 @@ fun SubjectCardPreview() {
             SubjectCard(
                 stateType = BbangZipCardStateType.DEFAULT,
                 data =
-                    BbangZipCardData.SubjectCardData(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
                 stateType = BbangZipCardStateType.CHECKED,
                 data =
-                    BbangZipCardData.SubjectCardData(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
                 stateType = BbangZipCardStateType.CHECKABLE,
                 data =
-                    BbangZipCardData.SubjectCardData(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
         }
