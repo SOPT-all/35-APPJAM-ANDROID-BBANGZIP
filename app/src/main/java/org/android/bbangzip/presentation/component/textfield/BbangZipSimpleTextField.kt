@@ -17,6 +17,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
@@ -26,6 +29,8 @@ import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
+import org.android.bbangzip.ui.theme.defaultBbangZipColors
+import org.android.bbangzip.ui.theme.defaultBbangZipTypography
 
 @Composable
 fun BbangZipSimpleTextField(
@@ -35,6 +40,7 @@ fun BbangZipSimpleTextField(
     value: String,
     modifier: Modifier = Modifier,
     bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Empty,
+    onClickTextField: () -> Unit = { },
     onValueChange: (String) -> Unit = { },
 ) {
     BbangZipTextFieldSlot(
@@ -55,7 +61,9 @@ fun BbangZipSimpleTextField(
             BasicTextField(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 8.dp),
+                    .padding(start = 8.dp)
+                    .focusRequester(FocusRequester())
+                    .onFocusChanged { if(it.isFocused) onClickTextField() },
                 value = value,
                 onValueChange = { onValueChange(it) },
                 cursorBrush = SolidColor(BbangZipTheme.colors.labelNormal_282119),
@@ -67,7 +75,7 @@ fun BbangZipSimpleTextField(
                     if (value.isEmpty()) {
                         Text(
                             text = stringResource(placeholder),
-                            color = bbangZipTextFieldInputState.getTextColor(),
+                            color = defaultBbangZipColors.labelAssistive_282119_28,
                             style = BbangZipTheme.typography.label1Medium
                         )
                     }
@@ -107,6 +115,9 @@ fun BbangZipSimpleTextFieldPreview() {
             guideline = R.string.app_name,
             value = text,
             bbangZipTextFieldInputState = validationState,
+            onClickTextField = {
+
+            },
             onValueChange = { newValue ->
                 text = newValue
                 validateText(text = newValue)

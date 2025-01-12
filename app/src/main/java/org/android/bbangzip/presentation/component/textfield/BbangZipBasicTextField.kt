@@ -4,6 +4,7 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -16,17 +17,23 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
+import org.android.bbangzip.presentation.type.BbangZipTextFieldType
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
+import org.android.bbangzip.ui.theme.defaultBbangZipColors
 
 @Composable
 fun BbangZipBasicTextField(
@@ -38,6 +45,7 @@ fun BbangZipBasicTextField(
     modifier: Modifier = Modifier,
     bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Empty,
     onValueChange: (String) -> Unit = { },
+    onClickTextField: () -> Unit = { },
     onDeleteButtonClick: () -> Unit = { },
 ) {
     BbangZipTextFieldSlot(
@@ -57,7 +65,9 @@ fun BbangZipBasicTextField(
             BasicTextField(
                 modifier = Modifier
                     .weight(1f)
-                    .padding(start = 8.dp),
+                    .padding(start = 8.dp)
+                    .focusRequester(FocusRequester())
+                    .onFocusChanged { if(it.isFocused) onClickTextField() },
                 value = value,
                 onValueChange = {
                     if (it.length <= maxCharacter) onValueChange(it)
@@ -71,7 +81,7 @@ fun BbangZipBasicTextField(
                     if (value.isEmpty()) {
                         Text(
                             text = stringResource(placeholder),
-                            color = bbangZipTextFieldInputState.getTextColor(),
+                            color = defaultBbangZipColors.labelAssistive_282119_28,
                             style = BbangZipTheme.typography.label1Medium
                         )
                     }
@@ -146,6 +156,9 @@ fun BbangZipBasicTextFieldPreview() {
             onValueChange = { newValue ->
                 text = newValue
                 validateText(text = newValue)
+            },
+            onClickTextField = {
+                if (validationState == BbangZipTextFieldInputState.Empty) validationState = BbangZipTextFieldInputState.Typing else Unit
             },
             onDeleteButtonClick = {
                 text = ""
