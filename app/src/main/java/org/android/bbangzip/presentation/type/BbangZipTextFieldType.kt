@@ -9,23 +9,23 @@ enum class BbangZipTextFieldType(
     val characterCheckColor: Color = defaultBbangZipColors.labelAlternative_282119_61,
     val borderColor: Color = Color.Transparent,
     val backgroundColor: Color = defaultBbangZipColors.fillNormal_68645E_08,
-    val guidelineColor: Color = defaultBbangZipColors.labelAssistive_282119_28
+    val guidelineColor: Color = defaultBbangZipColors.labelAssistive_282119_28,
 ) {
     EMPTY(
         iconColor = defaultBbangZipColors.labelAssistive_282119_28,
         textColor = defaultBbangZipColors.labelAssistive_282119_28,
-        characterCheckColor = defaultBbangZipColors.labelDisable_282119_12
+        characterCheckColor = defaultBbangZipColors.labelDisable_282119_12,
     ),
     TYPING(
-        backgroundColor = defaultBbangZipColors.fillStrong_68645E_16
+        backgroundColor = defaultBbangZipColors.fillStrong_68645E_16,
     ),
     COMPLETE(
         borderColor = defaultBbangZipColors.statusPositive_3D3730,
-        guidelineColor = defaultBbangZipColors.statusPositive_3D3730
+        guidelineColor = defaultBbangZipColors.statusPositive_3D3730,
     ),
     FIELD,
     ERROR(
         borderColor = defaultBbangZipColors.statusDestructive_FF8345,
-        guidelineColor = defaultBbangZipColors.statusDestructive_FF8345
-    )
+        guidelineColor = defaultBbangZipColors.statusDestructive_FF8345,
+    ),
 }

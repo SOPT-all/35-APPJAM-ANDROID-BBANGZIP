@@ -46,24 +46,26 @@ fun BbangZipBasicTextField(
 ) {
     BbangZipTextFieldSlot(
         columnModifier = modifier,
-        rowModifier = Modifier
-            .background(color = bbangZipTextFieldInputState.getBackgroundColor(), shape = RoundedCornerShape(20.dp))
-            .border(width = 1.dp, color = bbangZipTextFieldInputState.getBorderColor(), shape = RoundedCornerShape(20.dp))
-            .padding(start = 16.dp, end = 12.dp, top = 16.dp, bottom = 16.dp),
+        rowModifier =
+            Modifier
+                .background(color = bbangZipTextFieldInputState.getBackgroundColor(), shape = RoundedCornerShape(20.dp))
+                .border(width = 1.dp, color = bbangZipTextFieldInputState.getBorderColor(), shape = RoundedCornerShape(20.dp))
+                .padding(start = 16.dp, end = 12.dp, top = 16.dp, bottom = 16.dp),
         leadingIcon = {
             Icon(
                 painter = painterResource(leadingIcon),
                 contentDescription = null,
-                tint = bbangZipTextFieldInputState.getIconColor()
+                tint = bbangZipTextFieldInputState.getIconColor(),
             )
         },
         content = {
             BasicTextField(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 8.dp)
-                    .focusRequester(FocusRequester())
-                    .onFocusChanged { if (it.isFocused) onClickTextField() },
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp)
+                        .focusRequester(FocusRequester())
+                        .onFocusChanged { if (it.isFocused) onClickTextField() },
                 value = value,
                 onValueChange = {
                     if (it.length <= maxCharacter) onValueChange(it)
@@ -78,27 +80,28 @@ fun BbangZipBasicTextField(
                         Text(
                             text = stringResource(placeholder),
                             color = defaultBbangZipColors.labelAssistive_282119_28,
-                            style = BbangZipTheme.typography.label1Medium
+                            style = BbangZipTheme.typography.label1Medium,
                         )
                     }
-                }
+                },
             )
         },
         characterCount = {
             Text(
                 text = stringResource(R.string.textfield_character_counter, value.length.toString(), maxCharacter.toString()),
                 color = bbangZipTextFieldInputState.getCharacterCheckColor(),
-                style = BbangZipTheme.typography.caption1Medium
+                style = BbangZipTheme.typography.caption1Medium,
             )
         },
         trailingIcon = {
             if (value.isNotEmpty()) {
                 Icon(
-                    modifier = Modifier
-                        .noRippleClickable { onDeleteButtonClick() },
+                    modifier =
+                        Modifier
+                            .noRippleClickable { onDeleteButtonClick() },
                     imageVector = ImageVector.vectorResource(R.drawable.ic_x_circle_default_24),
                     tint = bbangZipTextFieldInputState.getIconColor(),
-                    contentDescription = null
+                    contentDescription = null,
                 )
             }
         },
@@ -107,9 +110,9 @@ fun BbangZipBasicTextField(
                 text = stringResource(id = guideline),
                 modifier = Modifier.padding(start = 8.dp, top = 4.dp),
                 color = bbangZipTextFieldInputState.getGuidelineColor(),
-                style = BbangZipTheme.typography.caption2Medium
+                style = BbangZipTheme.typography.caption2Medium,
             )
-        }
+        },
     )
 }
 
@@ -121,13 +124,14 @@ fun BbangZipBasicTextFieldPreview() {
         var validationState by remember { mutableStateOf<BbangZipTextFieldInputState>(BbangZipTextFieldInputState.Empty) }
 
         fun validateText(text: String) {
-            validationState = when {
-                text.isEmpty() -> BbangZipTextFieldInputState.Empty
-                text.length == 1 -> BbangZipTextFieldInputState.Typing
-                text.length == 3 -> BbangZipTextFieldInputState.Complete
-                5 < text.length -> BbangZipTextFieldInputState.Error
-                else -> BbangZipTextFieldInputState.Field
-            }
+            validationState =
+                when {
+                    text.isEmpty() -> BbangZipTextFieldInputState.Empty
+                    text.length == 1 -> BbangZipTextFieldInputState.Typing
+                    text.length == 3 -> BbangZipTextFieldInputState.Complete
+                    5 < text.length -> BbangZipTextFieldInputState.Error
+                    else -> BbangZipTextFieldInputState.Field
+                }
         }
 
         BbangZipBasicTextField(
@@ -147,7 +151,7 @@ fun BbangZipBasicTextFieldPreview() {
             onDeleteButtonClick = {
                 text = ""
                 validationState = BbangZipTextFieldInputState.Empty
-            }
+            },
         )
     }
 }

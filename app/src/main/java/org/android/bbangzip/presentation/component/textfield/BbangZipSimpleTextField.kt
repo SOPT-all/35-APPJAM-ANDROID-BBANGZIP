@@ -43,27 +43,27 @@ fun BbangZipSimpleTextField(
 ) {
     BbangZipTextFieldSlot(
         columnModifier = modifier,
-        rowModifier = Modifier
-            .background(color = bbangZipTextFieldInputState.getBackgroundColor(), shape = RoundedCornerShape(20.dp))
-            .border(width = 1.dp, color = bbangZipTextFieldInputState.getBorderColor(), shape = RoundedCornerShape(20.dp))
-            .padding(start = 16.dp, end = 12.dp, top = 18.dp, bottom = 18.dp),
-
+        rowModifier =
+            Modifier
+                .background(color = bbangZipTextFieldInputState.getBackgroundColor(), shape = RoundedCornerShape(20.dp))
+                .border(width = 1.dp, color = bbangZipTextFieldInputState.getBorderColor(), shape = RoundedCornerShape(20.dp))
+                .padding(start = 16.dp, end = 12.dp, top = 18.dp, bottom = 18.dp),
         leadingIcon = {
             Icon(
                 imageVector = ImageVector.vectorResource(leadingIcon),
                 modifier = Modifier.size(size = 16.dp),
                 contentDescription = null,
-                tint = bbangZipTextFieldInputState.getIconColor()
+                tint = bbangZipTextFieldInputState.getIconColor(),
             )
         },
-
         content = {
             BasicTextField(
-                modifier = Modifier
-                    .weight(1f)
-                    .padding(start = 8.dp)
-                    .focusRequester(FocusRequester())
-                    .onFocusChanged { if (it.isFocused) onClickTextField() },
+                modifier =
+                    Modifier
+                        .weight(1f)
+                        .padding(start = 8.dp)
+                        .focusRequester(FocusRequester())
+                        .onFocusChanged { if (it.isFocused) onClickTextField() },
                 value = value,
                 onValueChange = { onValueChange(it) },
                 cursorBrush = SolidColor(BbangZipTheme.colors.labelNormal_282119),
@@ -76,23 +76,24 @@ fun BbangZipSimpleTextField(
                         Text(
                             text = stringResource(placeholder),
                             color = defaultBbangZipColors.labelAssistive_282119_28,
-                            style = BbangZipTheme.typography.label1Medium
+                            style = BbangZipTheme.typography.label1Medium,
                         )
                     }
-                }
+                },
             )
         },
-
         guideline = {
             Text(
                 text = stringResource(id = guideline),
-                modifier = Modifier
-                    .padding(start = 8.dp, top = 4.dp),
-                color = bbangZipTextFieldInputState
-                    .getGuidelineColor(),
-                style = BbangZipTheme.typography.caption2Medium
+                modifier =
+                    Modifier
+                        .padding(start = 8.dp, top = 4.dp),
+                color =
+                    bbangZipTextFieldInputState
+                        .getGuidelineColor(),
+                style = BbangZipTheme.typography.caption2Medium,
             )
-        }
+        },
     )
 }
 
@@ -104,12 +105,13 @@ fun BbangZipSimpleTextFieldPreview() {
         var validationState by remember { mutableStateOf<BbangZipTextFieldInputState>(BbangZipTextFieldInputState.Empty) }
 
         fun validateText(text: String) {
-            validationState = when {
-                text.isEmpty() -> BbangZipTextFieldInputState.Empty
-                text.length == 1 -> BbangZipTextFieldInputState.Typing
-                5 < text.length -> BbangZipTextFieldInputState.Error
-                else -> BbangZipTextFieldInputState.Field
-            }
+            validationState =
+                when {
+                    text.isEmpty() -> BbangZipTextFieldInputState.Empty
+                    text.length == 1 -> BbangZipTextFieldInputState.Typing
+                    5 < text.length -> BbangZipTextFieldInputState.Error
+                    else -> BbangZipTextFieldInputState.Field
+                }
         }
 
         BbangZipSimpleTextField(
@@ -119,12 +121,11 @@ fun BbangZipSimpleTextFieldPreview() {
             value = text,
             bbangZipTextFieldInputState = validationState,
             onClickTextField = {
-
             },
             onValueChange = { newValue ->
                 text = newValue
                 validateText(text = newValue)
-            }
+            },
         )
     }
 }

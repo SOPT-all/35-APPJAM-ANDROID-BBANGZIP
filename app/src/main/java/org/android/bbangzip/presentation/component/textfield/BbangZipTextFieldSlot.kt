@@ -18,15 +18,15 @@ fun BbangZipTextFieldSlot(
     content: @Composable (RowScope.() -> Unit) = {},
     characterCount: @Composable (RowScope.() -> Unit) = {},
     trailingIcon: @Composable (RowScope.() -> Unit) = {},
-    guideline: @Composable (ColumnScope.() -> Unit) = {}
+    guideline: @Composable (ColumnScope.() -> Unit) = {},
 ) {
     Column(
-        modifier = columnModifier.then(modifier)
-    ){
+        modifier = columnModifier.then(modifier),
+    ) {
         Row(
             modifier = rowModifier.then(modifier),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
         ) {
             leadingIcon()
             content()
