@@ -13,29 +13,24 @@ enum class BottomNavigationType(
     val route: BottomNavigationRoute,
 ) {
     SUBJECT(
-        bottomNaviIcon = R.drawable.ic_dummy_24,
-        bottomNaviTitle = R.string.dummy,
+        bottomNaviIcon = R.drawable.ic_book_default_24,
+        bottomNaviTitle = R.string.bottomNavigation_subject_tab_title,
         route = BottomNavigationRoute.Subject,
     ),
     TODO(
-        bottomNaviIcon = R.drawable.ic_dummy_24,
-        bottomNaviTitle = R.string.dummy,
+        bottomNaviIcon = R.drawable.ic_file_check_default_24,
+        bottomNaviTitle = R.string.bottomNavigation_todo_tab_title,
         route = BottomNavigationRoute.Todo,
     ),
     FRIEND(
-        bottomNaviIcon = R.drawable.ic_dummy_24,
-        bottomNaviTitle = R.string.dummy,
+        bottomNaviIcon = R.drawable.ic_messagebox_default_24,
+        bottomNaviTitle = R.string.bottomNavigation_friend_tab_title,
         route = BottomNavigationRoute.Friend,
     ),
     MY(
-        bottomNaviIcon = R.drawable.ic_dummy_24,
-        bottomNaviTitle = R.string.dummy,
+        bottomNaviIcon = R.drawable.ic_user_one_default_24,
+        bottomNaviTitle = R.string.bottomNavigation_my_tab_title,
         route = BottomNavigationRoute.My,
-    ),
-    DUMMY(
-        bottomNaviIcon = R.drawable.ic_dummy_24,
-        bottomNaviTitle = R.string.dummy,
-        route = BottomNavigationRoute.Dummy,
     ),
     ;
 
