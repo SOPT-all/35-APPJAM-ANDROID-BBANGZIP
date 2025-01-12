@@ -25,4 +25,11 @@ sealed interface BbangZipCardData {
         val pendingCount: Int,
         val inProgressCount: Int
     ) : BbangZipCardData, Parcelable
+
+    @Parcelize
+    data class FriendCardData(
+        val friendId: Int,
+        val friendName: String,
+        val imageUrl: String
+    ) : BbangZipCardData, Parcelable
 }

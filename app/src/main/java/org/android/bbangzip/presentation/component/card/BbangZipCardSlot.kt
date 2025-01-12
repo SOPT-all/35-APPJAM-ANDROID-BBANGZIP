@@ -6,6 +6,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.card.model.BbangZipCardData
 import org.android.bbangzip.presentation.type.BbangZipCardStateType
 import org.android.bbangzip.presentation.type.BbangZipCardType
@@ -37,10 +38,19 @@ fun BbangZipCardSlot(
                 modifier = modifier
             )
         }
+
+        BbangZipCardType.FRIEND -> {
+            val friendData = data as? BbangZipCardData.FriendCardData ?: throw IllegalArgumentException("Invalid data for FRIEND card")
+            FriendCard(
+                stateType = stateType,
+                data = friendData,
+                modifier = modifier
+            )
+        }
     }
 }
 
-@Preview(showBackground = true, showSystemUi = true)
+@Preview(showBackground = true)
 @Composable
 fun StudyCardSlotPreview() {
     BBANGZIPTheme {
@@ -154,6 +164,55 @@ fun StudyCardSlotPreview() {
                 ),
                 modifier = Modifier.padding(bottom = 8.dp)
             )
+        }
+    }
+}
+
+@Preview(showBackground = true, showSystemUi = true)
+@Composable
+fun FriendCardPreview() {
+    BBANGZIPTheme {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            // FriendCard States
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                // FriendCard States
+                BbangZipCardSlot(
+                    stateType = BbangZipCardStateType.DEFAULT,
+                    studyType = BbangZipCardType.FRIEND,
+                    data = BbangZipCardData.FriendCardData(
+                        friendId = 1,
+                        friendName = "강라리",
+                        imageUrl = "R.drawable.ic_person" // 적절한 더미 이미지 리소스 사용
+                    ),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                BbangZipCardSlot(
+                    stateType = BbangZipCardStateType.CHECKED,
+                    studyType = BbangZipCardType.FRIEND,
+                    data = BbangZipCardData.FriendCardData(
+                        friendId = 2,
+                        friendName = "최민지",
+                        imageUrl = "R.drawable.ic_person" // 적절한 더미 이미지 리소스 사용
+                    ),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+
+                BbangZipCardSlot(
+                    stateType = BbangZipCardStateType.CHECKABLE,
+                    studyType = BbangZipCardType.FRIEND,
+                    data = BbangZipCardData.FriendCardData(
+                        friendId = 3,
+                        friendName = "이은지",
+                        imageUrl = "R.drawable.ic_person" // 적절한 더미 이미지 리소스 사용
+                    ),
+                    modifier = Modifier.padding(bottom = 8.dp)
+                )
+            }
         }
     }
 }
