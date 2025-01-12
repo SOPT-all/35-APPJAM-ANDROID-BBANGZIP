@@ -40,7 +40,7 @@ fun BbangZipBasicTextField(
     onValueChange: (String) -> Unit = { },
     onDeleteButtonClick: () -> Unit = { },
 ) {
-    BbangZipBasicTextFieldSlot(
+    BbangZipTextFieldSlot(
         modifier = modifier
             .fillMaxWidth()
             .background(color = bbangZipTextFieldInputState.getBackgroundColor(), shape = RoundedCornerShape(20.dp))

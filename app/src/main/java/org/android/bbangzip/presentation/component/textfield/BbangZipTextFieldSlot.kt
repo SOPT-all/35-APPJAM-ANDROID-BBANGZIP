@@ -10,7 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 
 @Composable
-fun BbangZipBasicTextFieldSlot(
+fun BbangZipTextFieldSlot(
     modifier: Modifier = Modifier,
     leadingIcon: @Composable (RowScope.() -> Unit) = {},
     content: @Composable (RowScope.() -> Unit) = {},
