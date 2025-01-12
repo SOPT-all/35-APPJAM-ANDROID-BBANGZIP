@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.type
 
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Dp
@@ -15,8 +14,8 @@ sealed class BbangZipButtonType(
     val disableBackgroundColor: Color = Color.Unspecified,
     val disableContentColor: Color = Color.Unspecified,
     val disableBorderColor: Color = Color.Unspecified,
-    val borderWidth: Dp = 0.dp
-    ){
+    val borderWidth: Dp = 0.dp,
+) {
     data object Solid : BbangZipButtonType(
         enableBackgroundColor = defaultBbangZipColors.primaryNormal_282119,
         enableContentColor = defaultBbangZipColors.staticWhite_FFFFFF,
@@ -31,7 +30,7 @@ sealed class BbangZipButtonType(
         disableBackgroundColor = Color.Unspecified,
         disableContentColor = Color.Unspecified,
         disableBorderColor = Color.Unspecified,
-        borderWidth = 1.dp
+        borderWidth = 1.dp,
     )
 
     data object Kakao : BbangZipButtonType(
@@ -46,8 +45,8 @@ sealed class BbangZipButtonSize(
     val verticalPadding: Dp,
     val iconSize: Dp,
     val spacing: Dp,
-    val textStyle: TextStyle
-){
+    val textStyle: TextStyle,
+) {
     data object Large : BbangZipButtonSize(
         cornerRadius = 24.dp,
         horizontalPadding = 28.dp,

@@ -17,7 +17,7 @@ fun BbangZipButtonSlot(
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         leadingIcon()
 

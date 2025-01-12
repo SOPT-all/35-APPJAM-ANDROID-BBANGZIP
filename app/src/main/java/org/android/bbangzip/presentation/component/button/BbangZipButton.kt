@@ -1,11 +1,9 @@
 package org.android.bbangzip.presentation.component.button
 
 import androidx.annotation.DrawableRes
-import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,7 +25,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
@@ -51,14 +48,15 @@ fun BbangZipButton(
     val contentColor = if (isEnable) bbangZipButtonType.enableContentColor else bbangZipButtonType.disableContentColor
 
     BbangZipButtonSlot(
-        modifier = modifier
-            .background(color = backgroundColor, shape = RoundedCornerShape(bbangZipButtonSize.cornerRadius))
-            .border(color = bbangZipButtonType.enableBorderColor, width = bbangZipButtonType.borderWidth, shape = RoundedCornerShape(bbangZipButtonSize.cornerRadius) )
-            .noRippleClickable { if (isEnable) onClick() }
-            .padding(
-                horizontal = bbangZipButtonSize.horizontalPadding,
-                vertical = bbangZipButtonSize.verticalPadding
-            ),
+        modifier =
+            modifier
+                .background(color = backgroundColor, shape = RoundedCornerShape(bbangZipButtonSize.cornerRadius))
+                .border(color = bbangZipButtonType.enableBorderColor, width = bbangZipButtonType.borderWidth, shape = RoundedCornerShape(bbangZipButtonSize.cornerRadius))
+                .noRippleClickable { if (isEnable) onClick() }
+                .padding(
+                    horizontal = bbangZipButtonSize.horizontalPadding,
+                    vertical = bbangZipButtonSize.verticalPadding,
+                ),
         leadingIcon = {
             if (leadingIcon != null) {
                 Icon(
@@ -99,7 +97,7 @@ private fun BbangZipButtonPreview() {
     BBANGZIPTheme {
         Column(
             modifier = Modifier.fillMaxSize().padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Solid,
@@ -117,7 +115,7 @@ private fun BbangZipButtonPreview() {
                 label = stringResource(R.string.btn_add_todo_label),
                 modifier = Modifier.fillMaxWidth(),
                 trailingIcon = R.drawable.ic_chevronright_thick_small_24,
-                isEnable = addTodo
+                isEnable = addTodo,
             )
 
             BbangZipButton(
@@ -134,18 +132,17 @@ private fun BbangZipButtonPreview() {
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 onClick = { },
                 label = stringResource(R.string.btn_cancle_label),
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Outlined,
                 bbangZipButtonSize = BbangZipButtonSize.Medium,
-                onClick = { overDueCount += 1},
-                label = String.format(stringResource(R.string.btn_todo_overdue_label),overDueCount),
+                onClick = { overDueCount += 1 },
+                label = String.format(stringResource(R.string.btn_todo_overdue_label), overDueCount),
                 trailingIcon = R.drawable.ic_chevronright_thick_small_24,
-                modifier = Modifier.wrapContentSize()
+                modifier = Modifier.wrapContentSize(),
             )
         }
     }
 }
-
