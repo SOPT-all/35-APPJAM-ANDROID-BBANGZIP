@@ -86,8 +86,8 @@
 <b>Technology</b>
 | Category | Content | 선정 이유 |
 | --- | --- | --- |
-| Architecture | SAA(Single Activity Architecture), Clean Architecture(+ UseCase) | 각 layer의 명확한 분리를 통해 가독성과 유지보수성을 높이고, Jetpack Navigation과의 통합을 통해 화면 간 상태 관리를 효율적으로 처리합니다. |
-| Design Pattern | Repository Pattern, MVI | 데이터 소스와 비즈니스 로직을 분리하여 데이터 접근 로직을 캡슐화합니다. 단방향 데이터 흐름을 통해 상태를 예측 가능하게 관리합니다. |
+| Architecture | SAA(Single Activity Architecture), Clean Architecture(+ UseCase), MVI | 각 layer의 명확한 분리를 통해 가독성과 유지보수성을 높이고, Jetpack Navigation과의 통합을 통해 화면 간 상태 관리를 효율적으로 처리합니다. 단방향 데이터 흐름을 통해 상태를 예측 가능하게 관리합니다. |
+| Design Pattern | Repository Pattern, State Pattern, Delegate Pattern | 데이터 소스와 비즈니스 로직을 분리하여 데이터 접근 로직을 캡슐화합니다. 상태를 객체화하여 일관성 있게 상태를 관리합니다. 클래스의 책임을 분리하고 재사용성을 높입니다. |
 | Dependency Injection | Hilt | 모듈 간 결합도를 낮추고 DI 과정을 간소화하여 생산성을 높이고 테스트를 용이하게 합니다. |
 | Network | Retrofit, OkHttp | Retrofit의 직관적인 API 통신 인터페이스와 OkHttp의 세부 설정과 로깅을 통해 안정적이고 유연한 네트워크 통신을 할 수 있습니다. |
 | Asynchronous Processing | Coroutine(+Flow) | 비동기 작업을 직관적으로 처리하고 데이터 스트림을 효율적으로 관리합니다. UI 상태와 데이터를 동기화합니다. |
