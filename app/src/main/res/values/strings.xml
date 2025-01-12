@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">BBANGZIP</string>
     <string name="dummy">이거</string>
+
+    <!-- component - textfield -->
+    <string name="textfield_character_counter">%s/%s</string>
 </resources>

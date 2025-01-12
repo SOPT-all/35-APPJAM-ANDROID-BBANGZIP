@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -22,14 +21,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
-import org.android.bbangzip.presentation.type.BbangZipTextFieldType
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -67,7 +64,7 @@ fun BbangZipBasicTextField(
                     .weight(1f)
                     .padding(start = 8.dp)
                     .focusRequester(FocusRequester())
-                    .onFocusChanged { if(it.isFocused) onClickTextField() },
+                    .onFocusChanged { if (it.isFocused) onClickTextField() },
                 value = value,
                 onValueChange = {
                     if (it.length <= maxCharacter) onValueChange(it)
@@ -90,19 +87,7 @@ fun BbangZipBasicTextField(
         },
         characterCount = {
             Text(
-                text = value.length.toString(),
-                color = bbangZipTextFieldInputState.getCharacterCheckColor(),
-                style = BbangZipTheme.typography.caption1Medium
-            )
-
-            Text(
-                text = "/",
-                color = bbangZipTextFieldInputState.getCharacterCheckColor(),
-                style = BbangZipTheme.typography.caption1Medium
-            )
-
-            Text(
-                text = maxCharacter.toString(),
+                text = stringResource(R.string.textfield_character_counter, value.length.toString(), maxCharacter.toString()),
                 color = bbangZipTextFieldInputState.getCharacterCheckColor(),
                 style = BbangZipTheme.typography.caption1Medium
             )
