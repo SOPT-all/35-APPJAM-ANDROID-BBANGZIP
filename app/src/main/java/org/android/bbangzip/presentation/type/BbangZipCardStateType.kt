@@ -15,10 +15,10 @@ data class StudyCardStyle(
     val shadowOptions: List<ShadowConfig>
 )
 
-sealed interface StudyCardStateType {
+sealed interface BbangZipCardStateType {
     @Composable fun getStyle(): StudyCardStyle
 
-    data object DEFAULT : StudyCardStateType {
+    data object DEFAULT : BbangZipCardStateType {
         @Composable override fun getStyle() = StudyCardStyle(
             background = BbangZipTheme.colors.backgroundNormal_FFFFFF,
             borderColor = BbangZipTheme.colors.lineAlternative_68645E_08,
@@ -50,7 +50,7 @@ sealed interface StudyCardStateType {
         )
     }
 
-    data object CHECKABLE : StudyCardStateType {
+    data object CHECKABLE : BbangZipCardStateType {
         @Composable override fun getStyle() = StudyCardStyle(
             background = BbangZipTheme.colors.backgroundAlternative_F5F5F5,
             borderColor = BbangZipTheme.colors.lineAlternative_68645E_08,
@@ -82,7 +82,7 @@ sealed interface StudyCardStateType {
         )
     }
 
-    data object CHECKED : StudyCardStateType {
+    data object CHECKED : BbangZipCardStateType {
         @Composable override fun getStyle() = StudyCardStyle(
             background = BbangZipTheme.colors.backgroundAlternative_F5F5F5,
             borderColor = BbangZipTheme.colors.lineStrong_68645E_52,
@@ -115,7 +115,7 @@ sealed interface StudyCardStateType {
     }
 }
 
-sealed interface ToDoCardStateType : StudyCardStateType {
+sealed interface ToDoCardStateType : BbangZipCardStateType {
     data object COMPLETE : ToDoCardStateType {
         @Composable override fun getStyle() = StudyCardStyle(
             background = BbangZipTheme.colors.backgroundNormal_FFFFFF,

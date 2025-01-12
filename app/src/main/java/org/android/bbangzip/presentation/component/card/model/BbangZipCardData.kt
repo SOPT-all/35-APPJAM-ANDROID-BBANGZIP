@@ -1,6 +1,10 @@
-package org.android.bbangzip.presentation.type
+package org.android.bbangzip.presentation.component.card.model
 
-sealed interface StudyCardData {
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+sealed interface BbangZipCardData {
+    @Parcelize
     data class TodoCardData(
         val pieceId: String,
         val subjectName: String,
@@ -10,8 +14,9 @@ sealed interface StudyCardData {
         val finishPage: Int,
         val deadline: String,
         val remainingDays: Int,
-    ) : StudyCardData
+    ) : BbangZipCardData, Parcelable
 
+    @Parcelize
     data class SubjectCardData(
         val subjectId: Int,
         val subjectName: String,
@@ -19,5 +24,5 @@ sealed interface StudyCardData {
         val examRemainingDays: Int,
         val pendingCount: Int,
         val inProgressCount: Int
-    ) : StudyCardData
+    ) : BbangZipCardData, Parcelable
 }

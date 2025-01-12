@@ -23,8 +23,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
-import org.android.bbangzip.presentation.type.StudyCardData
-import org.android.bbangzip.presentation.type.StudyCardStateType
+import org.android.bbangzip.presentation.component.card.model.BbangZipCardData
+import org.android.bbangzip.presentation.type.BbangZipCardStateType
 import org.android.bbangzip.presentation.type.ToDoCardStateType
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
@@ -32,8 +32,8 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun ToDoCard(
-    stateType: StudyCardStateType,
-    data: StudyCardData.TodoCardData,
+    stateType: BbangZipCardStateType,
+    data: BbangZipCardData.TodoCardData,
     modifier: Modifier = Modifier
 ) {
     val style = stateType.getStyle()
@@ -44,9 +44,9 @@ fun ToDoCard(
         style.shadowOptions
     }
     val background = when (stateType) {
-        StudyCardStateType.DEFAULT -> BbangZipTheme.colors.fillStrong_68645E_16
-        StudyCardStateType.CHECKED -> BbangZipTheme.colors.fillStrong_68645E_16
-        StudyCardStateType.CHECKABLE -> BbangZipTheme.colors.fillStrong_68645E_16
+        BbangZipCardStateType.DEFAULT -> BbangZipTheme.colors.fillStrong_68645E_16
+        BbangZipCardStateType.CHECKED -> BbangZipTheme.colors.fillStrong_68645E_16
+        BbangZipCardStateType.CHECKABLE -> BbangZipTheme.colors.fillStrong_68645E_16
         ToDoCardStateType.COMPLETE -> BbangZipTheme.colors.secondaryNormal_FFCD80
     }
     Box(
@@ -84,7 +84,7 @@ fun ToDoCard(
 
 @Composable
 fun ToDoInfo(
-    data: StudyCardData.TodoCardData,
+    data: BbangZipCardData.TodoCardData,
     modifier: Modifier = Modifier
 ) {
     Column(modifier = modifier) {
@@ -158,8 +158,8 @@ fun ToDoCardPreview() {
     BBANGZIPTheme {
         Column {
             ToDoCard(
-                stateType = StudyCardStateType.DEFAULT,
-                data = StudyCardData.TodoCardData(
+                stateType = BbangZipCardStateType.DEFAULT,
+                data = BbangZipCardData.TodoCardData(
                     subjectName = "경제통계학개론",
                     examName = "중간고사",
                     studyContents = "경제통계학",
@@ -173,8 +173,8 @@ fun ToDoCardPreview() {
                     .padding(16.dp)
             )
             ToDoCard(
-                stateType = StudyCardStateType.CHECKED,
-                data = StudyCardData.TodoCardData(
+                stateType = BbangZipCardStateType.CHECKED,
+                data = BbangZipCardData.TodoCardData(
                     subjectName = "경제통계학개론",
                     examName = "중간고사",
                     studyContents = "경제통계학",
@@ -188,8 +188,8 @@ fun ToDoCardPreview() {
                     .padding(16.dp)
             )
             ToDoCard(
-                stateType = StudyCardStateType.CHECKABLE,
-                data = StudyCardData.TodoCardData(
+                stateType = BbangZipCardStateType.CHECKABLE,
+                data = BbangZipCardData.TodoCardData(
                     subjectName = "경제통계학개론",
                     examName = "중간고사",
                     studyContents = "경제통계학",
@@ -204,7 +204,7 @@ fun ToDoCardPreview() {
             )
             ToDoCard(
                 stateType = ToDoCardStateType.COMPLETE,
-                data = StudyCardData.TodoCardData(
+                data = BbangZipCardData.TodoCardData(
                     subjectName = "경제통계학개론",
                     examName = "중간고사",
                     studyContents = "경제통계학",

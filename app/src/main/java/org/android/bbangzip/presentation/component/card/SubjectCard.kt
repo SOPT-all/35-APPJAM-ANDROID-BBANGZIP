@@ -24,8 +24,8 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
-import org.android.bbangzip.presentation.type.StudyCardData
-import org.android.bbangzip.presentation.type.StudyCardStateType
+import org.android.bbangzip.presentation.component.card.model.BbangZipCardData
+import org.android.bbangzip.presentation.type.BbangZipCardStateType
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -33,8 +33,8 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun SubjectCard(
-    stateType: StudyCardStateType,
-    data: StudyCardData.SubjectCardData,
+    stateType: BbangZipCardStateType,
+    data: BbangZipCardData.SubjectCardData,
     modifier: Modifier = Modifier
 ) {
     val style = stateType.getStyle()
@@ -64,7 +64,7 @@ fun SubjectCard(
 
 @Composable
 fun SubjectInfo(
-    data: StudyCardData.SubjectCardData,
+    data: BbangZipCardData.SubjectCardData,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -156,8 +156,8 @@ fun SubjectCardPreview() {
     BBANGZIPTheme {
         Column {
             SubjectCard(
-                stateType = StudyCardStateType.DEFAULT, // 필요한 상태 타입 설정
-                data = StudyCardData.SubjectCardData(
+                stateType = BbangZipCardStateType.DEFAULT, // 필요한 상태 타입 설정
+                data = BbangZipCardData.SubjectCardData(
                     subjectName = "[경영] 경제통계학",
                     examName = "중간고사",
                     pendingCount = 0, // 밀린 공부 개수
@@ -169,8 +169,8 @@ fun SubjectCardPreview() {
                     .padding(16.dp) // 카드가 화면에 잘 보이도록 여백 추가
             )
             SubjectCard(
-                stateType = StudyCardStateType.CHECKED, // 필요한 상태 타입 설정
-                data = StudyCardData.SubjectCardData(
+                stateType = BbangZipCardStateType.CHECKED, // 필요한 상태 타입 설정
+                data = BbangZipCardData.SubjectCardData(
                     subjectName = "[경영] 경제통계학",
                     examName = "중간고사",
                     pendingCount = 0, // 밀린 공부 개수
@@ -182,8 +182,8 @@ fun SubjectCardPreview() {
                     .padding(16.dp) // 카드가 화면에 잘 보이도록 여백 추가
             )
             SubjectCard(
-                stateType = StudyCardStateType.CHECKABLE, // 필요한 상태 타입 설정
-                data = StudyCardData.SubjectCardData(
+                stateType = BbangZipCardStateType.CHECKABLE, // 필요한 상태 타입 설정
+                data = BbangZipCardData.SubjectCardData(
                     subjectName = "[경영] 경제통계학",
                     examName = "중간고사",
                     pendingCount = 0, // 밀린 공부 개수
