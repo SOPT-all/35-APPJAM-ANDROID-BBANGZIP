@@ -8,5 +8,5 @@ data class ShadowConfig(
     val blur: Dp,
     val offsetX: Dp,
     val offsetY: Dp,
-    val spread: Dp
+    val spread: Dp,
 )

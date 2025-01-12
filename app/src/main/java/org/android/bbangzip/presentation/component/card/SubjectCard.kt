@@ -30,33 +30,33 @@ import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
-
 @Composable
 fun SubjectCard(
     stateType: BbangZipCardStateType,
     data: BbangZipCardData.SubjectCardData,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val style = stateType.getStyle()
 
     Box(
-        modifier = modifier
-            .applyShadows(shadowOptions = style.shadowOptions, shape = RoundedCornerShape(style.radius))
-            .height(190.dp) // TODO 기기대응 어케할지 물어보기
-            .border(width = style.borderWidth, color = style.borderColor, shape = RoundedCornerShape(size = style.radius))
-            .background(color = style.background, shape = RoundedCornerShape(size = style.radius))
-            .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
+        modifier =
+            modifier
+                .applyShadows(shadowOptions = style.shadowOptions, shape = RoundedCornerShape(style.radius))
+                .height(190.dp) // TODO 기기대응 어케할지 물어보기
+                .border(width = style.borderWidth, color = style.borderColor, shape = RoundedCornerShape(size = style.radius))
+                .background(color = style.background, shape = RoundedCornerShape(size = style.radius))
+                .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             SubjectInfo(
-                data = data
+                data = data,
             )
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevronright_thick_small_24),
                 tint = BbangZipTheme.colors.labelAssistive_282119_28,
-                contentDescription = "오늘 할 일로 향하는 버튼입니다."
+                contentDescription = "오늘 할 일로 향하는 버튼입니다.",
             )
         }
     }
@@ -65,7 +65,7 @@ fun SubjectCard(
 @Composable
 fun SubjectInfo(
     data: BbangZipCardData.SubjectCardData,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxHeight(),
@@ -90,32 +90,32 @@ fun SubjectInfo(
 
             Box(
                 contentAlignment = Alignment.Center,
-                modifier = Modifier
-                    .background(color = BbangZipTheme.colors.statusPositive_3D3730, shape = RoundedCornerShape(11.dp))
-                    .padding(horizontal = 12.dp, vertical = 2.dp)
+                modifier =
+                    Modifier
+                        .background(color = BbangZipTheme.colors.statusPositive_3D3730, shape = RoundedCornerShape(11.dp))
+                        .padding(horizontal = 12.dp, vertical = 2.dp),
             ) {
                 Text(
                     text = "D-24",
                     style = BbangZipTheme.typography.caption1Medium,
-                    color = BbangZipTheme.colors.staticWhite_FFFFFF
+                    color = BbangZipTheme.colors.staticWhite_FFFFFF,
                 )
-            }//TODO 칩구현
+            } // TODO 칩구현
         }
         Column {
             StudyStateCountCircle(
                 backgroundColor = BbangZipTheme.colors.statusDestructive_FF8345,
                 count = data.pendingCount,
-                text = "밀린 공부"
+                text = "밀린 공부",
             )
             Spacer(modifier = Modifier.height(4.dp))
 
             StudyStateCountCircle(
                 backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
                 count = data.inProgressCount,
-                text = "진행 중인 공부"
+                text = "진행 중인 공부",
             )
         }
-
     }
 }
 
@@ -124,19 +124,20 @@ fun StudyStateCountCircle(
     backgroundColor: Color,
     count: Int,
     text: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(verticalAlignment = Alignment.CenterVertically) {
         Box(
             contentAlignment = Alignment.Center,
-            modifier = modifier
-                .background(color = backgroundColor, shape = CircleShape)
-                .padding(horizontal = 6.dp, vertical = 3.dp)
+            modifier =
+                modifier
+                    .background(color = backgroundColor, shape = CircleShape)
+                    .padding(horizontal = 6.dp, vertical = 3.dp),
         ) {
             Text(
                 text = count.toString(),
                 style = BbangZipTheme.typography.caption2Bold,
-                color = BbangZipTheme.colors.staticWhite_FFFFFF
+                color = BbangZipTheme.colors.staticWhite_FFFFFF,
             )
         }
 
@@ -145,7 +146,7 @@ fun StudyStateCountCircle(
         Text(
             text = text,
             style = BbangZipTheme.typography.caption1Bold,
-            color = BbangZipTheme.colors.labelAssistive_282119_28
+            color = BbangZipTheme.colors.labelAssistive_282119_28,
         )
     }
 }
@@ -156,43 +157,43 @@ fun SubjectCardPreview() {
     BBANGZIPTheme {
         Column {
             SubjectCard(
-                stateType = BbangZipCardStateType.DEFAULT, // 필요한 상태 타입 설정
-                data = BbangZipCardData.SubjectCardData(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0, // 밀린 공부 개수
-                    inProgressCount = 6,
-                    subjectId = 1,
-                    examRemainingDays = 1 // 진행 중인 공부 개수
-                ),
-                modifier = Modifier
-                    .padding(16.dp) // 카드가 화면에 잘 보이도록 여백 추가
+                stateType = BbangZipCardStateType.DEFAULT,
+                data =
+                    BbangZipCardData.SubjectCardData(
+                        subjectName = "[경영] 경제통계학",
+                        examName = "중간고사",
+                        pendingCount = 0,
+                        inProgressCount = 6,
+                        subjectId = 1,
+                        examRemainingDays = 1,
+                    ),
+                modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
-                stateType = BbangZipCardStateType.CHECKED, // 필요한 상태 타입 설정
-                data = BbangZipCardData.SubjectCardData(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0, // 밀린 공부 개수
-                    inProgressCount = 6,
-                    subjectId = 1,
-                    examRemainingDays = 1 // 진행 중인 공부 개수
-                ),
-                modifier = Modifier
-                    .padding(16.dp) // 카드가 화면에 잘 보이도록 여백 추가
+                stateType = BbangZipCardStateType.CHECKED,
+                data =
+                    BbangZipCardData.SubjectCardData(
+                        subjectName = "[경영] 경제통계학",
+                        examName = "중간고사",
+                        pendingCount = 0,
+                        inProgressCount = 6,
+                        subjectId = 1,
+                        examRemainingDays = 1,
+                    ),
+                modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
-                stateType = BbangZipCardStateType.CHECKABLE, // 필요한 상태 타입 설정
-                data = BbangZipCardData.SubjectCardData(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0, // 밀린 공부 개수
-                    inProgressCount = 6,
-                    subjectId = 1,
-                    examRemainingDays = 1 // 진행 중인 공부 개수
-                ),
-                modifier = Modifier
-                    .padding(16.dp) // 카드가 화면에 잘 보이도록 여백 추가
+                stateType = BbangZipCardStateType.CHECKABLE,
+                data =
+                    BbangZipCardData.SubjectCardData(
+                        subjectName = "[경영] 경제통계학",
+                        examName = "중간고사",
+                        pendingCount = 0,
+                        inProgressCount = 6,
+                        subjectId = 1,
+                        examRemainingDays = 1,
+                    ),
+                modifier = Modifier.padding(16.dp),
             )
         }
     }
