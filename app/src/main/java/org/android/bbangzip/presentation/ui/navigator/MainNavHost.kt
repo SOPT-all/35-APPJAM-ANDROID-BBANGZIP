@@ -25,7 +25,7 @@ fun MainNavHost(
         modifier =
             modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(top = padding.calculateTopPadding())
                 .background(MaterialTheme.colorScheme.surfaceDim),
     ) {
         NavHost(

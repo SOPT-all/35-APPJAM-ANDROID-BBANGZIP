@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.navigator.component
 
+import android.content.res.Resources.Theme
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.animation.AnimatedVisibility
@@ -21,8 +22,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
@@ -32,6 +36,7 @@ import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.util.modifier.dropShadow
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
+import org.android.bbangzip.ui.theme.BbangZipTheme
 import org.android.bbangzip.ui.theme.defaultBbangZipColors
 import org.android.bbangzip.ui.theme.defaultBbangZipTypography
 
@@ -52,7 +57,7 @@ fun BottomNavigationBar(
             modifier =
                 modifier
                     .fillMaxWidth()
-                    .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF)
+                    .background(color = Color.Transparent)
                     .dropShadow(
                         offsetY = (-4).dp,
                         shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
@@ -65,7 +70,7 @@ fun BottomNavigationBar(
                         .clip(
                             shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
                         )
-                        .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF)
+                        .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF)
                         .padding(top = 12.dp, bottom = 8.dp, start = 12.dp, end = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -106,13 +111,13 @@ private fun BottomNavigationItem(
             modifier = Modifier.padding(horizontal = 24.dp),
         ) {
             Icon(
-                painter = painterResource(id = bottomNaviIcon),
+                imageVector = ImageVector.vectorResource(id = bottomNaviIcon),
                 contentDescription = stringResource(id = R.string.app_name),
                 tint =
                     if (isSelected) {
-                        defaultBbangZipColors.labelNormal_282119
+                        BbangZipTheme.colors.labelNormal_282119
                     } else {
-                        defaultBbangZipColors.labelAssistive_282119_28
+                        BbangZipTheme.colors.labelAssistive_282119_28
                     },
             )
         }
@@ -123,11 +128,11 @@ private fun BottomNavigationItem(
             text = stringResource(bottomNaviTitle),
             color =
                 if (isSelected) {
-                    defaultBbangZipColors.labelNormal_282119
+                    BbangZipTheme.colors.labelNormal_282119
                 } else {
-                    defaultBbangZipColors.labelAssistive_282119_28
+                    BbangZipTheme.colors.labelAssistive_282119_28
                 },
-            style = defaultBbangZipTypography.caption1Bold,
+            style = BbangZipTheme.typography.caption1Bold,
         )
     }
 }
