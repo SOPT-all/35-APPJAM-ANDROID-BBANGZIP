@@ -28,7 +28,7 @@ fun BbangZipBasicProgressBar(
     Box(
         modifier = modifier
             .clip(clipShape)
-            .background(Color.White)
+            .background(backgroundColor)
             .height(8.dp)
             .fillMaxWidth()
     ) {
