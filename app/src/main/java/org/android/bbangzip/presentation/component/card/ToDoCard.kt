@@ -81,7 +81,7 @@ fun ToDoCard(
                             tint = BbangZipTheme.colors.staticWhite_FFFFFF,
                         )
                     }
-                } else null,
+                } ,
             )
         }
     }
