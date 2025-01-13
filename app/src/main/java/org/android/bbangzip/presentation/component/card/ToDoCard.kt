@@ -73,8 +73,8 @@ fun ToDoCard(
             CheckSpace(
                 backgroundColor = checkBoxBackgroundColor,
                 checkIcon =
-                if (stateType == ToDoCardStateType.COMPLETE || stateType == BbangZipCardStateType.CHECKED) {
-                    {
+                {
+                    if (stateType == ToDoCardStateType.COMPLETE || stateType == BbangZipCardStateType.CHECKED) {
                         Icon(
                             imageVector = ImageVector.vectorResource(id = R.drawable.ic_check_thick_24),
                             contentDescription = "체크 표시 아이콘입니다.",
