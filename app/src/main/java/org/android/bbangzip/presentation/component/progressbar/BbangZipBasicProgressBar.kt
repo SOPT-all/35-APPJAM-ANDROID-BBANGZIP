@@ -23,21 +23,23 @@ fun BbangZipBasicProgressBar(
     progress: Float,
     backgroundColor: Color = BbangZipTheme.colors.fillStrong_68645E_16,
     progressColor: Color = BbangZipTheme.colors.labelNormal_282119,
-    clipShape: Shape = RoundedCornerShape(4.dp)
+    clipShape: Shape = RoundedCornerShape(4.dp),
 ) {
     Box(
-        modifier = modifier
-            .clip(clipShape)
-            .background(backgroundColor)
-            .height(8.dp)
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .clip(clipShape)
+                .background(backgroundColor)
+                .height(8.dp)
+                .fillMaxWidth(),
     ) {
         Box(
-            modifier = Modifier
-                .clip(clipShape)
-                .background(progressColor)
-                .fillMaxHeight()
-                .fillMaxWidth(progress)
+            modifier =
+                Modifier
+                    .clip(clipShape)
+                    .background(progressColor)
+                    .fillMaxHeight()
+                    .fillMaxWidth(progress),
         )
     }
 }
@@ -46,12 +48,13 @@ fun BbangZipBasicProgressBar(
 @Composable
 fun BbangZipProgressBarPreview() {
     Column(
-        modifier = Modifier
-            .background(color = Color.Gray)
-            .fillMaxSize()
+        modifier =
+            Modifier
+                .background(color = Color.Gray)
+                .fillMaxSize(),
     ) {
         BbangZipBasicProgressBar(
-            progress = 0.5f
+            progress = 0.5f,
         )
     }
 }

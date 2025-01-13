@@ -21,27 +21,29 @@ fun OnboardingProgressBar(
     onboardingType: OnboardingType,
 ) {
     val currentPage = onboardingType.ordinal + 1
-    val progress = when (onboardingType) {
-        OnboardingType.FIRST -> 0.04f
-        OnboardingType.SECOND -> 0.5f
-        OnboardingType.THIRD -> 1f
-    }
+    val progress =
+        when (onboardingType) {
+            OnboardingType.FIRST -> 0.04f
+            OnboardingType.SECOND -> 0.5f
+            OnboardingType.THIRD -> 1f
+        }
 
     Column(modifier = modifier) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             OnboardingType.entries.forEachIndexed { index, _ ->
-                val state = if (index < currentPage) {
-                    BbangZipPushIconState.Positive
-                } else {
-                    BbangZipPushIconState.Disable
-                }
+                val state =
+                    if (index < currentPage) {
+                        BbangZipPushIconState.Positive
+                    } else {
+                        BbangZipPushIconState.Disable
+                    }
 
                 BbangZipPushIcon(
                     pushIconText = (index + 1).toString(),
-                    bbangZipPushIconState = state
+                    bbangZipPushIconState = state,
                 )
             }
         }
@@ -51,7 +53,7 @@ fun OnboardingProgressBar(
 
     BbangZipBasicProgressBar(
         progress = progress,
-        backgroundColor = BbangZipTheme.colors.fillStrong_68645E_16
+        backgroundColor = BbangZipTheme.colors.fillStrong_68645E_16,
     )
 }
 
@@ -63,7 +65,7 @@ fun OnboardingProgressBarPreview() {
     Column {
         testPages.forEach { currentPage ->
             OnboardingProgressBar(
-                onboardingType = OnboardingType.entries[currentPage]
+                onboardingType = OnboardingType.entries[currentPage],
             )
 
             Spacer(modifier = Modifier.height(8.dp))

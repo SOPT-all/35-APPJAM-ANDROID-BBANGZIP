@@ -15,7 +15,7 @@ sealed class BbangZipPushIconState : Parcelable {
 private val stateToTypeMap =
     mapOf(
         BbangZipPushIconState.Positive to PushIconType.POSITIVE,
-        BbangZipPushIconState.Disable to PushIconType.DISABLE
+        BbangZipPushIconState.Disable to PushIconType.DISABLE,
     )
 
 fun BbangZipPushIconState.getBackgroundColor(): Color {

@@ -15,14 +15,15 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun BbangZipPushIcon(
     modifier: Modifier = Modifier,
     pushIconText: String,
-    bbangZipPushIconState: BbangZipPushIconState = BbangZipPushIconState.Disable
+    bbangZipPushIconState: BbangZipPushIconState = BbangZipPushIconState.Disable,
 ) {
     Text(
         text = pushIconText,
-        modifier = modifier
-            .background(color = bbangZipPushIconState.getBackgroundColor(), shape = CircleShape)
-            .padding(horizontal = 7.dp, vertical = 3.dp),
+        modifier =
+            modifier
+                .background(color = bbangZipPushIconState.getBackgroundColor(), shape = CircleShape)
+                .padding(horizontal = 7.dp, vertical = 3.dp),
         style = BbangZipTheme.typography.caption2Bold,
-        color = BbangZipTheme.colors.staticWhite_FFFFFF
+        color = BbangZipTheme.colors.staticWhite_FFFFFF,
     )
 }

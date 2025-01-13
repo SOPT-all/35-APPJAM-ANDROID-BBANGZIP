@@ -30,22 +30,22 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun BbangZipLevelProgressBar(
     modifier: Modifier = Modifier,
     level: Int,
-    currentPoint: Int
+    currentPoint: Int,
 ) {
     val levelType = BbangZipLevelType.entries[level - 1]
 
     Column(
-        modifier = modifier
-    ){
+        modifier = modifier,
+    ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Row {
                 BbangZipChip(
                     backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                    text = stringResource(R.string.progressbar_chip_level, level.toString())
+                    text = stringResource(R.string.progressbar_chip_level, level.toString()),
                 )
 
                 Spacer(modifier = Modifier.padding(8.dp))
@@ -53,20 +53,20 @@ fun BbangZipLevelProgressBar(
                 Text(
                     text = levelType.bbangZipName,
                     style = BbangZipTheme.typography.body1Bold,
-                    color = BbangZipTheme.colors.labelNormal_282119
+                    color = BbangZipTheme.colors.labelNormal_282119,
                 )
             }
 
             BbangZipPoint(
                 currentPoint = currentPoint.toString(),
-                totalPoint = levelType.bbangZipLevelPoint.toString()
+                totalPoint = levelType.bbangZipLevelPoint.toString(),
             )
         }
 
         Spacer(Modifier.height(4.dp))
 
         BbangZipBasicProgressBar(
-            progress = currentPoint.toFloat() / levelType.bbangZipLevelPoint.toFloat()
+            progress = currentPoint.toFloat() / levelType.bbangZipLevelPoint.toFloat(),
         )
     }
 }
@@ -75,24 +75,24 @@ fun BbangZipLevelProgressBar(
 private fun BbangZipPoint(
     modifier: Modifier = Modifier,
     currentPoint: String,
-    totalPoint: String
+    totalPoint: String,
 ) {
     Row(
         modifier = modifier,
         horizontalArrangement = Arrangement.Start,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_trophy_default_24),
             contentDescription = null,
-            tint = BbangZipTheme.colors.labelAlternative_282119_61
+            tint = BbangZipTheme.colors.labelAlternative_282119_61,
         )
 
         Text(
             text = stringResource(R.string.bbangzip_level_point, currentPoint, totalPoint),
             modifier = Modifier.padding(start = 1.dp),
             style = BbangZipTheme.typography.label2Medium,
-            color = BbangZipTheme.colors.labelAlternative_282119_61
+            color = BbangZipTheme.colors.labelAlternative_282119_61,
         )
     }
 }
@@ -101,14 +101,15 @@ private fun BbangZipPoint(
 @Composable
 fun BbangZipLevelProgressBarPreview() {
     BBANGZIPTheme {
-        Column (
-            modifier = Modifier
-                .background(Color.Yellow)
-                .fillMaxSize()
-        ){
+        Column(
+            modifier =
+                Modifier
+                    .background(Color.Yellow)
+                    .fillMaxSize(),
+        ) {
             BbangZipLevelProgressBar(
                 level = 1,
-                currentPoint = 50
+                currentPoint = 50,
             )
         }
     }
