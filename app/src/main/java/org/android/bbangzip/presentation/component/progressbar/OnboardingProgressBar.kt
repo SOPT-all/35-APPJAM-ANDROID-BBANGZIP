@@ -6,26 +6,25 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.presentation.component.BbangZipPushIcon
 import org.android.bbangzip.presentation.model.BbangZipPushIconState
+import org.android.bbangzip.presentation.type.OnboardingType
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun OnboardingProgressBar(
     modifier: Modifier = Modifier,
-    currentPage: Int,
-    totalPages: Int = 3
+    onboardingType: OnboardingType,
 ) {
-    val progress = when (currentPage) {
-        0 -> 0.04f
-        1 -> 0.5f
-        2 -> 1f
-        else -> 0f
+    val currentPage = onboardingType.ordinal + 1
+    val progress = when (onboardingType) {
+        OnboardingType.FIRST -> 0.04f
+        OnboardingType.SECOND -> 0.5f
+        OnboardingType.THIRD -> 1f
     }
 
     Column(modifier = modifier) {
@@ -33,27 +32,27 @@ fun OnboardingProgressBar(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth()
         ) {
-            (1..totalPages).forEach { index ->
-                val state = if (index <= currentPage + 1) {
+            OnboardingType.entries.forEachIndexed { index, _ ->
+                val state = if (index < currentPage) {
                     BbangZipPushIconState.Positive
                 } else {
                     BbangZipPushIconState.Disable
                 }
 
                 BbangZipPushIcon(
-                    pushIconText = index.toString(),
+                    pushIconText = (index + 1).toString(),
                     bbangZipPushIconState = state
                 )
             }
         }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        BbangZipBasicProgressBar(
-            progress = progress,
-            backgroundColor = BbangZipTheme.colors.fillStrong_68645E_16
-        )
     }
+
+    Spacer(modifier = Modifier.height(8.dp))
+
+    BbangZipBasicProgressBar(
+        progress = progress,
+        backgroundColor = BbangZipTheme.colors.fillStrong_68645E_16
+    )
 }
 
 @Preview(showBackground = true)
@@ -64,10 +63,10 @@ fun OnboardingProgressBarPreview() {
     Column {
         testPages.forEach { currentPage ->
             OnboardingProgressBar(
-                currentPage = currentPage,
-                totalPages = 3,
-                modifier = Modifier.padding(16.dp)
+                onboardingType = OnboardingType.entries[currentPage]
             )
+
+            Spacer(modifier = Modifier.height(8.dp))
         }
     }
 }
