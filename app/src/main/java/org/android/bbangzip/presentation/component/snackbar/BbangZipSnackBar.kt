@@ -17,12 +17,13 @@ fun BbangZipSnackBar(
     text: String,
     textStyle: TextStyle,
     textColor: Color,
-    backgroundColor: Color,
+    containerColor: Color,
     modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier
-            .background(color = backgroundColor, shape = RoundedCornerShape(size = 16.dp))
+            .padding(12.dp)
+            .background(color = containerColor, shape = RoundedCornerShape(size = 16.dp))
             .padding(vertical = 7.dp , horizontal = 24.dp),
         contentAlignment = Alignment.Center
     ){
