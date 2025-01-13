@@ -8,10 +8,30 @@
     <string name="bottomNavigation_my_tab_title">마이페이지</string>
 
     <!--button-->
-    <string name="btn_next_label">다음으로</string>
-    <string name="btn_add_todo_label">오늘 할 공부 추가하기</string>
     <string name="btn_kakao_login_label">카카오로 로그인하기</string>
+    <string name="btn_todo_overdue_label">"밀린 공부 %d개 하러가기"</string>
+    <string name="btn_select_due_label">"%s년 %s월 %s일 까지"</string>
+    <string name="btn_start_app_label">빵집 오픈하러 가기</string>
+    <string name="btn_finish_onboarding_label">빵점 탈출하러 가기</string>
+    <string name="btn_input_exam_date_label">시험 일자 입력하기</string>
+    <string name="btn_input_due_label">공부 기한 입력하기</string>
+    <string name="btn_input_semester_label">학년/학기 입력하기</string>
+    <string name="btn_next_label">다음으로</string>
     <string name="btn_cancle_label">취소</string>
-    <string name="btn_todo_overdue_label">"밀린 공부 %s개 하러가기"</string>
+    <string name="btn_delete_label">"%d개 삭제하기"</string>
+    <string name="btn_save_label">저장하기</string>
+    <string name="btn_slice_study_label">쪼개서 공부하기</string>
+    <string name="btn_slice_again_label">다시 쪼개기</string>
+    <string name="btn_enroll_label">등록하기</string>
+    <string name="btn_enroll_study_label">공부 내용 등록하기</string>
+    <string name="btn_modify_label">수정하기</string>
+    <string name="btn_modify_semester_label">학기 변경하기</string>
+    <string name="btn_add_label">추가하기</string>
+    <string name="btn_add_todo_label">오늘 할 공부 추가하기</string>
+    <string name="btn_add_subject_first_label">과목 먼저 추가하기</string>
+    <string name="btn_rollback_label">되돌리기</string>
+    <string name="btn_close_label">닫기</string>
+    <string name="btn_logout_label">로그아웃 하기</string>
+    <string name="btn_withdraw_label">탈퇴하기</string>
 
 </resources>
