@@ -5,7 +5,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,11 +15,9 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -28,13 +25,11 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
@@ -58,12 +53,13 @@ fun BbangZipButton(
 
     var isClicked by remember { mutableStateOf(false) }
     val animatedBackgroundColor by animateColorAsState(
-        targetValue = when {
-            isClicked -> BbangZipTheme.colors.interactionInactive_D4D3D1
-            isEnable -> bbangZipButtonType.enableBackgroundColor
-            else -> bbangZipButtonType.disableBackgroundColor
-        },
-        animationSpec = tween(durationMillis = 100)
+        targetValue =
+            when {
+                isClicked -> BbangZipTheme.colors.interactionInactive_D4D3D1
+                isEnable -> bbangZipButtonType.enableBackgroundColor
+                else -> bbangZipButtonType.disableBackgroundColor
+            },
+        animationSpec = tween(durationMillis = 100),
     )
 
     if (isClicked) {
@@ -78,7 +74,7 @@ fun BbangZipButton(
     BbangZipButtonSlot(
         modifier =
             modifier
-                .background(color = if(bbangZipButtonType is BbangZipButtonType.Outlined) animatedBackgroundColor else backgroundColor, shape = RoundedCornerShape(bbangZipButtonSize.cornerRadius))
+                .background(color = if (bbangZipButtonType is BbangZipButtonType.Outlined) animatedBackgroundColor else backgroundColor, shape = RoundedCornerShape(bbangZipButtonSize.cornerRadius))
                 .border(color = bbangZipButtonType.enableBorderColor, width = bbangZipButtonType.borderWidth, shape = RoundedCornerShape(bbangZipButtonSize.cornerRadius))
                 .noRippleClickable {
                     if (isEnable) {
