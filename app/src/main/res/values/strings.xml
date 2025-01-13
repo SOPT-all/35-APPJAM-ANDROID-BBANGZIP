@@ -6,4 +6,11 @@
     <string name="bottomNavigation_todo_tab_title">오늘 할 일</string>
     <string name="bottomNavigation_friend_tab_title">친구들</string>
     <string name="bottomNavigation_my_tab_title">마이페이지</string>
+
+    <!-- progress bar -->
+    <string name="progressbar_chip_level">Lv %s</string>
+    <string name="bbangzip_level1_name">가판대</string>
+    <string name="bbangzip_level2_name">가판대</string>
+    <string name="bbangzip_level3_name">가판대</string>
+    <string name="bbangzip_level_point">%s/%s</string>
 </resources>
