@@ -11,4 +11,4 @@ data class SubjectCardModel(
     val examRemainingDays: Int,
     val pendingCount: Int,
     val inProgressCount: Int,
-) :  Parcelable
+) : Parcelable

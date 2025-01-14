@@ -6,8 +6,11 @@ import org.android.bbangzip.ui.theme.defaultBbangZipOpacity
 import org.android.bbangzip.ui.theme.model.ShadowOption
 
 enum class BbangZipShadowType(
-    val shadowOptions: List<ShadowOption>
+    val shadowOptions: List<ShadowOption>,
 ) {
+    EMPTY(
+        listOf(),
+    ),
     Emphasize(
         listOf(
             ShadowOption(
@@ -31,7 +34,7 @@ enum class BbangZipShadowType(
                 offsetY = 0.dp,
                 spread = 0.dp,
             ),
-        )
+        ),
     ),
     Strong(
         listOf(
@@ -56,8 +59,6 @@ enum class BbangZipShadowType(
                 offsetY = 0.dp,
                 spread = 0.dp,
             ),
-        )
-    )
-
-
+        ),
+    ),
 }
