@@ -46,22 +46,22 @@ fun ToDoCard(
         }
     Box(
         modifier =
-        modifier
-            .applyShadows(
-                shadowType = state.getShadowOptions(),
-                shape = RoundedCornerShape(size = radius),
-            )
-            .fillMaxWidth()
-            .border(
-                width = state.getBorderWidth(),
-                color = state.getBorderColor(),
-                shape = RoundedCornerShape(size = radius),
-            )
-            .background(
-                color = state.getBackgroundColor(),
-                shape = RoundedCornerShape(size = radius),
-            )
-            .padding(horizontal = 16.dp, vertical = 10.dp),
+            modifier
+                .applyShadows(
+                    shadowType = state.getShadowOptions(),
+                    shape = RoundedCornerShape(size = radius),
+                )
+                .fillMaxWidth()
+                .border(
+                    width = state.getBorderWidth(),
+                    color = state.getBorderColor(),
+                    shape = RoundedCornerShape(size = radius),
+                )
+                .background(
+                    color = state.getBackgroundColor(),
+                    shape = RoundedCornerShape(size = radius),
+                )
+                .padding(horizontal = 16.dp, vertical = 10.dp),
     ) {
         Row(
             modifier =

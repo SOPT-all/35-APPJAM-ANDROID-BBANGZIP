@@ -39,22 +39,22 @@ fun FriendCard(
     val radius = state.getRadius()
     Box(
         modifier =
-        modifier
-            .applyShadows(
-                shadowType = state.getShadowOptions(),
-                shape = RoundedCornerShape(radius),
-            )
-            .fillMaxWidth()
-            .border(
-                width = state.getBorderWidth(),
-                color = state.getBorderColor(),
-                shape = RoundedCornerShape(size = radius),
-            )
-            .background(
-                color = state.getBackgroundColor(),
-                shape = RoundedCornerShape(size = radius),
-            )
-            .padding(16.dp),
+            modifier
+                .applyShadows(
+                    shadowType = state.getShadowOptions(),
+                    shape = RoundedCornerShape(radius),
+                )
+                .fillMaxWidth()
+                .border(
+                    width = state.getBorderWidth(),
+                    color = state.getBorderColor(),
+                    shape = RoundedCornerShape(size = radius),
+                )
+                .background(
+                    color = state.getBackgroundColor(),
+                    shape = RoundedCornerShape(size = radius),
+                )
+                .padding(16.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
