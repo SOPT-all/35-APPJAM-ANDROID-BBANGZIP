@@ -18,19 +18,20 @@ fun BbangZipSnackBar(
     textStyle: TextStyle,
     textColor: Color,
     containerColor: Color,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .padding(12.dp)
-            .background(color = containerColor, shape = RoundedCornerShape(size = 16.dp))
-            .padding(vertical = 7.dp , horizontal = 24.dp),
-        contentAlignment = Alignment.Center
-    ){
+        modifier =
+            modifier
+                .padding(12.dp)
+                .background(color = containerColor, shape = RoundedCornerShape(size = 16.dp))
+                .padding(vertical = 7.dp, horizontal = 24.dp),
+        contentAlignment = Alignment.Center,
+    ) {
         Text(
             text = text,
             style = textStyle,
-            color = textColor
+            color = textColor,
         )
     }
 }

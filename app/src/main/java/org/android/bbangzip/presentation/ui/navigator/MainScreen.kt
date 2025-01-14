@@ -37,7 +37,7 @@ private fun MainScreenContent(
             MainNavHost(
                 navigator = navigator,
                 padding = padding,
-                snackBarHostState = hostState
+                snackBarHostState = hostState,
             )
         },
         snackbarHost = { BbangZipSnackBarHost(hostState) },

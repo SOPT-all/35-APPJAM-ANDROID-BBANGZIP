@@ -9,8 +9,8 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun BbangZipSnackBarHost(
     snackBarHostState: SnackbarHostState,
-    modifier: Modifier = Modifier) {
-
+    modifier: Modifier = Modifier,
+) {
     SnackbarHost(
         modifier = modifier,
         hostState = snackBarHostState,
@@ -21,6 +21,6 @@ fun BbangZipSnackBarHost(
                 textColor = BbangZipTheme.colors.staticWhite_FFFFFF,
                 containerColor = BbangZipTheme.colors.labelAlternative_282119_61,
             )
-        }
+        },
     )
 }

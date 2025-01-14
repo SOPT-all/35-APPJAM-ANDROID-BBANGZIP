@@ -19,9 +19,12 @@ import org.android.bbangzip.ui.theme.defaultBbangZipColors
 fun SubjectScreen(
     modifier: Modifier = Modifier,
 ) {
-    Column(modifier = modifier
-        .fillMaxSize()
-        .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF)) {
+    Column(
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF),
+    ) {
         Text("subject 탭")
     }
 }
@@ -32,22 +35,25 @@ private fun SubjectScreenPreview() {
     val snackBarHostState = remember { SnackbarHostState() }
     val coroutineScope = rememberCoroutineScope()
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF),
     ) {
         Text("subject 탭")
         Button(
             onClick = {
                 coroutineScope.launch {
-                    val job = launch {
-                        snackBarHostState.currentSnackbarData?.dismiss()
-                        snackBarHostState.showSnackbar("안녕안녕")
-                    }
+                    val job =
+                        launch {
+                            snackBarHostState.currentSnackbarData?.dismiss()
+                            snackBarHostState.showSnackbar("안녕안녕")
+                        }
                     delay(2000)
                     job.cancel()
                 }
-            }) { Text("눌러") }
+            },
+        ) { Text("눌러") }
     }
 }
-//위에 코드는 클릭마다 스낵바가뜨고 2초후에 사라지게 만든 코드입니다
+// 위에 코드는 클릭마다 스낵바가뜨고 2초후에 사라지게 만든 코드입니다
