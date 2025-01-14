@@ -5,18 +5,16 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import okhttp3.internal.toImmutableList
-import org.android.bbangzip.presentation.component.snackbar.BbangZipSnackBar
+import org.android.bbangzip.presentation.component.snackbar.BbangZipSnackBarHost
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.navigator.component.BottomNavigationBar
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
-import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun MainScreen(
@@ -42,19 +40,7 @@ private fun MainScreenContent(
                 snackBarHostState = hostState
             )
         },
-        snackbarHost = {
-            SnackbarHost(
-                hostState = hostState,
-                snackbar = { data ->
-                    BbangZipSnackBar(
-                        text = data.visuals.message,
-                        textStyle = BbangZipTheme.typography.label2Bold,
-                        textColor = BbangZipTheme.colors.staticWhite_FFFFFF,
-                        containerColor = BbangZipTheme.colors.labelAlternative_282119_61,
-                    )
-                }
-            )
-        },
+        snackbarHost = { BbangZipSnackBarHost(hostState) },
         bottomBar = {
             BottomNavigationBar(
                 isVisible = navigator.showBottomBar(),
