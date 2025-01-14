@@ -1,4 +1,13 @@
 <resources>
     <string name="app_name">BBANGZIP</string>
     <string name="dummy">이거</string>
+    <string name="card_todo_check_space_description">체크 표시 아이콘입니다.</string>
+    <string name="card_subject_button_description">오늘 할 일로 향하는 버튼입니다.</string>
+    <string name="card_subject_pending_icon_description">밀린 공부</string>
+    <string name="card_subject_studying_icon_description">진행 중인 공부</string>
+    <string name="card_friend_profile_description">프로필 이미지입니다.</string>
+    <string name="card_friend_kebab_button_description">더보기 버튼입니다.</string>
+    <string name="card_friend_boss_text">사장님</string>
+
+    <!-- component - card -->
 </resources>

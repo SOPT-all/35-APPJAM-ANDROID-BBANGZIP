@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,18 +39,21 @@ fun SubjectCard(
     val radius = state.getRadius()
     Box(
         modifier =
-            modifier
-                .applyShadows(
-                    shadowType = state.getShadowOptions(),
-                    shape = RoundedCornerShape(radius),
-                )
-                .border(
-                    width = state.getBorderWidth(),
-                    color = state.getBorderColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .background(color = state.getBackgroundColor(), shape = RoundedCornerShape(size = radius))
-                .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
+        modifier
+            .applyShadows(
+                shadowType = state.getShadowOptions(),
+                shape = RoundedCornerShape(radius),
+            )
+            .border(
+                width = state.getBorderWidth(),
+                color = state.getBorderColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .background(
+                color = state.getBackgroundColor(),
+                shape = RoundedCornerShape(size = radius)
+            )
+            .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -60,7 +64,7 @@ fun SubjectCard(
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevronright_thick_small_24),
                 tint = BbangZipTheme.colors.labelAssistive_282119_28,
-                contentDescription = "오늘 할 일로 향하는 버튼입니다.",
+                contentDescription = stringResource(R.string.card_subject_button_description),
             )
         }
     }
@@ -101,7 +105,7 @@ fun SubjectInfo(
             BbangZipPushIcon(
                 backgroundColor = BbangZipTheme.colors.statusDestructive_FF8345,
                 count = data.pendingCount,
-                text = "밀린 공부",
+                text = stringResource(R.string.card_subject_pending_icon_description),
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -109,7 +113,7 @@ fun SubjectInfo(
             BbangZipPushIcon(
                 backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
                 count = data.inProgressCount,
-                text = "진행 중인 공부",
+                text = stringResource(R.string.card_subject_studying_icon_description),
             )
         }
     }
@@ -126,9 +130,9 @@ fun BbangZipPushIcon(
         Box(
             contentAlignment = Alignment.Center,
             modifier =
-                modifier
-                    .background(color = backgroundColor, shape = CircleShape)
-                    .padding(horizontal = 6.dp, vertical = 3.dp),
+            modifier
+                .background(color = backgroundColor, shape = CircleShape)
+                .padding(horizontal = 6.dp, vertical = 3.dp),
         ) {
             Text(
                 text = count.toString(),
@@ -155,40 +159,40 @@ fun SubjectCardPreview() {
             SubjectCard(
                 state = BbangZipCardState.DEFAULT,
                 data =
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
                 state = BbangZipCardState.CHECKED,
                 data =
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
                 state = BbangZipCardState.CHECKABLE,
                 data =
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
         }

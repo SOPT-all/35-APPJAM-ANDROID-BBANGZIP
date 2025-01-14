@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -39,28 +40,28 @@ fun ToDoCard(
     val checkBoxBackgroundColor =
         when (state) {
             BbangZipCardState.DEFAULT -> BbangZipTheme.colors.fillStrong_68645E_16
-            BbangZipCardState.CHECKED -> BbangZipTheme.colors.labelAlternative_282119_61
+            BbangZipCardState.CHECKED -> BbangZipTheme.colors.fillStrong_68645E_16
             BbangZipCardState.CHECKABLE -> BbangZipTheme.colors.fillStrong_68645E_16
             BbangZipCardState.COMPLETE -> BbangZipTheme.colors.secondaryNormal_FFCD80
         }
     Box(
         modifier =
-            modifier
-                .applyShadows(
-                    shadowType = state.getShadowOptions(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .fillMaxWidth()
-                .border(
-                    width = state.getBorderWidth(),
-                    color = state.getBorderColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .background(
-                    color = state.getBackgroundColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .padding(horizontal = 16.dp, vertical = 10.dp),
+        modifier
+            .applyShadows(
+                shadowType = state.getShadowOptions(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .fillMaxWidth()
+            .border(
+                width = state.getBorderWidth(),
+                color = state.getBorderColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .background(
+                color = state.getBackgroundColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .padding(horizontal = 16.dp, vertical = 10.dp),
     ) {
         Row(
             modifier =
@@ -77,7 +78,7 @@ fun ToDoCard(
                         if (state == BbangZipCardState.COMPLETE) {
                             Icon(
                                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_check_thick_24),
-                                contentDescription = "체크 표시 아이콘입니다.",
+                                contentDescription = stringResource(R.string.card_todo_check_space_description),
                                 tint = BbangZipTheme.colors.staticWhite_FFFFFF,
                             )
                         }

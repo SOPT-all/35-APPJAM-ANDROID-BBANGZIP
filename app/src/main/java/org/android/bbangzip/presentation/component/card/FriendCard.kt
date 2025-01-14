@@ -20,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -38,22 +39,22 @@ fun FriendCard(
     val radius = state.getRadius()
     Box(
         modifier =
-            modifier
-                .applyShadows(
-                    shadowType = state.getShadowOptions(),
-                    shape = RoundedCornerShape(radius),
-                )
-                .fillMaxWidth()
-                .border(
-                    width = state.getBorderWidth(),
-                    color = state.getBorderColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .background(
-                    color = state.getBackgroundColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .padding(16.dp),
+        modifier
+            .applyShadows(
+                shadowType = state.getShadowOptions(),
+                shape = RoundedCornerShape(radius),
+            )
+            .fillMaxWidth()
+            .border(
+                width = state.getBorderWidth(),
+                color = state.getBorderColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .background(
+                color = state.getBackgroundColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .padding(16.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -65,11 +66,10 @@ fun FriendCard(
             ) {
                 Image(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_user_one_default_24),
-                    contentDescription = "프로필 이미지입니다.",
+                    contentDescription = stringResource(R.string.card_friend_profile_description),
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier.size(48.dp),
                 )
-                // TODO 밤에 코리와 함께 고칠게요 이거 나중가면 이미지가 48.dp로 내려오나?
 
                 Spacer(modifier = Modifier.width(16.dp))
 
@@ -82,7 +82,7 @@ fun FriendCard(
                 Spacer(modifier = Modifier.width(4.dp))
 
                 Text(
-                    text = "사장님",
+                    text = stringResource(R.string.card_friend_boss_text),
                     style = BbangZipTheme.typography.caption2Bold,
                     color = BbangZipTheme.colors.labelAlternative_282119_61,
                 )
@@ -90,7 +90,7 @@ fun FriendCard(
 
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_kebab_default_24),
-                contentDescription = "더보기 버튼입니다.",
+                contentDescription = stringResource(R.string.card_friend_kebab_button_description),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
