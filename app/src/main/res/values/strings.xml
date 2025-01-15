@@ -1,9 +1,25 @@
 <resources>
     <string name="app_name">BBANGZIP</string>
+    <string name="dummy">이거</string>
 
     <!--bottomNavigation-->
     <string name="bottomNavigation_subject_tab_title">과목 관리</string>
     <string name="bottomNavigation_todo_tab_title">오늘 할 일</string>
     <string name="bottomNavigation_friend_tab_title">친구들</string>
     <string name="bottomNavigation_my_tab_title">마이페이지</string>
+
+    <!-- component - card -->
+    <string name="card_todo_check_space_description">체크 표시 아이콘입니다.</string>
+    <string name="card_subject_button_description">오늘 할 일로 향하는 버튼입니다.</string>
+    <string name="card_subject_pending_icon_description">밀린 공부</string>
+    <string name="card_subject_studying_icon_description">진행 중인 공부</string>
+    <string name="card_friend_profile_description">프로필 이미지입니다.</string>
+    <string name="card_friend_kebab_button_description">더보기 버튼입니다.</string>
+    <string name="card_friend_boss_text">사장님</string>
+    <string name="card_d_minus_day_text">D-%s</string>
+    <string name="card_deadline_text">%s까지</string>
+    <string name="card_start_end_day_text">%sp - %sp</string>
+    <string name="card_subject_exam_name_text">%s / %s</string>
+    <string name="card_d_minus">D+</string>
+    <string name="card_d_plus">D-</string>
 </resources>
