@@ -23,7 +23,7 @@ import org.android.bbangzip.presentation.util.constant.DateConstant
 fun BbangZipSemesterPicker(
     onConfirm: (Semester) -> Unit = {},
     currentSemester: Semester = Semester(DateConstant.YEAR_OF_TODAY.toString(), "1학기"),
-){
+) {
     Row(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -41,8 +41,8 @@ fun BbangZipSemesterPicker(
             onConfirm(
                 Semester(
                     year = year,
-                    semester = semester
-                )
+                    semester = semester,
+                ),
             )
         }
 
@@ -71,9 +71,9 @@ fun BbangZipSemesterPickerPreview() {
 
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
     ) {
         BbangZipSemesterPicker(
             onConfirm = {

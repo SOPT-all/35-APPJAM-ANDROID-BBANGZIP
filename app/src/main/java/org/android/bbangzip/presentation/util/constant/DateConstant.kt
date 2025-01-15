@@ -1,7 +1,5 @@
 package org.android.bbangzip.presentation.util.constant
 
-import java.time.LocalDate
-
 object DateConstant {
     const val YEAR_OF_TODAY = 2025
 

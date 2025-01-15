@@ -55,8 +55,8 @@ fun BbangZipDatePicker(
                 Date(
                     year = year,
                     month = month,
-                    day = day
-                )
+                    day = day,
+                ),
             )
         }
 
@@ -102,9 +102,9 @@ fun BbangZipDatePickerPreview() {
 
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
     ) {
         BbangZipDatePicker(
             onConfirm = {
