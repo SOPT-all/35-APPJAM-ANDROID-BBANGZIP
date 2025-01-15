@@ -10,4 +10,3 @@ data class ShadowOption(
     val offsetY: Dp,
     val spread: Dp,
 )
-

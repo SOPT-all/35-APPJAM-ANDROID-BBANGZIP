@@ -27,7 +27,7 @@ enum class BbangZipShadowType(
                 offsetY = 0.dp,
                 spread = 0.dp,
             ),
-        )
+        ),
     ),
     Emphasize(
         listOf(
@@ -52,7 +52,7 @@ enum class BbangZipShadowType(
                 offsetY = 0.dp,
                 spread = 0.dp,
             ),
-        )
+        ),
     ),
     Strong(
         listOf(
@@ -77,7 +77,7 @@ enum class BbangZipShadowType(
                 offsetY = 0.dp,
                 spread = 0.dp,
             ),
-        )
+        ),
     ),
     Heavy(
         listOf(
@@ -102,7 +102,7 @@ enum class BbangZipShadowType(
                 offsetY = 0.dp,
                 spread = 0.dp,
             ),
-        )
+        ),
     ),
     HeavyInverse(
         listOf(
@@ -127,7 +127,7 @@ enum class BbangZipShadowType(
                 offsetY = 0.dp,
                 spread = 0.dp,
             ),
-        )
+        ),
     ),
     StrongInverse(
         listOf(
@@ -152,7 +152,7 @@ enum class BbangZipShadowType(
                 offsetY = 0.dp,
                 spread = 0.dp,
             ),
-        )
+        ),
     ),
     EmphasizeInverse(
         listOf(
@@ -177,7 +177,7 @@ enum class BbangZipShadowType(
                 offsetY = 0.dp,
                 spread = 0.dp,
             ),
-        )
+        ),
     ),
     NormalInverse(
         listOf(
@@ -202,6 +202,6 @@ enum class BbangZipShadowType(
                 offsetY = 0.dp,
                 spread = 0.dp,
             ),
-        )
-    )
+        ),
+    ),
 }
