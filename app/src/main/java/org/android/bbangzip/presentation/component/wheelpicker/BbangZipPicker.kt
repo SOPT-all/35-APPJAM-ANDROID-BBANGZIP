@@ -43,6 +43,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 import org.android.bbangzip.ui.theme.defaultBbangZipColors
 import timber.log.Timber
 
+// isCircular : 무한 스크롤 여부
 @Composable
 fun Picker(
     items: List<String>,
@@ -51,7 +52,7 @@ fun Picker(
     startIndex: Int = 0,
     visibleItemsCount: Int = 5,
     textModifier: Modifier = Modifier,
-    isCircular: Boolean = true, // 무한 스크롤 여부
+    isCircular: Boolean = true,
 ) {
     val pickerItems: List<String> = if (isCircular) items else List(visibleItemsCount / 2) { "" } + items + List(visibleItemsCount / 2) { "" }
     // 보여지는 아이템의 가운데값 인덱스
