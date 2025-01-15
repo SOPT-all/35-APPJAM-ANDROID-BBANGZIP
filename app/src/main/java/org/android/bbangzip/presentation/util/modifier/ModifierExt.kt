@@ -1,16 +1,22 @@
 package org.android.bbangzip.presentation.util.modifier
 
 import android.graphics.BlurMaskFilter
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.interaction.collectIsPressedAsState
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.composed
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Paint
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.graphics.compositeOver
 import androidx.compose.ui.graphics.drawOutline
 import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
 import androidx.compose.ui.semantics.Role
@@ -32,6 +38,31 @@ fun Modifier.noRippleClickable(
         onClickLabel = onClickLabel,
         role = role,
     )
+
+fun Modifier.applyFilterOnClick(
+    baseColor: Color = Color.Transparent,
+    radius: Dp = 0.dp,
+    isDisabled: Boolean = true,
+    filterColor: Color = Color(0xFF282119).copy(alpha = 0.12f),
+    onClick: () -> Unit = {},
+): Modifier =
+    composed {
+        val finalFilteredColor =
+            remember(baseColor, filterColor) {
+                filterColor.compositeOver(baseColor)
+            }
+        val interactionSource = remember { MutableInteractionSource() }
+        val isPressed by interactionSource.collectIsPressedAsState()
+
+        this
+            .background(if (isPressed && !isDisabled) finalFilteredColor else baseColor, shape = RoundedCornerShape(size = radius))
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null,
+                onClick = { onClick() },
+            )
+    }
+
 
 @Composable
 fun Modifier.dropShadow(
