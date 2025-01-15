@@ -29,28 +29,28 @@ fun BbangZipDatePicker(
         modifier = Modifier.fillMaxWidth(),
     ) {
         val years = DateConstant.YEARS_LIST
-        val yearPickerState = rememberPickerState()
+        val yearPickerState = remember { mutableStateOf("") }
         val startYear = currentDate.year.toInt() - DateConstant.YEAR_OF_TODAY
 
         val months = DateConstant.MONTHS_LIST
-        val monthsPickerState = rememberPickerState()
+        val monthsPickerState = remember { mutableStateOf("") }
         val startMonth = currentDate.month.toInt() - 1
 
         val days =
-            remember(yearPickerState.selectedItem, monthsPickerState.selectedItem) {
+            remember(yearPickerState.value, monthsPickerState.value) {
                 derivedStateOf {
-                    val year = yearPickerState.selectedItem.filter { it.isDigit() }.toIntOrNull() ?: DateConstant.YEAR_OF_TODAY
-                    val month = monthsPickerState.selectedItem.filter { it.isDigit() }.toIntOrNull() ?: 1
+                    val year = yearPickerState.value.filter { it.isDigit() }.toIntOrNull() ?: DateConstant.YEAR_OF_TODAY
+                    val month = monthsPickerState.value.filter { it.isDigit() }.toIntOrNull() ?: 1
                     (1..getDaysInMonth(year, month)).map { it.toString() + "일" }
                 }
             }
-        val daysPickerState = rememberPickerState()
+        val daysPickerState = remember { mutableStateOf("") }
         val startDay = currentDate.day.toInt() - 1
 
-        LaunchedEffect(yearPickerState.selectedItem, monthsPickerState.selectedItem, daysPickerState.selectedItem) {
-            val year = yearPickerState.selectedItem.filter { it.isDigit() }
-            val month = monthsPickerState.selectedItem.filter { it.isDigit() }
-            val day = daysPickerState.selectedItem.filter { it.isDigit() }
+        LaunchedEffect(yearPickerState.value, monthsPickerState.value, daysPickerState.value) {
+            val year = yearPickerState.value.filter { it.isDigit() }
+            val month = monthsPickerState.value.filter { it.isDigit() }
+            val day = daysPickerState.value.filter { it.isDigit() }
             onConfirm(
                 Date(
                     year = year,
@@ -64,30 +64,24 @@ fun BbangZipDatePicker(
         Picker(
             state = yearPickerState,
             items = years,
-            modifier = Modifier.weight(1.2f),
+            modifier = Modifier.weight(5f),
             startIndex = startYear,
-            visibleItemsCount = 5,
-            textModifier = Modifier.padding(8.dp),
             isCircular = false,
         )
 
         Picker(
             state = monthsPickerState,
             items = months,
-            modifier = Modifier.weight(0.3f),
+            modifier = Modifier.weight(3f),
             startIndex = startMonth,
-            visibleItemsCount = 5,
-            textModifier = Modifier.padding(8.dp),
             isCircular = false,
         )
 
         Picker(
             state = daysPickerState,
             items = days.value,
+            modifier = Modifier.weight(3f),
             startIndex = startDay,
-            visibleItemsCount = 5,
-            modifier = Modifier.weight(0.8f),
-            textModifier = Modifier.padding(8.dp),
             isCircular = false,
         )
     }

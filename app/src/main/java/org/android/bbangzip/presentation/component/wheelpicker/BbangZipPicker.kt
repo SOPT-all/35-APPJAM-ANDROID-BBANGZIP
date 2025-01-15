@@ -16,9 +16,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
@@ -44,10 +46,10 @@ import timber.log.Timber
 @Composable
 fun Picker(
     items: List<String>,
-    state: PickerState = rememberPickerState(),
+    state: MutableState<String>,
     modifier: Modifier = Modifier,
     startIndex: Int = 0,
-    visibleItemsCount: Int = 3,
+    visibleItemsCount: Int = 5,
     textModifier: Modifier = Modifier,
     isCircular: Boolean = true, // 무한 스크롤 여부
 ) {
@@ -99,7 +101,7 @@ fun Picker(
                 getItem(index + visibleItemsMiddle)
             } // item 방출
             .distinctUntilChanged() // 실제 변경될 때만 flow가 값을 방출
-            .collect { item -> state.selectedItem = item } //  수집 받으면 selectedItem 변경
+            .collect { item -> state.value = item } //  수집 받으면 selectedItem 변경
     }
 
     Box(modifier = modifier) {
@@ -122,6 +124,7 @@ fun Picker(
                     modifier =
                         Modifier
                             .onSizeChanged { size -> itemHeightPixels.intValue = size.height }
+                            .padding(8.dp)
                             .then(textModifier),
                 )
             }
@@ -159,9 +162,9 @@ fun PickerPreview() {
             modifier = Modifier.fillMaxSize(),
         ) {
             val values = remember { (1..99).map { it.toString() } }
-            val valuesPickerState = rememberPickerState()
+            val valuesPickerState = remember { mutableStateOf("") }
             val units = remember { listOf("seconds", "minutes", "hours") }
-            val unitsPickerState = rememberPickerState()
+            val unitsPickerState = remember { mutableStateOf("") }
 
             Text(text = "Example Picker", modifier = Modifier.padding(top = 16.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -170,7 +173,6 @@ fun PickerPreview() {
                     items = values,
                     visibleItemsCount = 5,
                     modifier = Modifier.weight(0.3f),
-                    textModifier = Modifier.padding(8.dp),
                     isCircular = false,
                 )
 
@@ -179,13 +181,12 @@ fun PickerPreview() {
                     items = units,
                     visibleItemsCount = 5,
                     modifier = Modifier.weight(0.7f),
-                    textModifier = Modifier.padding(8.dp),
                     isCircular = true,
                 )
             }
 
             Text(
-                text = "Interval: ${valuesPickerState.selectedItem} ${unitsPickerState.selectedItem}",
+                text = "Interval: ${valuesPickerState.value} ${unitsPickerState.value}",
                 modifier = Modifier.padding(vertical = 16.dp),
             )
         }
