@@ -63,5 +63,12 @@ private fun TopBalloonPreview() {
             text = "사장님의 과제 빵점 탈출을 위해서",
             horizontalPadding = 16.dp,
         )
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        BottomTailBalloon(
+            text = "사장님의 과제 빵점 탈출을 위해서",
+            horizontalPadding = 16.dp,
+        )
     }
 }
