@@ -29,6 +29,7 @@ import org.android.bbangzip.presentation.component.chip.BbangZipChip
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
+import org.android.bbangzip.ui.theme.BbangZipOpacity
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -39,6 +40,7 @@ fun ToDoCard(
     modifier: Modifier = Modifier,
 ) {
     val radius = state.getRadius()
+    val infoOpacity = state.getInfoOpacity()
     Box(
         modifier =
         modifier
@@ -65,7 +67,8 @@ fun ToDoCard(
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
-            ToDoInfo(data = data)
+            ToDoInfo(data = data,
+                infoOpacity = infoOpacity)
 
             CheckSpace(
                 backgroundColor = state.getCheckBoxBackgroundColor(),
@@ -74,10 +77,11 @@ fun ToDoCard(
         }
     }
 }
-
+//TODO
 @Composable
 fun ToDoInfo(
     data: ToDoCardModel,
+    infoOpacity: Float,
     modifier: Modifier = Modifier,
 ) {
     val count = if (data.remainingDays >= 0) "D+" else "D-"
@@ -87,7 +91,6 @@ fun ToDoInfo(
         } else {
             BbangZipTheme.colors.statusDestructive_FF8345
         }
-
     Column(modifier = modifier) {
         Column(modifier = Modifier.padding(start = 4.dp)) {
             Text(
@@ -97,7 +100,7 @@ fun ToDoInfo(
                     data.examName
                 ),
                 style = BbangZipTheme.typography.caption2Medium,
-                color = BbangZipTheme.colors.labelAssistive_282119_28,
+                color = BbangZipTheme.colors.labelAssistive_282119_28.copy(alpha = infoOpacity),
             )
 
             Spacer(modifier = Modifier.height(2.dp))
@@ -105,7 +108,7 @@ fun ToDoInfo(
             Text(
                 text = data.studyContents,
                 style = BbangZipTheme.typography.caption1Medium,
-                color = BbangZipTheme.colors.labelAlternative_282119_61,
+                color = BbangZipTheme.colors.labelAlternative_282119_61.copy(alpha = infoOpacity),
             )
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -117,7 +120,7 @@ fun ToDoInfo(
                     data.finishPage
                 ),
                 style = BbangZipTheme.typography.label1Bold,
-                color = BbangZipTheme.colors.labelNormal_282119,
+                color = BbangZipTheme.colors.labelNormal_282119.copy(alpha = infoOpacity),
             )
         }
 
@@ -126,7 +129,7 @@ fun ToDoInfo(
         Row(verticalAlignment = Alignment.CenterVertically) {
             BbangZipChip(
                 text = count + data.remainingDays,
-                backgroundColor = chipBackgroundColor,
+                backgroundColor = chipBackgroundColor.copy(alpha = infoOpacity),
             )
 
             Spacer(modifier = Modifier.width(8.dp))
@@ -134,7 +137,7 @@ fun ToDoInfo(
             Text(
                 text = stringResource(R.string.card_deadline_text, data.deadline),
                 style = BbangZipTheme.typography.caption1Bold,
-                color = BbangZipTheme.colors.labelAlternative_282119_61,
+                color = BbangZipTheme.colors.labelAlternative_282119_61.copy(alpha = infoOpacity),
             )
         }
     }

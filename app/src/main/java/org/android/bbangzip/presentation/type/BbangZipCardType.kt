@@ -5,6 +5,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.ui.theme.BbangZipTheme
 import org.android.bbangzip.ui.theme.defaultBbangZipColors
+import org.android.bbangzip.ui.theme.defaultBbangZipOpacity
 
 enum class BbangZipCardType(
     val backgroundColor: Color,
@@ -13,6 +14,7 @@ enum class BbangZipCardType(
     val radius: Dp = 24.dp,
     val shadowOptions: BbangZipShadowType = BbangZipShadowType.EMPTY,
     val checkBoxBackgroundColor: Color = defaultBbangZipColors.fillStrong_68645E_16,
+    val infoOpacity: Float = 1f
 ) {
     DEFAULT(
         backgroundColor = defaultBbangZipColors.backgroundNormal_FFFFFF,
@@ -36,6 +38,7 @@ enum class BbangZipCardType(
         backgroundColor = defaultBbangZipColors.backgroundNormal_FFFFFF,
         borderColor = defaultBbangZipColors.lineAlternative_68645E_08,
         borderWidth = 1.dp,
-        checkBoxBackgroundColor = defaultBbangZipColors.secondaryNormal_FFCD80
+        checkBoxBackgroundColor = defaultBbangZipColors.secondaryNormal_FFCD80,
+        infoOpacity = defaultBbangZipOpacity.opacity40
     ),
 }
