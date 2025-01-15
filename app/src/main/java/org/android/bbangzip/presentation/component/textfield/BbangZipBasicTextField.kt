@@ -2,12 +2,14 @@ package org.android.bbangzip.presentation.component.textfield
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -21,16 +23,23 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
+import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
+import org.android.bbangzip.presentation.model.getBackgroundColor
+import org.android.bbangzip.presentation.model.getBorderColor
+import org.android.bbangzip.presentation.model.getCharacterCheckColor
+import org.android.bbangzip.presentation.model.getGuidelineColor
+import org.android.bbangzip.presentation.model.getIconColor
+import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
-import org.android.bbangzip.ui.theme.defaultBbangZipColors
 
 @Composable
 fun BbangZipBasicTextField(
@@ -42,9 +51,13 @@ fun BbangZipBasicTextField(
     maxCharacter: Int,
     modifier: Modifier = Modifier,
     bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Empty,
-    onClickTextField: () -> Unit = { },
+    onFocusChange: () -> Unit = { },
     onDeleteButtonClick: () -> Unit = { },
+    keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Default),
+    keyboardActions: KeyboardActions = KeyboardActions.Default
 ) {
+    var isFocused by remember { mutableStateOf(false) }
+
     BbangZipTextFieldSlot(
         columnModifier = modifier,
         rowModifier =
@@ -66,11 +79,13 @@ fun BbangZipBasicTextField(
                         .weight(1f)
                         .padding(start = 8.dp)
                         .focusRequester(FocusRequester())
-                        .onFocusChanged { if (it.isFocused) onClickTextField() },
+                        .onFocusChanged { focusState -> isFocused = focusState.isFocused },
                 value = value,
                 onValueChange = {
                     if (it.length <= maxCharacter) onValueChange(it)
                 },
+                keyboardActions = keyboardActions,
+                keyboardOptions = keyboardOptions,
                 cursorBrush = SolidColor(BbangZipTheme.colors.labelNormal_282119),
                 singleLine = true,
                 textStyle = BbangZipTheme.typography.label1Medium,
@@ -117,6 +132,7 @@ fun BbangZipBasicTextField(
     )
 }
 
+
 @Preview(showBackground = true)
 @Composable
 fun BbangZipBasicTextFieldPreview() {
@@ -130,7 +146,7 @@ fun BbangZipBasicTextFieldPreview() {
                     text.isEmpty() -> BbangZipTextFieldInputState.Empty
                     text.length == 1 -> BbangZipTextFieldInputState.Typing
                     text.length == 3 -> BbangZipTextFieldInputState.Complete
-                    text.length > 5-> BbangZipTextFieldInputState.Error
+                    text.length > 5 -> BbangZipTextFieldInputState.Error
                     else -> BbangZipTextFieldInputState.Field
                 }
         }
@@ -146,7 +162,7 @@ fun BbangZipBasicTextFieldPreview() {
                 text = newValue
                 validateText(text = newValue)
             },
-            onClickTextField = {
+            onFocusChange = {
                 if (validationState == BbangZipTextFieldInputState.Empty) validationState = BbangZipTextFieldInputState.Typing else Unit
             },
             onDeleteButtonClick = {

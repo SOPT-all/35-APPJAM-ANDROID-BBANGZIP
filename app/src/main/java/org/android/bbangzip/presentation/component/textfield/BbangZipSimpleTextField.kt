@@ -26,6 +26,11 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
+import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
+import org.android.bbangzip.presentation.model.getBackgroundColor
+import org.android.bbangzip.presentation.model.getBorderColor
+import org.android.bbangzip.presentation.model.getGuidelineColor
+import org.android.bbangzip.presentation.model.getIconColor
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 import org.android.bbangzip.ui.theme.defaultBbangZipColors
@@ -38,7 +43,7 @@ fun BbangZipSimpleTextField(
     value: String,
     modifier: Modifier = Modifier,
     bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Empty,
-    onClickTextField: () -> Unit = { },
+    onFocusChange: () -> Unit = { },
     onValueChange: (String) -> Unit = { },
 ) {
     BbangZipTextFieldSlot(
@@ -63,7 +68,7 @@ fun BbangZipSimpleTextField(
                         .weight(1f)
                         .padding(start = 8.dp)
                         .focusRequester(FocusRequester())
-                        .onFocusChanged { if (it.isFocused) onClickTextField() },
+                        .onFocusChanged { if (it.isFocused) onFocusChange() },
                 value = value,
                 onValueChange = { onValueChange(it) },
                 cursorBrush = SolidColor(BbangZipTheme.colors.labelNormal_282119),
@@ -102,7 +107,8 @@ fun BbangZipSimpleTextField(
 fun BbangZipSimpleTextFieldPreview() {
     BBANGZIPTheme {
         var text by remember { mutableStateOf("") }
-        var validationState by remember { mutableStateOf<BbangZipTextFieldInputState>(BbangZipTextFieldInputState.Empty) }
+        var validationState by remember { mutableStateOf<BbangZipTextFieldInputState>(
+            BbangZipTextFieldInputState.Empty) }
 
         fun validateText(text: String) {
             validationState =
@@ -120,7 +126,8 @@ fun BbangZipSimpleTextFieldPreview() {
             guideline = R.string.app_name,
             value = text,
             bbangZipTextFieldInputState = validationState,
-            onClickTextField = {
+            onFocusChange = {
+                if (validationState == BbangZipTextFieldInputState.Empty) validationState = BbangZipTextFieldInputState.Typing else Unit
             },
             onValueChange = { newValue ->
                 text = newValue

@@ -1,4 +1,4 @@
-package org.android.bbangzip.presentation.component.textfield
+package org.android.bbangzip.presentation.model
 
 import android.os.Parcelable
 import androidx.compose.ui.graphics.Color
