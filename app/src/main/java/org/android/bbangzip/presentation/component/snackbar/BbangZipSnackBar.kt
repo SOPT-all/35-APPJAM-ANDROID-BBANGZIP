@@ -25,7 +25,7 @@ fun BbangZipSnackBar(
             modifier
                 .padding(12.dp)
                 .background(color = containerColor, shape = RoundedCornerShape(size = 16.dp))
-                .padding(vertical = 7.dp, horizontal = 24.dp),
+                .padding(vertical = 11.dp, horizontal = 24.dp),
         contentAlignment = Alignment.Center,
     ) {
         Text(
