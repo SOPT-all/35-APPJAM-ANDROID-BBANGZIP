@@ -44,12 +44,12 @@ private fun BbangZipPushIconPreview() {
         Row {
             BbangZipPushIcon(
                 pushIconText = "1",
-                bbangZipPushIconState = BbangZipPushIconState.Positive
+                bbangZipPushIconState = BbangZipPushIconState.Positive,
             )
 
             BbangZipPushIcon(
                 pushIconText = "2",
-                bbangZipPushIconState = BbangZipPushIconState.Disable
+                bbangZipPushIconState = BbangZipPushIconState.Disable,
             )
         }
     }
