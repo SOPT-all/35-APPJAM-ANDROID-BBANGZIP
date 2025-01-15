@@ -3,6 +3,7 @@ package org.android.bbangzip.presentation.component.card
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,6 +35,8 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun FriendCard(
     state: BbangZipCardState,
     data: FriendCardModel,
+    onClick: () -> Unit = {},
+    onActionIconClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val radius = state.getRadius()
@@ -54,7 +57,8 @@ fun FriendCard(
                     color = state.getBackgroundColor(),
                     shape = RoundedCornerShape(size = radius),
                 )
-                .padding(16.dp),
+                .padding(16.dp)
+                .clickable { onClick() },
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -66,7 +70,7 @@ fun FriendCard(
             ) {
                 Image(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_user_one_default_24),
-                    contentDescription = stringResource(R.string.card_friend_profile_description),
+                    contentDescription = null,
                     contentScale = ContentScale.FillBounds,
                     modifier = Modifier.size(48.dp),
                 )
@@ -87,11 +91,12 @@ fun FriendCard(
                     color = BbangZipTheme.colors.labelAlternative_282119_61,
                 )
             }
-
+            //TODO
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_kebab_default_24),
                 contentDescription = stringResource(R.string.card_friend_kebab_button_description),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
+                modifier = Modifier.clickable { onActionIconClick() },
             )
         }
     }

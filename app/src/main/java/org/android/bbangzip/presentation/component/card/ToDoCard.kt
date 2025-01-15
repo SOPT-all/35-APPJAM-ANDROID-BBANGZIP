@@ -2,6 +2,7 @@ package org.android.bbangzip.presentation.component.card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,55 +35,41 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun ToDoCard(
     state: BbangZipCardState,
     data: ToDoCardModel,
+    onClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val radius = state.getRadius()
-    val checkBoxBackgroundColor =
-        when (state) {
-            BbangZipCardState.DEFAULT -> BbangZipTheme.colors.fillStrong_68645E_16
-            BbangZipCardState.CHECKED -> BbangZipTheme.colors.fillStrong_68645E_16
-            BbangZipCardState.CHECKABLE -> BbangZipTheme.colors.fillStrong_68645E_16
-            BbangZipCardState.COMPLETE -> BbangZipTheme.colors.secondaryNormal_FFCD80
-        }
     Box(
         modifier =
-            modifier
-                .applyShadows(
-                    shadowType = state.getShadowOptions(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .fillMaxWidth()
-                .border(
-                    width = state.getBorderWidth(),
-                    color = state.getBorderColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .background(
-                    color = state.getBackgroundColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .padding(horizontal = 16.dp, vertical = 10.dp),
+        modifier
+            .applyShadows(
+                shadowType = state.getShadowOptions(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .fillMaxWidth()
+            .border(
+                width = state.getBorderWidth(),
+                color = state.getBorderColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .background(
+                color = state.getBackgroundColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .padding(horizontal = 16.dp, vertical = 10.dp)
+            .clickable { onClick() },
     ) {
         Row(
             modifier =
-                Modifier
-                    .fillMaxWidth(),
+            Modifier
+                .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             ToDoInfo(data = data)
 
             CheckSpace(
-                backgroundColor = checkBoxBackgroundColor,
-                checkIcon =
-                    {
-                        if (state == BbangZipCardState.COMPLETE) {
-                            Icon(
-                                imageVector = ImageVector.vectorResource(id = R.drawable.ic_check_thick_24),
-                                contentDescription = stringResource(R.string.card_todo_check_space_description),
-                                tint = BbangZipTheme.colors.staticWhite_FFFFFF,
-                            )
-                        }
-                    },
+                backgroundColor = state.getCheckBoxBackgroundColor(),
+                isCompleted = state == BbangZipCardState.COMPLETE
             )
         }
     }
@@ -94,7 +81,7 @@ fun ToDoInfo(
     modifier: Modifier = Modifier,
 ) {
     val count = if (data.remainingDays >= 0) "D+" else "D-"
-    val backgroundColor =
+    val chipBackgroundColor =
         if (data.remainingDays >= 0) {
             BbangZipTheme.colors.labelAlternative_282119_61
         } else {
@@ -104,7 +91,11 @@ fun ToDoInfo(
     Column(modifier = modifier) {
         Column(modifier = Modifier.padding(start = 4.dp)) {
             Text(
-                text = "${data.subjectName} / ${data.examName}",
+                text = stringResource(
+                    R.string.card_subject_exam_name_text,
+                    data.subjectName,
+                    data.examName
+                ),
                 style = BbangZipTheme.typography.caption2Medium,
                 color = BbangZipTheme.colors.labelAssistive_282119_28,
             )
@@ -120,7 +111,11 @@ fun ToDoInfo(
             Spacer(modifier = Modifier.height(4.dp))
 
             Text(
-                text = "${data.startPage}p - ${data.finishPage}p",
+                text = stringResource(
+                    R.string.card_start_end_day_text,
+                    data.startPage,
+                    data.finishPage
+                ),
                 style = BbangZipTheme.typography.label1Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
             )
@@ -131,13 +126,13 @@ fun ToDoInfo(
         Row(verticalAlignment = Alignment.CenterVertically) {
             BbangZipChip(
                 text = count + data.remainingDays,
-                backgroundColor = backgroundColor,
+                backgroundColor = chipBackgroundColor,
             )
 
             Spacer(modifier = Modifier.width(8.dp))
 
             Text(
-                text = "${data.deadline}까지",
+                text = stringResource(R.string.card_deadline_text, data.deadline),
                 style = BbangZipTheme.typography.caption1Bold,
                 color = BbangZipTheme.colors.labelAlternative_282119_61,
             )
@@ -147,23 +142,31 @@ fun ToDoInfo(
 
 @Composable
 fun CheckSpace(
-    modifier: Modifier = Modifier,
     backgroundColor: Color,
-    checkIcon: @Composable (() -> Unit)? = null,
+    isCompleted: Boolean = false,
+    modifier: Modifier = Modifier,
 ) {
     Box(
         contentAlignment = Alignment.Center,
         modifier =
-            modifier
-                .background(color = backgroundColor, shape = RoundedCornerShape(12.dp))
-                .height(32.dp)
-                .width(32.dp),
+        modifier
+            .background(color = backgroundColor, shape = RoundedCornerShape(12.dp))
+            .height(32.dp)
+            .width(32.dp)
+
         // TODO 여기 어떤식으로 기기대응하는지 물어보기
     ) {
-        checkIcon?.invoke()
+        if (isCompleted) {
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_check_thick_24),
+                contentDescription = stringResource(R.string.card_todo_check_space_description),
+                tint = BbangZipTheme.colors.staticWhite_FFFFFF,
+            )
+        }
     }
 }
 
+//TODO
 @Preview(showBackground = true)
 @Composable
 fun ToDoCardPreview() {
@@ -172,70 +175,70 @@ fun ToDoCardPreview() {
             ToDoCard(
                 state = BbangZipCardState.DEFAULT,
                 data =
-                    ToDoCardModel(
-                        subjectName = "경제통계학개론",
-                        examName = "중간고사",
-                        studyContents = "경제통계학",
-                        startPage = 36,
-                        finishPage = 60,
-                        deadline = "2025년 4월 25일",
-                        pieceId = "1",
-                        remainingDays = 1,
-                    ),
+                ToDoCardModel(
+                    subjectName = "경제통계학개론",
+                    examName = "중간고사",
+                    studyContents = "경제통계학",
+                    startPage = 36,
+                    finishPage = 60,
+                    deadline = "2025년 4월 25일",
+                    pieceId = "1",
+                    remainingDays = 1,
+                ),
                 modifier =
-                    Modifier
-                        .padding(16.dp),
+                Modifier
+                    .padding(16.dp),
             )
             ToDoCard(
                 state = BbangZipCardState.CHECKABLE,
                 data =
-                    ToDoCardModel(
-                        subjectName = "경제통계학개론",
-                        examName = "중간고사",
-                        studyContents = "경제통계학",
-                        startPage = 36,
-                        finishPage = 60,
-                        deadline = "2025년 4월 25일",
-                        pieceId = "1",
-                        remainingDays = 1,
-                    ),
+                ToDoCardModel(
+                    subjectName = "경제통계학개론",
+                    examName = "중간고사",
+                    studyContents = "경제통계학",
+                    startPage = 36,
+                    finishPage = 60,
+                    deadline = "2025년 4월 25일",
+                    pieceId = "1",
+                    remainingDays = 1,
+                ),
                 modifier =
-                    Modifier
-                        .padding(16.dp),
+                Modifier
+                    .padding(16.dp),
             )
             ToDoCard(
                 state = BbangZipCardState.CHECKED,
                 data =
-                    ToDoCardModel(
-                        subjectName = "경제통계학개론",
-                        examName = "중간고사",
-                        studyContents = "경제통계학",
-                        startPage = 36,
-                        finishPage = 60,
-                        deadline = "2025년 4월 25일",
-                        pieceId = "1",
-                        remainingDays = 1,
-                    ),
+                ToDoCardModel(
+                    subjectName = "경제통계학개론",
+                    examName = "중간고사",
+                    studyContents = "경제통계학",
+                    startPage = 36,
+                    finishPage = 60,
+                    deadline = "2025년 4월 25일",
+                    pieceId = "1",
+                    remainingDays = 1,
+                ),
                 modifier =
-                    Modifier
-                        .padding(16.dp),
+                Modifier
+                    .padding(16.dp),
             )
             ToDoCard(
                 state = BbangZipCardState.COMPLETE,
                 data =
-                    ToDoCardModel(
-                        subjectName = "경제통계학개론",
-                        examName = "중간고사",
-                        studyContents = "경제통계학",
-                        startPage = 36,
-                        finishPage = 60,
-                        deadline = "2025년 4월 25일",
-                        pieceId = "1",
-                        remainingDays = 1,
-                    ),
+                ToDoCardModel(
+                    subjectName = "경제통계학개론",
+                    examName = "중간고사",
+                    studyContents = "경제통계학",
+                    startPage = 36,
+                    finishPage = 60,
+                    deadline = "2025년 4월 25일",
+                    pieceId = "1",
+                    remainingDays = 1,
+                ),
                 modifier =
-                    Modifier
-                        .padding(16.dp),
+                Modifier
+                    .padding(16.dp),
             )
         }
     }

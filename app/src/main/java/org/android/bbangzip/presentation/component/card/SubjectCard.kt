@@ -2,6 +2,7 @@ package org.android.bbangzip.presentation.component.card
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,26 +35,29 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun SubjectCard(
     state: BbangZipCardState,
     data: SubjectCardModel,
+    onClick: () -> Unit = {},
+    onActionIconClick: () -> Unit = {},
     modifier: Modifier = Modifier,
 ) {
     val radius = state.getRadius()
     Box(
         modifier =
-            modifier
-                .applyShadows(
-                    shadowType = state.getShadowOptions(),
-                    shape = RoundedCornerShape(radius),
-                )
-                .border(
-                    width = state.getBorderWidth(),
-                    color = state.getBorderColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .background(
-                    color = state.getBackgroundColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
+        modifier
+            .applyShadows(
+                shadowType = state.getShadowOptions(),
+                shape = RoundedCornerShape(radius),
+            )
+            .border(
+                width = state.getBorderWidth(),
+                color = state.getBorderColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .background(
+                color = state.getBackgroundColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp)
+            .clickable { onClick() },
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -65,11 +69,13 @@ fun SubjectCard(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevronright_thick_small_24),
                 tint = BbangZipTheme.colors.labelAssistive_282119_28,
                 contentDescription = stringResource(R.string.card_subject_button_description),
+                modifier = Modifier
+                    .clickable { onActionIconClick() },
             )
         }
     }
 }
-
+//TODO
 @Composable
 fun SubjectInfo(
     data: SubjectCardModel,
@@ -96,11 +102,12 @@ fun SubjectInfo(
         Spacer(modifier = Modifier.height(4.dp))
 
         BbangZipChip(
-            text = "D-${data.pendingCount}",
+            text = (stringResource(R.string.card_d_minus_day,data.pendingCount)),
             backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
         )
 
         Spacer(modifier = Modifier.height(44.dp))
+
         Column {
             BbangZipPushIcon(
                 backgroundColor = BbangZipTheme.colors.statusDestructive_FF8345,

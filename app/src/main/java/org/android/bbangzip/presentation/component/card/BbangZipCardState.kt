@@ -36,3 +36,5 @@ fun BbangZipCardState.getBorderWidth(): Dp = stateToTypeMap[this]?.borderWidth ?
 fun BbangZipCardState.getRadius(): Dp = stateToTypeMap[this]?.radius ?: 0.dp
 
 fun BbangZipCardState.getShadowOptions(): BbangZipShadowType = stateToTypeMap[this]?.shadowOptions ?: BbangZipShadowType.EMPTY
+
+fun BbangZipCardState.getCheckBoxBackgroundColor(): Color = stateToTypeMap[this]?.checkBoxBackgroundColor ?: Color.Transparent
