@@ -41,7 +41,7 @@ fun BottomTailBalloon(
         )
 
         Icon(
-            imageVector = ImageVector.vectorResource(R.drawable.ic_balloon_tail_down),
+            imageVector = ImageVector.vectorResource(R.drawable.ic_balloon_tail_down_8),
             contentDescription = null,
             modifier = Modifier.padding(start = 24.dp),
             tint = BbangZipTheme.colors.staticWhite_FFFFFF,
