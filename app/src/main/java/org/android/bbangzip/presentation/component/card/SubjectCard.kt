@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
@@ -19,6 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -39,33 +41,37 @@ fun SubjectCard(
     modifier: Modifier = Modifier,
 ) {
     val radius = state.getRadius()
+    val width = (LocalConfiguration.current.screenWidthDp - 48) / 2
     Box(
         modifier =
-            modifier
-                .applyShadows(
-                    shadowType = state.getShadowOptions(),
-                    shape = RoundedCornerShape(radius),
-                )
-                .border(
-                    width = state.getBorderWidth(),
-                    color = state.getBorderColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .background(
-                    color = state.getBackgroundColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .applyFilterOnClick(
-                    baseColor = state.getBackgroundColor(),
-                    radius = radius,
-                ) { onClick() }
-                .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
+        modifier
+            .applyShadows(
+                shadowType = state.getShadowOptions(),
+                shape = RoundedCornerShape(radius),
+            )
+            .border(
+                width = state.getBorderWidth(),
+                color = state.getBorderColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .width(width = width.dp)
+            .background(
+                color = state.getBackgroundColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .applyFilterOnClick(
+                baseColor = state.getBackgroundColor(),
+                radius = radius,
+            ) { onClick() }
+            .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.fillMaxWidth()
         ) {
             SubjectInfo(
                 data = data,
+                modifier = Modifier.weight(1f)
             )
 
             Icon(
@@ -77,7 +83,6 @@ fun SubjectCard(
     }
 }
 
-// TODO
 @Composable
 fun SubjectInfo(
     data: SubjectCardModel,
@@ -135,13 +140,16 @@ fun BbangZipPushIcon(
     text: String,
     modifier: Modifier = Modifier,
 ) {
-    Row(verticalAlignment = Alignment.CenterVertically) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
         Box(
             contentAlignment = Alignment.Center,
             modifier =
-                modifier
-                    .background(color = backgroundColor, shape = CircleShape)
-                    .padding(horizontal = 6.dp, vertical = 3.dp),
+            Modifier
+                .background(color = backgroundColor, shape = CircleShape)
+                .padding(horizontal = 6.dp, vertical = 3.dp),
         ) {
             Text(
                 text = count.toString(),
@@ -168,40 +176,40 @@ fun SubjectCardPreview() {
             SubjectCard(
                 state = BbangZipCardState.DEFAULT,
                 data =
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
                 state = BbangZipCardState.CHECKED,
                 data =
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
                 state = BbangZipCardState.CHECKABLE,
                 data =
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] ",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
         }
