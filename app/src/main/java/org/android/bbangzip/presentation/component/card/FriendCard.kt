@@ -27,6 +27,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.model.card.FriendCardModel
+import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -57,8 +58,8 @@ fun FriendCard(
                     color = state.getBackgroundColor(),
                     shape = RoundedCornerShape(size = radius),
                 )
+                .applyFilterOnClick(baseColor = state.getBackgroundColor(), radius = radius) {  onClick() }
                 .padding(16.dp)
-                .clickable { onClick() },
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -91,7 +92,6 @@ fun FriendCard(
                     color = BbangZipTheme.colors.labelAlternative_282119_61,
                 )
             }
-            //TODO
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_menu_kebab_default_24),
                 contentDescription = stringResource(R.string.card_friend_kebab_button_description),
@@ -102,7 +102,7 @@ fun FriendCard(
     }
 }
 
-@Preview(showBackground = true, name = "Friend Card Preview")
+@Preview(showBackground = true)
 @Composable
 fun FriendCardPreview() {
     BBANGZIPTheme {

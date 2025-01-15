@@ -11,6 +11,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.contentcapture.ContentCaptureManager.Companion.isEnabled
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -43,6 +44,7 @@ fun Modifier.noRippleClickable(
 fun Modifier.applyFilterOnClick(
     baseColor: Color = Color.Transparent,
     radius: Dp = 0.dp,
+    isDisabled: Boolean = true,
     filterColor: Color = Color(0xFF282119).copy(alpha = 0.12f),
     onClick: () -> Unit = {}
 ): Modifier = composed {
@@ -53,7 +55,7 @@ fun Modifier.applyFilterOnClick(
     val isPressed by interactionSource.collectIsPressedAsState()
 
     this
-        .background(if (isPressed) finalFilteredColor else baseColor, shape = RoundedCornerShape(size = radius))
+        .background(if (isPressed && !isDisabled) finalFilteredColor else baseColor, shape = RoundedCornerShape(size = radius))
         .clickable(
             interactionSource = interactionSource,
             indication = null, // Ripple 제거
