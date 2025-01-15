@@ -1,4 +1,4 @@
-package org.android.bbangzip.presentation.ui.component.bottomsheet
+package org.android.bbangzip.presentation.component.bottomsheet
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

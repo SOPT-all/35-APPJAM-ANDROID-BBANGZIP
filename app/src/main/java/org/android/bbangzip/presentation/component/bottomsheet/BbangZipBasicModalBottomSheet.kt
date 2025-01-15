@@ -1,4 +1,4 @@
-package org.android.bbangzip.presentation.ui.component.bottomsheet
+package org.android.bbangzip.presentation.component.bottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
