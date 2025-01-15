@@ -4,7 +4,6 @@ import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
@@ -23,7 +22,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
@@ -36,7 +34,6 @@ import org.android.bbangzip.presentation.model.getBorderColor
 import org.android.bbangzip.presentation.model.getCharacterCheckColor
 import org.android.bbangzip.presentation.model.getGuidelineColor
 import org.android.bbangzip.presentation.model.getIconColor
-import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -54,7 +51,7 @@ fun BbangZipBasicTextField(
     onFocusChange: () -> Unit = { },
     onDeleteButtonClick: () -> Unit = { },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Default),
-    keyboardActions: KeyboardActions = KeyboardActions.Default
+    keyboardActions: KeyboardActions = KeyboardActions.Default,
 ) {
     var isFocused by remember { mutableStateOf(false) }
 
@@ -131,7 +128,6 @@ fun BbangZipBasicTextField(
         },
     )
 }
-
 
 @Preview(showBackground = true)
 @Composable

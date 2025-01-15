@@ -107,8 +107,11 @@ fun BbangZipSimpleTextField(
 fun BbangZipSimpleTextFieldPreview() {
     BBANGZIPTheme {
         var text by remember { mutableStateOf("") }
-        var validationState by remember { mutableStateOf<BbangZipTextFieldInputState>(
-            BbangZipTextFieldInputState.Empty) }
+        var validationState by remember {
+            mutableStateOf<BbangZipTextFieldInputState>(
+                BbangZipTextFieldInputState.Empty,
+            )
+        }
 
         fun validateText(text: String) {
             validationState =

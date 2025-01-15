@@ -9,9 +9,6 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import org.android.bbangzip.R
@@ -33,7 +30,7 @@ fun FriendScreen(
     var text2 by remember { mutableStateOf("") }
     var validationState2 by remember {
         mutableStateOf<BbangZipTextFieldInputState>(
-            BbangZipTextFieldInputState.Empty
+            BbangZipTextFieldInputState.Empty,
         )
     }
 
@@ -59,9 +56,10 @@ fun FriendScreen(
     }
 
     Column(
-        modifier = modifier
-            .fillMaxSize()
-            .addFocusCleaner(focusManager)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .addFocusCleaner(focusManager),
     ) {
         BbangZipBasicTextField(
             leadingIcon = R.drawable.ic_book_default_24,
@@ -123,6 +121,5 @@ fun FriendScreen(
 @Composable
 private fun FriendScreenPreview() {
     BBANGZIPTheme {
-
     }
 }
