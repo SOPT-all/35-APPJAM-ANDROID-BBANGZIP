@@ -100,7 +100,16 @@ fun Modifier.applyShadows(
     shadowType: BbangZipShadowType,
     shape: Shape,
 ): Modifier {
-    return shadowType.shadowOptions.fold(this) { acc, shadowOption ->
-        acc.dropShadow(shape = shape, color = shadowOption.color, blur = shadowOption.blur, offsetY = shadowOption.offsetY, offsetX = shadowOption.offsetX, spread = shadowOption.spread)
-    }
+    return shadowType
+        .shadowOptions
+        .fold(this) { acc, shadowOption ->
+            acc.dropShadow(
+                shape = shape,
+                color = shadowOption.color,
+                blur = shadowOption.blur,
+                offsetY = shadowOption.offsetY,
+                offsetX = shadowOption.offsetX,
+                spread = shadowOption.spread
+            )
+        }
 }
