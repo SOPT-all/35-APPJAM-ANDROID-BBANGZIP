@@ -109,7 +109,7 @@ fun Modifier.applyShadows(
                 blur = shadowOption.blur,
                 offsetY = shadowOption.offsetY,
                 offsetX = shadowOption.offsetX,
-                spread = shadowOption.spread
+                spread = shadowOption.spread,
             )
         }
 }
