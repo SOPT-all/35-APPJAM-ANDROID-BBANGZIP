@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
+import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -51,37 +52,19 @@ fun BbangZipButton(
     val backgroundColor = if (isEnable) bbangZipButtonType.enableBackgroundColor else bbangZipButtonType.disableBackgroundColor
     val contentColor = if (isEnable) bbangZipButtonType.enableContentColor else bbangZipButtonType.disableContentColor
 
-    var isClicked by remember { mutableStateOf(false) }
-    val animatedBackgroundColor by animateColorAsState(
-        targetValue =
-            when {
-                isClicked -> BbangZipTheme.colors.interactionInactive_D4D3D1
-                isEnable -> bbangZipButtonType.enableBackgroundColor
-                else -> bbangZipButtonType.disableBackgroundColor
-            },
-        animationSpec = tween(durationMillis = 100),
-    )
-
-    if (isClicked) {
-        SideEffect {
-            Thread {
-                Thread.sleep(100)
-                isClicked = false
-            }.start()
-        }
-    }
-
     BbangZipButtonSlot(
         modifier =
             modifier
-                .background(color = if (bbangZipButtonType is BbangZipButtonType.Outlined) animatedBackgroundColor else backgroundColor, shape = RoundedCornerShape(bbangZipButtonSize.cornerRadius))
+                .background(color = backgroundColor, shape = RoundedCornerShape(bbangZipButtonSize.cornerRadius))
                 .border(color = bbangZipButtonType.enableBorderColor, width = bbangZipButtonType.borderWidth, shape = RoundedCornerShape(bbangZipButtonSize.cornerRadius))
-                .noRippleClickable {
-                    if (isEnable) {
-                        isClicked = true
-                        onClick()
-                    }
-                }
+                .applyFilterOnClick(
+                    baseColor = backgroundColor,
+                    radius = bbangZipButtonSize.cornerRadius,
+                    isDisabled = !isEnable,
+                    onClick = {
+                        if(isEnable) onClick()
+                              },
+                )
                 .padding(
                     horizontal = bbangZipButtonSize.horizontalPadding,
                     vertical = bbangZipButtonSize.verticalPadding,
