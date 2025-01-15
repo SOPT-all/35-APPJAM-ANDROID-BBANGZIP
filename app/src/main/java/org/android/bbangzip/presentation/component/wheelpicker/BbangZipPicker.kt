@@ -68,11 +68,12 @@ fun Picker(
         derivedStateOf { items.size + 1 }
     }
     // 스크롤 상 시작 인덱스
+    // isCircular가 false이면 시작 인덱스를 0으로 설정
     val listStartIndex =
         if (isCircular) {
             listScrollMiddle - listScrollMiddle % pickerItems.size - visibleItemsMiddle + startIndex
         } else {
-            0 + startIndex // isCircular가 false이면 시작 인덱스를 0으로 설정
+            0 + startIndex
         }
 
     fun getItem(index: Int) = pickerItems[index % pickerItems.size]
@@ -95,13 +96,17 @@ fun Picker(
             )
         }
 
+    // 얘가 변경되면
+    // item 방출
+    // 실제 변경될 때만 flow가 값을 방출
+    //  수집 받으면 selectedItem 변경
     LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemIndex } // 얘가 변경되면
+        snapshotFlow { listState.firstVisibleItemIndex }
             .map { index ->
                 getItem(index + visibleItemsMiddle)
-            } // item 방출
-            .distinctUntilChanged() // 실제 변경될 때만 flow가 값을 방출
-            .collect { item -> state.value = item } //  수집 받으면 selectedItem 변경
+            }
+            .distinctUntilChanged()
+            .collect { item -> state.value = item }
     }
 
     Box(modifier = modifier) {
