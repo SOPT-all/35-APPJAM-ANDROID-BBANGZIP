@@ -60,10 +60,11 @@ fun BbangZipDatePicker(
             )
         }
 
+        // 3개 picker에 weight 부여해서 대충 피그마와 비슷하게 동적으로 되게 구현해봤는데 어떤가요..
         Picker(
             state = yearPickerState,
             items = years,
-            modifier = Modifier.weight(0.4f),
+            modifier = Modifier.weight(1.2f),
             startIndex = startYear,
             visibleItemsCount = 5,
             textModifier = Modifier.padding(8.dp),
@@ -85,7 +86,7 @@ fun BbangZipDatePicker(
             items = days.value,
             startIndex = startDay,
             visibleItemsCount = 5,
-            modifier = Modifier.weight(0.3f),
+            modifier = Modifier.weight(0.8f),
             textModifier = Modifier.padding(8.dp),
             isCircular = false,
         )
