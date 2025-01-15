@@ -40,6 +40,7 @@ fun TopTailBalloon(
             modifier = Modifier.padding(start = 24.dp),
             tint = BbangZipTheme.colors.staticWhite_FFFFFF,
         )
+
         BalloonContainer(
             leadingIcon = leadingIcon,
             text = text,

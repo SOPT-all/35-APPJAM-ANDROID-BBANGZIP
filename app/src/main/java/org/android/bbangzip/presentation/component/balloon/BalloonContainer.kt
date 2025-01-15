@@ -3,10 +3,8 @@ package org.android.bbangzip.presentation.component.balloon
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -39,15 +37,11 @@ fun BalloonContainer(
         Row {
             leadingIcon()
 
-            Spacer(modifier = Modifier.width(6.dp))
-
             Text(
                 text = text,
                 style = BbangZipTheme.typography.body1Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
             )
-
-            Spacer(modifier = Modifier.width(6.dp))
 
             trailingIcon()
         }
