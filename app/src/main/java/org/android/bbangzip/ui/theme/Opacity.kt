@@ -13,7 +13,7 @@ data class BbangZipOpacity(
     val opacity22: Float,
     val opacity28: Float,
     val opacity35: Float,
-    val opacity40 : Float,
+    val opacity40: Float,
     val opacity43: Float,
     val opacity52: Float,
     val opacity61: Float,

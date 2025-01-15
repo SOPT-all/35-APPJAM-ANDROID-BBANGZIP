@@ -58,8 +58,8 @@ fun FriendCard(
                     color = state.getBackgroundColor(),
                     shape = RoundedCornerShape(size = radius),
                 )
-                .applyFilterOnClick(baseColor = state.getBackgroundColor(), radius = radius) {  onClick() }
-                .padding(16.dp)
+                .applyFilterOnClick(baseColor = state.getBackgroundColor(), radius = radius) { onClick() }
+                .padding(16.dp),
     ) {
         Row(
             modifier = Modifier.fillMaxWidth(),
