@@ -63,7 +63,6 @@ fun Modifier.applyFilterOnClick(
             )
     }
 
-
 @Composable
 fun Modifier.dropShadow(
     shape: Shape,

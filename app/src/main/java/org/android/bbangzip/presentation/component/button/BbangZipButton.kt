@@ -1,8 +1,6 @@
 package org.android.bbangzip.presentation.component.button
 
 import androidx.annotation.DrawableRes
-import androidx.compose.animation.animateColorAsState
-import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -18,7 +16,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -34,9 +31,7 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
-import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
-import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun BbangZipButton(
@@ -62,8 +57,8 @@ fun BbangZipButton(
                     radius = bbangZipButtonSize.cornerRadius,
                     isDisabled = !isEnable,
                     onClick = {
-                        if(isEnable) onClick()
-                              },
+                        if (isEnable) onClick()
+                    },
                 )
                 .padding(
                     horizontal = bbangZipButtonSize.horizontalPadding,
