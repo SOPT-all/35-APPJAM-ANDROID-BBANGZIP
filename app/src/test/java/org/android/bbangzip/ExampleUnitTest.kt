@@ -1,4 +1,4 @@
-package org.andsopt.android.bbangzip
+package org.android.bbangzip
 
 import org.junit.Assert.*
 import org.junit.Test
