@@ -70,7 +70,7 @@ fun Picker(
         if (isCircular) {
             listScrollMiddle - listScrollMiddle % pickerItems.size - visibleItemsMiddle + startIndex
         } else {
-            0 // isCircular가 false이면 시작 인덱스를 0으로 설정
+            0 + startIndex // isCircular가 false이면 시작 인덱스를 0으로 설정
         }
 
     fun getItem(index: Int) = pickerItems[index % pickerItems.size]
