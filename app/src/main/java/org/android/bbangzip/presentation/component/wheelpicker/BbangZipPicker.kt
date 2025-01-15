@@ -51,23 +51,27 @@ fun Picker(
     textModifier: Modifier = Modifier,
     isCircular: Boolean = true, // 무한 스크롤 여부
 ) {
-    val pickerItems: List<String> = if(isCircular) items else List(visibleItemsCount/2){""} + items + List(visibleItemsCount/2){""}
+    val pickerItems: List<String> = if (isCircular) items else List(visibleItemsCount / 2) { "" } + items + List(visibleItemsCount / 2) { "" }
     // 보여지는 아이템의 가운데값 인덱스
     val visibleItemsMiddle = visibleItemsCount / 2
     // 무한 스크롤
-    val listScrollCount = if (isCircular) Integer.MAX_VALUE else {
-        if(visibleItemsCount > pickerItems.size) visibleItemsCount else pickerItems.size
-    }
+    val listScrollCount =
+        if (isCircular) {
+            Integer.MAX_VALUE
+        } else {
+            if (visibleItemsCount > pickerItems.size) visibleItemsCount else pickerItems.size
+        }
     // 무한 스크롤 상 가운데
     val listScrollMiddle by remember(items) {
         derivedStateOf { items.size + 1 }
     }
     // 스크롤 상 시작 인덱스
-    val listStartIndex = if (isCircular) {
-        listScrollMiddle - listScrollMiddle % pickerItems.size - visibleItemsMiddle + startIndex
-    } else {
-        0 // isCircular가 false이면 시작 인덱스를 0으로 설정
-    }
+    val listStartIndex =
+        if (isCircular) {
+            listScrollMiddle - listScrollMiddle % pickerItems.size - visibleItemsMiddle + startIndex
+        } else {
+            0 // isCircular가 false이면 시작 인덱스를 0으로 설정
+        }
 
     fun getItem(index: Int) = pickerItems[index % pickerItems.size]
 
@@ -80,21 +84,22 @@ fun Picker(
     val itemHeightPixels = remember { mutableIntStateOf(0) }
     val itemHeightDp = pixelsToDp(itemHeightPixels.intValue)
 
-    val fadingEdgeGradient = remember {
-        Brush.verticalGradient(
-            0f to Color.Transparent,
-            0.5f to Color.Black,
-            1f to Color.Transparent
-        )
-    }
+    val fadingEdgeGradient =
+        remember {
+            Brush.verticalGradient(
+                0f to Color.Transparent,
+                0.5f to Color.Black,
+                1f to Color.Transparent,
+            )
+        }
 
     LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemIndex }    // 얘가 변경되면
+        snapshotFlow { listState.firstVisibleItemIndex } // 얘가 변경되면
             .map { index ->
                 getItem(index + visibleItemsMiddle)
-            }   // item 방출
+            } // item 방출
             .distinctUntilChanged() // 실제 변경될 때만 flow가 값을 방출
-            .collect { item -> state.selectedItem = item }  //  수집 받으면 selectedItem 변경
+            .collect { item -> state.selectedItem = item } //  수집 받으면 selectedItem 변경
     }
 
     Box(modifier = modifier) {
@@ -102,10 +107,11 @@ fun Picker(
             state = listState,
             flingBehavior = flingBehavior,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(itemHeightDp * visibleItemsCount)
-                .fadingEdge(fadingEdgeGradient)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(itemHeightDp * visibleItemsCount)
+                    .fadingEdge(fadingEdgeGradient),
         ) {
             items(listScrollCount) { index ->
                 Text(
@@ -113,30 +119,32 @@ fun Picker(
                     maxLines = 1,
                     overflow = TextOverflow.Ellipsis,
                     style = BbangZipTheme.typography.heading2Bold,
-                    modifier = Modifier
-                        .onSizeChanged { size -> itemHeightPixels.intValue = size.height }
-                        .then(textModifier)
+                    modifier =
+                        Modifier
+                            .onSizeChanged { size -> itemHeightPixels.intValue = size.height }
+                            .then(textModifier),
                 )
             }
         }
 
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .offset(y = itemHeightDp * visibleItemsMiddle)
-                .height(height = itemHeightDp)
-                .background(color = defaultBbangZipColors.fillAlternative_68645E_05)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .offset(y = itemHeightDp * visibleItemsMiddle)
+                    .height(height = itemHeightDp)
+                    .background(color = defaultBbangZipColors.fillAlternative_68645E_05),
         )
     }
-
 }
 
-private fun Modifier.fadingEdge(brush: Brush) = this
-    .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
-    .drawWithContent {
-        drawContent()
-        drawRect(brush = brush, blendMode = BlendMode.DstIn)
-    }
+private fun Modifier.fadingEdge(brush: Brush) =
+    this
+        .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
+        .drawWithContent {
+            drawContent()
+            drawRect(brush = brush, blendMode = BlendMode.DstIn)
+        }
 
 @Composable
 private fun pixelsToDp(pixels: Int) = with(LocalDensity.current) { pixels.toDp() }
@@ -148,9 +156,8 @@ fun PickerPreview() {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) {
-
             val values = remember { (1..99).map { it.toString() } }
             val valuesPickerState = rememberPickerState()
             val units = remember { listOf("seconds", "minutes", "hours") }
@@ -164,7 +171,7 @@ fun PickerPreview() {
                     visibleItemsCount = 5,
                     modifier = Modifier.weight(0.3f),
                     textModifier = Modifier.padding(8.dp),
-                    isCircular = false
+                    isCircular = false,
                 )
 
                 Picker(
@@ -173,13 +180,13 @@ fun PickerPreview() {
                     visibleItemsCount = 5,
                     modifier = Modifier.weight(0.7f),
                     textModifier = Modifier.padding(8.dp),
-                    isCircular = true
+                    isCircular = true,
                 )
             }
 
             Text(
                 text = "Interval: ${valuesPickerState.selectedItem} ${unitsPickerState.selectedItem}",
-                modifier = Modifier.padding(vertical = 16.dp)
+                modifier = Modifier.padding(vertical = 16.dp),
             )
         }
     }
