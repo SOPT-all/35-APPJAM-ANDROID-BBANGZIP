@@ -35,9 +35,9 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun ToDoCard(
     state: BbangZipCardState,
     data: ToDoCardModel,
+    modifier: Modifier = Modifier,
     isDeleted: Boolean = false,
     onClick: () -> Unit = {},
-    modifier: Modifier = Modifier,
 ) {
     val radius = state.getRadius()
     val infoOpacity = state.getInfoOpacity()
@@ -177,7 +177,6 @@ fun CheckSpace(
                 .background(color = backgroundColor, shape = RoundedCornerShape(12.dp))
                 .height(32.dp)
                 .width(32.dp),
-        // TODO 여기 어떤식으로 기기대응하는지 물어보기
     ) {
         if (isCompleted) {
             Icon(
@@ -189,7 +188,6 @@ fun CheckSpace(
     }
 }
 
-// TODO
 @Preview(showBackground = true)
 @Composable
 fun ToDoCardPreview() {

@@ -36,9 +36,9 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun FriendCard(
     state: BbangZipCardState,
     data: FriendCardModel,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     onActionIconClick: () -> Unit = {},
-    modifier: Modifier = Modifier,
 ) {
     val radius = state.getRadius()
     Box(
