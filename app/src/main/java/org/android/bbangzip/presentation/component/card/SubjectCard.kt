@@ -23,6 +23,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
@@ -96,6 +97,8 @@ fun SubjectInfo(
             text = data.subjectName,
             style = BbangZipTheme.typography.body1Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -104,6 +107,8 @@ fun SubjectInfo(
             text = data.examName,
             style = BbangZipTheme.typography.label2Bold,
             color = BbangZipTheme.colors.labelNeutral_282119_88,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -203,7 +208,7 @@ fun SubjectCardPreview() {
                 state = BbangZipCardState.CHECKABLE,
                 data =
                     SubjectCardModel(
-                        subjectName = "[경영] ",
+                        subjectName = "[경영] 해ㅜ저해줘재훠재헞",
                         examName = "중간고사",
                         pendingCount = 0,
                         inProgressCount = 6,
