@@ -2,6 +2,9 @@ package org.android.bbangzip.presentation.ui.component.bottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -30,8 +33,8 @@ fun BbangZipBasicModalBottomSheet(
     sheetState: SheetState = rememberModalBottomSheetState(),
     title: @Composable (ColumnScope.() -> Unit) = {},
     content: @Composable (ColumnScope.() -> Unit) = {},
-    firstButton: @Composable (ColumnScope.() -> Unit) = {},
-    secondButton: @Composable (ColumnScope.() -> Unit) = {}
+    interactButton: @Composable (ColumnScope.() -> Unit) = {},
+    cancelButton: @Composable (ColumnScope.() -> Unit) = {}
 ) {
     if (isBottomSheetVisible) {
         ModalBottomSheet(
@@ -42,12 +45,15 @@ fun BbangZipBasicModalBottomSheet(
             scrimColor = BbangZipTheme.colors.materialDimmer_282119_52,
         ) {
             Column(
-                modifier = modifier.padding(horizontal = 16.dp)
+                modifier = modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 title()
                 content()
-                firstButton()
-                secondButton()
+                interactButton()
+                cancelButton()
             }
         }
     }
