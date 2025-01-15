@@ -22,4 +22,19 @@
     <string name="card_subject_exam_name_text">%s / %s</string>
     <string name="card_d_minus">D+</string>
     <string name="card_d_plus">D-</string>
+
+    <!-- progress bar -->
+    <string name="progressbar_chip_level">Lv %s</string>
+    <string name="bbangzip_level1_name">가판대</string>
+    <string name="bbangzip_level2_name">가판대</string>
+    <string name="bbangzip_level3_name">가판대</string>
+    <string name="bbangzip_level_point">%s/%s</string>
+    <string name="bbangzip_trophy_description">This is a point icon that tells you the current bakery level.</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_first_title">사장님의 이름을\n알려주세요</string>
+    <string name="onboarding_second_title">현재 재학 중인\n학기를 알려주세요</string>
+    <string name="onboarding_second_description">%s 사장님, 안녕하세요!</string>
+    <string name="onboarding_third_title">수강하는 과목 중 한 가지만 먼저 입력해 볼까요?</string>
+    <string name="onboarding_third_description">>%s %s에 재학 중이시네요!</string>
 </resources>
