@@ -11,22 +11,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.chip.BbangZipChip
+import org.android.bbangzip.presentation.component.pushicon.BbangZipPushIconWithText
 import org.android.bbangzip.presentation.model.card.SubjectCardModel
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.presentation.util.modifier.applyShadows
@@ -96,6 +96,8 @@ fun SubjectInfo(
             text = data.subjectName,
             style = BbangZipTheme.typography.body1Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -104,6 +106,8 @@ fun SubjectInfo(
             text = data.examName,
             style = BbangZipTheme.typography.label2Bold,
             color = BbangZipTheme.colors.labelNeutral_282119_88,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
         )
 
         Spacer(modifier = Modifier.height(4.dp))
@@ -116,7 +120,7 @@ fun SubjectInfo(
         Spacer(modifier = Modifier.height(44.dp))
 
         Column {
-            BbangZipPushIcon(
+            BbangZipPushIconWithText(
                 backgroundColor = BbangZipTheme.colors.statusDestructive_FF8345,
                 count = data.pendingCount,
                 text = stringResource(R.string.card_subject_pending_icon_description),
@@ -124,47 +128,12 @@ fun SubjectInfo(
 
             Spacer(modifier = Modifier.height(4.dp))
 
-            BbangZipPushIcon(
+            BbangZipPushIconWithText(
                 backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
                 count = data.inProgressCount,
                 text = stringResource(R.string.card_subject_studying_icon_description),
             )
         }
-    }
-}
-
-@Composable
-fun BbangZipPushIcon(
-    backgroundColor: Color,
-    count: Int,
-    text: String,
-    modifier: Modifier = Modifier,
-) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = modifier,
-    ) {
-        Box(
-            contentAlignment = Alignment.Center,
-            modifier =
-                Modifier
-                    .background(color = backgroundColor, shape = CircleShape)
-                    .padding(horizontal = 6.dp, vertical = 3.dp),
-        ) {
-            Text(
-                text = count.toString(),
-                style = BbangZipTheme.typography.caption2Bold,
-                color = BbangZipTheme.colors.staticWhite_FFFFFF,
-            )
-        }
-
-        Spacer(modifier = Modifier.width(4.dp))
-
-        Text(
-            text = text,
-            style = BbangZipTheme.typography.caption1Bold,
-            color = BbangZipTheme.colors.labelAssistive_282119_28,
-        )
     }
 }
 
@@ -203,7 +172,7 @@ fun SubjectCardPreview() {
                 state = BbangZipCardState.CHECKABLE,
                 data =
                     SubjectCardModel(
-                        subjectName = "[경영] ",
+                        subjectName = "[경영] 해ㅜ저해줘재훠재헞",
                         examName = "중간고사",
                         pendingCount = 0,
                         inProgressCount = 6,
