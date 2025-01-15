@@ -54,7 +54,7 @@ private fun TopBalloonPreview() {
     Column(
         Modifier
             .fillMaxSize()
-            .background(color = defaultBbangZipColors.staticBlack_000000),
+            .background(color = defaultBbangZipColors.backgroundAccent_FFDAA0),
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(10.dp))
