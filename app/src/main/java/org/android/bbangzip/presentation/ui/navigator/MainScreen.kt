@@ -5,10 +5,13 @@ import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import okhttp3.internal.toImmutableList
+import org.android.bbangzip.presentation.component.snackbar.BbangZipSnackBarHost
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.navigator.component.BottomNavigationBar
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
@@ -24,8 +27,9 @@ fun MainScreen(
 
 @Composable
 private fun MainScreenContent(
-    modifier: Modifier = Modifier,
     navigator: MainNavigator,
+    hostState: SnackbarHostState = remember { SnackbarHostState() },
+    modifier: Modifier = Modifier,
 ) {
     Scaffold(
         modifier = modifier.padding(WindowInsets.navigationBars.asPaddingValues()),
@@ -33,8 +37,10 @@ private fun MainScreenContent(
             MainNavHost(
                 navigator = navigator,
                 padding = padding,
+                snackBarHostState = hostState,
             )
         },
+        snackbarHost = { BbangZipSnackBarHost(hostState) },
         bottomBar = {
             BottomNavigationBar(
                 isVisible = navigator.showBottomBar(),
