@@ -11,7 +11,7 @@ enum class BbangZipShadowType(
     EMPTY(
         listOf(),
     ),
-    Normal(
+    NORMAL(
         listOf(
             ShadowOption(
                 color = defaultBbangZipColors.staticBlack_000000.copy(defaultBbangZipOpacity.opacity12),
@@ -29,7 +29,7 @@ enum class BbangZipShadowType(
             ),
         ),
     ),
-    Emphasize(
+    EMPHASIZE(
         listOf(
             ShadowOption(
                 color = defaultBbangZipColors.staticBlack_000000.copy(defaultBbangZipOpacity.opacity12),
@@ -54,7 +54,7 @@ enum class BbangZipShadowType(
             ),
         ),
     ),
-    Strong(
+    STRONG(
         listOf(
             ShadowOption(
                 color = defaultBbangZipColors.staticBlack_000000.copy(defaultBbangZipOpacity.opacity12),
@@ -79,7 +79,7 @@ enum class BbangZipShadowType(
             ),
         ),
     ),
-    Heavy(
+    HEAVY(
         listOf(
             ShadowOption(
                 color = defaultBbangZipColors.staticBlack_000000.copy(defaultBbangZipOpacity.opacity12),
@@ -104,7 +104,7 @@ enum class BbangZipShadowType(
             ),
         ),
     ),
-    HeavyInverse(
+    HEAVY_INVERSE(
         listOf(
             ShadowOption(
                 color = defaultBbangZipColors.staticBlack_000000.copy(defaultBbangZipOpacity.opacity12),
@@ -129,7 +129,7 @@ enum class BbangZipShadowType(
             ),
         ),
     ),
-    StrongInverse(
+    STRONG_INVERSE(
         listOf(
             ShadowOption(
                 color = defaultBbangZipColors.staticBlack_000000.copy(defaultBbangZipOpacity.opacity12),
@@ -154,7 +154,7 @@ enum class BbangZipShadowType(
             ),
         ),
     ),
-    EmphasizeInverse(
+    EMPHASIZE_INVERSE(
         listOf(
             ShadowOption(
                 color = defaultBbangZipColors.staticBlack_000000.copy(defaultBbangZipOpacity.opacity12),
@@ -179,7 +179,7 @@ enum class BbangZipShadowType(
             ),
         ),
     ),
-    NormalInverse(
+    NORMAL_INVERSE(
         listOf(
             ShadowOption(
                 color = defaultBbangZipColors.staticBlack_000000.copy(defaultBbangZipOpacity.opacity12),
