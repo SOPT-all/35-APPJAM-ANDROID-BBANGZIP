@@ -24,17 +24,18 @@ fun BbangZipOneButtonBottomSheet(
     cancelButtonText: String,
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit = {},
-    onClickCancelButton: () -> Unit = {}
+    onClickCancelButton: () -> Unit = {},
 ) {
     BbangZipBasicModalBottomSheet(
         modifier = modifier,
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = onDismissRequest,
-        sheetState = rememberModalBottomSheetState(
-            confirmValueChange = { newState ->
-                !(newState == SheetValue.Hidden && isBottomSheetVisible)
-            }
-        ),
+        sheetState =
+            rememberModalBottomSheetState(
+                confirmValueChange = { newState ->
+                    !(newState == SheetValue.Hidden && isBottomSheetVisible)
+                },
+            ),
         content = {
             // TODO 승범 Badge Detail
         },
@@ -47,11 +48,11 @@ fun BbangZipOneButtonBottomSheet(
                 Text(
                     text = cancelButtonText,
                     style = BbangZipTheme.typography.body1Bold,
-                    color = BbangZipTheme.colors.primaryNormal_282119
+                    color = BbangZipTheme.colors.primaryNormal_282119,
                 )
             }
             // TODO Button 집어넣기
-        }
+        },
     )
 }
 
@@ -64,6 +65,6 @@ private fun BbangZipOneButtonBottomSheetPreview() {
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = { isBottomSheetVisible = !isBottomSheetVisible },
         cancelButtonText = "닫기",
-        onClickCancelButton = { isBottomSheetVisible = !isBottomSheetVisible }
+        onClickCancelButton = { isBottomSheetVisible = !isBottomSheetVisible },
     )
 }

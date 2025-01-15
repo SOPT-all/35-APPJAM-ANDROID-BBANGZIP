@@ -29,25 +29,27 @@ fun BbangZipTwoButtonBottomSheet(
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit = {},
     onClickInteractButton: () -> Unit = {},
-    onClickCancelButton: () -> Unit = {}
+    onClickCancelButton: () -> Unit = {},
 ) {
     BbangZipBasicModalBottomSheet(
         modifier = modifier,
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = onDismissRequest,
-        sheetState = rememberModalBottomSheetState(
-            confirmValueChange = { newState ->
-                !(newState == SheetValue.Hidden && isBottomSheetVisible)
-            }
-        ),
+        sheetState =
+            rememberModalBottomSheetState(
+                confirmValueChange = { newState ->
+                    !(newState == SheetValue.Hidden && isBottomSheetVisible)
+                },
+            ),
         title = {
             Text(
                 text = bottomSheetTitle,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 15.dp),
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 15.dp),
                 style = BbangZipTheme.typography.headline1Bold,
-                color = BbangZipTheme.colors.labelNeutral_282119_88
+                color = BbangZipTheme.colors.labelNeutral_282119_88,
             )
         },
         interactButton = {
@@ -59,7 +61,7 @@ fun BbangZipTwoButtonBottomSheet(
                 Text(
                     text = interactButtonText,
                     style = BbangZipTheme.typography.body1Bold,
-                    color = BbangZipTheme.colors.staticWhite_FFFFFF
+                    color = BbangZipTheme.colors.staticWhite_FFFFFF,
                 )
             }
             // TODO Button 집어넣기
@@ -73,11 +75,11 @@ fun BbangZipTwoButtonBottomSheet(
                 Text(
                     text = cancelButtonText,
                     style = BbangZipTheme.typography.body1Bold,
-                    color = BbangZipTheme.colors.primaryNormal_282119
+                    color = BbangZipTheme.colors.primaryNormal_282119,
                 )
             }
             // TODO Button 집어넣기
-        }
+        },
     )
 }
 
@@ -92,6 +94,6 @@ private fun BbangZipTwoButtonBottomSheetPreview() {
         onDismissRequest = { isBottomSheetVisible = !isBottomSheetVisible },
         interactButtonText = "로그아웃 하기",
         cancelButtonText = "취소",
-        onClickCancelButton = { isBottomSheetVisible = !isBottomSheetVisible}
+        onClickCancelButton = { isBottomSheetVisible = !isBottomSheetVisible },
     )
 }

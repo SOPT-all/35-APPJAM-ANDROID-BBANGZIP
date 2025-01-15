@@ -2,9 +2,7 @@ package org.android.bbangzip.presentation.ui.component.bottomsheet
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -34,7 +32,7 @@ fun BbangZipBasicModalBottomSheet(
     title: @Composable (ColumnScope.() -> Unit) = {},
     content: @Composable (ColumnScope.() -> Unit) = {},
     interactButton: @Composable (ColumnScope.() -> Unit) = {},
-    cancelButton: @Composable (ColumnScope.() -> Unit) = {}
+    cancelButton: @Composable (ColumnScope.() -> Unit) = {},
 ) {
     if (isBottomSheetVisible) {
         ModalBottomSheet(
@@ -45,10 +43,11 @@ fun BbangZipBasicModalBottomSheet(
             scrimColor = BbangZipTheme.colors.materialDimmer_282119_52,
         ) {
             Column(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                modifier =
+                    modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 16.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 title()
                 content()
@@ -73,9 +72,10 @@ private fun BasicModalBottomSheetPreview() {
             title = {
                 Text(
                     text = "BbangZip Basic Modal Bottom Sheet Title",
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(vertical = 15.dp)
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(vertical = 15.dp),
                 )
             },
             content = {

@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.ui.component.bottomsheet
 
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -29,25 +28,27 @@ fun BbangZipDatePickerBottomSheet(
     selectedDate: ExamDate? = null,
     onSelectedDateChanged: (ExamDate) -> Unit = {},
     onClickInputButton: (ExamDate) -> Unit = {},
-    onDismissRequest: () -> Unit = {}
+    onDismissRequest: () -> Unit = {},
 ) {
     BbangZipBasicModalBottomSheet(
         modifier = modifier,
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = onDismissRequest,
-        sheetState = rememberModalBottomSheetState(
-            confirmValueChange = { newState ->
-                newState == SheetValue.Hidden
-            }
-        ),
+        sheetState =
+            rememberModalBottomSheetState(
+                confirmValueChange = { newState ->
+                    newState == SheetValue.Hidden
+                },
+            ),
         title = {
             Text(
                 text = bottomSheetTitle,
-                modifier = Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 15.dp),
+                modifier =
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 15.dp),
                 style = BbangZipTheme.typography.headline1Bold,
-                color = BbangZipTheme.colors.labelNeutral_282119_88
+                color = BbangZipTheme.colors.labelNeutral_282119_88,
             )
         },
         content = {
@@ -61,7 +62,7 @@ fun BbangZipDatePickerBottomSheet(
             // TODO Button 넣기, Button 클릭 시에 onClickInputButton() 전달
 
             Spacer(modifier = Modifier.height(16.dp))
-        }
+        },
     )
 }
 

@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
@@ -33,42 +32,44 @@ fun BbangZipListPickerBottomSheet(
     modifier: Modifier = Modifier,
     title: @Composable (ColumnScope.() -> Unit) = {},
     onSelectedItemChanged: (Int) -> Unit = {},
-    onDismissRequest: () -> Unit = {}
+    onDismissRequest: () -> Unit = {},
 ) {
     BbangZipBasicModalBottomSheet(
         modifier = modifier,
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = onDismissRequest,
-        sheetState = rememberModalBottomSheetState(
-            confirmValueChange = { newState ->
-                !(newState == SheetValue.Hidden && isBottomSheetVisible)
-            }
-        ),
+        sheetState =
+            rememberModalBottomSheetState(
+                confirmValueChange = { newState ->
+                    !(newState == SheetValue.Hidden && isBottomSheetVisible)
+                },
+            ),
         title = { title() },
         content = {
             LazyColumn(
                 modifier = Modifier.padding(vertical = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 itemsIndexed(
                     itemList,
-                    key = { _, item -> item }
+                    key = { _, item -> item },
                 ) { index, item ->
                     Text(
                         text = itemList[index],
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 8.dp)
-                            // TODO focused 확장 clickable로 변경
-                            .clickable { onSelectedItemChanged(index) },
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(vertical = 8.dp)
+                                // TODO focused 확장 clickable로 변경
+                                .clickable { onSelectedItemChanged(index) },
                         textAlign = TextAlign.Center,
                         style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119
+                        color = BbangZipTheme.colors.labelNormal_282119,
                     )
                 }
             }
-        }
+        },
     )
 }
 
@@ -84,26 +85,28 @@ private fun BbangZipListPickerBottomSheetPreview() {
             title = {
                 Text(
                     text = "몇 조각으로 쪼개서 공부할까요?",
-                    modifier = Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(vertical = 15.dp),
+                    modifier =
+                        Modifier
+                            .align(Alignment.CenterHorizontally)
+                            .padding(vertical = 15.dp),
                     style = BbangZipTheme.typography.headline1Bold,
-                    color = BbangZipTheme.colors.labelNeutral_282119_88
+                    color = BbangZipTheme.colors.labelNeutral_282119_88,
                 )
             },
             onDismissRequest = { isBottomSheetVisible = !isBottomSheetVisible },
-            itemList = listOf(
-                "1조각",
-                "2조각",
-                "3조각",
-                "4조각",
-                "5조각",
-                "6조각"
-            ),
+            itemList =
+                listOf(
+                    "1조각",
+                    "2조각",
+                    "3조각",
+                    "4조각",
+                    "5조각",
+                    "6조각",
+                ),
             onSelectedItemChanged = { index ->
                 selectedPiece = index
                 isBottomSheetVisible = !isBottomSheetVisible
-            }
+            },
         )
     }
 }

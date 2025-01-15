@@ -36,46 +36,48 @@ fun BbangZipListDefaultPickerBottomSheet(
     title: @Composable (ColumnScope.() -> Unit) = {},
     selectedItem: Int = 0,
     onSelectedItemChanged: (Int) -> Unit = {},
-    onDismissRequest: () -> Unit = {}
+    onDismissRequest: () -> Unit = {},
 ) {
     BbangZipBasicModalBottomSheet(
         modifier = modifier,
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = onDismissRequest,
-        sheetState = rememberModalBottomSheetState(
-            confirmValueChange = { newState ->
-                !(newState == SheetValue.Hidden && isBottomSheetVisible)
-            }
-        ),
+        sheetState =
+            rememberModalBottomSheetState(
+                confirmValueChange = { newState ->
+                    !(newState == SheetValue.Hidden && isBottomSheetVisible)
+                },
+            ),
         title = { title() },
         content = {
             LazyColumn(
                 modifier = Modifier.padding(top = 8.dp, bottom = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 itemsIndexed(
                     itemList,
-                    key = { _, item -> item }
+                    key = { _, item -> item },
                 ) { index, item ->
                     Text(
                         text = itemList[index],
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            // TODO focused 확장 clickable로 변경,
-                            .clickable { onSelectedItemChanged(index) }
-                            .background(
-                                color = if (index != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
-                                shape = RoundedCornerShape(16.dp),
-                            )
-                            .padding(vertical = 8.dp),
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                // TODO focused 확장 clickable로 변경,
+                                .clickable { onSelectedItemChanged(index) }
+                                .background(
+                                    color = if (index != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
+                                    shape = RoundedCornerShape(16.dp),
+                                )
+                                .padding(vertical = 8.dp),
                         textAlign = TextAlign.Center,
                         style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119
+                        color = BbangZipTheme.colors.labelNormal_282119,
                     )
                 }
             }
-        }
+        },
     )
 }
 
@@ -89,16 +91,17 @@ private fun BbangZipListDefaultPickerBottomSheetPreview() {
         BbangZipListDefaultPickerBottomSheet(
             isBottomSheetVisible = isBottomSheetVisible,
             onDismissRequest = { isBottomSheetVisible = !isBottomSheetVisible },
-            itemList = listOf(
-                "최근 등록 순",
-                "분량 적은 순",
-                "마감 기한 빠른 순"
-            ),
+            itemList =
+                listOf(
+                    "최근 등록 순",
+                    "분량 적은 순",
+                    "마감 기한 빠른 순",
+                ),
             selectedItem = 1,
             onSelectedItemChanged = { index ->
                 selectedSort = index
                 isBottomSheetVisible = !isBottomSheetVisible
-            }
+            },
         )
     }
 }
