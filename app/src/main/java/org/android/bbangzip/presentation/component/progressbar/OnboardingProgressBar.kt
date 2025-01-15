@@ -10,15 +10,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import org.android.bbangzip.presentation.component.BbangZipPushIcon
+import org.android.bbangzip.presentation.component.pushicon.BbangZipPushIcon
 import org.android.bbangzip.presentation.model.BbangZipPushIconState
 import org.android.bbangzip.presentation.type.OnboardingType
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun OnboardingProgressBar(
-    modifier: Modifier = Modifier,
     onboardingType: OnboardingType,
+    modifier: Modifier = Modifier,
 ) {
     val currentPage = onboardingType.ordinal + 1
     val progress =

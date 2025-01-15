@@ -29,6 +29,7 @@
     <string name="bbangzip_level2_name">가판대</string>
     <string name="bbangzip_level3_name">가판대</string>
     <string name="bbangzip_level_point">%s/%s</string>
+    <string name="bbangzip_trophy_description">This is a point icon that tells you the current bakery level.</string>
 
     <!-- onboarding -->
     <string name="onboarding_first_title">사장님의 이름을\n알려주세요</string>

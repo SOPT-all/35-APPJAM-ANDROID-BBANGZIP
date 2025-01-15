@@ -19,8 +19,8 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun BbangZipBasicProgressBar(
-    modifier: Modifier = Modifier,
     progress: Float,
+    modifier: Modifier = Modifier,
     backgroundColor: Color = BbangZipTheme.colors.fillStrong_68645E_16,
     progressColor: Color = BbangZipTheme.colors.labelNormal_282119,
     clipShape: Shape = RoundedCornerShape(4.dp),

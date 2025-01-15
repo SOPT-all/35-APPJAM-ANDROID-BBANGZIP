@@ -28,9 +28,9 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun BbangZipLevelProgressBar(
-    modifier: Modifier = Modifier,
     level: Int,
     currentPoint: Int,
+    modifier: Modifier = Modifier,
 ) {
     val levelType = BbangZipLevelType.entries[level - 1]
 
@@ -84,7 +84,7 @@ private fun BbangZipPoint(
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_trophy_default_24),
-            contentDescription = null,
+            contentDescription = stringResource(R.string.bbangzip_trophy_description),
             tint = BbangZipTheme.colors.labelAlternative_282119_61,
         )
 
