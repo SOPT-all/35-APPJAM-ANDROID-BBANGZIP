@@ -2,6 +2,7 @@ package org.android.bbangzip.presentation.component.textfield
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.padding
@@ -37,10 +38,10 @@ fun BbangZipBasicTextField(
     @StringRes placeholder: Int,
     @StringRes guideline: Int,
     value: String,
+    onValueChange: (String) -> Unit,
     maxCharacter: Int,
     modifier: Modifier = Modifier,
     bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Empty,
-    onValueChange: (String) -> Unit = { },
     onClickTextField: () -> Unit = { },
     onDeleteButtonClick: () -> Unit = { },
 ) {
@@ -53,7 +54,7 @@ fun BbangZipBasicTextField(
                 .padding(start = 16.dp, end = 12.dp, top = 16.dp, bottom = 16.dp),
         leadingIcon = {
             Icon(
-                painter = painterResource(leadingIcon),
+                imageVector = ImageVector.vectorResource(leadingIcon),
                 contentDescription = null,
                 tint = bbangZipTextFieldInputState.getIconColor(),
             )
@@ -79,7 +80,7 @@ fun BbangZipBasicTextField(
                     if (value.isEmpty()) {
                         Text(
                             text = stringResource(placeholder),
-                            color = defaultBbangZipColors.labelAssistive_282119_28,
+                            color = BbangZipTheme.colors.labelAssistive_282119_28,
                             style = BbangZipTheme.typography.label1Medium,
                         )
                     }
@@ -129,7 +130,7 @@ fun BbangZipBasicTextFieldPreview() {
                     text.isEmpty() -> BbangZipTextFieldInputState.Empty
                     text.length == 1 -> BbangZipTextFieldInputState.Typing
                     text.length == 3 -> BbangZipTextFieldInputState.Complete
-                    5 < text.length -> BbangZipTextFieldInputState.Error
+                    text.length > 5-> BbangZipTextFieldInputState.Error
                     else -> BbangZipTextFieldInputState.Field
                 }
         }
