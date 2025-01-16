@@ -39,7 +39,6 @@ import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
-import org.android.bbangzip.ui.theme.defaultBbangZipColors
 
 // isCircular : 무한 스크롤 여부
 @Composable
