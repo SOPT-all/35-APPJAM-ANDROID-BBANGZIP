@@ -16,7 +16,6 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -41,13 +40,13 @@ import kotlinx.coroutines.flow.map
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 import org.android.bbangzip.ui.theme.defaultBbangZipColors
-import timber.log.Timber
 
 // isCircular : 무한 스크롤 여부
 @Composable
 fun Picker(
     items: List<String>,
-    state: MutableState<String>,
+    state: String,
+    onItemChanged: (String) -> Unit = {},
     modifier: Modifier = Modifier,
     startIndex: Int = 0,
     visibleItemsCount: Int = 5,
@@ -86,7 +85,6 @@ fun Picker(
 
     val listState = rememberLazyListState(initialFirstVisibleItemIndex = listStartIndex)
 
-    Timber.tag("zz").d(listState.firstVisibleItemIndex.toString())
     // 사용자가 스크롤을 멈출 때 애매하게 멈추지 않도록 하는 역할
     val flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
 
@@ -112,7 +110,7 @@ fun Picker(
                 getItem(index + visibleItemsMiddle)
             }
             .distinctUntilChanged()
-            .collect { item -> state.value = item }
+            .collect { item -> onItemChanged(item) }
     }
 
     Box(modifier = modifier) {
@@ -147,7 +145,7 @@ fun Picker(
                     .fillMaxWidth()
                     .offset(y = itemHeightDp * visibleItemsMiddle)
                     .height(height = itemHeightDp)
-                    .background(color = defaultBbangZipColors.fillAlternative_68645E_05),
+                    .background(color = BbangZipTheme.colors.fillAlternative_68645E_05),
         )
     }
 }
@@ -173,9 +171,9 @@ fun PickerPreview() {
             modifier = Modifier.fillMaxSize(),
         ) {
             val values = remember { (1..99).map { it.toString() } }
-            val valuesPickerState = remember { mutableStateOf("") }
+            val valuesPickerState by remember { mutableStateOf("") }
             val units = remember { listOf("seconds", "minutes", "hours") }
-            val unitsPickerState = remember { mutableStateOf("") }
+            val unitsPickerState by remember { mutableStateOf("") }
 
             Text(text = "Example Picker", modifier = Modifier.padding(top = 16.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -197,7 +195,7 @@ fun PickerPreview() {
             }
 
             Text(
-                text = "Interval: ${valuesPickerState.value} ${unitsPickerState.value}",
+                text = "Interval: $valuesPickerState $unitsPickerState",
                 modifier = Modifier.padding(vertical = 16.dp),
             )
         }
