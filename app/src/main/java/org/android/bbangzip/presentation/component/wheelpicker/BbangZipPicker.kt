@@ -21,6 +21,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -37,20 +38,21 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.map
+import org.android.bbangzip.presentation.util.graphic.pixelsToDp
+import org.android.bbangzip.presentation.util.modifier.fadingEdge
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 // isCircular : 무한 스크롤 여부
 @Composable
-fun Picker(
+fun BbangZipPicker(
     items: List<String>,
-    state: String,
-    onItemChanged: (String) -> Unit = {},
     modifier: Modifier = Modifier,
+    onItemChanged: (String) -> Unit = {},
     startIndex: Int = 0,
     visibleItemsCount: Int = 5,
     textModifier: Modifier = Modifier,
-    isCircular: Boolean = true,
+    isCircular: Boolean = false,
 ) {
     val pickerItems: List<String> =
         if (isCircular) {
@@ -88,7 +90,7 @@ fun Picker(
     val flingBehavior = rememberSnapFlingBehavior(lazyListState = listState)
 
     val itemHeightPixels = remember { mutableIntStateOf(0) }
-    val itemHeightDp = pixelsToDp(itemHeightPixels.intValue)
+    val itemHeightDp = itemHeightPixels.intValue.pixelsToDp()
 
     val fadingEdgeGradient =
         remember {
@@ -149,17 +151,6 @@ fun Picker(
     }
 }
 
-private fun Modifier.fadingEdge(brush: Brush) =
-    this
-        .graphicsLayer(compositingStrategy = CompositingStrategy.Offscreen)
-        .drawWithContent {
-            drawContent()
-            drawRect(brush = brush, blendMode = BlendMode.DstIn)
-        }
-
-@Composable
-private fun pixelsToDp(pixels: Int) = with(LocalDensity.current) { pixels.toDp() }
-
 @Composable
 @Preview(showBackground = true)
 fun PickerPreview() {
@@ -170,25 +161,25 @@ fun PickerPreview() {
             modifier = Modifier.fillMaxSize(),
         ) {
             val values = remember { (1..99).map { it.toString() } }
-            val valuesPickerState by remember { mutableStateOf("") }
+            var valuesPickerState by remember { mutableStateOf("") }
+
             val units = remember { listOf("seconds", "minutes", "hours") }
-            val unitsPickerState by remember { mutableStateOf("") }
+            var unitsPickerState by remember { mutableStateOf("") }
 
             Text(text = "Example Picker", modifier = Modifier.padding(top = 16.dp))
             Row(modifier = Modifier.fillMaxWidth()) {
-                Picker(
-                    state = valuesPickerState,
+                BbangZipPicker(
                     items = values,
-                    visibleItemsCount = 5,
                     modifier = Modifier.weight(0.3f),
-                    isCircular = false,
+                    onItemChanged = { valuesPickerState = it },
+                    visibleItemsCount = 5,
                 )
 
-                Picker(
-                    state = unitsPickerState,
+                BbangZipPicker(
                     items = units,
-                    visibleItemsCount = 5,
                     modifier = Modifier.weight(0.7f),
+                    onItemChanged = { unitsPickerState = it },
+                    visibleItemsCount = 5,
                     isCircular = true,
                 )
             }

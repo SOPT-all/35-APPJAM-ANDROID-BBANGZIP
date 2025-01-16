@@ -17,49 +17,45 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.presentation.model.Semester
 import org.android.bbangzip.presentation.type.SemesterType
-import org.android.bbangzip.presentation.util.constant.DateConstant
+import org.android.bbangzip.presentation.util.constant.DateConstants
 
 @Composable
 fun BbangZipSemesterPicker(
     onConfirm: (Semester) -> Unit = {},
-    currentSemester: Semester = Semester(DateConstant.YEAR_OF_TODAY.toString(), "1학기"),
+    currentSemester: Semester = Semester(DateConstants.YEAR_OF_TODAY.toString(), SemesterType.FIRST),
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        val years = DateConstant.YEARS_LIST
-        val yearPickerState = remember { mutableStateOf("") }
-        val startYear = currentSemester.year.toInt() - DateConstant.YEAR_OF_TODAY
+        val years = DateConstants.YEARS_LIST
+        val yearPickerState by remember { mutableStateOf("") }
+        val startYear = currentSemester.year.toInt() - DateConstants.YEAR_OF_TODAY
 
         val semesters = SemesterType.entries.map { entry -> entry.text }
-        val semesterPickerState = remember { mutableStateOf("") }
-        val startSemester = SemesterType.entries.find { it.text == currentSemester.semester }?.ordinal
+        val semesterPickerState by remember { mutableStateOf("") }
+        val startSemester = SemesterType.entries.find { it == currentSemester.semester }?.ordinal
 
-        LaunchedEffect(yearPickerState.value, semesterPickerState.value) {
-            val year = yearPickerState.value.filter { it.isDigit() }
-            val semester = semesterPickerState.value
+        LaunchedEffect(yearPickerState, semesterPickerState) {
+            val year = yearPickerState.filter { it.isDigit() }
+            val semester = SemesterType.entries.find { it.text == semesterPickerState }
             onConfirm(
                 Semester(
                     year = year,
-                    semester = semester,
+                    semester = semester?:SemesterType.FIRST,
                 ),
             )
         }
 
-        Picker(
-            state = yearPickerState,
+        BbangZipPicker(
             items = years,
             modifier = Modifier.weight(5f),
             startIndex = startYear,
-            isCircular = false,
         )
 
-        Picker(
-            state = semesterPickerState,
+        BbangZipPicker(
             items = semesters,
             modifier = Modifier.weight(4f),
             startIndex = startSemester ?: 0,
-            isCircular = false,
         )
     }
 }
@@ -79,7 +75,7 @@ fun BbangZipSemesterPickerPreview() {
             onConfirm = {
                 selectedSemester = it
             },
-            currentSemester = Semester("2025", "2학기"),
+            currentSemester = Semester("2025", SemesterType.SECOND),
         )
         Text("Selected Semester: ${selectedSemester?.year}년 ${selectedSemester?.semester}")
     }

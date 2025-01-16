@@ -16,28 +16,28 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.presentation.model.Date
-import org.android.bbangzip.presentation.util.constant.DateConstant
+import org.android.bbangzip.presentation.util.constant.DateConstants
 import java.time.YearMonth
 
 @Composable
 fun BbangZipDatePicker(
     onConfirm: (Date) -> Unit = {},
-    currentDate: Date = Date(DateConstant.YEAR_OF_TODAY.toString(), "1", "1"),
+    currentDate: Date = Date(DateConstants.YEAR_OF_TODAY.toString(), "1", "1"),
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
     ) {
-        val years = DateConstant.YEARS_LIST
+        val years = DateConstants.YEARS_LIST
         val yearPickerState by remember { mutableStateOf("") }
-        val startYear = currentDate.year.toInt() - DateConstant.YEAR_OF_TODAY
+        val startYear = currentDate.year.toInt() - DateConstants.YEAR_OF_TODAY
 
-        val months = DateConstant.MONTHS_LIST
+        val months = DateConstants.MONTHS_LIST
         val monthsPickerState by remember { mutableStateOf("") }
         val startMonth = currentDate.month.toInt() - 1
 
         val days =
             remember(yearPickerState, monthsPickerState) {
-                val year = yearPickerState.filter { it.isDigit() }.toIntOrNull() ?: DateConstant.YEAR_OF_TODAY
+                val year = yearPickerState.filter { it.isDigit() }.toIntOrNull() ?: DateConstants.YEAR_OF_TODAY
                 val month = monthsPickerState.filter { it.isDigit() }.toIntOrNull() ?: 1
                 (1..getDaysInMonth(year, month)).map { it.toString() + "일" }
             }
@@ -58,28 +58,22 @@ fun BbangZipDatePicker(
         }
 
         // 3개 picker에 weight 부여해서 대충 피그마와 비슷하게 동적으로 되게 구현해봤는데 어떤가요..
-        Picker(
-            state = yearPickerState,
+        BbangZipPicker(
             items = years,
             modifier = Modifier.weight(5f),
             startIndex = startYear,
-            isCircular = false,
         )
 
-        Picker(
-            state = monthsPickerState,
+        BbangZipPicker(
             items = months,
             modifier = Modifier.weight(3f),
             startIndex = startMonth,
-            isCircular = false,
         )
 
-        Picker(
-            state = daysPickerState,
+        BbangZipPicker(
             items = days,
             modifier = Modifier.weight(3f),
             startIndex = startDay,
-            isCircular = false,
         )
     }
 }
