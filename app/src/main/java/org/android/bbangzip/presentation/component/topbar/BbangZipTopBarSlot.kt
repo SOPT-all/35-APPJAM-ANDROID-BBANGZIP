@@ -17,7 +17,7 @@ fun BbangZipTopBarSlot(
     trailingIcon: @Composable (RowScope.() -> Unit) = {},
 ) {
     Row(
-        modifier = modifier.height(56.dp),
+        modifier = modifier,
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {

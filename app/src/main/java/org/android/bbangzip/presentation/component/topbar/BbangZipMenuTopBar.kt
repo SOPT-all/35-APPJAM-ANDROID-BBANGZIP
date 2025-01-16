@@ -23,6 +23,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun BbangZipMenuTopBar(
     title: String = "",
+    modifier: Modifier = Modifier,
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
     onMenuClick: () -> Unit = {},
@@ -32,7 +33,7 @@ fun BbangZipMenuTopBar(
         leadingIcon = {
             Box(
                 modifier =
-                    Modifier
+                    modifier
                         .width(56.dp)
                         .height(56.dp),
                 contentAlignment = Alignment.Center,
