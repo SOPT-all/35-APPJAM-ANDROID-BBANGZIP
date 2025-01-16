@@ -41,7 +41,7 @@ fun BbangZipSemesterPicker(
             onConfirm(
                 Semester(
                     year = year,
-                    semester = semester?:SemesterType.FIRST,
+                    semester = semester ?: SemesterType.FIRST,
                 ),
             )
         }
