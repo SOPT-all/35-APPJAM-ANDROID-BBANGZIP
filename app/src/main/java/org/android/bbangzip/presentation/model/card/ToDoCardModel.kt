@@ -13,4 +13,5 @@ data class ToDoCardModel(
     val finishPage: Int,
     val deadline: String,
     val remainingDays: Int,
+    val isFinished : Boolean,
 ) : Parcelable

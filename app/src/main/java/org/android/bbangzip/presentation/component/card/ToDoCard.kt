@@ -205,6 +205,7 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = "1",
                         remainingDays = 1,
+                        isFinished = true
                     ),
                 modifier =
                     Modifier
@@ -222,6 +223,7 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = "1",
                         remainingDays = 1,
+                        isFinished = true
                     ),
                 modifier =
                     Modifier
@@ -239,6 +241,7 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = "1",
                         remainingDays = 1,
+                        isFinished = true
                     ),
                 modifier =
                     Modifier
@@ -256,6 +259,7 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = "1",
                         remainingDays = 1,
+                        isFinished = true
                     ),
                 modifier =
                     Modifier
