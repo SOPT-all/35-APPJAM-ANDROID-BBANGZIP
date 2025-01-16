@@ -26,27 +26,29 @@ fun BbangZipMenuTopBar(
     leadingIcon: ImageVector? = null,
     trailingIcon: ImageVector? = null,
     onMenuClick: () -> Unit = {},
-    onBackArrowClick: () -> Unit = {}
-){
+    onBackArrowClick: () -> Unit = {},
+) {
     BbangZipTopBarSlot(
         leadingIcon = {
             Box(
-                modifier = Modifier
-                    .width(56.dp)
-                    .height(56.dp),
-                contentAlignment = Alignment.Center
-            ){
+                modifier =
+                    Modifier
+                        .width(56.dp)
+                        .height(56.dp),
+                contentAlignment = Alignment.Center,
+            ) {
                 leadingIcon?.let {
                     Icon(
                         imageVector = it,
                         contentDescription = null,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .applyFilterOnClick(
-                                radius = 20.dp,
-                                isDisabled = false,
-                                onClick = { onBackArrowClick() }
-                            )
+                        modifier =
+                            Modifier
+                                .padding(8.dp)
+                                .applyFilterOnClick(
+                                    radius = 20.dp,
+                                    isDisabled = false,
+                                    onClick = { onBackArrowClick() },
+                                ),
                     )
                 }
             }
@@ -56,39 +58,41 @@ fun BbangZipMenuTopBar(
                 text = title,
                 textAlign = TextAlign.Center,
                 modifier = Modifier.weight(1f),
-                style = BbangZipTheme.typography.headline1Bold
+                style = BbangZipTheme.typography.headline1Bold,
             )
         },
         trailingIcon = {
-           Box(
-               modifier = Modifier
-                   .width(56.dp)
-                   .height(56.dp),
-               contentAlignment = Alignment.Center
-           ) {
+            Box(
+                modifier =
+                    Modifier
+                        .width(56.dp)
+                        .height(56.dp),
+                contentAlignment = Alignment.Center,
+            ) {
                 trailingIcon?.let {
                     Icon(
                         imageVector = it,
                         contentDescription = null,
-                        modifier = Modifier
-                            .padding(8.dp)
-                            .applyFilterOnClick(
-                                radius = 20.dp,
-                                isDisabled = false,
-                                onClick = { onMenuClick() }
-                            )
+                        modifier =
+                            Modifier
+                                .padding(8.dp)
+                                .applyFilterOnClick(
+                                    radius = 20.dp,
+                                    isDisabled = false,
+                                    onClick = { onMenuClick() },
+                                ),
                     )
                 }
             }
-        }
+        },
     )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun BbangZipMenuTopBarPreview(){
+fun BbangZipMenuTopBarPreview() {
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         BbangZipMenuTopBar(
             title = "경제통계학",
@@ -108,7 +112,6 @@ fun BbangZipMenuTopBarPreview(){
             title = "경제통계학",
             leadingIcon = ImageVector.vectorResource(id = R.drawable.ic_chevronleft_thick_small_24),
             trailingIcon = ImageVector.vectorResource(id = R.drawable.ic_menu_kebab_default_24),
-
-            )
+        )
     }
 }
