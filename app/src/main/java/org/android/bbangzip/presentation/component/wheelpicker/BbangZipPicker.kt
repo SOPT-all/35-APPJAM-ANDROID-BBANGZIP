@@ -54,7 +54,8 @@ fun Picker(
     textModifier: Modifier = Modifier,
     isCircular: Boolean = true,
 ) {
-    val pickerItems: List<String> = if (isCircular) items else List(visibleItemsCount / 2) { "" } + items + List(visibleItemsCount / 2) { "" }
+    val pickerItems: List<String> = if (isCircular) items
+    else List(visibleItemsCount / 2) { "" } + items + List(visibleItemsCount / 2) { "" }
     // 보여지는 아이템의 가운데값 인덱스
     val visibleItemsMiddle = visibleItemsCount / 2
     // 무한 스크롤
@@ -116,10 +117,10 @@ fun Picker(
             flingBehavior = flingBehavior,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(itemHeightDp * visibleItemsCount)
-                    .fadingEdge(fadingEdgeGradient),
+            Modifier
+                .fillMaxWidth()
+                .height(itemHeightDp * visibleItemsCount)
+                .fadingEdge(fadingEdgeGradient),
         ) {
             items(listScrollCount) { index ->
                 Text(
@@ -128,21 +129,21 @@ fun Picker(
                     overflow = TextOverflow.Ellipsis,
                     style = BbangZipTheme.typography.heading2Bold,
                     modifier =
-                        Modifier
-                            .onSizeChanged { size -> itemHeightPixels.intValue = size.height }
-                            .padding(8.dp)
-                            .then(textModifier),
+                    Modifier
+                        .onSizeChanged { size -> itemHeightPixels.intValue = size.height }
+                        .padding(8.dp)
+                        .then(textModifier),
                 )
             }
         }
 
         Box(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .offset(y = itemHeightDp * visibleItemsMiddle)
-                    .height(height = itemHeightDp)
-                    .background(color = defaultBbangZipColors.fillAlternative_68645E_05),
+            Modifier
+                .fillMaxWidth()
+                .offset(y = itemHeightDp * visibleItemsMiddle)
+                .height(height = itemHeightDp)
+                .background(color = defaultBbangZipColors.fillAlternative_68645E_05),
         )
     }
 }
