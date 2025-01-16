@@ -33,12 +33,12 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun ToDoCard(
-    state: BbangZipCardState,
     data: ToDoCardModel,
     modifier: Modifier = Modifier,
     isDeleted: Boolean = false,
     onClick: () -> Unit = {},
 ) {
+    val state = data.cardState
     val radius = state.getRadius()
     val infoOpacity = state.getInfoOpacity()
     Box(
@@ -194,7 +194,6 @@ fun ToDoCardPreview() {
     BBANGZIPTheme {
         Column {
             ToDoCard(
-                state = BbangZipCardState.DEFAULT,
                 data =
                     ToDoCardModel(
                         subjectName = "경제통계학개론",
@@ -205,14 +204,13 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = "1",
                         remainingDays = 1,
-                        isFinished = true
+                        cardState = BbangZipCardState.DEFAULT,
                     ),
                 modifier =
                     Modifier
                         .padding(16.dp),
             )
             ToDoCard(
-                state = BbangZipCardState.CHECKABLE,
                 data =
                     ToDoCardModel(
                         subjectName = "경제통계학개론",
@@ -223,14 +221,13 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = "1",
                         remainingDays = 1,
-                        isFinished = true
+                        cardState = BbangZipCardState.CHECKED,
                     ),
                 modifier =
                     Modifier
                         .padding(16.dp),
             )
             ToDoCard(
-                state = BbangZipCardState.CHECKED,
                 data =
                     ToDoCardModel(
                         subjectName = "경제통계학개론",
@@ -241,14 +238,13 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = "1",
                         remainingDays = 1,
-                        isFinished = true
+                        cardState = BbangZipCardState.CHECKABLE,
                     ),
                 modifier =
                     Modifier
                         .padding(16.dp),
             )
             ToDoCard(
-                state = BbangZipCardState.COMPLETE,
                 data =
                     ToDoCardModel(
                         subjectName = "경제통계학개론",
@@ -259,7 +255,7 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = "1",
                         remainingDays = 1,
-                        isFinished = true
+                        cardState = BbangZipCardState.COMPLETE,
                     ),
                 modifier =
                     Modifier
