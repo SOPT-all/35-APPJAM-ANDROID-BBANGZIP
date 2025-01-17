@@ -109,10 +109,10 @@ protobuf {
     generateProtoTasks {
         all().forEach { task ->
             task.builtins {
-                id("java"){
+                id("java") {
                     option("lite")
                 }
-                id("kotlin"){
+                id("kotlin") {
                     option("lite")
                 }
             }

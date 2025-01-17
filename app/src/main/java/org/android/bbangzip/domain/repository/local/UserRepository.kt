@@ -5,6 +5,8 @@ import org.android.bbangzip.UserPreferences
 
 interface UserRepository {
     val userPreferenceFlow: Flow<UserPreferences>
+
     suspend fun setUserData(accessToken: String)
+
     suspend fun clearUserData()
 }

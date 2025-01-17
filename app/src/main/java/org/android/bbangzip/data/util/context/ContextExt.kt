@@ -8,5 +8,5 @@ import org.android.bbangzip.data.datasource.local.serializer.UserSerializer
 
 val Context.userDataSource: DataStore<UserPreferences> by dataStore(
     fileName = "user_prefs.proto",
-    serializer = UserSerializer
+    serializer = UserSerializer,
 )
