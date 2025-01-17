@@ -112,18 +112,20 @@ fun ToDoInfo(
 
     Column(modifier = modifier) {
         Column(modifier = Modifier.padding(start = 4.dp)) {
-            Text(
-                text =
-                    stringResource(
-                        R.string.card_subject_exam_name_text,
-                        data.subjectName,
-                        data.examName,
-                    ),
-                style = BbangZipTheme.typography.caption2Medium,
-                color = getColor(BbangZipTheme.colors.labelAssistive_282119_28),
-            )
+            if (data.subjectName.isNotBlank() && data.examName.isNotBlank()) {
+                Text(
+                    text =
+                        stringResource(
+                            R.string.card_subject_exam_name_text,
+                            data.subjectName,
+                            data.examName,
+                        ),
+                    style = BbangZipTheme.typography.caption2Medium,
+                    color = getColor(BbangZipTheme.colors.labelAssistive_282119_28),
+                )
 
-            Spacer(modifier = Modifier.height(2.dp))
+                Spacer(modifier = Modifier.height(2.dp))
+            }
 
             Text(
                 text = data.studyContents,
@@ -230,8 +232,8 @@ fun ToDoCardPreview() {
             ToDoCard(
                 data =
                     ToDoCardModel(
-                        subjectName = "경제통계학개론",
-                        examName = "중간고사",
+                        subjectName = "",
+                        examName = "",
                         studyContents = "경제통계학",
                         startPage = 36,
                         finishPage = 60,
