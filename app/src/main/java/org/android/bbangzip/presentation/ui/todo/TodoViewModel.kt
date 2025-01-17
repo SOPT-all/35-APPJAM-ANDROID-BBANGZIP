@@ -36,21 +36,21 @@ constructor(
             TodoContract.TodoEvent.Initialize -> launch { initDataLoad() }
 
             //Filter BottomSheet
-            is TodoContract.TodoEvent.OnFilterItemClicked -> updateState(
+            is TodoContract.TodoEvent.OnFilterBottomSheetItemClicked -> updateState(
                 TodoContract.TodoReduce.UpdateFilterItemIndex(itemIndex = event.todoFilterItemIndex)
             )
 
-            TodoContract.TodoEvent.OnFilterDismissRequest -> updateState(TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(todoFilterBottomSheetState = false))
+            TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest -> updateState(TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(todoFilterBottomSheetState = false))
             TodoContract.TodoEvent.OnFilterIconClicked -> updateState(TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(todoFilterBottomSheetState = true))
 
             //revertComplete BottomSheet
-            is TodoContract.TodoEvent.OnRevertCompleteApproveButtonClicked -> {
+            is TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveButtonClicked -> {
                 updateState(TodoContract.TodoReduce.UpdateCardState(pieceId = event.pieceId, cardState = event.cardState))
                 updateState(TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(revertCompleteBottomSheetState = false))
             }
 
-            TodoContract.TodoEvent.OnRevertCompleteDismissButtonClicked -> updateState(TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(revertCompleteBottomSheetState = false))
-            TodoContract.TodoEvent.OnRevertCompleteDismissRequest -> updateState(TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(revertCompleteBottomSheetState = false))
+            TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> updateState(TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(revertCompleteBottomSheetState = false))
+            TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissRequest -> updateState(TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(revertCompleteBottomSheetState = false))
 
             //Delete
             is TodoContract.TodoEvent.OnDeleteScreenCardClicked ->
