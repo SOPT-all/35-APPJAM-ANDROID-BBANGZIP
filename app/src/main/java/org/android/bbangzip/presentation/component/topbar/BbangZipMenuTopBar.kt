@@ -137,6 +137,7 @@ fun BbangZipMenuTopBarPreview() {
         BbangZipMenuTopBar(
             isShadowed = true,
             title = "경제통계학",
+            backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
             trailingIcon = R.drawable.ic_menu_kebab_default_24,
         )
