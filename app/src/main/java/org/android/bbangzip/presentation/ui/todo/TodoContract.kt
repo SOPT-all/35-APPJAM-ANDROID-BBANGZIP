@@ -4,7 +4,6 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
-import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.type.ToDoScreenType
 import org.android.bbangzip.presentation.util.base.BaseContract
 
@@ -17,7 +16,7 @@ class TodoContract {
         val completeCount: Int = 0,
         val todoFilterBottomSheetState: Boolean = false,
         val todoFilterItemIndex: Int = 0,
-        val selectedItemList : List<Int> = listOf(),
+        val selectedItemList: List<Int> = listOf(),
         val revertCompleteBottomSheetState: Boolean = false,
         val screenType: ToDoScreenType = ToDoScreenType.EMPTY
     ) : BaseContract.State, Parcelable {
@@ -31,11 +30,11 @@ class TodoContract {
 
         data object OnAddStudyButtonClicked : TodoEvent
 
-        data object OnFilterDismissRequest : TodoEvent
+        data object OnRevertCompleteBottomSheetDismissButtonClicked : TodoEvent
 
-        data object OnRevertCompleteDismissButtonClicked : TodoEvent
+        data object OnFilterBottomSheetDismissRequest : TodoEvent
 
-        data object OnRevertCompleteDismissRequest : TodoEvent
+        data object OnRevertCompleteBottomSheetDismissRequest : TodoEvent
 
         data object OnFilterIconClicked : TodoEvent
 
@@ -45,7 +44,7 @@ class TodoContract {
 
         data object OnItemDeleteButtonClicked : TodoEvent
 
-        data class OnRevertCompleteApproveButtonClicked(
+        data class OnRevertCompleteBottomSheetApproveButtonClicked(
             val pieceId: Int,
             val cardState: BbangZipCardState
         ) : TodoEvent
@@ -57,7 +56,7 @@ class TodoContract {
             val completeCount: Int
         ) : TodoEvent
 
-        data class OnFilterItemClicked(val todoFilterItemIndex: Int) : TodoEvent
+        data class OnFilterBottomSheetItemClicked(val todoFilterItemIndex: Int) : TodoEvent
 
         data class OnDeleteScreenCardClicked(val pieceId: Int) : TodoEvent
 

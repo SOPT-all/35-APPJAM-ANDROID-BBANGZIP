@@ -40,7 +40,7 @@ fun MainNavHost(
 
             subjectNavGraph()
 
-            todoNavGraph()
+            todoNavGraph(snackBarHostState = snackBarHostState)
 
             dummyNavGraph()
         }
