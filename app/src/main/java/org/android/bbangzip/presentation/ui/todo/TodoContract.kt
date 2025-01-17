@@ -5,18 +5,21 @@ import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.ToDoFilterType
+import org.android.bbangzip.presentation.type.ToDoScreenType
 import org.android.bbangzip.presentation.util.base.BaseContract
 
 class TodoContract {
     @Parcelize
     data class TodoState(
-        val todoList: List<ToDoCardModel>,
-        val pendingCount: Int,
-        val remainingStudyCount: Int,
-        val completeCount: Int,
-        val todoFilterBottomSheetState: Boolean,
-        val todoFilterItemIndex: Int,
-        val revertCompleteBottomSheetState: Boolean,
+        val todoList: List<ToDoCardModel> = listOf(),
+        val pendingCount: Int = 0,
+        val remainingStudyCount: Int = 0,
+        val completeCount: Int = 0,
+        val todoFilterBottomSheetState: Boolean = false,
+        val todoFilterItemIndex: Int = 0,
+        val selectedItemList : List<Int> = listOf(),
+        val revertCompleteBottomSheetState: Boolean = false,
+        val screenType: ToDoScreenType = ToDoScreenType.EMPTY
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -24,7 +27,7 @@ class TodoContract {
     sealed interface TodoEvent : BaseContract.Event {
         data object Initialize : TodoEvent
 
-        data object OnPendingStudyButtonClicked : TodoEvent
+        data object OnAddPendingStudyButtonClicked : TodoEvent
 
         data object OnAddStudyButtonClicked : TodoEvent
 
@@ -40,17 +43,24 @@ class TodoContract {
 
         data object OnCloseIconClicked : TodoEvent
 
-        data class OnItemDeleteButtonClicked(val pieceIds: List<Long>) : TodoEvent
+        data object OnItemDeleteButtonClicked : TodoEvent
+
+        data class OnRevertCompleteApproveButtonClicked(
+            val pieceId: Int,
+            val cardState: BbangZipCardState
+        ) : TodoEvent
 
         data class FetchToDoInfo(
-            val year: Int,
-            val semester: String,
-            val sortOption: String = ToDoFilterType.RECENT.id,
+            val todoList: List<ToDoCardModel>,
+            val pendingCount: Int,
+            val remainingStudyCount: Int,
+            val completeCount: Int
         ) : TodoEvent
 
         data class OnFilterItemClicked(val todoFilterItemIndex: Int) : TodoEvent
 
-        data class OnRevertCompleteApproveButtonClicked(val pieceIds: List<Long>) : TodoEvent
+        data class OnDeleteScreenCardClicked(val pieceId: Int) : TodoEvent
+
     }
 
     sealed interface TodoReduce : BaseContract.Reduce {
@@ -61,13 +71,37 @@ class TodoContract {
             val completeCount: Int,
         ) : TodoReduce
 
-        data class UpdateToDoFilterBottomSheetState(val todoFilterBottomSheetState: Boolean)
+        data class UpdateToDoFilterBottomSheetState(val todoFilterBottomSheetState: Boolean) :
+            TodoReduce
 
-        data class UpdateRevertCompleteBottomSheetState(val revertCompleteBottomSheetState: Boolean)
+        data class UpdateRevertCompleteBottomSheetState(val revertCompleteBottomSheetState: Boolean) :
+            TodoReduce
 
-        data class UpdateToDoCount(val completeCount: Int, val remainingStudyCount: Int)
+        data class UpdateToDoCount(val completeCount: Int, val remainingStudyCount: Int) :
+            TodoReduce
 
-        data class UpdateCardState(val cardState: BbangZipCardState)
+        data class UpdateCardState(
+            val pieceId: Int,
+            val cardState: BbangZipCardState
+        ) : TodoReduce
+
+        data class UpdateToDoListState(
+            val cardState: BbangZipCardState
+        ) : TodoReduce
+
+        data class UpdateFilterItemIndex(
+            val itemIndex: Int
+        ) : TodoReduce
+
+        data class DeleteToDoListItems(
+            val pieceIds: List<Int>
+        ) : TodoReduce
+
+        data class UpdatePendingToDoCount(val pendingCount: Int) : TodoReduce
+
+        data class UpdateScreenType(val screenType: ToDoScreenType) : TodoReduce
+
+        data class UpdateSelectedItemList(val pieceId: Int) : TodoReduce
     }
 
     sealed interface TodoSideEffect : BaseContract.SideEffect {
