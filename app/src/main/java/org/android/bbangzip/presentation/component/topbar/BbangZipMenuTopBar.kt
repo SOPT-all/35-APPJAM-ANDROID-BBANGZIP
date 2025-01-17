@@ -15,7 +15,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextAlign
@@ -40,20 +39,21 @@ fun BbangZipMenuTopBar(
     onLeadingIconClick: () -> Unit = {},
 ) {
     Box(
-        modifier = modifier
-            .applyShadows(
-                shadowType = if(isShadowed) BbangZipShadowType.EMPHASIZE else BbangZipShadowType.EMPTY,
-                shape = RectangleShape
-            )
-            .background(backGroundColor)
+        modifier =
+            modifier
+                .applyShadows(
+                    shadowType = if (isShadowed) BbangZipShadowType.EMPHASIZE else BbangZipShadowType.EMPTY,
+                    shape = RectangleShape,
+                )
+                .background(backGroundColor),
     ) {
         BbangZipTopBarSlot(
             leadingIcon = {
                 Box(
                     modifier =
-                    modifier
-                        .width(56.dp)
-                        .height(56.dp),
+                        modifier
+                            .width(56.dp)
+                            .height(56.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     leadingIcon?.let {
@@ -61,14 +61,14 @@ fun BbangZipMenuTopBar(
                             imageVector = ImageVector.vectorResource(it),
                             contentDescription = null,
                             modifier =
-                            Modifier
-                                .padding(8.dp)
-                                .applyFilterOnClick(
-                                    radius = 20.dp,
-                                    isDisabled = false,
-                                    onClick = { onLeadingIconClick() },
-                                ),
-                            tint = BbangZipTheme.colors.labelAlternative_282119_61
+                                Modifier
+                                    .padding(8.dp)
+                                    .applyFilterOnClick(
+                                        radius = 20.dp,
+                                        isDisabled = false,
+                                        onClick = { onLeadingIconClick() },
+                                    ),
+                            tint = BbangZipTheme.colors.labelAlternative_282119_61,
                         )
                     }
                 }
@@ -85,9 +85,9 @@ fun BbangZipMenuTopBar(
             trailingIcon = {
                 Box(
                     modifier =
-                    Modifier
-                        .width(56.dp)
-                        .height(56.dp),
+                        Modifier
+                            .width(56.dp)
+                            .height(56.dp),
                     contentAlignment = Alignment.Center,
                 ) {
                     trailingIcon?.let {
@@ -95,14 +95,14 @@ fun BbangZipMenuTopBar(
                             imageVector = ImageVector.vectorResource(it),
                             contentDescription = null,
                             modifier =
-                            Modifier
-                                .padding(8.dp)
-                                .applyFilterOnClick(
-                                    radius = 20.dp,
-                                    isDisabled = false,
-                                    onClick = { onTrailingIconClick() },
-                                ),
-                            tint = BbangZipTheme.colors.labelAlternative_282119_61
+                                Modifier
+                                    .padding(8.dp)
+                                    .applyFilterOnClick(
+                                        radius = 20.dp,
+                                        isDisabled = false,
+                                        onClick = { onTrailingIconClick() },
+                                    ),
+                            tint = BbangZipTheme.colors.labelAlternative_282119_61,
                         )
                     }
                 }
