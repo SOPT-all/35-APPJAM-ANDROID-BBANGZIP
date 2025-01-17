@@ -32,7 +32,8 @@ private fun MainScreenContent(
     modifier: Modifier = Modifier,
 ) {
     Scaffold(
-        modifier = modifier.padding(WindowInsets.navigationBars.asPaddingValues()),
+        modifier = modifier
+            .padding(WindowInsets.navigationBars.asPaddingValues()),
         content = { padding ->
             MainNavHost(
                 navigator = navigator,

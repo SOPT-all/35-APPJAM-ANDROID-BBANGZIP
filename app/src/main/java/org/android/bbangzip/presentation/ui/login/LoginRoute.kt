@@ -11,8 +11,8 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun LoginRoute(
-    navigateToSubject: () -> Unit = {},
-    navigateToOnboarding: () -> Unit= {},
+    navigateToSubject: () -> Unit,
+    navigateToOnboarding: () -> Unit,
     viewModel: LoginViewModel = hiltViewModel()
 ){
     val state by viewModel.uiState.collectAsStateWithLifecycle()

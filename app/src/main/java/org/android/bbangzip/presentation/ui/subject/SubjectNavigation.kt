@@ -6,10 +6,9 @@ import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
 
-fun NavController.navigateSubject(navOptions: NavOptions) {
+fun NavController.navigateSubject() {
     navigate(
         route = BottomNavigationRoute.Subject,
-        navOptions = navOptions,
     )
 }
 
