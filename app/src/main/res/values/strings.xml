@@ -69,4 +69,7 @@
     <string name="todo_filter_recent">recent</string>
     <string name="todo_filter_least_volume">leastVolume</string>
     <string name="todo_filter_deadline">nearestDeadline</string>
+
+    <!-- component - textfield -->
+    <string name="textfield_character_counter">%s/%s</string>
 </resources>
