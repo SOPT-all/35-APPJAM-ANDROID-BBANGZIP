@@ -2,7 +2,10 @@
 
 # Kotlin
 agp = "8.7.3"
+datastore = "1.1.2"
 kotlin = "2.0.0"
+protobuf = "3.24.1"
+protobufPlugin = "0.9.4"
 
 # Androidx
 coreKtx = "1.13.1"
@@ -21,11 +24,13 @@ espressoCore = "3.6.1"
 
 # Third Party
 okhttp = "4.11.0"
+protobufJavalite = "3.21.11"
+protobufKotlinLite = "3.21.11"
 retrofit = "2.11.0"
 retrofitKotlinSerializationConverter = "1.0.0"
 kotlinSerializationJson = "1.6.3"
 coil = "3.0.3"
-timber ="5.0.1"
+timber = "5.0.1"
 ktlint = "12.1.1"
 ksp = "2.0.0-1.0.21"
 
@@ -33,6 +38,7 @@ ksp = "2.0.0-1.0.21"
 
 # Androidx
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
 androidx-compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -41,8 +47,8 @@ androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation"}
-androidx-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "navigationHilt"}
+androidx-navigation = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation" }
+androidx-hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "navigationHilt" }
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
 # Test
@@ -59,7 +65,9 @@ hilt-plugin = { group = "com.google.dagger", name = "hilt-android-gradle-plugin"
 
 # Third Party
 coil3 = { group = "io.coil-kt.coil3", name = "coil-compose", version.ref = "coil" }
-coil3-network = {group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil"}
+coil3-network = { group = "io.coil-kt.coil3", name = "coil-network-okhttp", version.ref = "coil" }
+protobuf-javalite = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobufJavalite" }
+protobuf-kotlin-lite = { module = "com.google.protobuf:protobuf-kotlin-lite", version.ref = "protobufKotlinLite" }
 timber = { group = "com.jakewharton.timber", name = "timber", version.ref = "timber" }
 okhttp-bom = { group = "com.squareup.okhttp3", name = "okhttp-bom", version.ref = "okhttp" }
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp" }
@@ -67,6 +75,8 @@ okhttp-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-i
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-kotlin-serialization-converter = { group = "com.jakewharton.retrofit", name = "retrofit2-kotlinx-serialization-converter", version.ref = "retrofitKotlinSerializationConverter" }
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerializationJson" }
+
+protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -101,4 +111,3 @@ retrofit = [
     "retrofit",
     "retrofit-kotlin-serialization-converter"
 ]
-
