@@ -1,3 +1,4 @@
+import com.google.protobuf.gradle.id
 import java.util.Properties
 
 plugins {
@@ -9,6 +10,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dagger.hilt)
+    id("com.google.protobuf") version libs.versions.protobufPlugin
 }
 
 val properties =
@@ -42,13 +44,16 @@ android {
             )
         }
     }
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
+
     kotlinOptions {
         jvmTarget = "17"
     }
+
     buildFeatures {
         compose = true
         buildConfig = true
@@ -89,6 +94,30 @@ dependencies {
 
     // Timber
     implementation(libs.timber)
+
+    // Proto DataStore
+    implementation(libs.androidx.datastore)
+    implementation(libs.protobuf.javalite)
+    implementation(libs.protobuf.kotlin.lite)
+}
+
+protobuf {
+    protoc {
+        artifact = libs.protobuf.protoc.get().toString()
+    }
+
+    generateProtoTasks {
+        all().forEach { task ->
+            task.builtins {
+                id("java") {
+                    option("lite")
+                }
+                id("kotlin") {
+                    option("lite")
+                }
+            }
+        }
+    }
 }
 
 ktlint {

@@ -4,7 +4,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.android.bbangzip.domain.repository.DummyRepository
+import org.android.bbangzip.domain.repository.remote.DummyRepository
 import org.android.bbangzip.domain.usecase.FetchDummyUseCase
 import javax.inject.Singleton
 

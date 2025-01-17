@@ -1,7 +1,7 @@
 package org.android.bbangzip.domain.usecase
 
 import org.android.bbangzip.domain.model.DummyEntity
-import org.android.bbangzip.domain.repository.DummyRepository
+import org.android.bbangzip.domain.repository.remote.DummyRepository
 
 class FetchDummyUseCase(
     private val dummyRepository: DummyRepository,
