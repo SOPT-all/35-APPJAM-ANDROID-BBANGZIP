@@ -3,26 +3,26 @@ package org.android.bbangzip.presentation.ui.login
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import okhttp3.internal.immutableListOf
@@ -40,42 +40,34 @@ fun LoginScreen(
     pagerState: PagerState,
     onClickKakaoLoginBtn: () -> Unit = {}
 ) {
-    Column(
+    Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         Column(
             modifier = Modifier
-                .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)
+                .align(Alignment.TopStart)
+                .fillMaxWidth()
         ) {
-            Text(
-                text = stringResource(R.string.login_title),
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 20.dp, top = 84.dp, end = 20.dp),
-                style = BbangZipTheme.typography.title2Bold,
-                color = BbangZipTheme.colors.labelNormal_282119
+            PagerWithTitle(
+                pagerState = pagerState,
+                onboardingList = state.onBoardingList
             )
 
-            HorizontalPager(
-                state = pagerState,
-            ) { page ->
-                Image(
-                    painter = painterResource(state.onBoardingList[page]),
-                    contentDescription = null,
-                    modifier = Modifier.fillMaxWidth()
-                )
-            }
+            Image(
+                painter = painterResource(R.drawable.ic_background_circle_accent),
+                contentDescription = null,
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.fillMaxWidth()
+            )
+
+            PagerIndicator(pagerState = pagerState)
+
         }
 
-        Icon(
-            imageVector = ImageVector.vectorResource(R.drawable.ic_background_circle_accent),
-            modifier = Modifier.fillMaxWidth(),
-            tint = BbangZipTheme.colors.backgroundAccent_FFDAA0,
-            contentDescription = null
-        )
-
         Column(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
         ) {
             BottomTailBalloon(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -92,6 +84,60 @@ fun LoginScreen(
                 onClick = { onClickKakaoLoginBtn() },
                 label = stringResource(R.string.btn_kakao_login_label),
                 leadingIcon = R.drawable.ic_kakao_default_24
+            )
+        }
+    }
+}
+
+@Composable
+private fun PagerWithTitle(
+    pagerState: PagerState,
+    onboardingList: List<Int>
+) {
+    Column(
+        modifier = Modifier
+            .height((LocalConfiguration.current.screenHeightDp * 0.59).dp)
+            .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)
+    ) {
+        Text(
+            text = stringResource(R.string.login_title),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 20.dp, top = 84.dp, end = 20.dp),
+            style = BbangZipTheme.typography.title2Bold,
+            color = BbangZipTheme.colors.labelNormal_282119
+        )
+
+        HorizontalPager(
+            state = pagerState,
+            modifier = Modifier.fillMaxSize()
+        ) { page ->
+            Image(
+                painter = painterResource(onboardingList[page]),
+                contentDescription = null,
+                modifier = Modifier.fillMaxWidth()
+            )
+        }
+    }
+}
+
+@Composable
+private fun PagerIndicator(
+    pagerState: PagerState
+) {
+    Row(
+        Modifier
+            .padding(top = 19.dp)
+            .fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+    ) {
+        repeat(pagerState.pageCount) { iteration ->
+            val color = if (pagerState.currentPage == iteration) BbangZipTheme.colors.materialDimmer_282119_52 else BbangZipTheme.colors.materialDimmer_282119_52.copy(alpha = 0.16f)
+            Box(
+                modifier = Modifier
+                    .padding(4.dp)
+                    .background(color, CircleShape)
+                    .size(6.dp)
             )
         }
     }
