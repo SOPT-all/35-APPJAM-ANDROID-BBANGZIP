@@ -7,6 +7,9 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun TodoRoute(
@@ -17,6 +20,7 @@ fun TodoRoute(
 ) {
     val todoState by viewModel.uiState.collectAsStateWithLifecycle()
     val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
+    val todayDate  = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-E").withLocale(Locale.forLanguageTag("ko"))).split("-")
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
@@ -37,6 +41,7 @@ fun TodoRoute(
         true ->
             TodoScreen(
                 todoState = todoState,
+                todayDate= todayDate,
                 snackBarHostState = snackBarHostState,
                 onAddPendingStudyButtonClicked = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnAddPendingStudyButtonClicked)
