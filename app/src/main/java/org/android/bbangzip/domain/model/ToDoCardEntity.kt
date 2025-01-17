@@ -1,7 +1,7 @@
 package org.android.bbangzip.domain.model
 
 data class ToDoCardEntity(
-    val pieceId: String,
+    val pieceId: Int,
     val subjectName: String = "",
     val examName: String = "",
     val studyContents: String,

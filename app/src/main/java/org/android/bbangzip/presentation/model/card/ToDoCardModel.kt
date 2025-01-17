@@ -6,7 +6,7 @@ import org.android.bbangzip.presentation.component.card.BbangZipCardState
 
 @Parcelize
 data class ToDoCardModel(
-    val pieceId: String,
+    val pieceId: Int,
     val subjectName: String,
     val examName: String,
     val studyContents: String,
