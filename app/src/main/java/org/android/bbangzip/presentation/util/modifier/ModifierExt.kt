@@ -73,7 +73,7 @@ fun Modifier.applyFilterOnClick(
             .background(if (isPressed && !isDisabled) finalFilteredColor else baseColor, shape = RoundedCornerShape(size = radius))
             .clickable(
                 interactionSource = interactionSource,
-                indication = rippleIndication,
+                indication =  if(!isDisabled) rippleIndication else null,
                 onClick = { onClick() },
             )
     }

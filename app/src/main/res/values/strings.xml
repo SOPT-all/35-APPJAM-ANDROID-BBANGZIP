@@ -44,7 +44,7 @@
     <string name="btn_modify_semester_label">학기 변경하기</string>
     <string name="btn_add_label">추가하기</string>
     <string name="btn_add_todo_label">오늘 할 공부 추가하기</string>
-    <string name="btn_add_subject_first_label">과목 먼저 추가하기</string>
+    <string name="btn_add_subject_label">과목 추가하기</string>
     <string name="btn_rollback_label">되돌리기</string>
     <string name="btn_close_label">닫기</string>
     <string name="btn_logout_label">로그아웃 하기</string>
@@ -67,4 +67,7 @@
 
     <!-- component - textfield -->
     <string name="textfield_character_counter">%s/%s</string>
+
+    <!-- empty view -->
+    <string name="empty_view_text">Empty View</string>
 </resources>

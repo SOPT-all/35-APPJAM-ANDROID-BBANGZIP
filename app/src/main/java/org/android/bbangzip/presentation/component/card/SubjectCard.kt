@@ -37,33 +37,32 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun SubjectCard(
-    state: BbangZipCardState,
     data: SubjectCardModel,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
-    val radius = state.getRadius()
+    val radius = data.state.getRadius()
     val width = (LocalConfiguration.current.screenWidthDp - 48) / 2
     Box(
         modifier =
             modifier
                 .applyShadows(
-                    shadowType = state.getShadowOptions(),
+                    shadowType = data.state.getShadowOptions(),
                     shape = RoundedCornerShape(radius),
                 )
                 .border(
-                    width = state.getBorderWidth(),
-                    color = state.getBorderColor(),
+                    width = data.state.getBorderWidth(),
+                    color = data.state.getBorderColor(),
                     shape = RoundedCornerShape(size = radius),
                 )
                 .width(width = width.dp)
                 .aspectRatio(156/190f)
                 .background(
-                    color = state.getBackgroundColor(),
+                    color = data.state.getBackgroundColor(),
                     shape = RoundedCornerShape(size = radius),
                 )
                 .applyFilterOnClick(
-                    baseColor = state.getBackgroundColor(),
+                    baseColor = data.state.getBackgroundColor(),
                     isDisabled = false,
                     radius = radius,
                 ) { onClick() }
@@ -151,7 +150,6 @@ fun SubjectCardPreview() {
     BBANGZIPTheme {
         Column {
             SubjectCard(
-                state = BbangZipCardState.DEFAULT,
                 data =
                     SubjectCardModel(
                         subjectName = "[경영] 경제통계학",
@@ -160,11 +158,11 @@ fun SubjectCardPreview() {
                         inProgressCount = 6,
                         subjectId = 1,
                         examRemainingDays = 1,
+                        state = BbangZipCardState.DEFAULT,
                     ),
                 modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
-                state = BbangZipCardState.CHECKED,
                 data =
                     SubjectCardModel(
                         subjectName = "[경영] 경제통계학",
@@ -173,11 +171,11 @@ fun SubjectCardPreview() {
                         inProgressCount = 6,
                         subjectId = 1,
                         examRemainingDays = 1,
+                        state = BbangZipCardState.CHECKED,
                     ),
                 modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
-                state = BbangZipCardState.CHECKABLE,
                 data =
                     SubjectCardModel(
                         subjectName = "[경영] 해ㅜ저해줘재훠재헞",
@@ -186,6 +184,7 @@ fun SubjectCardPreview() {
                         inProgressCount = 6,
                         subjectId = 1,
                         examRemainingDays = 1,
+                        state = BbangZipCardState.CHECKABLE,
                     ),
                 modifier = Modifier.padding(16.dp),
             )
