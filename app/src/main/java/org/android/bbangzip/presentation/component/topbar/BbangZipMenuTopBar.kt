@@ -29,7 +29,7 @@ import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
-fun BbangZipMenuTopBar(
+fun BbangZipBaseTopBar(
     modifier: Modifier = Modifier,
     isShadowed: Boolean = false,
     backGroundColor: Color = BbangZipTheme.colors.staticWhite_FFFFFF,
@@ -119,24 +119,24 @@ fun BbangZipMenuTopBarPreview() {
     Column(
         modifier = Modifier.fillMaxSize(),
     ) {
-        BbangZipMenuTopBar(
+        BbangZipBaseTopBar(
             isShadowed = true,
             title = "경제통계학",
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
         )
 
-        BbangZipMenuTopBar(
+        BbangZipBaseTopBar(
             isShadowed = true,
             title = "",
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
         )
 
-        BbangZipMenuTopBar(
+        BbangZipBaseTopBar(
             isShadowed = true,
             title = "",
         )
 
-        BbangZipMenuTopBar(
+        BbangZipBaseTopBar(
             isShadowed = true,
             title = "경제통계학",
             backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
