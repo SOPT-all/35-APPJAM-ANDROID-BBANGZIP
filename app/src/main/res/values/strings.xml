@@ -1,4 +1,70 @@
 <resources>
     <string name="app_name">BBANGZIP</string>
     <string name="dummy">이거</string>
+
+    <!--bottomNavigation-->
+    <string name="bottomNavigation_subject_tab_title">과목 관리</string>
+    <string name="bottomNavigation_todo_tab_title">오늘 할 일</string>
+    <string name="bottomNavigation_friend_tab_title">친구들</string>
+    <string name="bottomNavigation_my_tab_title">마이페이지</string>
+
+    <!-- component - card -->
+    <string name="card_todo_check_space_description">체크 표시 아이콘입니다.</string>
+    <string name="card_subject_button_description">오늘 할 일로 향하는 버튼입니다.</string>
+    <string name="card_subject_pending_icon_description">밀린 공부</string>
+    <string name="card_subject_studying_icon_description">진행 중인 공부</string>
+    <string name="card_friend_profile_description">프로필 이미지입니다.</string>
+    <string name="card_friend_kebab_button_description">더보기 버튼입니다.</string>
+    <string name="card_friend_boss_text">사장님</string>
+    <string name="card_d_minus_day_text">D-%s</string>
+    <string name="card_deadline_text">%s까지</string>
+    <string name="card_start_end_day_text">%sp - %sp</string>
+    <string name="card_subject_exam_name_text">%s / %s</string>
+    <string name="card_d_minus">D+</string>
+    <string name="card_d_plus">D-</string>
+
+    <!--button-->
+    <string name="btn_kakao_login_label">카카오로 로그인하기</string>
+    <string name="btn_todo_overdue_label">"밀린 공부 %d개 하러가기"</string>
+    <string name="btn_select_due_label">"%s년 %s월 %s일 까지"</string>
+    <string name="btn_start_app_label">빵집 오픈하러 가기</string>
+    <string name="btn_finish_onboarding_label">빵점 탈출하러 가기</string>
+    <string name="btn_input_exam_date_label">시험 일자 입력하기</string>
+    <string name="btn_input_due_label">공부 기한 입력하기</string>
+    <string name="btn_input_semester_label">학년/학기 입력하기</string>
+    <string name="btn_next_label">다음으로</string>
+    <string name="btn_cancle_label">취소</string>
+    <string name="btn_delete_label">"%d개 삭제하기"</string>
+    <string name="btn_save_label">저장하기</string>
+    <string name="btn_slice_study_label">쪼개서 공부하기</string>
+    <string name="btn_slice_again_label">다시 쪼개기</string>
+    <string name="btn_enroll_label">등록하기</string>
+    <string name="btn_enroll_study_label">공부 내용 등록하기</string>
+    <string name="btn_modify_label">수정하기</string>
+    <string name="btn_modify_semester_label">학기 변경하기</string>
+    <string name="btn_add_label">추가하기</string>
+    <string name="btn_add_todo_label">오늘 할 공부 추가하기</string>
+    <string name="btn_add_subject_first_label">과목 먼저 추가하기</string>
+    <string name="btn_rollback_label">되돌리기</string>
+    <string name="btn_close_label">닫기</string>
+    <string name="btn_logout_label">로그아웃 하기</string>
+    <string name="btn_withdraw_label">탈퇴하기</string>
+
+    <!-- progress bar -->
+    <string name="progressbar_chip_level">Lv %s</string>
+    <string name="bbangzip_level1_name">가판대</string>
+    <string name="bbangzip_level2_name">가판대</string>
+    <string name="bbangzip_level3_name">가판대</string>
+    <string name="bbangzip_level_point">%s/%s</string>
+    <string name="bbangzip_trophy_description">This is a point icon that tells you the current bakery level.</string>
+
+    <!-- onboarding -->
+    <string name="onboarding_first_title">사장님의 이름을\n알려주세요</string>
+    <string name="onboarding_second_title">현재 재학 중인\n학기를 알려주세요</string>
+    <string name="onboarding_second_description">%s 사장님, 안녕하세요!</string>
+    <string name="onboarding_third_title">수강하는 과목 중 한 가지만 먼저 입력해 볼까요?</string>
+    <string name="onboarding_third_description">>%s %s에 재학 중이시네요!</string>
+
+    <!-- component - textfield -->
+    <string name="textfield_character_counter">%s/%s</string>
 </resources>
