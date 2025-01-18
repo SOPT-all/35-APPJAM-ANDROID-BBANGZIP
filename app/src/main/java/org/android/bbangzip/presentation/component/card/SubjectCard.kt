@@ -107,36 +107,40 @@ fun SubjectInfo(
         Spacer(modifier = Modifier.height(4.dp))
 
         Text(
-            text = data.examName,
+            text = data.examName.ifEmpty { "공부를 추가해주세요" },
             style = BbangZipTheme.typography.label2Bold,
             color = BbangZipTheme.colors.labelNeutral_282119_88,
             maxLines = 1,
             overflow = TextOverflow.Ellipsis,
         )
 
-        Spacer(modifier = Modifier.height(4.dp))
+        data.examName.ifEmpty { Gap() }
 
-        BbangZipChip(
-            text = (stringResource(R.string.card_d_minus_day_text, data.pendingCount)),
-            backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-        )
+        if (data.examName.isNotEmpty()) {
+            Gap(height = 4)
 
-        Gap()
-
-        Column {
-            BbangZipPushIconWithText(
-                backgroundColor = BbangZipTheme.colors.statusDestructive_FF8345,
-                count = data.pendingCount,
-                text = stringResource(R.string.card_subject_pending_icon_description),
-            )
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            BbangZipPushIconWithText(
+            BbangZipChip(
+                text = (stringResource(R.string.card_d_minus_day_text, data.pendingCount)),
                 backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                count = data.inProgressCount,
-                text = stringResource(R.string.card_subject_studying_icon_description),
             )
+
+            Gap()
+
+            Column {
+                BbangZipPushIconWithText(
+                    backgroundColor = BbangZipTheme.colors.statusDestructive_FF8345,
+                    count = data.pendingCount,
+                    text = stringResource(R.string.card_subject_pending_icon_description),
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+
+                BbangZipPushIconWithText(
+                    backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
+                    count = data.inProgressCount,
+                    text = stringResource(R.string.card_subject_studying_icon_description),
+                )
+            }
         }
     }
 }
