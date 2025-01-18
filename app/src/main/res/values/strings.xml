@@ -21,7 +21,7 @@
     <string name="card_start_end_day_text">%sp - %sp</string>
     <string name="card_subject_exam_name_text">%s / %s</string>
     <string name="card_d_minus">D+</string>
-    <string name="card_d_plus">D-</string>
+    <string name="card_d_plus">D</string>
 
     <!--button-->
     <string name="btn_kakao_login_label">카카오로 로그인하기</string>
@@ -81,4 +81,6 @@
     <string name="todo_remaing_count_text">총 %s개의 공부가 남았어요</string>
     <string name="todo_remaining_nothing_text">오늘의 공부를 모두 끝냈어요!</string>
     <string name="todo_complete_remaining_nothing_text">사장님 퇴근 준비 완료</string>
+    <string name="todo_delete_screen_text">삭제할 오늘의 공부를 \n선택해 주세요</string>
+    <string name="todo_delete_screen_delete_button_text">%s개 삭제하기</string>
 </resources>

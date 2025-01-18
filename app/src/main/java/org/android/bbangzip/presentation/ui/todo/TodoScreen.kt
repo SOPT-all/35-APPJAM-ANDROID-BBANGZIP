@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -18,7 +17,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -35,11 +33,11 @@ import org.android.bbangzip.presentation.component.balloon.TopTailBalloon
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.component.card.ToDoCard
+import org.android.bbangzip.presentation.component.snackbar.BbangZipSnackBarHost
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.ToDoScreenType
-import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -51,7 +49,7 @@ fun TodoScreen(
     onAddPendingStudyButtonClicked: () -> Unit = {},
     onAddStudyButtonClicked: () -> Unit = {},
     onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
-    onRevertCompleteBottomSheetApproveButtonClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
+    onRevertCompleteBottomSheetApproveButtonClicked: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
     onFilterIconClicked: () -> Unit = {},
     onFilterBottomSheetItemClicked: (Int) -> Unit = {},
@@ -59,90 +57,155 @@ fun TodoScreen(
     onDeleteIconClicked: () -> Unit = {},
     onCloseIconClicked: () -> Unit = {},
     onItemDeleteButtonClicked: () -> Unit = {},
-    onDeleteScreenCardClicked: (Int) -> Unit = {},
-    onFetchScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
+    onDeleteScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
+    onDefaultScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
 ) {
-    LazyColumn(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = BbangZipTheme.colors.staticWhite_FFFFFF)
-            .padding(bottom = 64.dp)
-    ) {
-        item {
-            DateMessageCard(
-                todayDate = todayDate,
-                pendingCount = todoState.pendingCount,
-                onAddPendingStudyButtonClicked = onAddPendingStudyButtonClicked
-            )
-        }
+    Box(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = modifier
+                .fillMaxSize()
+                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF)
+                .padding(bottom = 74.dp)
+        ) {
+            item {
+                DateMessageCard(
+                    todayDate = todayDate,
+                    pendingCount = todoState.pendingCount,
+                    onAddPendingStudyButtonClicked = onAddPendingStudyButtonClicked
+                )
 
-        item {
-            Spacer(Modifier.height(48.dp))
-        }
+                Spacer(Modifier.height(48.dp))
+            }
 
-        item {
-            StudyCountText(
-                remainingCount = todoState.pendingCount,
-                completeCount = todoState.completeCount,
-                modifier = modifier.padding(horizontal = 16.dp)
-            )
-        }
-
-        item {
-            Spacer(Modifier.height(16.dp))
-        }
-
-        item {
-            DeleteAndFilterIcons(
-                onDeleteIconClicked = onDeleteIconClicked,
-                onFilterIconClicked = onFilterIconClicked,
-                modifier = Modifier.padding(horizontal = 16.dp)
-            )
-        }
-
-        item {
-            Spacer(Modifier.height(18.dp))
-        }
-
-        items(
-            count = todoState.todoList.size,
-            key = { index ->
-                todoState.todoList[index].pieceId
-            }) { index ->
-            ToDoCard(
-                data = todoState.todoList[index],
-                modifier = Modifier.padding(horizontal = 24.dp, vertical = 6.dp),
-                onClick = {
-                    when {
-                        (todoState.screenType == ToDoScreenType.FETCH) && (todoState.todoList[index].cardState == BbangZipCardState.DEFAULT) ->
-                            onFetchScreenCardClicked(
-                                todoState.todoList[index].pieceId,
-                                BbangZipCardState.COMPLETE
-                            )
-
-                        (todoState.screenType == ToDoScreenType.FETCH) && (todoState.todoList[index].cardState == BbangZipCardState.COMPLETE) ->
-                            onFetchScreenCardClicked(
-                                todoState.todoList[index].pieceId,
-                                BbangZipCardState.DEFAULT
-                            )
-
-                        (todoState.screenType == ToDoScreenType.DELETE) && (todoState.todoList[index].cardState == BbangZipCardState.CHECKED) ->
-                            onFetchScreenCardClicked(
-                                todoState.todoList[index].pieceId,
-                                BbangZipCardState.CHECKABLE
-                            )
-
-                        else ->
-                            onFetchScreenCardClicked(
-                                todoState.todoList[index].pieceId,
-                                BbangZipCardState.CHECKED
-                            )
-                    }
+            if (todoState.screenType == ToDoScreenType.EMPTY) {
+                item {
+                    EmptyView(onAddStudyButtonClicked = onAddStudyButtonClicked)
                 }
-            )
+            }
+
+            if (todoState.screenType == ToDoScreenType.DEFAULT) {
+                item {
+                    StudyCountText(
+                        remainingCount = todoState.remainingStudyCount,
+                        completeCount = todoState.completeCount,
+                    )
+
+                    Spacer(Modifier.height(16.dp))
+
+                    DeleteAndFilterIcons(
+                        onDeleteIconClicked = onDeleteIconClicked,
+                        onFilterIconClicked = onFilterIconClicked,
+                    )
+
+                    Spacer(Modifier.height(10.dp))
+                }
+            }
+
+            if (todoState.screenType == ToDoScreenType.DELETE) {
+                item {
+                    Text(
+                        text = stringResource(R.string.todo_delete_screen_text),
+                        style = BbangZipTheme.typography.heading2Bold,
+                        color = BbangZipTheme.colors.labelNormal_282119,
+                        modifier = Modifier.padding(start = 24.dp)
+                    )
+
+                    Spacer(Modifier.height(4.dp))
+
+                    Row(
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        Box(
+                            modifier = Modifier
+                                .clip(CircleShape)
+                                .clickable { onCloseIconClicked() }, contentAlignment = Alignment.Center
+                        ) {
+                            Icon(
+                                imageVector = ImageVector.vectorResource(R.drawable.ic_x_small_24),
+                                contentDescription = null,
+                                modifier = Modifier.padding(8.dp),
+                                tint = BbangZipTheme.colors.labelAlternative_282119_61
+                            )
+                        }
+                    }
+                    Spacer(Modifier.height(10.dp))
+                }
+            }
+
+            if (todoState.screenType != ToDoScreenType.EMPTY) {
+                items(
+                    count = todoState.todoList.size,
+                    key = { index ->
+                        todoState.todoList[index].pieceId
+                    }) { index ->
+                    ToDoCard(
+                        data = todoState.todoList[index],
+                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+                        onClick = {
+                            when {
+                                (todoState.screenType == ToDoScreenType.DEFAULT) && (todoState.todoList[index].cardState == BbangZipCardState.DEFAULT) ->
+                                    onDefaultScreenCardClicked(
+                                        todoState.todoList[index].pieceId,
+                                        BbangZipCardState.COMPLETE
+                                    )
+
+                                (todoState.screenType == ToDoScreenType.DEFAULT) && (todoState.todoList[index].cardState == BbangZipCardState.COMPLETE) ->
+                                    onDefaultScreenCardClicked(
+                                        todoState.todoList[index].pieceId,
+                                        BbangZipCardState.DEFAULT
+                                    )
+
+                                (todoState.screenType == ToDoScreenType.DELETE) && (todoState.todoList[index].cardState == BbangZipCardState.CHECKED) ->
+                                    onDeleteScreenCardClicked(
+                                        todoState.todoList[index].pieceId,
+                                        BbangZipCardState.CHECKABLE
+                                    )
+
+                                (todoState.screenType == ToDoScreenType.DELETE) && (todoState.todoList[index].cardState == BbangZipCardState.CHECKABLE) ->
+                                    onDeleteScreenCardClicked(
+                                        todoState.todoList[index].pieceId,
+                                        BbangZipCardState.CHECKED
+                                    )
+
+                                else ->
+                                    onDeleteScreenCardClicked(
+                                        todoState.todoList[index].pieceId,
+                                        BbangZipCardState.COMPLETE
+                                    )
+                            }
+                        }
+                    )
+                }
+            }
+            if (todoState.screenType == ToDoScreenType.DELETE) {
+                item {
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    BbangZipButton(
+                        bbangZipButtonType = BbangZipButtonType.Solid,
+                        bbangZipButtonSize = BbangZipButtonSize.Large,
+                        onClick = { onItemDeleteButtonClicked() },
+                        label = stringResource(R.string.todo_delete_screen_delete_button_text, todoState.selectedItemList.size),
+                        modifier = Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth(),
+                        isEnable = todoState.selectedItemList.isNotEmpty(),
+                        trailingIcon = R.drawable.ic_plus_thick_24,
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                }
+            }
         }
     }
 }
+
 
 @Composable
 fun DateMessageCard(
@@ -256,12 +319,13 @@ fun StudyCountText(
 ) {
     Column(
         modifier = modifier
+            .padding(horizontal = 16.dp)
             .fillMaxWidth()
             .padding(start = 8.dp)
     ) {
         Text(
             text = when {
-                completeCount > 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
+                completeCount > 0 && remainingCount != 0-> stringResource(R.string.todo_complete_count_text, completeCount)
                 remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
                 else -> stringResource(R.string.todo_complete_nothing_text)
             },
@@ -271,7 +335,7 @@ fun StudyCountText(
 
         Text(
             text = if (remainingCount != 0) stringResource(R.string.todo_remaing_count_text, remainingCount)
-            else stringResource(R.string.todo_complete_nothing_text),
+            else stringResource(R.string.todo_remaining_nothing_text),
             style = BbangZipTheme.typography.title3Bold,
             color = BbangZipTheme.colors.labelNormal_282119
         )
@@ -285,7 +349,9 @@ fun DeleteAndFilterIcons(
     onFilterIconClicked: () -> Unit = {},
 ) {
     Row(
-        modifier = modifier.fillMaxWidth(),
+        modifier = modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
         Spacer(modifier = Modifier.weight(1f))
@@ -293,9 +359,8 @@ fun DeleteAndFilterIcons(
         Box(
             modifier = Modifier
                 .clip(CircleShape)
-                .clickable { onDeleteIconClicked() }
-            , contentAlignment = Alignment.Center
-            ) {
+                .clickable { onDeleteIconClicked() }, contentAlignment = Alignment.Center
+        ) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_trash_default_24),
                 contentDescription = null,
@@ -307,8 +372,7 @@ fun DeleteAndFilterIcons(
         Box(
             modifier = Modifier
                 .clip(CircleShape)
-                .clickable { onDeleteIconClicked() }
-            , contentAlignment = Alignment.Center
+                .clickable { onFilterIconClicked() }, contentAlignment = Alignment.Center
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_filter_default_24),
@@ -321,33 +385,33 @@ fun DeleteAndFilterIcons(
     }
 }
 
-//
-//@Preview(showBackground = true)
-//@Composable
-//private fun TodoScreenPreview() {
-//    Column(Modifier.fillMaxSize()) {
-//        DateMessageCard(
-//            todayDate = listOf("1", "2", "월"),
-//            pendingCount = 1,
-//            onAddPendingStudyButtonClicked = {}
-//        )
-//        Spacer(Modifier.height(16.dp))
-//        StudyCountText(
-//            1, 0,
-//            Modifier.padding(horizontal = 16.dp)
-//        )
-//
-//        Spacer(modifier = Modifier.height(16.dp))
-//
-//        DeleteAndFilterIcons(Modifier.padding(horizontal = 16.dp))
-//
-//        Spacer(Modifier.height(24.dp))
-//
-//        LazyColumn {
-//
-//        }
-//    }
-//}
+@Composable
+fun EmptyView(
+    modifier: Modifier = Modifier,
+    onAddStudyButtonClicked: () -> Unit = {}
+) {
+    Column(modifier = modifier.padding(horizontal = 16.dp)) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(328.dp)
+                .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)), contentAlignment = Alignment.Center
+        ) {
+            Text(text = "Empty View")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        BbangZipButton(
+            bbangZipButtonType = BbangZipButtonType.Solid,
+            bbangZipButtonSize = BbangZipButtonSize.Large,
+            onClick = { onAddStudyButtonClicked() },
+            label = stringResource(R.string.btn_add_todo_label),
+            modifier = Modifier.fillMaxWidth(),
+            trailingIcon = R.drawable.ic_plus_thick_24,
+        )
+    }
+}
 
 @Preview(showBackground = true)
 @Composable
@@ -504,7 +568,7 @@ fun TodoScreenMockPreview() {
             pendingCount = 2,
             remainingStudyCount = 1,
             completeCount = 1,
-            screenType = ToDoScreenType.FETCH
+            screenType = ToDoScreenType.DEFAULT
         ),
         TodoContract.TodoState(
             todoList = mockToDoList,
@@ -527,5 +591,4 @@ fun TodoScreenMockPreview() {
         todayDate = listOf("2025", "01", "18"),
         snackBarHostState = SnackbarHostState()
     )
-
 }

@@ -1,6 +1,7 @@
 package org.android.bbangzip.presentation.ui.todo
 
 import androidx.compose.material3.SnackbarHostState
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -19,8 +20,8 @@ fun TodoRoute(
     viewModel: TodoViewModel = hiltViewModel()
 ) {
     val todoState by viewModel.uiState.collectAsStateWithLifecycle()
-    val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
-    val todayDate  = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-E").withLocale(Locale.forLanguageTag("ko"))).split("-")
+    val success by viewModel.success.collectAsStateWithLifecycle(initialValue = true)
+    val todayDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-E").withLocale(Locale.forLanguageTag("ko"))).split("-")
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
@@ -41,7 +42,7 @@ fun TodoRoute(
         true ->
             TodoScreen(
                 todoState = todoState,
-                todayDate= todayDate,
+                todayDate = todayDate,
                 snackBarHostState = snackBarHostState,
                 onAddPendingStudyButtonClicked = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnAddPendingStudyButtonClicked)
@@ -52,9 +53,9 @@ fun TodoRoute(
                 onRevertCompleteBottomSheetDismissButtonClicked = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissButtonClicked)
                 },
-                onRevertCompleteBottomSheetApproveButtonClicked = { pieceId, cardState ->
+                onRevertCompleteBottomSheetApproveButtonClicked = { pieceId ->
                     viewModel.setEvent(
-                        TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId, cardState = cardState)
+                        TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)
                     )
                 },
                 onRevertCompleteBottomSheetDismissRequest = {
@@ -66,24 +67,27 @@ fun TodoRoute(
                 onFilterBottomSheetItemClicked = { filterIndex ->
                     viewModel.setEvent(TodoContract.TodoEvent.OnFilterBottomSheetItemClicked(todoFilterItemIndex = filterIndex))
                 },
-                onFilterBottomSheetDismissRequest ={
+                onFilterBottomSheetDismissRequest = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest)
                 },
-                onDeleteIconClicked ={
+                onDeleteIconClicked = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnDeleteIconClicked)
                 },
                 onCloseIconClicked = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnCloseIconClicked)
                 },
-                onItemDeleteButtonClicked ={
+                onItemDeleteButtonClicked = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnItemDeleteButtonClicked)
                 },
-                onDeleteScreenCardClicked = { pieceId ->
-                    viewModel.setEvent(TodoContract.TodoEvent.OnDeleteScreenCardClicked(pieceId = pieceId))
+                onDeleteScreenCardClicked = { pieceId, cardState ->
+                    viewModel.setEvent(TodoContract.TodoEvent.OnDeleteScreenCardClicked(pieceId = pieceId, cardState = cardState))
+                },
+                onDefaultScreenCardClicked = { pieceId, cardState ->
+                    viewModel.setEvent(TodoContract.TodoEvent.OnDefaultScreenCardClicked(pieceId = pieceId, cardState = cardState))
                 },
             )
 
-        false ->
-            null
+        false -> Text("땡!")
+
     }
 }
