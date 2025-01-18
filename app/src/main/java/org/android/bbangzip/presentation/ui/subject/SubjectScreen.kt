@@ -178,7 +178,7 @@ fun SubjectScreen(
                                         start = 16.dp,
                                         end = 16.dp,
                                     ),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp), // 아이템 간 간격
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             SubjectCard(state = BbangZipCardState.DEFAULT, data = subjects.last())
                             AddSubjectCard()
@@ -193,7 +193,7 @@ fun SubjectScreen(
                                         end = 16.dp,
                                         bottom = 16.dp,
                                     ),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp), // 아이템 간 간격
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             for (j in i * 2 until (i + 1) * 2) {
                                 SubjectCard(state = BbangZipCardState.DEFAULT, data = subjects[j])
@@ -212,7 +212,7 @@ fun SubjectScreen(
                                         start = 16.dp,
                                         end = 16.dp,
                                     ),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp), // 아이템 간 간격
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             AddSubjectCard()
                         }
@@ -226,7 +226,7 @@ fun SubjectScreen(
                                         end = 16.dp,
                                         bottom = 16.dp,
                                     ),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp), // 아이템 간 간격
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             for (j in i * 2 until (i + 1) * 2) {
                                 SubjectCard(state = BbangZipCardState.DEFAULT, data = subjects[j])
