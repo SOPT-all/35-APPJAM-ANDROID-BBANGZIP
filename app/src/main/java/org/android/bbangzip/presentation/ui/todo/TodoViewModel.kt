@@ -47,7 +47,7 @@ constructor(
                     )
                 )
                 setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
-                //TODO index를 이용해 서버로 FetchInfo 이름 보내주기
+                //TODO index를 이용해 서버로 FetchInfo 보내주기 다시 정렬하기 ㅋㅋ
             }
 
             TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest -> updateState(
