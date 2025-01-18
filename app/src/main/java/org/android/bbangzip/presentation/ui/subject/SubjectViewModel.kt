@@ -26,11 +26,13 @@ class SubjectViewModel
                 when (event) {
                     is SubjectContract.SubjectEvent.Initialize -> {}
 
-                    is SubjectContract.SubjectEvent.OnClickSelectedCard -> {
+                    is SubjectContract.SubjectEvent.OnClickDeleteButton -> {
+                        updateState(SubjectContract.SubjectReduce.UpdateDeletedSet(event.subjectId))
                     }
 
-                    is SubjectContract.SubjectEvent.OnClickSelectableCard -> {
-                        updateState(SubjectContract.SubjectReduce.UpdateSubjectCardToChecked(event.subjectId))
+                    is SubjectContract.SubjectEvent.OnClickDeleteModeCard -> {
+                        updateState(SubjectContract.SubjectReduce.UpdateSubjectCard(event.subjectId))
+                        updateState(SubjectContract.SubjectReduce.UpdateDeletedSet(event.subjectId))
                     }
 
                     is SubjectContract.SubjectEvent.OnClickTrashIcon ->{
@@ -40,7 +42,6 @@ class SubjectViewModel
                     is SubjectContract.SubjectEvent.OnClickCancleIcon ->{
                         updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
                     }
-                    else ->{}
                 }
             }
 
@@ -49,25 +50,17 @@ class SubjectViewModel
                 reduce: SubjectContract.SubjectReduce,
             ): SubjectContract.SubjectState {
                 return when (reduce) {
-                    is SubjectContract.SubjectReduce.UpdateSubjectCardToChecked -> state.copy(
-                        subjectList = state.subjectList.map { item ->
-                            if (item.state == BbangZipCardState.CHECKABLE && item.subjectId == reduce.subjectId) {
-                                item.copy(state = BbangZipCardState.CHECKED)
-                            } else {
-                                item
+                    is SubjectContract.SubjectReduce.UpdateSubjectCard -> {
+                        state.copy(
+                            subjectList = state.subjectList.map { item ->
+                                if (item.state == BbangZipCardState.CHECKABLE && item.subjectId == reduce.subjectId) {
+                                    item.copy(state = BbangZipCardState.CHECKED)
+                                } else if(item.state == BbangZipCardState.CHECKED && item.subjectId == reduce.subjectId){
+                                    item.copy(state = BbangZipCardState.CHECKABLE)
+                                }else item
                             }
-                        }
-                    )
-
-                    is SubjectContract.SubjectReduce.UpdateSubjectCardToCheckable -> state.copy(
-                        subjectList = state.subjectList.map { item ->
-                            if (item.state == BbangZipCardState.CHECKED && item.subjectId == reduce.subjectId) {
-                                item.copy(state = BbangZipCardState.CHECKABLE)
-                            } else {
-                                item
-                            }
-                        }
-                    )
+                        )
+                    }
 
                     is SubjectContract.SubjectReduce.UpdateToDeleteMode -> {
                         state.copy(
@@ -83,7 +76,29 @@ class SubjectViewModel
                             subjectList = state.subjectList.map {
                                 it.copy(state = BbangZipCardState.DEFAULT)
                             },
-                            cardViewType = CardViewType.DEFAULT
+                            cardViewType = CardViewType.DEFAULT,
+                            subjectSetToDelete = setOf()
+                        )
+                    }
+
+                    is SubjectContract.SubjectReduce.UpdateDeletedSet -> {
+                        state.copy(
+                            subjectSetToDelete = run {
+                                val targetSubject = state.subjectList.find { it.subjectId == reduce.subjectId }
+                                when (targetSubject?.state) {
+                                    BbangZipCardState.CHECKED -> {
+                                        state.subjectSetToDelete.plus(targetSubject.subjectId)
+                                    }
+
+                                    BbangZipCardState.CHECKABLE -> {
+                                        state.subjectSetToDelete.minus(targetSubject.subjectId)
+                                    }
+
+                                    else -> {
+                                        state.subjectSetToDelete
+                                    }
+                                }
+                            }
                         )
                     }
                 }

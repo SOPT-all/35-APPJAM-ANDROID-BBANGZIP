@@ -3,7 +3,6 @@ package org.android.bbangzip.presentation.ui.subject
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import okhttp3.internal.immutableListOf
-import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.SubjectCardModel
 import org.android.bbangzip.presentation.type.CardViewType
 import org.android.bbangzip.presentation.util.base.BaseContract
@@ -12,7 +11,7 @@ class SubjectContract {
     @Parcelize
     data class SubjectState(
         val subjectList: List<SubjectCardModel> =
-            immutableListOf(
+            listOf(
                 SubjectCardModel(
                     subjectName = "경제통계학",
                     examName = "",
@@ -54,7 +53,7 @@ class SubjectContract {
                     examRemainingDays = 1
                 )
             ),
-        val subjectSetToDelete : Set<SubjectCardModel> = setOf(),
+        val subjectSetToDelete: Set<Int> = setOf(),
         val cardViewType: CardViewType = CardViewType.DEFAULT
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
@@ -67,21 +66,19 @@ class SubjectContract {
 
         data object OnClickCancleIcon : SubjectEvent
 
-        data class OnClickSelectableCard(val subjectId: Int) : SubjectEvent
+        data class OnClickDeleteModeCard(val subjectId: Int) : SubjectEvent
 
-        data class OnClickSelectedCard(val subjectId: Int) : SubjectEvent
-
-        data object OnClickDeleteButton : SubjectEvent
+        data class OnClickDeleteButton(val subjectId: Int) : SubjectEvent
     }
 
     sealed interface SubjectReduce : BaseContract.Reduce {
-        data class UpdateSubjectCardToChecked(val subjectId: Int) : SubjectReduce
-
-        data class UpdateSubjectCardToCheckable(val subjectId: Int) : SubjectReduce
-
         data object UpdateToDeleteMode : SubjectReduce
 
         data object UpdateToDefaultMode : SubjectReduce
+
+        data class UpdateSubjectCard(val subjectId: Int) : SubjectReduce
+
+        data class UpdateDeletedSet(val subjectId: Int) : SubjectReduce
     }
 
     sealed interface SubjectSideEffect : BaseContract.SideEffect {
