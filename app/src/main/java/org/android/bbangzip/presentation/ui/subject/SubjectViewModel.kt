@@ -58,10 +58,9 @@ class SubjectViewModel
                             state.subjectList.map { item ->
                                 if (item.state == BbangZipCardState.CHECKABLE && item.subjectId == reduce.subjectId) {
                                     item.copy(state = BbangZipCardState.CHECKED)
-                                } else if (item.state == BbangZipCardState.CHECKED && item.subjectId == reduce.subjectId)
-                                    {
-                                        item.copy(state = BbangZipCardState.CHECKABLE)
-                                    } else {
+                                } else if (item.state == BbangZipCardState.CHECKED && item.subjectId == reduce.subjectId) {
+                                    item.copy(state = BbangZipCardState.CHECKABLE)
+                                } else {
                                     item
                                 }
                             },
