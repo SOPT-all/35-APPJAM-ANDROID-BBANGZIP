@@ -13,14 +13,14 @@ import kotlinx.coroutines.flow.collectLatest
 fun LoginRoute(
     navigateToSubject: () -> Unit,
     navigateToOnboarding: () -> Unit,
-    viewModel: LoginViewModel = hiltViewModel()
-){
+    viewModel: LoginViewModel = hiltViewModel(),
+) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { state.onBoardingList.size })
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
-            when(effect) {
+            when (effect) {
                 is LoginContract.LoginSideEffect.NavigateToSubject -> navigateToSubject()
                 is LoginContract.LoginSideEffect.NavigateToOnboarding -> navigateToOnboarding()
             }
@@ -29,13 +29,12 @@ fun LoginRoute(
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
-
         }
     }
 
     LoginScreen(
         state = state,
         pagerState = pagerState,
-        onClickKakaoLoginBtn = { viewModel.setEvent(LoginContract.LoginEvent.OnClickKakaoLoginBtn) }
+        onClickKakaoLoginBtn = { viewModel.setEvent(LoginContract.LoginEvent.OnClickKakaoLoginBtn) },
     )
 }

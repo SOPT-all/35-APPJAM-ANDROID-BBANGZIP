@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
@@ -39,35 +38,38 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun LoginScreen(
     state: LoginContract.LoginState,
     pagerState: PagerState,
-    onClickKakaoLoginBtn: () -> Unit = {}
+    onClickKakaoLoginBtn: () -> Unit = {},
 ) {
     Box(
-        modifier = Modifier
-            .fillMaxSize()
+        modifier =
+            Modifier
+                .fillMaxSize(),
     ) {
         Column(
-            modifier = Modifier
-                .align(Alignment.TopStart)
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .align(Alignment.TopStart)
+                    .fillMaxWidth(),
         ) {
             PagerWithTitle(
                 pagerState = pagerState,
-                onboardingList = state.onBoardingList
+                onboardingList = state.onBoardingList,
             )
 
             Image(
                 painter = painterResource(R.drawable.ic_background_circle_accent),
                 contentDescription = null,
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             PagerIndicator(pagerState = pagerState)
         }
 
         Column(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
+            modifier =
+                Modifier
+                    .align(Alignment.BottomCenter),
         ) {
             BottomTailBalloon(
                 modifier = Modifier.align(Alignment.CenterHorizontally),
@@ -76,14 +78,15 @@ fun LoginScreen(
             )
 
             BbangZipButton(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp),
+                modifier =
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
                 bbangZipButtonType = BbangZipButtonType.Kakao,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 onClick = { onClickKakaoLoginBtn() },
                 label = stringResource(R.string.btn_kakao_login_label),
-                leadingIcon = R.drawable.ic_kakao_default_24
+                leadingIcon = R.drawable.ic_kakao_default_24,
             )
         }
     }
@@ -92,30 +95,32 @@ fun LoginScreen(
 @Composable
 private fun PagerWithTitle(
     pagerState: PagerState,
-    onboardingList: List<Int>
+    onboardingList: List<Int>,
 ) {
     Column(
-        modifier = Modifier
-            .height((LocalConfiguration.current.screenHeightDp * 0.59).dp)
-            .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)
+        modifier =
+            Modifier
+                .height((LocalConfiguration.current.screenHeightDp * 0.59).dp)
+                .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0),
     ) {
         Text(
             text = stringResource(R.string.login_title),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 20.dp, top = 84.dp, end = 20.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, top = 84.dp, end = 20.dp),
             style = BbangZipTheme.typography.title2Bold,
-            color = BbangZipTheme.colors.labelNormal_282119
+            color = BbangZipTheme.colors.labelNormal_282119,
         )
 
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) { page ->
             Image(
                 painter = painterResource(onboardingList[page]),
                 contentDescription = null,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
         }
     }
@@ -123,21 +128,22 @@ private fun PagerWithTitle(
 
 @Composable
 private fun PagerIndicator(
-    pagerState: PagerState
+    pagerState: PagerState,
 ) {
     Row(
         Modifier
             .padding(top = 19.dp)
             .fillMaxWidth(),
-        horizontalArrangement = Arrangement.Center
+        horizontalArrangement = Arrangement.Center,
     ) {
         repeat(pagerState.pageCount) { iteration ->
             val color = if (pagerState.currentPage == iteration) BbangZipTheme.colors.materialDimmer_282119_52 else BbangZipTheme.colors.materialDimmer_282119_52.copy(alpha = 0.16f)
             Box(
-                modifier = Modifier
-                    .padding(4.dp)
-                    .background(color, CircleShape)
-                    .size(6.dp)
+                modifier =
+                    Modifier
+                        .padding(4.dp)
+                        .background(color, CircleShape)
+                        .size(6.dp),
             )
         }
     }
@@ -148,15 +154,17 @@ private fun PagerIndicator(
 private fun LoginScreenPreview() {
     BBANGZIPTheme {
         LoginScreen(
-            state = LoginContract.LoginState(
-                isOnboardingCompleted = false,
-                onBoardingList = immutableListOf(
-                    R.drawable.img_login1,
-                    R.drawable.img_login2,
-                    R.drawable.img_login1
-                )
-            ),
-            pagerState = rememberPagerState(pageCount = { 3 })
+            state =
+                LoginContract.LoginState(
+                    isOnboardingCompleted = false,
+                    onBoardingList =
+                        immutableListOf(
+                            R.drawable.img_login1,
+                            R.drawable.img_login2,
+                            R.drawable.img_login1,
+                        ),
+                ),
+            pagerState = rememberPagerState(pageCount = { 3 }),
         )
     }
 }
