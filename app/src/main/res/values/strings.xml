@@ -69,14 +69,14 @@
     <string name="textfield_character_counter">%s/%s</string>
 
     <!-- todo -->
-    <string name="todo_filter_recent">recent</string>
-    <string name="todo_filter_least_volume">leastVolume</string>
-    <string name="todo_filter_deadline">nearestDeadline</string>
+    <string name="todo_filter_recent">최근 등록 순</string>
+    <string name="todo_filter_least_volume">분량 적은 순</string>
+    <string name="todo_filter_deadline">마감 기한 빠른 순</string>
     <string name="todo_month_text">월</string>
     <string name="todo_day_text">일</string>
     <string name="todo_pending_count_text">사장님의 밀린 공부는 빵 개!</string>
     <string name="todo_top_tail_balloon_text">사장님의 과제 빵점 탈출을 응원해요!</string>
-    <string name="todo_complete_count_text">벌써 %s개나 완료 하셨네요</string>
+    <string name="todo_complete_count_text">벌써 %s개나 완료 하셨네요!</string>
     <string name="todo_complete_nothing_text">아직 완료된 할일이 없네요!</string>
     <string name="todo_remaing_count_text">총 %s개의 공부가 남았어요</string>
     <string name="todo_remaining_nothing_text">오늘의 공부를 모두 끝냈어요!</string>
@@ -87,4 +87,5 @@
     <!-- login -->
     <string name="login_title">제 과제 빵점 사장님은\n이번 학기 백점!</string>
     <string name="login_ballon_label">5초 만에 빵집 사장님 되기</string>
+    <string name="todo_revert_bottomsheet_approve_text">되돌리기</string>
 </resources>

@@ -4,10 +4,8 @@ import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
-import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.type.ToDoScreenType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -42,40 +40,94 @@ constructor(
 
             //Filter BottomSheet
             is TodoContract.TodoEvent.OnFilterBottomSheetItemClicked -> {
-                updateState(TodoContract.TodoReduce.UpdateFilterItemIndex(itemIndex = event.todoFilterItemIndex))
-                setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("${ToDoFilterType.entries[event.todoFilterItemIndex].id}으로 정렬했어요"))
+                updateState(TodoContract.TodoReduce.UpdateFilterType(selectedFilter = event.selectedFilterItem))
+                updateState(
+                    TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
+                        todoFilterBottomSheetState = false
+                    )
+                )
+                setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
                 //TODO index를 이용해 서버로 FetchInfo 이름 보내주기
             }
 
-            TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest -> updateState(TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(todoFilterBottomSheetState = false))
+            TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest -> updateState(
+                TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
+                    todoFilterBottomSheetState = false
+                )
+            )
+
             TodoContract.TodoEvent.OnFilterIconClicked -> {
-                updateState(TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(todoFilterBottomSheetState = true))
+                updateState(
+                    TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
+                        todoFilterBottomSheetState = true
+                    )
+                )
 
             }
 
             //revertComplete BottomSheet
             is TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveButtonClicked -> {
-                updateState(TodoContract.TodoReduce.UpdateCardState(pieceId = event.pieceId, cardState = BbangZipCardState.DEFAULT))
-                updateState(TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(revertCompleteBottomSheetState = false))
-                updateState(TodoContract.TodoReduce.UpdateToDoCount(completeCount = currentUiState.completeCount - 1, remainingStudyCount = currentUiState.remainingStudyCount + 1))
+                updateState(
+                    TodoContract.TodoReduce.UpdateCardState(
+                        pieceId = event.pieceId,
+                        cardState = BbangZipCardState.DEFAULT
+                    )
+                )
+                updateState(
+                    TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
+                        revertCompleteBottomSheetState = false
+                    )
+                )
+                updateState(
+                    TodoContract.TodoReduce.UpdateToDoCount(
+                        completeCount = currentUiState.completeCount - 1,
+                        remainingStudyCount = currentUiState.remainingStudyCount + 1
+                    )
+                )
+                updateState(TodoContract.TodoReduce.ResetSelectedItemList)
                 setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("미완료 상태로 되돌려졌어요!"))
                 //TODO pieceId 사영헤사 서버로 쏘기 미완료 APT
             }
 
-            TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> updateState(TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(revertCompleteBottomSheetState = false))
-            TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissRequest -> updateState(TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(revertCompleteBottomSheetState = false))
+            TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> {
+                updateState(
+                    TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
+                        revertCompleteBottomSheetState = false
+                    )
+                )
+                updateState(TodoContract.TodoReduce.ResetSelectedItemList)
+            }
+
+            TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissRequest -> {
+                updateState(
+                    TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
+                        revertCompleteBottomSheetState = false
+                    )
+                )
+                updateState(TodoContract.TodoReduce.ResetSelectedItemList)
+            }
 
             //Delete
             is TodoContract.TodoEvent.OnDeleteScreenCardClicked -> {
                 when (event.cardState) {
                     BbangZipCardState.CHECKED -> {
                         updateState(TodoContract.TodoReduce.UpdateSelectedItemList(pieceId = event.pieceId))
-                        updateState(TodoContract.TodoReduce.UpdateCardState(pieceId = event.pieceId, cardState = event.cardState))
+                        updateState(
+                            TodoContract.TodoReduce.UpdateCardState(
+                                pieceId = event.pieceId,
+                                cardState = event.cardState
+                            )
+                        )
                     }
 
                     BbangZipCardState.CHECKABLE -> {
                         updateState(TodoContract.TodoReduce.DeleteSelectedItemList(pieceId = event.pieceId))
-                        updateState(TodoContract.TodoReduce.UpdateCardState(pieceId = event.pieceId, cardState = event.cardState))
+                        updateState(
+                            TodoContract.TodoReduce.UpdateCardState(
+                                pieceId = event.pieceId,
+                                cardState = event.cardState
+                            )
+                        )
                     }
 
                     else -> {
@@ -86,11 +138,27 @@ constructor(
             //Default
             is TodoContract.TodoEvent.OnDefaultScreenCardClicked -> {
                 if (event.cardState == BbangZipCardState.COMPLETE) {
-                    updateState(TodoContract.TodoReduce.UpdateCardState(pieceId = event.pieceId, cardState = event.cardState))
-                    updateState(TodoContract.TodoReduce.UpdateToDoCount(completeCount = currentUiState.completeCount + 1, remainingStudyCount = currentUiState.remainingStudyCount - 1))
+                    updateState(
+                        TodoContract.TodoReduce.UpdateCardState(
+                            pieceId = event.pieceId,
+                            cardState = event.cardState
+                        )
+                    )
+                    updateState(
+                        TodoContract.TodoReduce.UpdateToDoCount(
+                            completeCount = currentUiState.completeCount + 1,
+                            remainingStudyCount = currentUiState.remainingStudyCount - 1
+                        )
+                    )
                     TodoContract.TodoSideEffect.ShowSnackBar("공부완료 ! 오늘의 빵굽기 성공!")
                 } else {
-                    updateState(TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(revertCompleteBottomSheetState = true))
+                    updateState(
+                        TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
+                            revertCompleteBottomSheetState = true
+                        )
+                    )
+                    updateState(TodoContract.TodoReduce.UpdateSelectedItemList(pieceId = event.pieceId))
+
                 }
                 // TODO 서버로 pieceId 이용해서 완료 API 쏘기
             }
@@ -115,7 +183,12 @@ constructor(
                 )
                 if (currentUiState.remainingStudyCount != 0) {
                     updateState(TodoContract.TodoReduce.DeleteToDoListItems)
-                    updateState(TodoContract.TodoReduce.UpdateToDoListCardState(previousCardState = BbangZipCardState.CHECKABLE, nextCardState = BbangZipCardState.DEFAULT))
+                    updateState(
+                        TodoContract.TodoReduce.UpdateToDoListCardState(
+                            previousCardState = BbangZipCardState.CHECKABLE,
+                            nextCardState = BbangZipCardState.DEFAULT
+                        )
+                    )
                     updateState(TodoContract.TodoReduce.UpdateScreenType(screenType = ToDoScreenType.DEFAULT))
 
                 } else {
@@ -126,8 +199,18 @@ constructor(
             }
 //  통과
             TodoContract.TodoEvent.OnCloseIconClicked -> {
-                updateState(TodoContract.TodoReduce.UpdateToDoListCardState(previousCardState = BbangZipCardState.CHECKABLE, nextCardState = BbangZipCardState.DEFAULT))
-                updateState(TodoContract.TodoReduce.UpdateToDoListCardState(previousCardState = BbangZipCardState.CHECKED, nextCardState = BbangZipCardState.DEFAULT))
+                updateState(
+                    TodoContract.TodoReduce.UpdateToDoListCardState(
+                        previousCardState = BbangZipCardState.CHECKABLE,
+                        nextCardState = BbangZipCardState.DEFAULT
+                    )
+                )
+                updateState(
+                    TodoContract.TodoReduce.UpdateToDoListCardState(
+                        previousCardState = BbangZipCardState.CHECKED,
+                        nextCardState = BbangZipCardState.DEFAULT
+                    )
+                )
                 updateState(TodoContract.TodoReduce.ResetSelectedItemList)
                 updateState(TodoContract.TodoReduce.UpdateScreenType(screenType = ToDoScreenType.DEFAULT))
             }
@@ -138,7 +221,10 @@ constructor(
         }
     }
 
-    override fun reduceState(state: TodoContract.TodoState, reduce: TodoContract.TodoReduce): TodoContract.TodoState {
+    override fun reduceState(
+        state: TodoContract.TodoState,
+        reduce: TodoContract.TodoReduce
+    ): TodoContract.TodoState {
         return when (reduce) {
             //ToDoInfo Fetch
             is TodoContract.TodoReduce.UpdateToDoInfo -> state.copy(
@@ -174,7 +260,7 @@ constructor(
 
             //Revert BottomSheet
             is TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState -> state.copy(
-                revertCompleteBottomSheetState = !state.revertCompleteBottomSheetState
+                revertCompleteBottomSheetState = reduce.revertCompleteBottomSheetState
             )
 
             is TodoContract.TodoReduce.UpdateSelectedItemList -> state.copy(
@@ -187,17 +273,18 @@ constructor(
 
             //Filter BottomSheet
             is TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState -> state.copy(
-                todoFilterBottomSheetState = !state.todoFilterBottomSheetState
+                todoFilterBottomSheetState = reduce.todoFilterBottomSheetState
             )
 
-            is TodoContract.TodoReduce.UpdateFilterItemIndex -> state.copy(
-                todoFilterItemIndex = reduce.itemIndex
+            is TodoContract.TodoReduce.UpdateFilterType -> state.copy(
+                selectedFilterItem = reduce.selectedFilter
             )
 
             //ToDoCount
             is TodoContract.TodoReduce.UpdateToDoCount -> {
                 state.copy(
-                    completeCount = reduce.completeCount, remainingStudyCount = reduce.remainingStudyCount
+                    completeCount = reduce.completeCount,
+                    remainingStudyCount = reduce.remainingStudyCount
                 )
             }
 

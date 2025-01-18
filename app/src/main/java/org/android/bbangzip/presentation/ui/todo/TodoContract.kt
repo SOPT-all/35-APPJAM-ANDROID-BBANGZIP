@@ -4,6 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
+import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.type.ToDoScreenType
 import org.android.bbangzip.presentation.util.base.BaseContract
 
@@ -125,7 +126,7 @@ class TodoContract {
         val remainingStudyCount: Int = 5,
         val completeCount: Int = 5,
         val todoFilterBottomSheetState: Boolean = false,
-        val todoFilterItemIndex: Int = 0,
+        val selectedFilterItem: ToDoFilterType = ToDoFilterType.RECENT,
         val selectedItemList: List<Int> = listOf(),
         val revertCompleteBottomSheetState: Boolean = false,
         val screenType: ToDoScreenType = ToDoScreenType.DEFAULT
@@ -166,7 +167,7 @@ class TodoContract {
             val completeCount: Int
         ) : TodoEvent
 
-        data class OnFilterBottomSheetItemClicked(val todoFilterItemIndex: Int) : TodoEvent
+        data class OnFilterBottomSheetItemClicked(val selectedFilterItem: ToDoFilterType) : TodoEvent
 
         data class OnDeleteScreenCardClicked(val pieceId: Int,val cardState: BbangZipCardState) : TodoEvent
 
@@ -202,11 +203,10 @@ class TodoContract {
         data class UpdateToDoListCardState(
             val previousCardState: BbangZipCardState,
             val nextCardState: BbangZipCardState
-
         ) : TodoReduce
 
-        data class UpdateFilterItemIndex(
-            val itemIndex: Int
+        data class UpdateFilterType(
+            val selectedFilter: ToDoFilterType
         ) : TodoReduce
 
         data class UpdatePendingToDoCount(val pendingCount: Int) : TodoReduce

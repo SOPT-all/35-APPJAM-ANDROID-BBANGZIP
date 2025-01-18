@@ -2,8 +2,10 @@ package org.android.bbangzip.presentation.ui.todo
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,10 +15,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,25 +29,27 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.balloon.TopTailBalloon
+import org.android.bbangzip.presentation.component.bottomsheet.BbangZipBasicModalBottomSheet
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.component.card.ToDoCard
-import org.android.bbangzip.presentation.component.snackbar.BbangZipSnackBarHost
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
+import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.type.ToDoScreenType
+import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun TodoScreen(
     todoState: TodoContract.TodoState,
     todayDate: List<String>,
-    snackBarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
     onAddPendingStudyButtonClicked: () -> Unit = {},
     onAddStudyButtonClicked: () -> Unit = {},
@@ -52,7 +57,7 @@ fun TodoScreen(
     onRevertCompleteBottomSheetApproveButtonClicked: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
     onFilterIconClicked: () -> Unit = {},
-    onFilterBottomSheetItemClicked: (Int) -> Unit = {},
+    onFilterBottomSheetItemClicked: (ToDoFilterType) -> Unit = {},
     onFilterBottomSheetDismissRequest: () -> Unit = {},
     onDeleteIconClicked: () -> Unit = {},
     onCloseIconClicked: () -> Unit = {},
@@ -60,13 +65,13 @@ fun TodoScreen(
     onDeleteScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
     onDefaultScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
 ) {
-    Box(modifier = Modifier.fillMaxSize()) {
-        LazyColumn(
-            modifier = modifier
-                .fillMaxSize()
-                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF)
-                .padding(bottom = 74.dp)
-        ) {
+    Box(
+        modifier = modifier
+            .fillMaxSize()
+            .padding(bottom = 74.dp)
+            .background(color = BbangZipTheme.colors.staticWhite_FFFFFF)
+    ) {
+        LazyColumn {
             item {
                 DateMessageCard(
                     todayDate = todayDate,
@@ -182,27 +187,38 @@ fun TodoScreen(
                     )
                 }
             }
-            if (todoState.screenType == ToDoScreenType.DELETE) {
-                item {
-                    Spacer(modifier = Modifier.height(10.dp))
-
-                    BbangZipButton(
-                        bbangZipButtonType = BbangZipButtonType.Solid,
-                        bbangZipButtonSize = BbangZipButtonSize.Large,
-                        onClick = { onItemDeleteButtonClicked() },
-                        label = stringResource(R.string.todo_delete_screen_delete_button_text, todoState.selectedItemList.size),
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .fillMaxWidth(),
-                        isEnable = todoState.selectedItemList.isNotEmpty(),
-                        trailingIcon = R.drawable.ic_plus_thick_24,
-                    )
-
-                    Spacer(modifier = Modifier.height(16.dp))
-
-                }
-            }
         }
+        if (todoState.screenType == ToDoScreenType.DELETE) {
+            BbangZipButton(
+                bbangZipButtonType = BbangZipButtonType.Solid,
+                bbangZipButtonSize = BbangZipButtonSize.Large,
+                onClick = { onItemDeleteButtonClicked() },
+                label = stringResource(R.string.todo_delete_screen_delete_button_text, todoState.selectedItemList.size),
+                modifier = Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 6.dp),
+                isEnable = todoState.selectedItemList.isNotEmpty(),
+                trailingIcon = R.drawable.ic_plus_thick_24,
+            )
+        }
+
+        RevertCompleteBottomSheet(
+            isBottomSheetVisible = todoState.revertCompleteBottomSheetState,
+            selectedItemPieceId = todoState.selectedItemList,
+            bottomSheetTitle = "미완료 상태로 되돌릴까요?",
+            onDismissRequest = onRevertCompleteBottomSheetDismissButtonClicked,
+            onClickInteractButton = onRevertCompleteBottomSheetApproveButtonClicked,
+            onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked
+        )
+
+        BbangZipToDoFilterPickerBottomSheet(
+            isBottomSheetVisible = todoState.todoFilterBottomSheetState,
+            selectedItem = todoState.selectedFilterItem,
+            onSelectedItemChanged = onFilterBottomSheetItemClicked,
+            onDismissRequest = onFilterBottomSheetDismissRequest
+        )
     }
 }
 
@@ -325,7 +341,7 @@ fun StudyCountText(
     ) {
         Text(
             text = when {
-                completeCount > 0 && remainingCount != 0-> stringResource(R.string.todo_complete_count_text, completeCount)
+                completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
                 remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
                 else -> stringResource(R.string.todo_complete_nothing_text)
             },
@@ -412,6 +428,104 @@ fun EmptyView(
         )
     }
 }
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun BbangZipToDoFilterPickerBottomSheet(
+    isBottomSheetVisible: Boolean,
+    modifier: Modifier = Modifier,
+    title: @Composable (ColumnScope.() -> Unit) = {},
+    selectedItem: ToDoFilterType = ToDoFilterType.RECENT,
+    onSelectedItemChanged: (ToDoFilterType) -> Unit = {},
+    onDismissRequest: () -> Unit = {},
+) {
+    BbangZipBasicModalBottomSheet(
+        modifier = modifier,
+        isBottomSheetVisible = isBottomSheetVisible,
+        onDismissRequest = onDismissRequest,
+        title = { title() },
+        content = {
+            LazyColumn(
+                modifier = Modifier.padding(top = 8.dp, bottom = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                itemsIndexed(
+                    ToDoFilterType.entries,
+                    key = { _, item -> item },
+                ) { _, item ->
+                    Text(
+                        text = item.filter,
+                        modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .applyFilterOnClick { onSelectedItemChanged(item) }
+                            .background(
+                                color = if (item != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
+                                shape = RoundedCornerShape(16.dp),
+                            )
+                            .padding(vertical = 8.dp),
+                        textAlign = TextAlign.Center,
+                        style = BbangZipTheme.typography.body1Bold,
+                        color = BbangZipTheme.colors.labelNormal_282119,
+                    )
+                }
+            }
+        },
+    )
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RevertCompleteBottomSheet(
+    isBottomSheetVisible: Boolean,
+    selectedItemPieceId: List<Int>,
+    bottomSheetTitle: String,
+    modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit = {},
+    onClickInteractButton: (Int) -> Unit = {},
+    onClickCancelButton: () -> Unit = {},
+) {
+    BbangZipBasicModalBottomSheet(
+        modifier = modifier,
+        isBottomSheetVisible = isBottomSheetVisible,
+        onDismissRequest = onDismissRequest,
+        title = {
+            Text(
+                text = bottomSheetTitle,
+                modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(vertical = 15.dp),
+                style = BbangZipTheme.typography.headline1Bold,
+                color = BbangZipTheme.colors.labelNeutral_282119_88,
+            )
+        },
+        interactButton = {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            BbangZipButton(
+                bbangZipButtonType = BbangZipButtonType.Solid,
+                bbangZipButtonSize = BbangZipButtonSize.Large,
+                onClick = { onClickInteractButton(selectedItemPieceId[0]) },
+                label = stringResource(R.string.todo_revert_bottomsheet_approve_text),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
+        cancelButton = {
+            Spacer(modifier = Modifier.height(8.dp))
+
+            BbangZipButton(
+                bbangZipButtonType = BbangZipButtonType.Outlined,
+                bbangZipButtonSize = BbangZipButtonSize.Large,
+                onClick =  onClickCancelButton,
+                label = stringResource(R.string.btn_cancle_label),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
+    )
+}
+
 
 @Preview(showBackground = true)
 @Composable
@@ -589,6 +703,5 @@ fun TodoScreenMockPreview() {
     TodoScreen(
         todoState = mockTodoStates[0],
         todayDate = listOf("2025", "01", "18"),
-        snackBarHostState = SnackbarHostState()
     )
 }

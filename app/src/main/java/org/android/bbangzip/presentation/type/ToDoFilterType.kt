@@ -4,19 +4,19 @@ import androidx.annotation.StringRes
 import org.android.bbangzip.R
 
 enum class ToDoFilterType(
-    @StringRes val filter: Int,
+    val filter: String,
     val id: String,
 ) {
     RECENT(
-        filter = R.string.todo_filter_recent,
+        filter = "최근 등록 순",
         id = "recent",
     ),
     VOLUME(
-        filter = R.string.todo_filter_least_volume,
+        filter = "분량 적은 순",
         id = "leastVolume",
     ),
     DEADLINE(
-        filter = R.string.todo_filter_deadline,
+        filter = "마감 기한 빠른 순",
         id = "nearestDeadline",
     ),
 }
