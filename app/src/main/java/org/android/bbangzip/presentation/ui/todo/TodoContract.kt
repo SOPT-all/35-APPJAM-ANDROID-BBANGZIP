@@ -155,7 +155,6 @@ class TodoContract {
 
         data object OnItemDeleteButtonClicked : TodoEvent
 
-
         data class OnRevertCompleteBottomSheetApproveButtonClicked(
             val pieceId: Int,
         ) : TodoEvent
@@ -167,9 +166,15 @@ class TodoContract {
             val completeCount: Int
         ) : TodoEvent
 
-        data class OnFilterBottomSheetItemClicked(val selectedFilterItem: ToDoFilterType) : TodoEvent
+        data class OnFilterBottomSheetItemClicked(
+            val selectedFilterItem: ToDoFilterType
+        ) : TodoEvent
 
-        data class OnDeleteScreenCardClicked(val pieceId: Int,val cardState: BbangZipCardState) : TodoEvent
+        data class OnDeleteScreenCardClicked(
+            val pieceId: Int,
+            val cardState: BbangZipCardState
+        ) :
+            TodoEvent
 
         data class OnDefaultScreenCardClicked(
             val pieceId: Int,
@@ -184,6 +189,7 @@ class TodoContract {
             val remainingStudyCount: Int,
             val completeCount: Int,
         ) : TodoReduce
+
         data object DeleteToDoListItems : TodoReduce
 
         data class UpdateToDoFilterBottomSheetState(val todoFilterBottomSheetState: Boolean) :
