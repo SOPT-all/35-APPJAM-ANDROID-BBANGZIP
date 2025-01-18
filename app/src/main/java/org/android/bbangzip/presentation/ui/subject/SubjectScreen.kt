@@ -4,14 +4,12 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -21,7 +19,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -41,8 +38,8 @@ fun SubjectScreen(
     val subjects: List<SubjectCardModel> =
         listOf(
             SubjectCardModel(
-                subjectName = "[경영] 경제통계학",
-                examName = "중간고사",
+                subjectName = "경제통계학",
+                examName = "",
                 pendingCount = 0,
                 inProgressCount = 6,
                 subjectId = 1,
@@ -83,19 +80,10 @@ fun SubjectScreen(
         )
 
     val configuration = LocalConfiguration.current
-    val density = LocalDensity.current
 
-    // system ui 제외한 스크린 높이 측정 이거 없이 방법이 없을까요..
-    // 전체 화면 높이 (dp), 시스템 ui 포함
     val screenHeightDp = configuration.screenHeightDp
 
-    // WindowInsets로 상태바와 내비게이션 바의 높이를 가져오기
-    val insets = WindowInsets.systemBars
-    val statusBarHeight = insets.getTop(density)
-    val navigationBarHeight = insets.getBottom(density)
-
-    val usableHeightDp = screenHeightDp - statusBarHeight - navigationBarHeight
-    val fullScreenHeightWithOutSystemUi = (usableHeightDp * 0.32).toInt()
+    val backgroundHeight = (screenHeightDp * 0.32).toInt()
 
     LazyColumn(
         modifier =
@@ -109,7 +97,7 @@ fun SubjectScreen(
                     modifier
                         .fillMaxWidth()
                         .statusBarsPadding()
-                        .height(fullScreenHeightWithOutSystemUi.dp)
+                        .height(backgroundHeight.dp)
                         .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
             ) {
                 Row(
