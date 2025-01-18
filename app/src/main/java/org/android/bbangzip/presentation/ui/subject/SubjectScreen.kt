@@ -38,48 +38,49 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun SubjectScreen(
     modifier: Modifier = Modifier,
 ) {
-    val subjects: List<SubjectCardModel> = listOf(
-        SubjectCardModel(
-            subjectName = "[경영] 경제통계학",
-            examName = "중간고사",
-            pendingCount = 0,
-            inProgressCount = 6,
-            subjectId = 1,
-            examRemainingDays = 1,
-        ),
-        SubjectCardModel(
-            subjectName = "[경영] 경제통계학",
-            examName = "중간고사",
-            pendingCount = 0,
-            inProgressCount = 6,
-            subjectId = 1,
-            examRemainingDays = 1,
-        ),
-        SubjectCardModel(
-            subjectName = "[경영] 경제통계학",
-            examName = "중간고사",
-            pendingCount = 0,
-            inProgressCount = 6,
-            subjectId = 1,
-            examRemainingDays = 1,
-        ),
-        SubjectCardModel(
-            subjectName = "[경영] 경제통계학",
-            examName = "중간고사",
-            pendingCount = 0,
-            inProgressCount = 6,
-            subjectId = 1,
-            examRemainingDays = 1,
-        ),
-        SubjectCardModel(
-            subjectName = "[경영] 경제통계학",
-            examName = "중간고사",
-            pendingCount = 0,
-            inProgressCount = 6,
-            subjectId = 1,
-            examRemainingDays = 1,
-        ),
-    )
+    val subjects: List<SubjectCardModel> =
+        listOf(
+            SubjectCardModel(
+                subjectName = "[경영] 경제통계학",
+                examName = "중간고사",
+                pendingCount = 0,
+                inProgressCount = 6,
+                subjectId = 1,
+                examRemainingDays = 1,
+            ),
+            SubjectCardModel(
+                subjectName = "[경영] 경제통계학",
+                examName = "중간고사",
+                pendingCount = 0,
+                inProgressCount = 6,
+                subjectId = 1,
+                examRemainingDays = 1,
+            ),
+            SubjectCardModel(
+                subjectName = "[경영] 경제통계학",
+                examName = "중간고사",
+                pendingCount = 0,
+                inProgressCount = 6,
+                subjectId = 1,
+                examRemainingDays = 1,
+            ),
+            SubjectCardModel(
+                subjectName = "[경영] 경제통계학",
+                examName = "중간고사",
+                pendingCount = 0,
+                inProgressCount = 6,
+                subjectId = 1,
+                examRemainingDays = 1,
+            ),
+            SubjectCardModel(
+                subjectName = "[경영] 경제통계학",
+                examName = "중간고사",
+                pendingCount = 0,
+                inProgressCount = 6,
+                subjectId = 1,
+                examRemainingDays = 1,
+            ),
+        )
 
     val configuration = LocalConfiguration.current
     val density = LocalDensity.current
@@ -97,17 +98,19 @@ fun SubjectScreen(
     val fullScreenHeightWithOutSystemUi = (usableHeightDp * 0.32).toInt()
 
     LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .statusBarsPadding()
-    ){
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .statusBarsPadding(),
+    ) {
         item {
             Box(
-                modifier = modifier
-                    .fillMaxWidth()
-                    .statusBarsPadding()
-                    .height(fullScreenHeightWithOutSystemUi.dp)
-                    .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
+                modifier =
+                    modifier
+                        .fillMaxWidth()
+                        .statusBarsPadding()
+                        .height(fullScreenHeightWithOutSystemUi.dp)
+                        .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
             ) {
                 Row(
                     modifier = modifier.padding(start = 24.dp, top = 27.dp),
@@ -116,7 +119,7 @@ fun SubjectScreen(
                     Text(
                         text = "2025년 2학기",
                         style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119
+                        color = BbangZipTheme.colors.labelNormal_282119,
                     )
 
                     Gap(width = 4)
@@ -124,8 +127,9 @@ fun SubjectScreen(
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevrondown_small_24),
                         contentDescription = null,
-                        modifier = Modifier
-                            .size(size = 20.dp)
+                        modifier =
+                            Modifier
+                                .size(size = 20.dp),
                     )
                 }
             }
@@ -133,19 +137,19 @@ fun SubjectScreen(
 
         // 아이콘에 padding을 8dp 씩 주면서 갭의 수치가 피그마와 다를 수 있습니다!
         // 위아래 8씩 빼주었다고 보면 됩니다.
-        item{
+        item {
             Gap(height = 40)
         }
 
         item {
             Row(
                 modifier = Modifier.padding(start = 24.dp, end = 16.dp),
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = "어떤 과목을 공부해 볼까요?",
                     style = BbangZipTheme.typography.headline2Bold,
-                    color = BbangZipTheme.colors.labelAlternative_282119_61
+                    color = BbangZipTheme.colors.labelAlternative_282119_61,
                 )
 
                 Gap()
@@ -153,82 +157,92 @@ fun SubjectScreen(
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_trash_default_24),
                     contentDescription = null,
-                    modifier = modifier.padding(8.dp)
+                    modifier = modifier.padding(8.dp),
                 )
             }
         }
 
-        item{
+        item {
             Gap(height = 24)
         }
 
-        item{
-            if(subjects.size % 2 == 1){
-                for(i in 0 until (subjects.size + 1)/2) {
-                    if(i==(subjects.size+1)/2-1){
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp
-                                ),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp) // 아이템 간 간격
-                        ) {
-                            SubjectCard(state = BbangZipCardState.DEFAULT, data = subjects.last())
-                            AddSubjectCard()
-                        }
-                    }else{
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = 16.dp
-                                ),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp) // 아이템 간 간격
-                        ) {
-                            for(j in i*2 until (i+1)*2) {
-                                SubjectCard(state = BbangZipCardState.DEFAULT, data = subjects[j])
+        item {
+            if (subjects.size % 2 == 1)
+                {
+                    for (i in 0 until (subjects.size + 1) / 2) {
+                        if (i == (subjects.size + 1) / 2 - 1)
+                            {
+                                Row(
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(
+                                                start = 16.dp,
+                                                end = 16.dp,
+                                            ),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp), // 아이템 간 간격
+                                ) {
+                                    SubjectCard(state = BbangZipCardState.DEFAULT, data = subjects.last())
+                                    AddSubjectCard()
+                                }
+                            } else
+                            {
+                                Row(
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(
+                                                start = 16.dp,
+                                                end = 16.dp,
+                                                bottom = 16.dp,
+                                            ),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp), // 아이템 간 간격
+                                ) {
+                                    for (j in i * 2 until (i + 1) * 2) {
+                                        SubjectCard(state = BbangZipCardState.DEFAULT, data = subjects[j])
+                                    }
+                                }
                             }
-                        }
+                    }
+                } else
+                {
+                    for (i in 0 until (subjects.size + 1) / 2 + 1) {
+                        if (i == (subjects.size + 1) / 2)
+                            {
+                                Row(
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(
+                                                start = 16.dp,
+                                                end = 16.dp,
+                                            ),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp), // 아이템 간 간격
+                                ) {
+                                    AddSubjectCard()
+                                }
+                            } else
+                            {
+                                Row(
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .padding(
+                                                start = 16.dp,
+                                                end = 16.dp,
+                                                bottom = 16.dp,
+                                            ),
+                                    horizontalArrangement = Arrangement.spacedBy(8.dp), // 아이템 간 간격
+                                ) {
+                                    for (j in i * 2 until (i + 1) * 2) {
+                                        SubjectCard(state = BbangZipCardState.DEFAULT, data = subjects[j])
+                                    }
+                                }
+                            }
                     }
                 }
-            }else{
-                for(i in 0 until (subjects.size + 1)/2 + 1) {
-                    if (i == (subjects.size + 1)/2){
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                ),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp) // 아이템 간 간격
-                        ) {
-                            AddSubjectCard()
-                        }
-                    }else{
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = 16.dp
-                                ),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp) // 아이템 간 간격
-                        ) {
-                            for(j in i*2 until (i+1)*2) {
-                                SubjectCard(state = BbangZipCardState.DEFAULT, data = subjects[j])
-                            }
-                        }
-                    }
-                }
-            }
         }
-        item{
+        item {
             Gap(height = 84)
         }
     }

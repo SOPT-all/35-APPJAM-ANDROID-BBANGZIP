@@ -41,26 +41,26 @@ fun AddSubjectCard(
                 .applyFilterOnClick(
                     baseColor = BbangZipTheme.colors.staticWhite_FFFFFF,
                     radius = 24.dp,
-                    isDisabled = false
-                ){ onClick() }
-                .padding(vertical = 59.dp)
-        ,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ){
+                    isDisabled = false,
+                ) { onClick() }
+                .padding(vertical = 59.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+    ) {
         Box(
-            modifier = Modifier
-                .size(40.dp)
-                .border(
-                    width = 1.dp,
-                    color = BbangZipTheme.colors.lineNormal_68645E_22,
-                    shape = CircleShape,
-                ),
-            contentAlignment = Alignment.Center
-        ){
+            modifier =
+                Modifier
+                    .size(40.dp)
+                    .border(
+                        width = 1.dp,
+                        color = BbangZipTheme.colors.lineNormal_68645E_22,
+                        shape = CircleShape,
+                    ),
+            contentAlignment = Alignment.Center,
+        ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
                 contentDescription = null,
-                modifier = Modifier.size(20.dp)
+                modifier = Modifier.size(20.dp),
             )
         }
 
@@ -69,7 +69,7 @@ fun AddSubjectCard(
         Text(
             text = "과목추가",
             style = BbangZipTheme.typography.body1Bold,
-            color = BbangZipTheme.colors.labelDisable_282119_12
+            color = BbangZipTheme.colors.labelDisable_282119_12,
         )
     }
 }
@@ -79,8 +79,6 @@ fun AddSubjectCard(
 private fun AddSubjectCardPreview() {
     AddSubjectCard(
         Modifier,
-        {}
+        {},
     )
 }
-
-
