@@ -4,6 +4,7 @@ import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
@@ -93,7 +94,7 @@ abstract class BaseViewModel<Event : BaseContract.Event, State : BaseContract.St
                 reduceState(currentUiState, reducer).also { state ->
                     savedStateHandle[STATE_KEY] = state.toParcelable()
                 }
-        }
+        }.launchIn(viewModelScope)
     }
 
     protected fun updateState(
