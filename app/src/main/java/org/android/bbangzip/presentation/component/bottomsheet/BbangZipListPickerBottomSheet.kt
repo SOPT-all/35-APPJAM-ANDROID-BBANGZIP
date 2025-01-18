@@ -21,6 +21,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
@@ -55,8 +56,7 @@ fun BbangZipListPickerBottomSheet(
                             Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp)
-                                // TODO focused 확장 clickable로 변경
-                                .clickable { onSelectedItemChanged(index) },
+                                .applyFilterOnClick { onSelectedItemChanged(index) },
                         textAlign = TextAlign.Center,
                         style = BbangZipTheme.typography.body1Bold,
                         color = BbangZipTheme.colors.labelNormal_282119,
