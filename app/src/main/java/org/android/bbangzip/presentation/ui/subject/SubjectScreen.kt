@@ -13,7 +13,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyItemScope
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -26,10 +25,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import okhttp3.internal.immutableListOf
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.card.AddSubjectCard
-import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.component.card.SubjectCard
 import org.android.bbangzip.presentation.model.card.SubjectCardModel
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
@@ -43,6 +42,12 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun SubjectScreen(
     modifier: Modifier = Modifier,
+    subjects: List<SubjectCardModel>,
+    cardViewType: CardViewType,
+    onClickTrashBtn: () -> Unit = {},
+    onClickCancleBtn: () -> Unit = {},
+    onClickSelectable: (Int) -> Unit = {},
+    onClickSelectedCard: (Int) -> Unit = {},
 ) {
     /**
      * 처음에 받는 카드들의 state는 default
@@ -54,56 +59,6 @@ fun SubjectScreen(
      * X 버튼 누를 시 cardViewType -> DEFAULT
      * subjects.size == 0 일 때 cardViewType -> EMPTY
      **/
-    val cardViewType = CardViewType.EMPTY
-    val subjects: List<SubjectCardModel> =
-        listOf(
-            SubjectCardModel(
-                subjectName = "경제통계학",
-                examName = "",
-                pendingCount = 0,
-                inProgressCount = 6,
-                subjectId = 1,
-                examRemainingDays = 1,
-                state = BbangZipCardState.DEFAULT
-            ),
-            SubjectCardModel(
-                subjectName = "[경영] 경제통계학",
-                examName = "중간고사",
-                pendingCount = 0,
-                inProgressCount = 6,
-                subjectId = 1,
-                examRemainingDays = 1,
-                state = BbangZipCardState.DEFAULT
-            ),
-            SubjectCardModel(
-                subjectName = "[경영] 경제통계학",
-                examName = "중간고사",
-                pendingCount = 0,
-                inProgressCount = 6,
-                subjectId = 1,
-                examRemainingDays = 1,
-                state = BbangZipCardState.DEFAULT
-            ),
-            SubjectCardModel(
-                subjectName = "[경영] 경제통계학",
-                examName = "중간고사",
-                pendingCount = 0,
-                inProgressCount = 6,
-                subjectId = 1,
-                examRemainingDays = 1,
-                state = BbangZipCardState.DEFAULT
-            ),
-            SubjectCardModel(
-                subjectName = "[경영] 경제통계학",
-                examName = "중간고사",
-                pendingCount = 0,
-                inProgressCount = 6,
-                subjectId = 1,
-                examRemainingDays = 1,
-                state = BbangZipCardState.DEFAULT
-            ),
-        )
-
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
     val backgroundHeight = (screenHeightDp * 0.32).toInt()
@@ -165,11 +120,15 @@ fun SubjectScreen(
             when(cardViewType){
                 CardViewType.DEFAULT -> DefaultCardView(
                     modifier = modifier,
-                    subjects = subjects
+                    subjects = subjects,
+                    onTrashIconClick = onClickTrashBtn
                 )
                 CardViewType.DELETE -> DeleteCardView(
                     modifier = modifier,
-                    subjects = subjects
+                    subjects = subjects,
+                    onSelectedCardClick = onClickSelectedCard,
+                    onSelectableCardClick = onClickSelectable,
+                    onCancleClick = onClickCancleBtn
                 )
                 CardViewType.EMPTY -> EmptySubjectCardView()
             }
@@ -184,6 +143,7 @@ fun SubjectScreen(
 private fun DefaultCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
+    onTrashIconClick: () -> Unit = {},
 ) {
     Column {
         Row(
@@ -205,7 +165,9 @@ private fun DefaultCardView(
                     .applyFilterOnClick(
                         radius = 20.dp,
                         isDisabled = false,
-                    ) { }
+                    ) {
+                        onTrashIconClick()
+                    }
                     .padding(8.dp)
             )
         }
@@ -289,6 +251,9 @@ private fun DefaultCardView(
 private fun DeleteCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
+    onSelectableCardClick: (Int) -> Unit = {},
+    onSelectedCardClick: (Int) -> Unit = {},
+    onCancleClick: () -> Unit = {}
 ) {
     Column {
         Row(
@@ -296,7 +261,7 @@ private fun DeleteCardView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "어떤 과목을 공부해 볼까요?",
+                text = "삭제할 과목을 선택해 주세요",
                 style = BbangZipTheme.typography.headline2Bold,
                 color = BbangZipTheme.colors.labelAlternative_282119_61,
             )
@@ -304,13 +269,15 @@ private fun DeleteCardView(
             Gap()
 
             Icon(
-                imageVector = ImageVector.vectorResource(R.drawable.ic_trash_default_24),
+                imageVector = ImageVector.vectorResource(R.drawable.ic_x_small_24),
                 contentDescription = null,
                 modifier = modifier
                     .applyFilterOnClick(
                         radius = 20.dp,
                         isDisabled = false,
-                    ) { }
+                    ) {
+                        onCancleClick()
+                    }
                     .padding(8.dp)
             )
         }
@@ -330,7 +297,13 @@ private fun DeleteCardView(
                             ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        SubjectCard(data = subjects.last().copy(state = BbangZipCardState.CHECKABLE))
+                        SubjectCard(
+                            data = subjects.last(),
+                            onClick = { index ->
+                                onSelectedCardClick(index)
+                                onSelectableCardClick(index)
+                            }
+                        )
                     }
                 } else {
                     Row(
@@ -345,7 +318,13 @@ private fun DeleteCardView(
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         for (j in i * 2 until (i + 1) * 2) {
-                            SubjectCard(data = subjects[j].copy(state = BbangZipCardState.CHECKABLE))
+                            SubjectCard(
+                                data = subjects[j],
+                                onClick = { index ->
+                                    onSelectedCardClick(index)
+                                    onSelectableCardClick(index)
+                                }
+                            )
                         }
                     }
                 }
@@ -364,7 +343,13 @@ private fun DeleteCardView(
                     horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     for (j in i * 2 until (i + 1) * 2) {
-                        SubjectCard(data = subjects[j].copy(state = BbangZipCardState.CHECKABLE))
+                        SubjectCard(
+                            data = subjects[j],
+                            onClick = { index ->
+                                onSelectedCardClick(index)
+                                onSelectableCardClick(index)
+                            }
+                        )
                     }
                 }
             }
@@ -404,6 +389,50 @@ private fun EmptySubjectCardView(
 @Composable
 private fun SubjectScreenPreview() {
     BBANGZIPTheme {
-        SubjectScreen()
+        SubjectScreen(
+            subjects = immutableListOf(
+                SubjectCardModel(
+                    subjectName = "경제통계학",
+                    examName = "",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1
+                ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 2,
+                    examRemainingDays = 1
+                ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 3,
+                    examRemainingDays = 1
+                ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 4,
+                    examRemainingDays = 1
+                ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 5,
+                    examRemainingDays = 1
+                )
+            ),
+            cardViewType = CardViewType.DEFAULT
+        )
     }
 }
