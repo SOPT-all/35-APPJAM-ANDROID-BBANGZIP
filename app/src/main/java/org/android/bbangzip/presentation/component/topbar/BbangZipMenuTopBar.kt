@@ -2,8 +2,10 @@ package org.android.bbangzip.presentation.component.topbar
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -47,67 +49,67 @@ fun BbangZipMenuTopBar(
                 )
                 .background(backGroundColor),
     ) {
-        BbangZipTopBarSlot(
-            leadingIcon = {
-                Box(
-                    modifier =
-                        modifier
-                            .width(56.dp)
-                            .height(56.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    leadingIcon?.let {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(it),
-                            contentDescription = null,
-                            modifier =
-                                Modifier
-                                    .padding(8.dp)
-                                    .applyFilterOnClick(
-                                        radius = 20.dp,
-                                        isDisabled = false,
-                                        onClick = { onLeadingIconClick() },
-                                    ),
-                            tint = BbangZipTheme.colors.labelAlternative_282119_61,
-                        )
-                    }
-                }
-            },
-            label = {
-                Text(
-                    text = title,
-                    modifier = Modifier.weight(1f),
-                    color = titleColor,
-                    textAlign = TextAlign.Center,
-                    style = BbangZipTheme.typography.headline1Bold,
-                )
-            },
-            trailingIcon = {
-                Box(
-                    modifier =
+        Row(
+            modifier = modifier,
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Center,
+        ) {
+            Box(
+                modifier =
+                modifier
+                    .width(56.dp)
+                    .height(56.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                leadingIcon?.let {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(it),
+                        contentDescription = null,
+                        modifier =
                         Modifier
-                            .width(56.dp)
-                            .height(56.dp),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    trailingIcon?.let {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(it),
-                            contentDescription = null,
-                            modifier =
-                                Modifier
-                                    .padding(8.dp)
-                                    .applyFilterOnClick(
-                                        radius = 20.dp,
-                                        isDisabled = false,
-                                        onClick = { onTrailingIconClick() },
-                                    ),
-                            tint = BbangZipTheme.colors.labelAlternative_282119_61,
-                        )
-                    }
+                            .padding(8.dp)
+                            .applyFilterOnClick(
+                                radius = 20.dp,
+                                isDisabled = false,
+                                onClick = { onLeadingIconClick() },
+                            ),
+                        tint = BbangZipTheme.colors.labelAlternative_282119_61,
+                    )
                 }
-            },
-        )
+            }
+
+            Text(
+                text = title,
+                modifier = Modifier.weight(1f),
+                color = titleColor,
+                textAlign = TextAlign.Center,
+                style = BbangZipTheme.typography.headline1Bold,
+            )
+
+            Box(
+                modifier =
+                Modifier
+                    .width(56.dp)
+                    .height(56.dp),
+                contentAlignment = Alignment.Center,
+            ) {
+                trailingIcon?.let {
+                    Icon(
+                        imageVector = ImageVector.vectorResource(it),
+                        contentDescription = null,
+                        modifier =
+                        Modifier
+                            .padding(8.dp)
+                            .applyFilterOnClick(
+                                radius = 20.dp,
+                                isDisabled = false,
+                                onClick = { onTrailingIconClick() },
+                            ),
+                        tint = BbangZipTheme.colors.labelAlternative_282119_61,
+                    )
+                }
+            }
+        }
     }
 }
 
