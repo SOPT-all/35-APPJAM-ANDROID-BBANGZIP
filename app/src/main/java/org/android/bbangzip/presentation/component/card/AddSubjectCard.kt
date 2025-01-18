@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -40,14 +39,14 @@ fun AddSubjectCard(
                     shape = RoundedCornerShape(size = 24.dp),
                 )
                 .width(width = width.dp)
-                .aspectRatio(156/190f)
+                .aspectRatio(156 / 190f)
                 .applyFilterOnClick(
                     baseColor = BbangZipTheme.colors.staticWhite_FFFFFF,
                     radius = 24.dp,
                     isDisabled = false,
                 ) { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Box(
             modifier =

@@ -7,15 +7,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -50,7 +46,7 @@ fun SubjectScreen(
     modifier: Modifier = Modifier,
     subjects: List<SubjectCardModel>,
     cardViewType: CardViewType,
-    deletedSet : Set<Int>,
+    deletedSet: Set<Int>,
     onClickTrashBtn: () -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
     onClickDeleteModeCard: (Int) -> Unit = {},
@@ -63,27 +59,28 @@ fun SubjectScreen(
     Box {
         LazyColumn(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+                Modifier
+                    .fillMaxSize()
+                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
         ) {
             item {
                 Box(
                     modifier =
-                    modifier
-                        .fillMaxWidth()
-                        .height(backgroundHeight.dp)
-                        .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
+                        modifier
+                            .fillMaxWidth()
+                            .height(backgroundHeight.dp)
+                            .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
                 ) {
                     Row(
-                        modifier = modifier
-                            .padding(start = 4.dp, top = 18.dp)
-                            .applyFilterOnClick(
-                                radius = 16.dp,
-                                isDisabled = false,
-                                onClick = { }
-                            )
-                            .padding(vertical = 8.dp, horizontal = 20.dp),
+                        modifier =
+                            modifier
+                                .padding(start = 4.dp, top = 18.dp)
+                                .applyFilterOnClick(
+                                    radius = 16.dp,
+                                    isDisabled = false,
+                                    onClick = { },
+                                )
+                                .padding(vertical = 8.dp, horizontal = 20.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -98,8 +95,8 @@ fun SubjectScreen(
                             imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevrondown_small_24),
                             contentDescription = null,
                             modifier =
-                            Modifier
-                                .size(size = 20.dp),
+                                Modifier
+                                    .size(size = 20.dp),
                         )
                     }
                 }
@@ -113,19 +110,21 @@ fun SubjectScreen(
 
             item {
                 when (cardViewType) {
-                    CardViewType.DEFAULT -> DefaultCardView(
-                        modifier = modifier,
-                        subjects = subjects,
-                        onTrashIconClick = onClickTrashBtn
-                    )
+                    CardViewType.DEFAULT ->
+                        DefaultCardView(
+                            modifier = modifier,
+                            subjects = subjects,
+                            onTrashIconClick = onClickTrashBtn,
+                        )
 
-                    CardViewType.DELETE -> DeleteCardView(
-                        modifier = modifier,
-                        subjects = subjects,
-                        onDeleteModeCardClick = onClickDeleteModeCard,
-                        onCancleClick = onClickCancleBtn,
-                        bottomPadding = bottomBarPadding
-                    )
+                    CardViewType.DELETE ->
+                        DeleteCardView(
+                            modifier = modifier,
+                            subjects = subjects,
+                            onDeleteModeCardClick = onClickDeleteModeCard,
+                            onCancleClick = onClickCancleBtn,
+                            bottomPadding = bottomBarPadding,
+                        )
 
                     CardViewType.EMPTY -> EmptySubjectCardView()
                 }
@@ -133,10 +132,11 @@ fun SubjectScreen(
         }
         if (cardViewType == CardViewType.DELETE) {
             Box(
-                modifier = Modifier
-                    .align(alignment = Alignment.BottomCenter)
-                    .padding(bottom = 80.dp, start = 16.dp, end = 16.dp)
-            ){
+                modifier =
+                    Modifier
+                        .align(alignment = Alignment.BottomCenter)
+                        .padding(bottom = 80.dp, start = 16.dp, end = 16.dp),
+            ) {
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
@@ -144,7 +144,7 @@ fun SubjectScreen(
                     modifier = Modifier.fillMaxWidth(),
                     label = String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
                     trailingIcon = R.drawable.ic_trash_default_24,
-                    isEnable = deletedSet.isNotEmpty()
+                    isEnable = deletedSet.isNotEmpty(),
                 )
             }
         }
@@ -173,14 +173,15 @@ private fun DefaultCardView(
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_trash_default_24),
                 contentDescription = null,
-                modifier = modifier
-                    .applyFilterOnClick(
-                        radius = 20.dp,
-                        isDisabled = false,
-                    ) {
-                        onTrashIconClick()
-                    }
-                    .padding(8.dp)
+                modifier =
+                    modifier
+                        .applyFilterOnClick(
+                            radius = 20.dp,
+                            isDisabled = false,
+                        ) {
+                            onTrashIconClick()
+                        }
+                        .padding(8.dp),
             )
         }
 
@@ -191,29 +192,29 @@ private fun DefaultCardView(
                 if (i == (subjects.size + 1) / 2 - 1) {
                     Row(
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                            ),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         SubjectCard(
-                            data = subjects.last()
+                            data = subjects.last(),
                         )
                         AddSubjectCard()
                     }
                 } else {
                     Row(
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                bottom = 16.dp,
-                            ),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = 16.dp,
+                                ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         for (j in i * 2 until (i + 1) * 2) {
@@ -227,12 +228,12 @@ private fun DefaultCardView(
                 if (i == (subjects.size + 1) / 2) {
                     Row(
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                            ),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         AddSubjectCard()
@@ -240,13 +241,13 @@ private fun DefaultCardView(
                 } else {
                     Row(
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                bottom = 16.dp,
-                            ),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = 16.dp,
+                                ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         for (j in i * 2 until (i + 1) * 2) {
@@ -266,7 +267,7 @@ private fun DeleteCardView(
     subjects: List<SubjectCardModel>,
     bottomPadding: Dp,
     onDeleteModeCardClick: (Int) -> Unit = {},
-    onCancleClick: () -> Unit = {}
+    onCancleClick: () -> Unit = {},
 ) {
     Box {
         Column {
@@ -285,14 +286,15 @@ private fun DeleteCardView(
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_x_small_24),
                     contentDescription = null,
-                    modifier = modifier
-                        .applyFilterOnClick(
-                            radius = 20.dp,
-                            isDisabled = false,
-                        ) {
-                            onCancleClick()
-                        }
-                        .padding(8.dp)
+                    modifier =
+                        modifier
+                            .applyFilterOnClick(
+                                radius = 20.dp,
+                                isDisabled = false,
+                            ) {
+                                onCancleClick()
+                            }
+                            .padding(8.dp),
                 )
             }
 
@@ -303,31 +305,31 @@ private fun DeleteCardView(
                     if (i == (subjects.size + 1) / 2 - 1) {
                         Row(
                             modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                ),
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        start = 16.dp,
+                                        end = 16.dp,
+                                    ),
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
                             SubjectCard(
                                 data = subjects.last(),
                                 onClick = { index ->
                                     onDeleteModeCardClick(index)
-                                }
+                                },
                             )
                         }
                     } else {
                         Row(
                             modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = 16.dp,
-                                ),
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(
+                                        start = 16.dp,
+                                        end = 16.dp,
+                                        bottom = 16.dp,
+                                    ),
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
                             for (j in i * 2 until (i + 1) * 2) {
@@ -335,7 +337,7 @@ private fun DeleteCardView(
                                     data = subjects[j],
                                     onClick = { index ->
                                         onDeleteModeCardClick(index)
-                                    }
+                                    },
                                 )
                             }
                         }
@@ -345,13 +347,13 @@ private fun DeleteCardView(
                 for (i in 0 until subjects.size / 2 + 1) {
                     Row(
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(
-                                start = 16.dp,
-                                end = 16.dp,
-                                bottom = 16.dp,
-                            ),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = 16.dp,
+                                ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         for (j in i * 2 until (i + 1) * 2) {
@@ -359,7 +361,7 @@ private fun DeleteCardView(
                                 data = subjects[j],
                                 onClick = { index ->
                                     onDeleteModeCardClick(index)
-                                }
+                                },
                             )
                         }
                     }
@@ -370,21 +372,22 @@ private fun DeleteCardView(
 
             Gap(height = 92)
         }
-
     }
 }
 
 @Composable
 private fun EmptySubjectCardView(
     modifier: Modifier = Modifier,
-    onAddSubjectButtonClicked: () -> Unit = {}
+    onAddSubjectButtonClicked: () -> Unit = {},
 ) {
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(328.dp)
-                .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)), contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(328.dp)
+                    .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
+            contentAlignment = Alignment.Center,
         ) {
             Text(text = stringResource(R.string.empty_view_text))
         }
@@ -407,51 +410,52 @@ private fun EmptySubjectCardView(
 private fun SubjectScreenPreview() {
     BBANGZIPTheme {
         SubjectScreen(
-            subjects = immutableListOf(
-                SubjectCardModel(
-                    subjectName = "경제통계학",
-                    examName = "",
-                    pendingCount = 0,
-                    inProgressCount = 6,
-                    subjectId = 1,
-                    examRemainingDays = 1
+            subjects =
+                immutableListOf(
+                    SubjectCardModel(
+                        subjectName = "경제통계학",
+                        examName = "",
+                        pendingCount = 0,
+                        inProgressCount = 6,
+                        subjectId = 1,
+                        examRemainingDays = 1,
+                    ),
+                    SubjectCardModel(
+                        subjectName = "[경영] 경제통계학",
+                        examName = "중간고사",
+                        pendingCount = 0,
+                        inProgressCount = 6,
+                        subjectId = 2,
+                        examRemainingDays = 1,
+                    ),
+                    SubjectCardModel(
+                        subjectName = "[경영] 경제통계학",
+                        examName = "중간고사",
+                        pendingCount = 0,
+                        inProgressCount = 6,
+                        subjectId = 3,
+                        examRemainingDays = 1,
+                    ),
+                    SubjectCardModel(
+                        subjectName = "[경영] 경제통계학",
+                        examName = "중간고사",
+                        pendingCount = 0,
+                        inProgressCount = 6,
+                        subjectId = 4,
+                        examRemainingDays = 1,
+                    ),
+                    SubjectCardModel(
+                        subjectName = "[경영] 경제통계학",
+                        examName = "중간고사",
+                        pendingCount = 0,
+                        inProgressCount = 6,
+                        subjectId = 5,
+                        examRemainingDays = 1,
+                    ),
                 ),
-                SubjectCardModel(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0,
-                    inProgressCount = 6,
-                    subjectId = 2,
-                    examRemainingDays = 1
-                ),
-                SubjectCardModel(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0,
-                    inProgressCount = 6,
-                    subjectId = 3,
-                    examRemainingDays = 1
-                ),
-                SubjectCardModel(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0,
-                    inProgressCount = 6,
-                    subjectId = 4,
-                    examRemainingDays = 1
-                ),
-                SubjectCardModel(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0,
-                    inProgressCount = 6,
-                    subjectId = 5,
-                    examRemainingDays = 1
-                )
-            ),
             cardViewType = CardViewType.DEFAULT,
             deletedSet = setOf(),
-            padding = PaddingValues(64.dp)
+            padding = PaddingValues(64.dp),
         )
     }
 }

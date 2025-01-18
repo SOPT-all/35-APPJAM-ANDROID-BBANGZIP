@@ -48,7 +48,7 @@ fun MainNavHost(
             myNavGraph()
 
             subjectNavGraph(
-                padding = padding
+                padding = padding,
             )
 
             todoNavGraph()

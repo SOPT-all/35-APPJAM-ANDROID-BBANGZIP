@@ -13,77 +13,86 @@ class SubjectViewModel
     @Inject
     constructor(
         savedStateHandle: SavedStateHandle,
-        ) : BaseViewModel<SubjectContract.SubjectEvent, SubjectContract.SubjectState, SubjectContract.SubjectReduce, SubjectContract.SubjectSideEffect>(
-            savedStateHandle = savedStateHandle
-        ){
-            override fun createInitialState(savedState: Parcelable?): SubjectContract.SubjectState {
-                return savedState as? SubjectContract.SubjectState ?: SubjectContract.SubjectState()
-            }
-    
-            init { setEvent(SubjectContract.SubjectEvent.Initialize) }
+    ) : BaseViewModel<SubjectContract.SubjectEvent, SubjectContract.SubjectState, SubjectContract.SubjectReduce, SubjectContract.SubjectSideEffect>(
+            savedStateHandle = savedStateHandle,
+        ) {
+        override fun createInitialState(savedState: Parcelable?): SubjectContract.SubjectState {
+            return savedState as? SubjectContract.SubjectState ?: SubjectContract.SubjectState()
+        }
 
-            override fun handleEvent(event: SubjectContract.SubjectEvent) {
-                when (event) {
-                    is SubjectContract.SubjectEvent.Initialize -> {}
+        init {
+            setEvent(SubjectContract.SubjectEvent.Initialize)
+        }
 
-                    is SubjectContract.SubjectEvent.OnClickDeleteButton -> {
-                        updateState(SubjectContract.SubjectReduce.UpdateDeletedSet(event.subjectId))
-                    }
+        override fun handleEvent(event: SubjectContract.SubjectEvent) {
+            when (event) {
+                is SubjectContract.SubjectEvent.Initialize -> {}
 
-                    is SubjectContract.SubjectEvent.OnClickDeleteModeCard -> {
-                        updateState(SubjectContract.SubjectReduce.UpdateSubjectCard(event.subjectId))
-                        updateState(SubjectContract.SubjectReduce.UpdateDeletedSet(event.subjectId))
-                    }
+                is SubjectContract.SubjectEvent.OnClickDeleteButton -> {
+                    updateState(SubjectContract.SubjectReduce.UpdateDeletedSet(event.subjectId))
+                }
 
-                    is SubjectContract.SubjectEvent.OnClickTrashIcon ->{
-                        updateState(SubjectContract.SubjectReduce.UpdateToDeleteMode)
-                    }
+                is SubjectContract.SubjectEvent.OnClickDeleteModeCard -> {
+                    updateState(SubjectContract.SubjectReduce.UpdateSubjectCard(event.subjectId))
+                    updateState(SubjectContract.SubjectReduce.UpdateDeletedSet(event.subjectId))
+                }
 
-                    is SubjectContract.SubjectEvent.OnClickCancleIcon ->{
-                        updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
-                    }
+                is SubjectContract.SubjectEvent.OnClickTrashIcon -> {
+                    updateState(SubjectContract.SubjectReduce.UpdateToDeleteMode)
+                }
+
+                is SubjectContract.SubjectEvent.OnClickCancleIcon -> {
+                    updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
                 }
             }
+        }
 
-            override fun reduceState(
-                state: SubjectContract.SubjectState,
-                reduce: SubjectContract.SubjectReduce,
-            ): SubjectContract.SubjectState {
-                return when (reduce) {
-                    is SubjectContract.SubjectReduce.UpdateSubjectCard -> {
-                        state.copy(
-                            subjectList = state.subjectList.map { item ->
+        override fun reduceState(
+            state: SubjectContract.SubjectState,
+            reduce: SubjectContract.SubjectReduce,
+        ): SubjectContract.SubjectState {
+            return when (reduce) {
+                is SubjectContract.SubjectReduce.UpdateSubjectCard -> {
+                    state.copy(
+                        subjectList =
+                            state.subjectList.map { item ->
                                 if (item.state == BbangZipCardState.CHECKABLE && item.subjectId == reduce.subjectId) {
                                     item.copy(state = BbangZipCardState.CHECKED)
-                                } else if(item.state == BbangZipCardState.CHECKED && item.subjectId == reduce.subjectId){
-                                    item.copy(state = BbangZipCardState.CHECKABLE)
-                                }else item
-                            }
-                        )
-                    }
+                                } else if (item.state == BbangZipCardState.CHECKED && item.subjectId == reduce.subjectId)
+                                    {
+                                        item.copy(state = BbangZipCardState.CHECKABLE)
+                                    } else {
+                                    item
+                                }
+                            },
+                    )
+                }
 
-                    is SubjectContract.SubjectReduce.UpdateToDeleteMode -> {
-                        state.copy(
-                            subjectList = state.subjectList.map {
+                is SubjectContract.SubjectReduce.UpdateToDeleteMode -> {
+                    state.copy(
+                        subjectList =
+                            state.subjectList.map {
                                 it.copy(state = BbangZipCardState.CHECKABLE)
                             },
-                            cardViewType = CardViewType.DELETE
-                        )
-                    }
+                        cardViewType = CardViewType.DELETE,
+                    )
+                }
 
-                    is SubjectContract.SubjectReduce.UpdateToDefaultMode -> {
-                        state.copy(
-                            subjectList = state.subjectList.map {
+                is SubjectContract.SubjectReduce.UpdateToDefaultMode -> {
+                    state.copy(
+                        subjectList =
+                            state.subjectList.map {
                                 it.copy(state = BbangZipCardState.DEFAULT)
                             },
-                            cardViewType = CardViewType.DEFAULT,
-                            subjectSetToDelete = setOf()
-                        )
-                    }
+                        cardViewType = CardViewType.DEFAULT,
+                        subjectSetToDelete = setOf(),
+                    )
+                }
 
-                    is SubjectContract.SubjectReduce.UpdateDeletedSet -> {
-                        state.copy(
-                            subjectSetToDelete = run {
+                is SubjectContract.SubjectReduce.UpdateDeletedSet -> {
+                    state.copy(
+                        subjectSetToDelete =
+                            run {
                                 val targetSubject = state.subjectList.find { it.subjectId == reduce.subjectId }
                                 when (targetSubject?.state) {
                                     BbangZipCardState.CHECKED -> {
@@ -98,9 +107,9 @@ class SubjectViewModel
                                         state.subjectSetToDelete
                                     }
                                 }
-                            }
-                        )
-                    }
+                            },
+                    )
                 }
             }
         }
+    }

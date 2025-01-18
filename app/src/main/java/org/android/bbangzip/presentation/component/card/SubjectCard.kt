@@ -56,7 +56,7 @@ fun SubjectCard(
                     shape = RoundedCornerShape(size = radius),
                 )
                 .width(width = width.dp)
-                .aspectRatio(156/190f)
+                .aspectRatio(156 / 190f)
                 .background(
                     color = data.state.getBackgroundColor(),
                     shape = RoundedCornerShape(size = radius),

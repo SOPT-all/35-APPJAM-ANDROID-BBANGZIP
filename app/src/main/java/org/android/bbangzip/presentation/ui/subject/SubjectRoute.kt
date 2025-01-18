@@ -15,11 +15,11 @@ fun SubjectRoute(
 
     SubjectScreen(
         padding = padding,
-        onClickDeleteModeCard = { id -> viewModel.setEvent(SubjectContract.SubjectEvent.OnClickDeleteModeCard(id))},
+        onClickDeleteModeCard = { id -> viewModel.setEvent(SubjectContract.SubjectEvent.OnClickDeleteModeCard(id)) },
         onClickTrashBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickTrashIcon) },
         onClickCancleBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickCancleIcon) },
         subjects = subjectState.subjectList,
         cardViewType = subjectState.cardViewType,
-        deletedSet = subjectState.subjectSetToDelete
+        deletedSet = subjectState.subjectSetToDelete,
     )
 }

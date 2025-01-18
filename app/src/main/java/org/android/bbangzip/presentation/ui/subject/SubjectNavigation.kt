@@ -13,11 +13,11 @@ fun NavController.navigateSubject() {
 }
 
 fun NavGraphBuilder.subjectNavGraph(
-    padding: PaddingValues
+    padding: PaddingValues,
 ) {
     composable<BottomNavigationRoute.Subject> {
         SubjectRoute(
-            padding = padding
+            padding = padding,
         )
     }
 }
