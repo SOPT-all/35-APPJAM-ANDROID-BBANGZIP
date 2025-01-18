@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.ui.splash
 
-import android.window.SplashScreen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
