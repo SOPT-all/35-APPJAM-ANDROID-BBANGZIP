@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.todo.todoadd.navigation
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -16,11 +17,13 @@ fun NavController.navigateTodoAdd() {
 }
 
 fun NavGraphBuilder.todoAddNavGraph(
+    snackBarHostState: SnackbarHostState,
     navigateToToDo: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
     composable<TodoAddRoute> {
         TodoAddRoute(
+            snackBarHostState = snackBarHostState,
             navigateToToDo = navigateToToDo,
             navigateToBack = navigateToBack,
         )

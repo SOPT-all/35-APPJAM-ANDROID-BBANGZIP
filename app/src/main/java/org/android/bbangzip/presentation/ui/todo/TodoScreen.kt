@@ -208,7 +208,7 @@ fun TodoScreen(
             isBottomSheetVisible = todoState.revertCompleteBottomSheetState,
             selectedItemPieceId = todoState.selectedItemList,
             bottomSheetTitle = "미완료 상태로 되돌릴까요?",
-            onDismissRequest = onRevertCompleteBottomSheetDismissButtonClicked,
+            onDismissRequest = onRevertCompleteBottomSheetDismissRequest,
             onClickInteractButton = onRevertCompleteBottomSheetApproveButtonClicked,
             onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked
         )
