@@ -56,9 +56,9 @@ fun BbangZipMenuTopBar(
         ) {
             Box(
                 modifier =
-                modifier
-                    .width(56.dp)
-                    .height(56.dp),
+                    modifier
+                        .width(56.dp)
+                        .height(56.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 leadingIcon?.let {
@@ -66,13 +66,13 @@ fun BbangZipMenuTopBar(
                         imageVector = ImageVector.vectorResource(it),
                         contentDescription = null,
                         modifier =
-                        Modifier
-                            .padding(8.dp)
-                            .applyFilterOnClick(
-                                radius = 20.dp,
-                                isDisabled = false,
-                                onClick = { onLeadingIconClick() },
-                            ),
+                            Modifier
+                                .padding(8.dp)
+                                .applyFilterOnClick(
+                                    radius = 20.dp,
+                                    isDisabled = false,
+                                    onClick = { onLeadingIconClick() },
+                                ),
                         tint = BbangZipTheme.colors.labelAlternative_282119_61,
                     )
                 }
@@ -88,9 +88,9 @@ fun BbangZipMenuTopBar(
 
             Box(
                 modifier =
-                Modifier
-                    .width(56.dp)
-                    .height(56.dp),
+                    Modifier
+                        .width(56.dp)
+                        .height(56.dp),
                 contentAlignment = Alignment.Center,
             ) {
                 trailingIcon?.let {
@@ -98,13 +98,13 @@ fun BbangZipMenuTopBar(
                         imageVector = ImageVector.vectorResource(it),
                         contentDescription = null,
                         modifier =
-                        Modifier
-                            .padding(8.dp)
-                            .applyFilterOnClick(
-                                radius = 20.dp,
-                                isDisabled = false,
-                                onClick = { onTrailingIconClick() },
-                            ),
+                            Modifier
+                                .padding(8.dp)
+                                .applyFilterOnClick(
+                                    radius = 20.dp,
+                                    isDisabled = false,
+                                    onClick = { onTrailingIconClick() },
+                                ),
                         tint = BbangZipTheme.colors.labelAlternative_282119_61,
                     )
                 }
