@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.android.bbangzip.presentation.model.Date
 import org.android.bbangzip.presentation.model.ExamDate
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
@@ -25,21 +26,15 @@ fun BbangZipDatePickerBottomSheet(
     isBottomSheetVisible: Boolean,
     modifier: Modifier = Modifier,
     bottomSheetTitle: String,
-    selectedDate: ExamDate? = null,
-    onSelectedDateChanged: (ExamDate) -> Unit = {},
-    onClickInputButton: (ExamDate) -> Unit = {},
+    selectedDate: Date? = null,
+    onSelectedDateChanged: (Date) -> Unit = {},
+    onClickInputButton: (Date) -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
     BbangZipBasicModalBottomSheet(
         modifier = modifier,
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = onDismissRequest,
-        sheetState =
-            rememberModalBottomSheetState(
-                confirmValueChange = { newState ->
-                    newState == SheetValue.Hidden
-                },
-            ),
         title = {
             Text(
                 text = bottomSheetTitle,

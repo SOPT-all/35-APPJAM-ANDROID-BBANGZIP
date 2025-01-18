@@ -24,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
@@ -42,12 +43,6 @@ fun BbangZipListDefaultPickerBottomSheet(
         modifier = modifier,
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = onDismissRequest,
-        sheetState =
-            rememberModalBottomSheetState(
-                confirmValueChange = { newState ->
-                    !(newState == SheetValue.Hidden && isBottomSheetVisible)
-                },
-            ),
         title = { title() },
         content = {
             LazyColumn(
@@ -64,8 +59,7 @@ fun BbangZipListDefaultPickerBottomSheet(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                // TODO focused 확장 clickable로 변경,
-                                .clickable { onSelectedItemChanged(index) }
+                                .applyFilterOnClick { onSelectedItemChanged(index) }
                                 .background(
                                     color = if (index != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
                                     shape = RoundedCornerShape(16.dp),

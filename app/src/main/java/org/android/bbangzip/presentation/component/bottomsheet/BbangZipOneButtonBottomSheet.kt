@@ -30,12 +30,6 @@ fun BbangZipOneButtonBottomSheet(
         modifier = modifier,
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = onDismissRequest,
-        sheetState =
-            rememberModalBottomSheetState(
-                confirmValueChange = { newState ->
-                    !(newState == SheetValue.Hidden && isBottomSheetVisible)
-                },
-            ),
         content = {
             // TODO 승범 Badge Detail
         },

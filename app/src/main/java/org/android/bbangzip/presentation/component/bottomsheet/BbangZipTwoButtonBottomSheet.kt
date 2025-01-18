@@ -35,12 +35,6 @@ fun BbangZipTwoButtonBottomSheet(
         modifier = modifier,
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = onDismissRequest,
-        sheetState =
-            rememberModalBottomSheetState(
-                confirmValueChange = { newState ->
-                    !(newState == SheetValue.Hidden && isBottomSheetVisible)
-                },
-            ),
         title = {
             Text(
                 text = bottomSheetTitle,

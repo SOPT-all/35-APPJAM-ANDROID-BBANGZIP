@@ -38,12 +38,6 @@ fun BbangZipListPickerBottomSheet(
         modifier = modifier,
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = onDismissRequest,
-        sheetState =
-            rememberModalBottomSheetState(
-                confirmValueChange = { newState ->
-                    !(newState == SheetValue.Hidden && isBottomSheetVisible)
-                },
-            ),
         title = { title() },
         content = {
             LazyColumn(

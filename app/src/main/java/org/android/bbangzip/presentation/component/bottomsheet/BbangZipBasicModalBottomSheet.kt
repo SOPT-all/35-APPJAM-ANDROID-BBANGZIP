@@ -28,7 +28,7 @@ fun BbangZipBasicModalBottomSheet(
     isBottomSheetVisible: Boolean,
     onDismissRequest: () -> Unit,
     modifier: Modifier = Modifier,
-    sheetState: SheetState = rememberModalBottomSheetState(),
+    sheetState: SheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true),
     title: @Composable (ColumnScope.() -> Unit) = {},
     content: @Composable (ColumnScope.() -> Unit) = {},
     interactButton: @Composable (ColumnScope.() -> Unit) = {},
