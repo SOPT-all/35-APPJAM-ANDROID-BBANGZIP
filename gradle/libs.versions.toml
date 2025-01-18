@@ -2,10 +2,7 @@
 
 # Kotlin
 agp = "8.7.3"
-datastore = "1.1.2"
 kotlin = "2.0.0"
-protobuf = "3.24.1"
-protobufPlugin = "0.9.4"
 
 # Androidx
 coreKtx = "1.13.1"
@@ -16,6 +13,7 @@ hilt = "2.52"
 navigation = "2.8.5"
 navigationHilt = "1.2.0"
 appcompat = "1.7.0"
+coreSplashscreen = "1.0.0"
 
 # Test
 junit = "4.13.2"
@@ -34,10 +32,16 @@ timber = "5.0.1"
 ktlint = "12.1.1"
 ksp = "2.0.0-1.0.21"
 
+# DataStore
+datastore = "1.1.2"
+protobuf = "3.24.1"
+protobufPlugin = "0.9.4"
+
 [libraries]
 
 # Androidx
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "coreSplashscreen" }
 androidx-datastore = { module = "androidx.datastore:datastore", version.ref = "datastore" }
 androidx-lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtx" }
 androidx-activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activityCompose" }
