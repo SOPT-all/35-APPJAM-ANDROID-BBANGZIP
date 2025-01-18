@@ -17,6 +17,7 @@ import org.android.bbangzip.presentation.ui.login.navigateLogin
 import org.android.bbangzip.presentation.ui.my.navigateMy
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
+import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.navigateTodoAdd
 import timber.log.Timber
 
 class MainNavigator(
@@ -62,9 +63,25 @@ class MainNavigator(
         navHostController.navigateLogin()
     }
 
+    fun navigateToToDo() {
+        navHostController.navigateTodo(navOptions {
+            popUpTo(BottomNavigationRoute.Subject::class.qualifiedName.orEmpty()) {
+                saveState = true
+                Timber.d("[navigation] restoreState -> $saveState")
+            }
+            launchSingleTop = true
+            restoreState = true
+        })
+    }
+
+    fun navigateToToDoAdd() {
+        navHostController.navigateTodoAdd()
+    }
+
     private fun popBackStack() {
         navHostController.popBackStack()
     }
+
 
     fun popBackStackIfNotSubject() {
         if (!isSameCurrentDestination<BottomNavigationRoute.Subject>()) {

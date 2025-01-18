@@ -9,12 +9,15 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import androidx.navigation.navOptions
 import org.android.bbangzip.presentation.ui.friend.friendNavGraph
 import org.android.bbangzip.presentation.ui.login.loginNavGraph
 import org.android.bbangzip.presentation.ui.my.myNavGraph
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
+import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.navigation.todoNavGraph
+import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.todoAddNavGraph
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -26,10 +29,10 @@ fun MainNavHost(
 ) {
     Box(
         modifier =
-            modifier
-                .padding(top = padding.calculateTopPadding())
-                .fillMaxSize()
-                .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
+        modifier
+            .padding(top = padding.calculateTopPadding())
+            .fillMaxSize()
+            .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         NavHost(
             navController = navigator.navHostController,
@@ -43,13 +46,25 @@ fun MainNavHost(
                 },
             )
 
+            todoAddNavGraph(
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToToDo = {
+                    navigator.navHostController.navigateTodo(navOptions =
+                    navOptions { launchSingleTop = true })
+                }
+            )
+
             friendNavGraph()
 
             myNavGraph()
 
             subjectNavGraph()
 
-            todoNavGraph(snackBarHostState = snackBarHostState)
+            todoNavGraph(
+                snackBarHostState = snackBarHostState,
+                navigateToAddToDo = { navigator.navigateToToDoAdd() },
+                navigateToAddPendingToDo = {},
+            )
         }
     }
 }

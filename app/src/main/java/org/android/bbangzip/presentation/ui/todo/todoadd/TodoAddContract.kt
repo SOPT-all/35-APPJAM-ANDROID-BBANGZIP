@@ -5,16 +5,14 @@ import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.ToDoFilterType
-import org.android.bbangzip.presentation.type.ToDoScreenType
-import org.android.bbangzip.presentation.ui.todo.TodoContract.TodoEvent
-import org.android.bbangzip.presentation.ui.todo.TodoContract.TodoReduce
 import org.android.bbangzip.presentation.util.base.BaseContract
 
-class TodoContract {
+class TodoAddContract {
     @Parcelize
     data class TodoAddState(
         val todoList: List<ToDoCardModel> = listOf(),
         val todoFilterBottomSheetState: Boolean = false,
+        val selectedFilter: ToDoFilterType = ToDoFilterType.RECENT,
         val selectedItemList: List<Int> = listOf(),
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
@@ -49,6 +47,10 @@ class TodoContract {
 
         data class UpdateFilterType(
             val selectedFilter: ToDoFilterType
+        ) : TodoAddReduce
+
+        data class DeleteSelectedItemList(
+            val pieceId: Int
         ) : TodoAddReduce
 
         data class UpdateCardState(
