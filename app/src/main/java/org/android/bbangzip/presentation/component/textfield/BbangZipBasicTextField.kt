@@ -47,7 +47,7 @@ fun BbangZipBasicTextField(
     onValueChange: (String) -> Unit,
     maxCharacter: Int,
     modifier: Modifier = Modifier,
-    bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Empty,
+    bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onFocusChange: () -> Unit = { },
     onDeleteButtonClick: () -> Unit = { },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Default),
@@ -134,15 +134,15 @@ fun BbangZipBasicTextField(
 fun BbangZipBasicTextFieldPreview() {
     BBANGZIPTheme {
         var text by remember { mutableStateOf("") }
-        var validationState by remember { mutableStateOf<BbangZipTextFieldInputState>(BbangZipTextFieldInputState.Empty) }
+        var validationState by remember { mutableStateOf<BbangZipTextFieldInputState>(BbangZipTextFieldInputState.Default) }
 
         fun validateText(text: String) {
             validationState =
                 when {
-                    text.isEmpty() -> BbangZipTextFieldInputState.Empty
+                    text.isEmpty() -> BbangZipTextFieldInputState.Default
                     text.length == 1 -> BbangZipTextFieldInputState.Typing
-                    text.length == 3 -> BbangZipTextFieldInputState.Complete
-                    text.length > 5 -> BbangZipTextFieldInputState.Error
+                    text.length == 3 -> BbangZipTextFieldInputState.Placeholder
+                    text.length > 5 -> BbangZipTextFieldInputState.Alert
                     else -> BbangZipTextFieldInputState.Field
                 }
         }
@@ -159,11 +159,11 @@ fun BbangZipBasicTextFieldPreview() {
                 validateText(text = newValue)
             },
             onFocusChange = {
-                if (validationState == BbangZipTextFieldInputState.Empty) validationState = BbangZipTextFieldInputState.Typing else Unit
+                if (validationState == BbangZipTextFieldInputState.Default) validationState = BbangZipTextFieldInputState.Typing else Unit
             },
             onDeleteButtonClick = {
                 text = ""
-                validationState = BbangZipTextFieldInputState.Empty
+                validationState = BbangZipTextFieldInputState.Default
             },
         )
     }
