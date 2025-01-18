@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -28,6 +29,7 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.chip.BbangZipChip
 import org.android.bbangzip.presentation.component.pushicon.BbangZipPushIconWithText
 import org.android.bbangzip.presentation.model.card.SubjectCardModel
+import org.android.bbangzip.presentation.util.graphic.Gap
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
@@ -55,12 +57,14 @@ fun SubjectCard(
                     shape = RoundedCornerShape(size = radius),
                 )
                 .width(width = width.dp)
+                .aspectRatio(156/190f)
                 .background(
                     color = state.getBackgroundColor(),
                     shape = RoundedCornerShape(size = radius),
                 )
                 .applyFilterOnClick(
                     baseColor = state.getBackgroundColor(),
+                    isDisabled = false,
                     radius = radius,
                 ) { onClick() }
                 .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
@@ -117,7 +121,7 @@ fun SubjectInfo(
             backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
         )
 
-        Spacer(modifier = Modifier.height(44.dp))
+        Gap()
 
         Column {
             BbangZipPushIconWithText(
