@@ -64,6 +64,7 @@ dependencies {
 
     implementation(libs.bundles.androidx)
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.core.splashscreen)
 
     // Test
     testImplementation(libs.junit)

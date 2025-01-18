@@ -83,4 +83,8 @@
     <string name="todo_complete_remaining_nothing_text">사장님 퇴근 준비 완료</string>
     <string name="todo_delete_screen_text">삭제할 오늘의 공부를 \n선택해 주세요</string>
     <string name="todo_delete_screen_delete_button_text">%s개 삭제하기</string>
+
+    <!-- login -->
+    <string name="login_title">제 과제 빵점 사장님은\n이번 학기 백점!</string>
+    <string name="login_ballon_label">5초 만에 빵집 사장님 되기</string>
 </resources>
