@@ -44,6 +44,7 @@ class TodoContract {
 
         data object OnItemDeleteButtonClicked : TodoEvent
 
+
         data class OnRevertCompleteBottomSheetApproveButtonClicked(
             val pieceId: Int,
             val cardState: BbangZipCardState
@@ -60,6 +61,7 @@ class TodoContract {
 
         data class OnDeleteScreenCardClicked(val pieceId: Int) : TodoEvent
 
+        data class OnFetchScreenCardClicked(val pieceId: Int,val cardState: BbangZipCardState) : TodoEvent
     }
 
     sealed interface TodoReduce : BaseContract.Reduce {
