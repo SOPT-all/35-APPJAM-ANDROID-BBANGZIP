@@ -1,8 +1,6 @@
 package org.android.bbangzip.presentation.ui.login
 
 import android.os.Parcelable
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
 import kotlinx.parcelize.Parcelize
 import okhttp3.internal.immutableListOf
 import org.android.bbangzip.R
@@ -12,12 +10,13 @@ class LoginContract {
     @Parcelize
     data class LoginState(
         val isOnboardingCompleted: Boolean = false,
-        val onBoardingList: List<Int> = immutableListOf(
-            R.drawable.img_login1,
-            R.drawable.img_login2,
-            R.drawable.img_login1
-        )
-    ): BaseContract.State, Parcelable {
+        val onBoardingList: List<Int> =
+            immutableListOf(
+                R.drawable.img_login1,
+                R.drawable.img_login2,
+                R.drawable.img_login1,
+            ),
+    ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
 
@@ -31,6 +30,7 @@ class LoginContract {
 
     sealed interface LoginSideEffect : BaseContract.SideEffect {
         data object NavigateToOnboarding : LoginSideEffect
-        data object NavigateToSubject: LoginSideEffect
+
+        data object NavigateToSubject : LoginSideEffect
     }
 }

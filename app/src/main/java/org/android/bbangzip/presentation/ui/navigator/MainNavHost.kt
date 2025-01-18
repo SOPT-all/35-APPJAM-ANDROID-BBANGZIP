@@ -40,7 +40,7 @@ fun MainNavHost(
                 navigateToOnboarding = {
                     navigator.navHostController.navigateSubject()
                     // TODO onboarding 만들어서 넣기
-                }
+                },
             )
 
             friendNavGraph()

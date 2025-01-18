@@ -16,10 +16,11 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun SplashScreen() {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(BbangZipTheme.colors.backgroundAccent_FFDAA0),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(BbangZipTheme.colors.backgroundAccent_FFDAA0),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Image(
             modifier = Modifier.weight(1f),

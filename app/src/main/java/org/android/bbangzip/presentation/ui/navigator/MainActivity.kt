@@ -9,18 +9,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import org.android.bbangzip.presentation.ui.splash.SplashScreen
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        installSplashScreen().setOnExitAnimationListener{ splashScreenView ->
+        installSplashScreen().setOnExitAnimationListener { splashScreenView ->
             splashScreenView.remove()
         }
 
