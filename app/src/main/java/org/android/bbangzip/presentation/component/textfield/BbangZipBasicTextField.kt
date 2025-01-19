@@ -60,13 +60,14 @@ fun BbangZipBasicTextField(
     onDeleteButtonClick: () -> Unit = { },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Default),
     focusManager: FocusManager,
-    keyboardActions: KeyboardActions = KeyboardActions(
-        onDone = {
-            val trimmedValue = value.trim()
-            onValueChange(trimmedValue)
-            focusManager.clearFocus(force = true)
-        }
-    ),
+    keyboardActions: KeyboardActions =
+        KeyboardActions(
+            onDone = {
+                val trimmedValue = value.trim()
+                onValueChange(trimmedValue)
+                focusManager.clearFocus(force = true)
+            },
+        ),
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }

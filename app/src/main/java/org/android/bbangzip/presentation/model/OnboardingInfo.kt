@@ -8,5 +8,5 @@ data class OnboardingInfo(
     val userName: String?,
     val year: Int,
     val semester: String?,
-    val subjectName: String?
+    val subjectName: String?,
 ) : Parcelable

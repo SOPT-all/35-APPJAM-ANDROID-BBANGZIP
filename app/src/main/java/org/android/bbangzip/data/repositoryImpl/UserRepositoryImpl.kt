@@ -8,46 +8,46 @@ import org.android.bbangzip.domain.repository.local.UserRepository
 import javax.inject.Inject
 
 class UserRepositoryImpl
-@Inject
-constructor(
-    private val userDataSource: UserLocalDataSource,
-) : UserRepository {
-    override val userPreferenceFlow: Flow<UserPreferences> = userDataSource.userPreferencesFlow
+    @Inject
+    constructor(
+        private val userDataSource: UserLocalDataSource,
+    ) : UserRepository {
+        override val userPreferenceFlow: Flow<UserPreferences> = userDataSource.userPreferencesFlow
 
-    override suspend fun setUserData(accessToken: String) {
-        userDataSource.updateUserPreferences { userData ->
-            userData
-                .toBuilder()
-                .setAccessToken(accessToken)
-                .build()
+        override suspend fun setUserData(accessToken: String) {
+            userDataSource.updateUserPreferences { userData ->
+                userData
+                    .toBuilder()
+                    .setAccessToken(accessToken)
+                    .build()
+            }
+        }
+
+        override suspend fun clearUserData() {
+            userDataSource.updateUserPreferences { userData ->
+                userData
+                    .toBuilder()
+                    .clearAccessToken()
+                    .clearOnboardingInfo()
+                    .build()
+            }
+        }
+
+        override suspend fun setOnboardingInfo(onboardingInfo: OnboardingInfo) {
+            userDataSource.updateUserPreferences { userData ->
+                userData
+                    .toBuilder()
+                    .setOnboardingInfo(onboardingInfo)
+                    .build()
+            }
+        }
+
+        override suspend fun clearOnboardingInfo() {
+            userDataSource.updateUserPreferences { userData ->
+                userData
+                    .toBuilder()
+                    .clearOnboardingInfo()
+                    .build()
+            }
         }
     }
-
-    override suspend fun clearUserData() {
-        userDataSource.updateUserPreferences { userData ->
-            userData
-                .toBuilder()
-                .clearAccessToken()
-                .clearOnboardingInfo()
-                .build()
-        }
-    }
-
-    override suspend fun setOnboardingInfo(onboardingInfo: OnboardingInfo) {
-        userDataSource.updateUserPreferences { userData ->
-            userData
-                .toBuilder()
-                .setOnboardingInfo(onboardingInfo)
-                .build()
-        }
-    }
-
-    override suspend fun clearOnboardingInfo() {
-        userDataSource.updateUserPreferences { userData ->
-            userData
-                .toBuilder()
-                .clearOnboardingInfo()
-                .build()
-        }
-    }
-}

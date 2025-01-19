@@ -8,7 +8,7 @@ import org.android.bbangzip.presentation.ui.onboarding.onboardingstart.Onboardin
 
 fun NavController.navigateOnboardingStart() {
     navigate(
-        route = OnboardingStartRoute
+        route = OnboardingStartRoute,
     )
 }
 
@@ -17,7 +17,7 @@ fun NavGraphBuilder.onboardingStartNavGraph(
 ) {
     composable<OnboardingStartRoute> {
         OnboardingStartRoute(
-            navigateToOnboarding = navigateToOnboarding
+            navigateToOnboarding = navigateToOnboarding,
         )
     }
 }

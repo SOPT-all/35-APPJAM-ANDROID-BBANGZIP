@@ -15,7 +15,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,7 +47,7 @@ fun OnboardingScreen(
     onBackBtnClick: () -> Unit = {},
     onNextBtnClick: () -> Unit = {},
     clearUserName: () -> Unit = {},
-    clearSubject: () -> Unit = {}
+    clearSubject: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -91,7 +90,7 @@ fun OnboardingScreen(
                 onChangeUserNameFocused = { onChangeUserNameFocused(it) },
                 onChangeSubjectFocused = { onChangeSubjectFocused(it) },
                 clearUserName = { clearUserName() },
-                clearSubject = { clearSubject() }
+                clearSubject = { clearSubject() },
             )
         }
 
@@ -121,12 +120,12 @@ private fun OnboardingPager(
     onChangeUserNameFocused: (Boolean) -> Unit = {},
     onChangeSubjectFocused: (Boolean) -> Unit = {},
     clearUserName: () -> Unit = {},
-    clearSubject: () -> Unit = {}
+    clearSubject: () -> Unit = {},
 ) {
     HorizontalPager(
         state = pagerState,
         modifier = modifier,
-        userScrollEnabled = false
+        userScrollEnabled = false,
     ) { pageIndex ->
         val onboardingType = OnboardingType.entries[pageIndex]
 
@@ -181,7 +180,7 @@ private fun OnboardingPager(
                         maxCharacter = 10,
                         focusManager = focusManager,
                         onFocusChange = { onChangeUserNameFocused(it) },
-                        onDeleteButtonClick = { clearUserName() }
+                        onDeleteButtonClick = { clearUserName() },
                     )
 
                 1 ->
@@ -201,7 +200,7 @@ private fun OnboardingPager(
                         maxCharacter = 20,
                         focusManager = focusManager,
                         onFocusChange = { onChangeSubjectFocused(it) },
-                        onDeleteButtonClick = { clearSubject() }
+                        onDeleteButtonClick = { clearSubject() },
                     )
             }
         }

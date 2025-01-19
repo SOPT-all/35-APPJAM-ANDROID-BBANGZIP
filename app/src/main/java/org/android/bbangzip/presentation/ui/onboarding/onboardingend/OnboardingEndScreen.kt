@@ -25,26 +25,28 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun OnboardingEndScreen(
     onClickNextBtn: () -> Unit = {},
-    onBackBtnClick: () -> Unit = {}
+    onBackBtnClick: () -> Unit = {},
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         BbangZipBaseTopBar(
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = { onBackBtnClick() }
+            onLeadingIconClick = { onBackBtnClick() },
         )
 
         Text(
             text = stringResource(id = R.string.onboarding_final_title),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp)
-                .padding(top = (LocalConfiguration.current.screenHeightDp * 0.184).dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp)
+                    .padding(top = (LocalConfiguration.current.screenHeightDp * 0.184).dp),
             style = BbangZipTheme.typography.title2Bold,
-            color = BbangZipTheme.colors.labelNormal_282119
+            color = BbangZipTheme.colors.labelNormal_282119,
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -52,7 +54,7 @@ fun OnboardingEndScreen(
         Image(
             painter = painterResource(id = R.drawable.img_login2),
             modifier = Modifier.fillMaxWidth(),
-            contentDescription = null
+            contentDescription = null,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -63,7 +65,7 @@ fun OnboardingEndScreen(
             bbangZipButtonSize = BbangZipButtonSize.Large,
             onClick = { onClickNextBtn() },
             label = stringResource(R.string.btn_finish_onboarding_label),
-            trailingIcon = R.drawable.ic_chevronright_thick_small_24
+            trailingIcon = R.drawable.ic_chevronright_thick_small_24,
         )
     }
 }

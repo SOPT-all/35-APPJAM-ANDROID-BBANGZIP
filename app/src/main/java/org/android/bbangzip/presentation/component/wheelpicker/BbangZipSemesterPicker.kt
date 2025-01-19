@@ -54,7 +54,7 @@ fun BbangZipSemesterPicker(
             startIndex = startYear,
             onItemChanged = { selectedYear ->
                 yearPickerState = selectedYear
-            }
+            },
         )
 
         BbangZipPicker(
@@ -63,7 +63,7 @@ fun BbangZipSemesterPicker(
             startIndex = startSemester ?: 0,
             onItemChanged = { selectedSemester ->
                 semesterPickerState = selectedSemester
-            }
+            },
         )
     }
 }

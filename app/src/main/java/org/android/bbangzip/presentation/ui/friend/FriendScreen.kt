@@ -25,22 +25,22 @@ fun FriendScreen(
     val focusManager = LocalFocusManager.current
 
     var text by remember { mutableStateOf("") }
-    var validationState by remember { mutableStateOf<BbangZipTextFieldInputState>(BbangZipTextFieldInputState.Empty) }
+    var validationState by remember { mutableStateOf<BbangZipTextFieldInputState>(BbangZipTextFieldInputState.Default) }
 
     var text2 by remember { mutableStateOf("") }
     var validationState2 by remember {
         mutableStateOf<BbangZipTextFieldInputState>(
-            BbangZipTextFieldInputState.Empty,
+            BbangZipTextFieldInputState.Default,
         )
     }
 
     fun validateText(text: String) {
         validationState =
             when {
-                text.isEmpty() -> BbangZipTextFieldInputState.Empty
+                text.isEmpty() -> BbangZipTextFieldInputState.Default
                 text.length == 1 -> BbangZipTextFieldInputState.Typing
-                text.length == 3 -> BbangZipTextFieldInputState.Complete
-                text.length > 5 -> BbangZipTextFieldInputState.Error
+                text.length == 3 -> BbangZipTextFieldInputState.Field
+                text.length > 5 -> BbangZipTextFieldInputState.Placeholder
                 else -> BbangZipTextFieldInputState.Field
             }
     }
@@ -48,9 +48,9 @@ fun FriendScreen(
     fun validate2Text(text: String) {
         validationState2 =
             when {
-                text.isEmpty() -> BbangZipTextFieldInputState.Empty
+                text.isEmpty() -> BbangZipTextFieldInputState.Default
                 text.length == 1 -> BbangZipTextFieldInputState.Typing
-                5 < text.length -> BbangZipTextFieldInputState.Error
+                5 < text.length -> BbangZipTextFieldInputState.Placeholder
                 else -> BbangZipTextFieldInputState.Field
             }
     }
@@ -73,12 +73,13 @@ fun FriendScreen(
                 validateText(text = newValue)
             },
             onFocusChange = {
-                if (validationState == BbangZipTextFieldInputState.Empty) validationState = BbangZipTextFieldInputState.Typing else Unit
+                if (validationState == BbangZipTextFieldInputState.Default) validationState = BbangZipTextFieldInputState.Typing else Unit
             },
             onDeleteButtonClick = {
                 text = ""
-                validationState = BbangZipTextFieldInputState.Empty
+                validationState = BbangZipTextFieldInputState.Default
             },
+            focusManager = LocalFocusManager.current,
         )
 
         Row {
@@ -90,7 +91,7 @@ fun FriendScreen(
                 value = text2,
                 bbangZipTextFieldInputState = validationState2,
                 onFocusChange = {
-                    if (validationState2 == BbangZipTextFieldInputState.Empty) validationState2 = BbangZipTextFieldInputState.Typing else Unit
+                    if (validationState2 == BbangZipTextFieldInputState.Default) validationState2 = BbangZipTextFieldInputState.Typing else Unit
                 },
                 onValueChange = { newValue ->
                     text2 = newValue
@@ -106,7 +107,7 @@ fun FriendScreen(
                 value = text2,
                 bbangZipTextFieldInputState = validationState2,
                 onFocusChange = {
-                    if (validationState2 == BbangZipTextFieldInputState.Empty) validationState2 = BbangZipTextFieldInputState.Typing else Unit
+                    if (validationState2 == BbangZipTextFieldInputState.Default) validationState2 = BbangZipTextFieldInputState.Typing else Unit
                 },
                 onValueChange = { newValue ->
                     text2 = newValue

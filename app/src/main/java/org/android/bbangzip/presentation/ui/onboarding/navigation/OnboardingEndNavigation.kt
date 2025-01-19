@@ -8,16 +8,16 @@ import org.android.bbangzip.presentation.ui.onboarding.onboardingend.OnboardingE
 
 fun NavController.navigateOnboardingEnd() {
     navigate(
-        route = OnboardingEndRoute
+        route = OnboardingEndRoute,
     )
 }
 
 fun NavGraphBuilder.onboardingEndNavGraph(
-    navigateToSubject: () -> Unit
+    navigateToSubject: () -> Unit,
 ) {
     composable<OnboardingEndRoute> {
         OnboardingEndRoute(
-            navigateToSubject = navigateToSubject
+            navigateToSubject = navigateToSubject,
         )
     }
 }

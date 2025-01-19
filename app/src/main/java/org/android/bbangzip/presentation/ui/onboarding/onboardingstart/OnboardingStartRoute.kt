@@ -10,7 +10,7 @@ import org.android.bbangzip.presentation.ui.onboarding.OnboardingViewModel
 @Composable
 fun OnboardingStartRoute(
     navigateToOnboarding: () -> Unit,
-    viewModel: OnboardingViewModel = hiltViewModel()
+    viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest {
@@ -22,6 +22,6 @@ fun OnboardingStartRoute(
     }
 
     OnboardingStartScreen(
-        onClickNextBtn = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickNextBtn) }
+        onClickNextBtn = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickNextBtn) },
     )
 }

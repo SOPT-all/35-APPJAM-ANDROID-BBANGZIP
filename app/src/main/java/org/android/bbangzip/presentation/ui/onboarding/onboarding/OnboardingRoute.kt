@@ -52,6 +52,6 @@ fun OnboardingRoute(
         onChangeUserNameFocused = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeUserNameFocused(it)) },
         onChangeSubjectFocused = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeSubjectFocused(it)) },
         clearUserName = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickDeleteUserName) },
-        clearSubject = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickDeleteSubject) }
+        clearSubject = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickDeleteSubject) },
     )
 }

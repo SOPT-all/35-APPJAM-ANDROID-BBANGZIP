@@ -24,20 +24,22 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun OnboardingStartScreen(
-    onClickNextBtn: () -> Unit = {}
+    onClickNextBtn: () -> Unit = {},
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
     ) {
         Text(
             text = stringResource(id = R.string.onboarding_start_title),
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = (LocalConfiguration.current.screenHeightDp * 0.184).dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = (LocalConfiguration.current.screenHeightDp * 0.184).dp),
             style = BbangZipTheme.typography.title2Bold,
-            color = BbangZipTheme.colors.labelNormal_282119
+            color = BbangZipTheme.colors.labelNormal_282119,
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -45,7 +47,7 @@ fun OnboardingStartScreen(
         Image(
             painter = painterResource(id = R.drawable.img_onboarding_start),
             modifier = Modifier.fillMaxWidth(),
-            contentDescription = null
+            contentDescription = null,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -56,7 +58,7 @@ fun OnboardingStartScreen(
             bbangZipButtonSize = BbangZipButtonSize.Large,
             onClick = { onClickNextBtn() },
             label = stringResource(R.string.btn_start_app_label),
-            trailingIcon = R.drawable.ic_chevronright_thick_small_24
+            trailingIcon = R.drawable.ic_chevronright_thick_small_24,
         )
     }
 }
@@ -65,6 +67,5 @@ fun OnboardingStartScreen(
 @Composable
 private fun OnboardingStartScreenPreview() {
     BBANGZIPTheme {
-
     }
 }
