@@ -9,12 +9,16 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
+import org.android.bbangzip.presentation.model.OnboardingInfo
 import org.android.bbangzip.presentation.model.Route
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.friend.navigateFriend
 import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
 import org.android.bbangzip.presentation.ui.my.navigateMy
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.todo.navigateTodo
 import timber.log.Timber
@@ -60,6 +64,18 @@ class MainNavigator(
 
     fun navigateToLogin() {
         navHostController.navigateLogin()
+    }
+
+    fun navigateToOnboardingStart() {
+        navHostController.navigateOnboardingStart()
+    }
+
+    fun navigateToOnboarding() {
+        navHostController.navigateOnboarding()
+    }
+
+    fun navigateToOnboardingEnd() {
+        navHostController.navigateOnboardingEnd()
     }
 
     private fun popBackStack() {
