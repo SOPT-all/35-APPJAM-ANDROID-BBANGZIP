@@ -3,7 +3,6 @@ package org.android.bbangzip.presentation.ui.onboarding
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.google.protobuf.empty
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
@@ -18,212 +17,215 @@ import javax.inject.Inject
 
 @HiltViewModel
 class OnboardingViewModel
-    @Inject
-    constructor(
-        private val userRepository: UserRepository,
-        savedStateHandle: SavedStateHandle,
-    ) : BaseViewModel<OnboardingContract.OnboardingEvent, OnboardingContract.OnboardingState, OnboardingContract.OnboardingReduce, OnboardingContract.OnboardingSideEffect>(
-            savedStateHandle = savedStateHandle,
-        ) {
-        val userPreferencesFlow: Flow<UserPreferences> = userRepository.userPreferenceFlow
+@Inject
+constructor(
+    private val userRepository: UserRepository,
+    savedStateHandle: SavedStateHandle,
+) : BaseViewModel<OnboardingContract.OnboardingEvent, OnboardingContract.OnboardingState, OnboardingContract.OnboardingReduce, OnboardingContract.OnboardingSideEffect>(
+    savedStateHandle = savedStateHandle,
+) {
+    val userPreferencesFlow: Flow<UserPreferences> = userRepository.userPreferenceFlow
 
-        fun setUserOnboardingInfo(onboardingInfo: OnboardingInfo) {
-            viewModelScope.launch { userRepository.setOnboardingInfo(onboardingInfo) }
-        }
+    fun setUserOnboardingInfo(onboardingInfo: OnboardingInfo) {
+        viewModelScope.launch { userRepository.setOnboardingInfo(onboardingInfo) }
+    }
 
-        override fun createInitialState(savedState: Parcelable?): OnboardingContract.OnboardingState {
-            return savedState as? OnboardingContract.OnboardingState ?: OnboardingContract.OnboardingState()
-        }
+    override fun createInitialState(savedState: Parcelable?): OnboardingContract.OnboardingState {
+        return savedState as? OnboardingContract.OnboardingState ?: OnboardingContract.OnboardingState()
+    }
 
-        override fun handleEvent(event: OnboardingContract.OnboardingEvent) {
-            when (event) {
-                is OnboardingContract.OnboardingEvent.OnChangeUserName -> {
-                    updateState(
-                        OnboardingContract.OnboardingReduce.UpdateUserName(
-                            userName = event.userName,
-                        ),
-                    )
-                    updateState(
-                        OnboardingContract.OnboardingReduce.UpdateUserNameTextFieldSate(
-                            userName = event.userName,
-                        ),
-                    )
-                    updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
-                }
+    override fun handleEvent(event: OnboardingContract.OnboardingEvent) {
+        when (event) {
+            is OnboardingContract.OnboardingEvent.OnChangeUserName -> {
+                updateState(
+                    OnboardingContract.OnboardingReduce.UpdateUserName(
+                        userName = event.userName,
+                    ),
+                )
+                updateState(
+                    OnboardingContract.OnboardingReduce.UpdateUserNameTextFieldSate(
+                        userName = event.userName,
+                    ),
+                )
+                updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
+            }
 
-                is OnboardingContract.OnboardingEvent.OnChangeUserNameFocused -> {
-                    updateState(
-                        OnboardingContract.OnboardingReduce.UpdateUserNameFocused(
-                            isFocused = event.isFocused,
-                        ),
-                    )
-                    updateState(
-                        OnboardingContract.OnboardingReduce.UpdateUserNameTextFieldSate(
-                            userName = currentUiState.userName ?: "",
-                        ),
-                    )
-                }
+            is OnboardingContract.OnboardingEvent.OnChangeUserNameFocused -> {
+                updateState(
+                    OnboardingContract.OnboardingReduce.UpdateUserNameFocused(
+                        isFocused = event.isFocused,
+                    ),
+                )
+                updateState(
+                    OnboardingContract.OnboardingReduce.UpdateUserNameTextFieldSate(
+                        userName = currentUiState.userName ?: "",
+                    ),
+                )
+            }
 
-                is OnboardingContract.OnboardingEvent.OnChangeSemester -> {
-                    updateState(
-                        OnboardingContract.OnboardingReduce.UpdateSemester(
-                            semester = event.semester,
-                        ),
-                    )
-                    updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
-                }
+            is OnboardingContract.OnboardingEvent.OnChangeSemester -> {
+                updateState(
+                    OnboardingContract.OnboardingReduce.UpdateSemester(
+                        semester = event.semester,
+                    ),
+                )
+                updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
+            }
 
-                is OnboardingContract.OnboardingEvent.OnChangeSubject -> {
-                    updateState(
-                        OnboardingContract.OnboardingReduce.UpdateSubject(
-                            subject = event.subject,
-                        ),
-                    )
-                    updateState(
-                        OnboardingContract.OnboardingReduce.UpdateSubjectNameTextFieldSate(
-                            subject = event.subject,
-                        ),
-                    )
-                    updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
-                }
+            is OnboardingContract.OnboardingEvent.OnChangeSubject -> {
+                updateState(
+                    OnboardingContract.OnboardingReduce.UpdateSubject(
+                        subject = event.subject,
+                    ),
+                )
+                updateState(
+                    OnboardingContract.OnboardingReduce.UpdateSubjectNameTextFieldSate(
+                        subject = event.subject,
+                    ),
+                )
+                updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
+            }
 
-                is OnboardingContract.OnboardingEvent.OnChangeSubjectFocused -> {
-                    updateState(
-                        OnboardingContract.OnboardingReduce.UpdateSubjectFocused(
-                            isFocused = event.isFocused,
-                        ),
-                    )
-                    updateState(
-                        OnboardingContract.OnboardingReduce.UpdateSubjectNameTextFieldSate(
-                            subject = currentUiState.subjectName ?: "",
-                        ),
-                    )
-                }
+            is OnboardingContract.OnboardingEvent.OnChangeSubjectFocused -> {
+                updateState(
+                    OnboardingContract.OnboardingReduce.UpdateSubjectFocused(
+                        isFocused = event.isFocused,
+                    ),
+                )
+                updateState(
+                    OnboardingContract.OnboardingReduce.UpdateSubjectNameTextFieldSate(
+                        subject = currentUiState.subjectName ?: "",
+                    ),
+                )
+            }
 
-                is OnboardingContract.OnboardingEvent.OnChangeCurrentPage -> {
-                    updateState(
-                        OnboardingContract.OnboardingReduce.UpdateCurrentPage(
-                            nextPage = event.currentPage,
-                        ),
-                    )
-                    updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
-                }
+            is OnboardingContract.OnboardingEvent.OnChangeCurrentPage -> {
+                updateState(
+                    OnboardingContract.OnboardingReduce.UpdateCurrentPage(
+                        nextPage = event.currentPage,
+                    ),
+                )
+                updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
+            }
 
-                is OnboardingContract.OnboardingEvent.OnClickDeleteUserName -> {
-                    Timber.d("[온보딩] -> 딜리트 유저 네임 이벤트 발생!")
-                    updateState(OnboardingContract.OnboardingReduce.DeleteUserName)
-                }
+            is OnboardingContract.OnboardingEvent.OnClickDeleteUserName -> {
+                updateState(OnboardingContract.OnboardingReduce.DeleteUserName)
+            }
 
-                is OnboardingContract.OnboardingEvent.OnClickDeleteSubject -> {
-                    updateState(OnboardingContract.OnboardingReduce.DeleteSubject)
-                }
+            is OnboardingContract.OnboardingEvent.OnClickDeleteSubject -> {
+                updateState(OnboardingContract.OnboardingReduce.DeleteSubject)
+            }
 
-                is OnboardingContract.OnboardingEvent.OnClickBackBtn -> {
-                    val previousPage = currentUiState.currentPage - 1
-                    when (currentUiState.currentPage) {
-                        1 -> {
-                            updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = previousPage))
-                            setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboardingStart)
-                        }
+            is OnboardingContract.OnboardingEvent.OnClickBackBtn -> {
+                val previousPage = currentUiState.currentPage - 1
+                when (currentUiState.currentPage) {
+                    1 -> {
+                        updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = previousPage))
+                        setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboardingStart)
+                    }
 
-                        2 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = previousPage))
-                        3 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = previousPage))
-                        4 -> {
-                            updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = previousPage))
-                            setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboarding)
-                        }
+                    2 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = previousPage))
+                    3 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = previousPage))
+                    4 -> {
+                        updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = previousPage))
+                        setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboarding)
                     }
                 }
+            }
 
-                is OnboardingContract.OnboardingEvent.OnClickNextBtn -> {
-                    val nextPage = currentUiState.currentPage + 1
-                    Timber.d("[온보딩] 현재 페이지 -> ${currentUiState.currentPage}")
-                    Timber.d("[온보딩] 다음 페이지 -> $nextPage")
+            is OnboardingContract.OnboardingEvent.OnClickNextBtn -> {
+                val nextPage = currentUiState.currentPage + 1
+                Timber.d("[온보딩] 현재 페이지 -> ${currentUiState.currentPage}")
+                Timber.d("[온보딩] 다음 페이지 -> $nextPage")
+                when (currentUiState.currentPage) {
+                    0 -> {
+                        updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
+                        setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboarding)
+                        Timber.d("[온보딩] 현재 페이지 -> ${currentUiState.currentPage}")
+                    }
+
+                    1 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
+                    2 -> {
+                        updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
+                        setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboardingEnd)
+                    }
+                }
+            }
+
+            is OnboardingContract.OnboardingEvent.OnClickFinishBtn ->
+                setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToSubject)
+        }
+    }
+
+    override fun reduceState(
+        state: OnboardingContract.OnboardingState,
+        reduce: OnboardingContract.OnboardingReduce,
+    ): OnboardingContract.OnboardingState {
+        return when (reduce) {
+            is OnboardingContract.OnboardingReduce.UpdateState -> reduce.state
+            is OnboardingContract.OnboardingReduce.UpdateUserName -> state.copy(userName = reduce.userName)
+            is OnboardingContract.OnboardingReduce.UpdateSemester -> state.copy(semester = reduce.semester)
+            is OnboardingContract.OnboardingReduce.UpdateSubject -> state.copy(subjectName = reduce.subject)
+            is OnboardingContract.OnboardingReduce.DeleteUserName -> {
+                Timber.d("[온보딩] -> ${currentUiState.userName}")
+                state.copy(userName = null, buttonEnabled = false)
+            }
+
+            is OnboardingContract.OnboardingReduce.DeleteSubject -> {
+                state.copy(subjectName = null, buttonEnabled = false)
+            }
+
+            is OnboardingContract.OnboardingReduce.UpdateUserNameFocused -> {
+                Timber.d("[TextField] UpdateUserNameFocused -> ${reduce.isFocused}")
+                state.copy(userNameFocusedState = reduce.isFocused)
+            }
+
+            is OnboardingContract.OnboardingReduce.UpdateSubjectFocused -> state.copy(subjectNameFocusedState = reduce.isFocused)
+            is OnboardingContract.OnboardingReduce.UpdateCurrentPage -> state.copy(currentPage = reduce.nextPage)
+            is OnboardingContract.OnboardingReduce.UpdateUserNameTextFieldSate -> {
+                val checkedText = determineTextFieldType(reduce.userName, currentUiState.userNameFocusedState)
+                Timber.d("[TextField] UpdateUserNameTextFieldSate -> ${reduce.userName} -> $checkedText")
+                state.copy(userNameTextFieldState = checkedText)
+            }
+
+            is OnboardingContract.OnboardingReduce.UpdateSubjectNameTextFieldSate -> {
+                val checkedText = determineTextFieldType(reduce.subject, currentUiState.subjectNameFocusedState)
+                Timber.d("[온보딩] 텍스트 필드 -> ${reduce.subject} -> $checkedText")
+                state.copy(subjectNameTextFieldState = checkedText)
+            }
+
+            is OnboardingContract.OnboardingReduce.UpdateButtonEnabled -> {
+                val buttonEnabled: Boolean =
                     when (currentUiState.currentPage) {
                         0 -> {
-                            updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
-                            setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboarding)
-                            Timber.d("[온보딩] 현재 페이지 -> ${currentUiState.currentPage}")
+                            currentUiState.userNameTextFieldState == BbangZipTextFieldInputState.Typing || currentUiState.userNameTextFieldState == BbangZipTextFieldInputState.Field
                         }
 
-                        1 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
+                        1 -> {
+                            currentUiState.semester.year == "2025" && currentUiState.semester.semester == SemesterType.FIRST
+                        }
+
                         2 -> {
-                            updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
-                            setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboardingEnd)
+                            currentUiState.subjectNameTextFieldState == BbangZipTextFieldInputState.Typing || currentUiState.subjectNameTextFieldState == BbangZipTextFieldInputState.Field
                         }
+
+                        else -> false
                     }
-                }
-
-                is OnboardingContract.OnboardingEvent.OnClickFinishBtn ->
-                    setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToSubject)
-            }
-        }
-
-        override fun reduceState(
-            state: OnboardingContract.OnboardingState,
-            reduce: OnboardingContract.OnboardingReduce,
-        ): OnboardingContract.OnboardingState {
-            return when (reduce) {
-                is OnboardingContract.OnboardingReduce.UpdateState -> reduce.state
-                is OnboardingContract.OnboardingReduce.UpdateUserName -> state.copy(userName = reduce.userName)
-                is OnboardingContract.OnboardingReduce.UpdateSemester -> state.copy(semester = reduce.semester)
-                is OnboardingContract.OnboardingReduce.UpdateSubject -> state.copy(subjectName = reduce.subject)
-                is OnboardingContract.OnboardingReduce.DeleteUserName -> {
-                    Timber.d("[온보딩] -> ${currentUiState.userName}")
-                    state.copy(userName = null)
-                }
-                is OnboardingContract.OnboardingReduce.DeleteSubject -> state.copy(subjectName = null)
-                is OnboardingContract.OnboardingReduce.UpdateUserNameFocused -> {
-                    Timber.d("[TextField] UpdateUserNameFocused -> ${reduce.isFocused}")
-                    state.copy(userNameFocusedState = reduce.isFocused)
-                }
-
-                is OnboardingContract.OnboardingReduce.UpdateSubjectFocused -> state.copy(subjectNameFocusedState = reduce.isFocused)
-                is OnboardingContract.OnboardingReduce.UpdateCurrentPage -> state.copy(currentPage = reduce.nextPage)
-                is OnboardingContract.OnboardingReduce.UpdateUserNameTextFieldSate -> {
-                    val checkedText = determineTextFieldType(reduce.userName, currentUiState.userNameFocusedState)
-                    Timber.d("[TextField] UpdateUserNameTextFieldSate -> ${reduce.userName} -> $checkedText")
-                    state.copy(userNameTextFieldState = checkedText)
-                }
-
-                is OnboardingContract.OnboardingReduce.UpdateSubjectNameTextFieldSate -> {
-                    val checkedText = determineTextFieldType(reduce.subject, currentUiState.subjectNameFocusedState)
-                    Timber.d("[온보딩] 텍스트 필드 -> ${reduce.subject} -> $checkedText")
-                    state.copy(subjectNameTextFieldState = checkedText)
-                }
-
-                is OnboardingContract.OnboardingReduce.UpdateButtonEnabled -> {
-                    val buttonEnabled: Boolean =
-                        when (currentUiState.currentPage) {
-                            0 -> {
-                                currentUiState.userNameTextFieldState == BbangZipTextFieldInputState.Typing || currentUiState.userNameTextFieldState == BbangZipTextFieldInputState.Field
-                            }
-
-                            1 -> {
-                                currentUiState.semester.year == "2025" && currentUiState.semester.semester == SemesterType.FIRST
-                            }
-
-                            2 -> {
-                                currentUiState.subjectNameTextFieldState == BbangZipTextFieldInputState.Typing || currentUiState.subjectNameTextFieldState == BbangZipTextFieldInputState.Field
-                            }
-
-                            else -> false
-                        }
-                    state.copy(buttonEnabled = buttonEnabled)
-                }
-            }
-        }
-
-        private fun determineTextFieldType(
-            text: String,
-            isFocused: Boolean,
-        ): BbangZipTextFieldInputState {
-            return when {
-                text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
-                text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
-                text.contains(Regex("[0-9!@#\$%^&*(),.?\":{}|<>]")) -> BbangZipTextFieldInputState.Alert
-                text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
-                else -> BbangZipTextFieldInputState.Field
+                state.copy(buttonEnabled = buttonEnabled)
             }
         }
     }
+
+    private fun determineTextFieldType(
+        text: String,
+        isFocused: Boolean,
+    ): BbangZipTextFieldInputState {
+        return when {
+            text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
+            text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
+            text.contains(Regex("[0-9!@#\$%^&*(),.?\":{}|<>]")) -> BbangZipTextFieldInputState.Alert
+            text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
+            else -> BbangZipTextFieldInputState.Field
+        }
+    }
+}
