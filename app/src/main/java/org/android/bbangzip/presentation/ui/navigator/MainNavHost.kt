@@ -47,7 +47,7 @@ fun MainNavHost(
             todoAddNavGraph(
                 snackBarHostState = snackBarHostState,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
-                navigateToToDo = { navigator.navigateToToDo() }
+                navigateToToDo = { navigator.popBackStackIfNotSubject() }
             )
 
 

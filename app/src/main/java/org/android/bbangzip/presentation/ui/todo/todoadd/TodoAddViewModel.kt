@@ -37,7 +37,7 @@ constructor(
 
             TodoAddContract.TodoAddEvent.OnFilterIconClicked -> updateState(
                 TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
-                    todoFilterBottomSheetState = false
+                    todoFilterBottomSheetState = true
                 )
             )
 
@@ -48,13 +48,14 @@ constructor(
                         todoFilterBottomSheetState = false
                     )
                 )
-                setSideEffect(TodoAddContract.TodoAddSideEffect.ShowSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
+                setSideEffect(TodoAddContract.TodoAddSideEffect.ShowTodoAddSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
                 //TODO 받아오고 다시 정렬해야됨 ㅋㅋ
             }
 
             TodoAddContract.TodoAddEvent.OnItemPlusButtonClicked -> {
                 // TODO 서버로 보내기
                 setSideEffect(TodoAddContract.TodoAddSideEffect.NavigateToToDo)
+                setSideEffect(TodoAddContract.TodoAddSideEffect.ShowSnackBar("오늘 할 공부를 추가했어요!"))
             }
 
             is TodoAddContract.TodoAddEvent.OnToDoCardClicked -> {

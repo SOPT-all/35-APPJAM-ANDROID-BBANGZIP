@@ -66,7 +66,7 @@ fun TodoScreen(
     onDefaultScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
 ) {
     Box(
-        modifier = modifier
+        modifier =  modifier
             .fillMaxSize()
             .padding(bottom = 74.dp)
             .background(color = BbangZipTheme.colors.staticWhite_FFFFFF)

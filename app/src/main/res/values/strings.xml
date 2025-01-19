@@ -88,4 +88,10 @@
     <string name="login_title">제 과제 빵점 사장님은\n이번 학기 백점!</string>
     <string name="login_ballon_label">5초 만에 빵집 사장님 되기</string>
     <string name="todo_revert_bottomsheet_approve_text">되돌리기</string>
+    <string name="todo_pending_add_title1">이제는 미룰 수 없다!</string>
+    <string name="todo_todo_pending_add_title1_add_title2">아직 늦지 않았어요!\n밀린 공부를 시작해봐요</string>
+    <string name="todo_add_title1">시작이 빵이다!</string>
+    <string name="todo_add_title2">오늘부터 하나씩!\n공부할 내용을 선택해 보세요</string>
+    <string name="todo_add_count">개 / 총 %s개</string>
+    <string name="todo_add_plus_button_label">오늘 할 공부 추가하기</string>
 </resources>

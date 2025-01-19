@@ -63,17 +63,6 @@ class MainNavigator(
         navHostController.navigateLogin()
     }
 
-    fun navigateToToDo() {
-        navHostController.navigateTodo(navOptions {
-            popUpTo(BottomNavigationRoute.Subject::class.qualifiedName.orEmpty()) {
-                saveState = true
-                Timber.d("[navigation] restoreState -> $saveState")
-            }
-            launchSingleTop = true
-            restoreState = true
-        })
-    }
-
     fun navigateToToDoAdd() {
         navHostController.navigateTodoAdd()
     }

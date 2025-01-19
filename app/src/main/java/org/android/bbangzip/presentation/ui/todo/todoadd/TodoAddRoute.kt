@@ -1,10 +1,12 @@
 package org.android.bbangzip.presentation.ui.todo.todoadd
 
+import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
@@ -20,6 +22,7 @@ fun TodoAddRoute(
 ) {
     val todoAddState by viewModel.uiState.collectAsStateWithLifecycle()
     val success by viewModel.success.collectAsStateWithLifecycle(initialValue = true)
+    val todoAddsSnackBarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
@@ -39,6 +42,16 @@ fun TodoAddRoute(
                     delay(2000)
                     job.cancel()
                 }
+
+                is TodoAddContract.TodoAddSideEffect.ShowTodoAddSnackBar -> {
+                    val job =
+                        launch {
+                            todoAddsSnackBarHostState.currentSnackbarData?.dismiss()
+                            todoAddsSnackBarHostState.showSnackbar(effect.message)
+                        }
+                    delay(2000)
+                    job.cancel()
+                }
             }
         }
     }
@@ -47,14 +60,15 @@ fun TodoAddRoute(
         true ->
             TodoAddScreen(
                 todoAddState = todoAddState,
+                todoAddSnackBarHostState = todoAddsSnackBarHostState,
                 onBackIconClicked = {
                     viewModel.setEvent(TodoAddContract.TodoAddEvent.OnBackIconClicked)
                 },
                 onFilterBottomSheetDismissRequest = {
-                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnFilterIconClicked)
-                },
-                nFilterIconClicked = {
                     viewModel.setEvent(TodoAddContract.TodoAddEvent.OnFilterBottomSheetDismissRequest)
+                },
+                onFilterIconClicked = {
+                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnFilterIconClicked)
                 },
                 onFilterBottomSheetItemClicked = { filter ->
                     viewModel.setEvent(TodoAddContract.TodoAddEvent.OnFilterBottomSheetItemClicked(selectedFilterItem = filter))
