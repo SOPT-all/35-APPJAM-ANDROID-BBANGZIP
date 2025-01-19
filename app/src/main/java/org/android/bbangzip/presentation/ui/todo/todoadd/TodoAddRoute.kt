@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.ui.todo.todoadd
 
-import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -49,7 +48,7 @@ fun TodoAddRoute(
                             todoAddsSnackBarHostState.currentSnackbarData?.dismiss()
                             todoAddsSnackBarHostState.showSnackbar(effect.message)
                         }
-                    delay(2000)
+                    delay(3000)
                     job.cancel()
                 }
             }

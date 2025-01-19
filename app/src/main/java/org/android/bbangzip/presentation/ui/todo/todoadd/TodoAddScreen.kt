@@ -71,6 +71,8 @@ fun TodoAddScreen(
                 onLeadingIconClick = onBackIconClicked
             )
 
+            Spacer(modifier =  Modifier.height(32.dp))
+
             LazyColumn(
                 modifier = Modifier
                     .padding(horizontal = 16.dp)
@@ -78,29 +80,51 @@ fun TodoAddScreen(
                 state = scrollState
             ) {
                 item {
-                    Text(text = stringResource(R.string.todo_add_title1), style = BbangZipTheme.typography.body1Bold, color = BbangZipTheme.colors.labelAlternative_282119_61)
+                    Text(
+                        text = stringResource(R.string.todo_add_title1),
+                        style = BbangZipTheme.typography.body1Bold,
+                        color = BbangZipTheme.colors.labelAlternative_282119_61
+                    )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    Text(text = stringResource(R.string.todo_add_title2), style = BbangZipTheme.typography.title3Bold, color = BbangZipTheme.colors.labelNormal_282119)
+                    Text(
+                        text = stringResource(R.string.todo_add_title2),
+                        style = BbangZipTheme.typography.title3Bold,
+                        color = BbangZipTheme.colors.labelNormal_282119
+                    )
 
                     Spacer(modifier = Modifier.height(32.dp))
                 }
 
                 item {
-                    Row {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
                         Spacer(modifier = Modifier.width(8.dp))
 
 
-                        Text(text = "${todoAddState.selectedItemList.size} ", style = BbangZipTheme.typography.body2Bold, color = BbangZipTheme.colors.labelNormal_282119)
-                        Text(text = stringResource(R.string.todo_add_count, todoAddState.todoList.size), style = BbangZipTheme.typography.body2Bold, color = BbangZipTheme.colors.labelAlternative_282119_61)
+                        Text(
+                            text = "${todoAddState.selectedItemList.size} ",
+                            style = BbangZipTheme.typography.body2Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119
+                        )
+                        Text(
+                            text = stringResource(
+                                R.string.todo_add_count,
+                                todoAddState.todoList.size
+                            ),
+                            style = BbangZipTheme.typography.body2Bold,
+                            color = BbangZipTheme.colors.labelAlternative_282119_61
+                        )
 
                         Spacer(modifier = Modifier.weight(1f))
 
                         Box(
                             modifier = Modifier
                                 .clip(CircleShape)
-                                .clickable { onFilterIconClicked() }, contentAlignment = Alignment.Center
+                                .clickable { onFilterIconClicked() },
+                            contentAlignment = Alignment.Center
                         ) {
                             Icon(
                                 imageVector = ImageVector.vectorResource(R.drawable.ic_filter_default_24),
@@ -111,6 +135,8 @@ fun TodoAddScreen(
                             )
                         }
                     }
+
+                    Spacer(modifier = Modifier.height(18.dp))
                 }
 
                 items(
@@ -120,7 +146,7 @@ fun TodoAddScreen(
                     }) { index ->
                     ToDoCard(
                         data = todoAddState.todoList[index],
-                        modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
+                        modifier = Modifier.padding( vertical = 6.dp),
                         onClick = {
                             if (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKED)
                                 onToDoCardClicked(

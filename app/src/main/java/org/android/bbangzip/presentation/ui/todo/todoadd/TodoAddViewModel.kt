@@ -4,7 +4,6 @@ import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
-import org.android.bbangzip.presentation.ui.todo.TodoContract
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import javax.inject.Inject
 
