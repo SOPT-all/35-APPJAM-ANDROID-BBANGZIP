@@ -67,12 +67,12 @@ fun BbangZipBaseTopBar(
                         contentDescription = null,
                         modifier =
                             Modifier
-                                .padding(8.dp)
                                 .applyFilterOnClick(
                                     radius = 20.dp,
                                     isDisabled = false,
                                     onClick = { onLeadingIconClick() },
-                                ),
+                                )
+                                .padding(8.dp),
                         tint = BbangZipTheme.colors.labelAlternative_282119_61,
                     )
                 }
@@ -99,12 +99,12 @@ fun BbangZipBaseTopBar(
                         contentDescription = null,
                         modifier =
                             Modifier
-                                .padding(8.dp)
                                 .applyFilterOnClick(
                                     radius = 20.dp,
                                     isDisabled = false,
                                     onClick = { onTrailingIconClick() },
-                                ),
+                                )
+                                .padding(8.dp),
                         tint = BbangZipTheme.colors.labelAlternative_282119_61,
                     )
                 }
