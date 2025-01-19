@@ -16,6 +16,7 @@ import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
 import org.android.bbangzip.presentation.ui.my.navigateMy
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
+import org.android.bbangzip.presentation.ui.subject.subjectdetail.SubjectDetailRoute
 import org.android.bbangzip.presentation.ui.todo.navigateTodo
 import timber.log.Timber
 
@@ -25,7 +26,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = LoginRoute
+    val startDestination = SubjectDetailRoute
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =

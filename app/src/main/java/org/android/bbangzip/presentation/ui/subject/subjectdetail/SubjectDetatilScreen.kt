@@ -1,6 +1,7 @@
 package org.android.bbangzip.presentation.ui.subject.subjectdetail
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,11 +13,14 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -37,6 +41,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
+import org.android.bbangzip.presentation.component.bottomsheet.BbangZipBasicModalBottomSheet
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.component.card.ToDoCard
@@ -51,10 +56,25 @@ import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BbangZipTheme
 import org.android.bbangzip.ui.theme.defaultBbangZipColors
+import timber.log.Timber
 
 @Composable
 fun SubjectDetailScreen(
     padding: PaddingValues,
+    todoList: List<ToDoCardModel>,
+    pieceViewType: PieceViewType,
+    deletedSet: Set<Int>,
+    revertCompleteBottomSheetState : Boolean,
+    selectedItemId: Int,
+    onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
+    onRevertCompleteBottomSheetApproveButtonClicked: () -> Unit = {},
+    onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
+    onTrashIconClicked: () -> Unit = {},
+    onCloseIconClicked: () -> Unit = {},
+    onDeleteModeCardClicked: (Int) -> Unit = {},
+    onClickCancleBtn: () -> Unit = {},
+    onDefaultCardClicked: (Int) -> Unit = {},
+    onCompleteCardClicked: (Int) -> Unit = {}
 ) {
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
@@ -62,55 +82,13 @@ fun SubjectDetailScreen(
 
 
     val tabs = listOf("중간고사", "기말고사")
-    val todoList = listOf(
-        ToDoCardModel(
-            subjectName = "경제통계학개론",
-            examName = "중간고사",
-            studyContents = "경제통계학",
-            startPage = 36,
-            finishPage = 60,
-            deadline = "2025년 4월 25일",
-            pieceId = "1",
-            remainingDays = 1,
-        ),
-        ToDoCardModel(
-            subjectName = "경제통계학개론",
-            examName = "중간고사",
-            studyContents = "경제통계학",
-            startPage = 36,
-            finishPage = 60,
-            deadline = "2025년 4월 25일",
-            pieceId = "1",
-            remainingDays = 1,
-        ),
-        ToDoCardModel(
-            subjectName = "경제통계학개론",
-            examName = "중간고사",
-            studyContents = "경제통계학",
-            startPage = 36,
-            finishPage = 60,
-            deadline = "2025년 4월 25일",
-            pieceId = "1",
-            remainingDays = 1,
-        ),
-        ToDoCardModel(
-            subjectName = "경제통계학개론",
-            examName = "중간고사",
-            studyContents = "경제통계학",
-            startPage = 36,
-            finishPage = 60,
-            deadline = "2025년 4월 25일",
-            pieceId = "1",
-            remainingDays = 1,
-        )
-    )
     var selectedIndex by remember { mutableIntStateOf(0) }
     var isMenuOpen by remember { mutableStateOf(false) }
     var motivationMessage by remember { mutableStateOf("사장님의 각오 한마디를 작성해보세요") }
-    var todoViewType by remember { mutableStateOf(PieceViewType.DEFAULT) }
 
     val listState = rememberLazyListState()
 
+    Timber.d("${deletedSet.size}")
     Box(
         modifier = Modifier.fillMaxSize()
     ) {
@@ -171,98 +149,25 @@ fun SubjectDetailScreen(
                 }
             }
             item{
-                when(todoViewType){
+                when(pieceViewType){
                     PieceViewType.EMPTY -> {
                         Spacer(modifier = Modifier.height(84.dp))
                         EmptySubjectCardView()
                     }
                     PieceViewType.DEFAULT -> {
-                        Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(horizontal = 16.dp)
-                            ,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Spacer(modifier = Modifier.height(52.dp))
-
-                            Row(
-                                modifier = Modifier.padding(start = 8.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ){
-                                Text(
-                                    text = "시험까지 D-14",
-                                    style = BbangZipTheme.typography.caption1Medium,
-                                    color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                                    modifier = Modifier
-                                        .background(
-                                            color = BbangZipTheme.colors.statusPositive_3D3730,
-                                            shape = RoundedCornerShape(11.dp)
-                                        )
-                                        .padding(horizontal = 12.dp, vertical = 2.dp)
-                                )
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    text = "2025년 11월 25일",
-                                    style = BbangZipTheme.typography.caption1Medium,
-                                    color = BbangZipTheme.colors.labelAlternative_282119_61
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.height(40.dp))
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth().padding(start = 8.dp),
-                                verticalAlignment = Alignment.CenterVertically
-                            ){
-                                Text(
-                                    text = "학습 내용",
-                                    style = BbangZipTheme.typography.heading2Bold,
-                                    color = BbangZipTheme.colors.labelAlternative_282119_61
-
-                                )
-
-                                Spacer(modifier = Modifier.weight(1f))
-
-                                Icon(
-                                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash_default_24),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .applyFilterOnClick(
-                                            radius = 20.dp,
-                                            isDisabled = false
-                                        )
-                                        {  }
-                                        .padding(8.dp)
-                                )
-
-                                Icon(
-                                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .applyFilterOnClick(
-                                            radius = 20.dp,
-                                            isDisabled = false
-                                        )
-                                        {  }
-                                        .padding(8.dp)
-                                )
-                            }
-
-                            Spacer(modifier = Modifier.height(16.dp))
-
-                            todoList.forEach { item ->
-                                ToDoCard(
-                                    state = BbangZipCardState.DEFAULT,
-                                    data = item
-                                )
-
-                                Spacer(modifier = Modifier.height(12.dp))
-                            }
-                        }
+                        DefaultPieceView(
+                            todoList = todoList,
+                            onTrashIconClicked = onTrashIconClicked,
+                            onDefaultCardClicked = onDefaultCardClicked,
+                            onCompleteCardClicked = onCompleteCardClicked
+                        )
                     }
                     PieceViewType.DELETE -> {
-
+                        DeletePieceView(
+                            todoList = todoList,
+                            onCloseIconClicked = onCloseIconClicked,
+                            onDeleteModeCardClicked = onDeleteModeCardClicked
+                        )
                     }
                 }
             }
@@ -324,6 +229,260 @@ fun SubjectDetailScreen(
                 }
             }
         }
+        if (pieceViewType == PieceViewType.DELETE) {
+            Box(
+                modifier =
+                Modifier
+                    .align(alignment = Alignment.BottomCenter)
+                    .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+            ) {
+                BbangZipButton(
+                    bbangZipButtonType = BbangZipButtonType.Solid,
+                    bbangZipButtonSize = BbangZipButtonSize.Large,
+                    onClick = { onClickCancleBtn() },
+                    modifier = Modifier.fillMaxWidth(),
+                    label = if(deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
+                    trailingIcon = R.drawable.ic_trash_default_24,
+                    isEnable = deletedSet.isNotEmpty(),
+                )
+            }
+        }
+
+        RevertCompleteBottomSheet(
+            isBottomSheetVisible = revertCompleteBottomSheetState,
+            bottomSheetTitle = "미완료 상태로 되돌릴까요?",
+            onDismissRequest = onRevertCompleteBottomSheetDismissRequest,
+            onClickInteractButton = onRevertCompleteBottomSheetApproveButtonClicked,
+            onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
+        )
+    }
+}
+
+@Composable
+private fun DefaultPieceView(
+    todoList: List<ToDoCardModel>,
+    onTrashIconClicked: () -> Unit = {},
+    onDefaultCardClicked: (Int) -> Unit,
+    onCompleteCardClicked: (Int) -> Unit
+    ) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(52.dp))
+
+        Row(
+            modifier = Modifier.padding(start = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "시험까지 D-14",
+                style = BbangZipTheme.typography.caption1Medium,
+                color = BbangZipTheme.colors.staticWhite_FFFFFF,
+                modifier = Modifier
+                    .background(
+                        color = BbangZipTheme.colors.statusPositive_3D3730,
+                        shape = RoundedCornerShape(11.dp)
+                    )
+                    .padding(horizontal = 12.dp, vertical = 2.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = "2025년 11월 25일",
+                style = BbangZipTheme.typography.caption1Medium,
+                color = BbangZipTheme.colors.labelAlternative_282119_61
+            )
+        }
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "학습 내용",
+                style = BbangZipTheme.typography.headline2Bold,
+                color = BbangZipTheme.colors.labelAlternative_282119_61
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash_default_24),
+                contentDescription = null,
+                modifier = Modifier
+                    .applyFilterOnClick(
+                        radius = 20.dp,
+                        isDisabled = false
+                    )
+                    { onTrashIconClicked() }
+                    .padding(8.dp),
+                tint = BbangZipTheme.colors.labelAlternative_282119_61
+            )
+
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
+                contentDescription = null,
+                modifier = Modifier
+                    .applyFilterOnClick(
+                        radius = 20.dp,
+                        isDisabled = false
+                    )
+                    { }
+                    .padding(8.dp),
+                tint = BbangZipTheme.colors.labelAlternative_282119_61
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        todoList.forEach { item ->
+            ToDoCard(
+                data = item,
+                onClick = {
+                    onDefaultCardClicked(item.pieceId)
+                    if(item.state == BbangZipCardState.COMPLETE) onCompleteCardClicked(item.pieceId)
+                }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .border(
+                    width = 2.dp,
+                    color = BbangZipTheme.colors.lineAlternative_68645E_08,
+                    shape = RoundedCornerShape(24.dp)
+                )
+                .applyFilterOnClick(
+                    radius = 24.dp,
+                    isDisabled = false
+                ) {  }
+        ){
+            Row(
+                modifier = Modifier
+                    .padding(vertical = 23.dp)
+                    .align(Alignment.Center),
+                verticalAlignment = Alignment.CenterVertically
+            ){
+                Box(
+                    modifier = Modifier
+                        .size(40.dp)
+                        .border(
+                            width = 1.dp,
+                            color = BbangZipTheme.colors.lineNormal_68645E_22,
+                            shape = CircleShape
+                        )
+                ){
+                    Icon(
+                        imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
+                        contentDescription = null,
+                        modifier = Modifier.size(20.dp).align(Alignment.Center)
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = "공부 추가",
+                    color = BbangZipTheme.colors.labelDisable_282119_12,
+                )
+            }
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+    }
+}
+
+@Composable
+private fun DeletePieceView(
+    todoList: List<ToDoCardModel>,
+    onCloseIconClicked: () -> Unit,
+    onDeleteModeCardClicked: (Int) -> Unit = {}
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(modifier = Modifier.height(52.dp))
+
+        Row(
+            modifier = Modifier.padding(start = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "시험까지 D-14",
+                style = BbangZipTheme.typography.caption1Medium,
+                color = BbangZipTheme.colors.staticWhite_FFFFFF,
+                modifier = Modifier
+                    .background(
+                        color = BbangZipTheme.colors.statusPositive_3D3730,
+                        shape = RoundedCornerShape(11.dp)
+                    )
+                    .padding(horizontal = 12.dp, vertical = 2.dp)
+            )
+            Spacer(modifier = Modifier.width(8.dp))
+            Text(
+                text = "2025년 11월 25일",
+                style = BbangZipTheme.typography.caption1Medium,
+                color = BbangZipTheme.colors.labelAlternative_282119_61
+            )
+        }
+
+        Spacer(modifier = Modifier.height(40.dp))
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = "삭제할 항목을 눌러서 선택해 주세요",
+                style = BbangZipTheme.typography.headline2Bold,
+                color = BbangZipTheme.colors.labelAlternative_282119_61
+
+            )
+
+            Spacer(modifier = Modifier.weight(1f))
+
+            Icon(
+                imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_small_24),
+                contentDescription = null,
+                modifier = Modifier
+                    .applyFilterOnClick(
+                        radius = 20.dp,
+                        isDisabled = false
+                    )
+                    { onCloseIconClicked() }
+                    .padding(8.dp),
+                tint = BbangZipTheme.colors.labelAlternative_282119_61
+            )
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        todoList.forEach { item ->
+            ToDoCard(
+                data = item,
+                onClick = {
+                    onDeleteModeCardClicked(item.pieceId)
+                }
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+        }
+
+        Spacer(modifier = Modifier.height(64.dp))
     }
 }
 
@@ -352,17 +511,6 @@ private fun examTab(
                 .background(color = if (isSelected) BbangZipTheme.colors.labelNormal_282119 else BbangZipTheme.colors.staticWhite_FFFFFF)
         )
     }
-}
-
-@Preview(
-    showBackground = true,
-    showSystemUi = true
-)
-@Composable
-private fun SubjectDetailScreenPreview() {
-    SubjectDetailScreen(
-        PaddingValues(64.dp)
-    )
 }
 
 @Composable
@@ -439,7 +587,6 @@ private fun EmptySubjectCardView(
         ) {
             Text(
                 text = stringResource(R.string.empty_view_text),
-
                 )
         }
 
@@ -454,4 +601,70 @@ private fun EmptySubjectCardView(
             trailingIcon = R.drawable.ic_plus_thick_24,
         )
     }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun RevertCompleteBottomSheet(
+    isBottomSheetVisible: Boolean,
+    bottomSheetTitle: String,
+    modifier: Modifier = Modifier,
+    onDismissRequest: () -> Unit = {},
+    onClickInteractButton: () -> Unit = {},
+    onClickCancelButton: () -> Unit = {},
+) {
+    BbangZipBasicModalBottomSheet(
+        modifier = modifier,
+        isBottomSheetVisible = isBottomSheetVisible,
+        onDismissRequest = onDismissRequest,
+        title = {
+            Text(
+                text = bottomSheetTitle,
+                modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(vertical = 15.dp),
+                style = BbangZipTheme.typography.headline1Bold,
+                color = BbangZipTheme.colors.labelNeutral_282119_88,
+            )
+        },
+        interactButton = {
+            Spacer(modifier = Modifier.height(16.dp))
+
+            BbangZipButton(
+                bbangZipButtonType = BbangZipButtonType.Solid,
+                bbangZipButtonSize = BbangZipButtonSize.Large,
+                onClick = { onClickInteractButton() },
+                label = stringResource(R.string.todo_revert_bottomsheet_approve_text),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
+        cancelButton = {
+            Spacer(modifier = Modifier.height(8.dp))
+
+            BbangZipButton(
+                bbangZipButtonType = BbangZipButtonType.Outlined,
+                bbangZipButtonSize = BbangZipButtonSize.Large,
+                onClick = onClickCancelButton,
+                label = stringResource(R.string.btn_cancle_label),
+                modifier = Modifier.fillMaxWidth(),
+            )
+        },
+    )
+}
+
+@Preview(
+    showBackground = true,
+    showSystemUi = true
+)
+@Composable
+private fun SubjectDetailScreenPreview() {
+    SubjectDetailScreen(
+        PaddingValues(64.dp),
+        emptyList(),
+        PieceViewType.DEFAULT,
+        emptySet(),
+        false,
+        selectedItemId = 0
+    )
 }

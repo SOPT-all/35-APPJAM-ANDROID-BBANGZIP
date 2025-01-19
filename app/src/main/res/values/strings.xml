@@ -72,4 +72,5 @@
     <string name="login_title">제 과제 빵점 사장님은\n이번 학기 백점!</string>
     <string name="login_ballon_label">5초 만에 빵집 사장님 되기</string>
     <string name="empty_view_text">EMPTY VIEW</string>
+    <string name="todo_revert_bottomsheet_approve_text">되돌리기</string>
 </resources>

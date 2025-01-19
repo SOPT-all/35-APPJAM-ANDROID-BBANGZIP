@@ -7,11 +7,13 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.composed
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.drawWithContent
 import androidx.compose.ui.focus.FocusManager
@@ -63,11 +65,14 @@ fun Modifier.applyFilterOnClick(
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed by interactionSource.collectIsPressedAsState()
 
+        val rippleIndication = ripple(bounded = true)
+
         this
+            .clip(RoundedCornerShape(size = radius))
             .background(if (isPressed && !isDisabled) finalFilteredColor else baseColor, shape = RoundedCornerShape(size = radius))
             .clickable(
                 interactionSource = interactionSource,
-                indication = null,
+                indication = if (!isDisabled) rippleIndication else null,
                 onClick = { onClick() },
             )
     }
