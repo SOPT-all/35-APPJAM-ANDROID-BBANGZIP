@@ -1,10 +1,13 @@
 package org.android.bbangzip.presentation.component.textfield
 
+import android.graphics.Paint.Align
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
@@ -16,6 +19,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
@@ -80,11 +84,18 @@ fun BbangZipBasicTextField(
                 .border(width = 1.dp, color = bbangZipTextFieldInputState.getBorderColor(), shape = RoundedCornerShape(20.dp))
                 .padding(start = 16.dp, end = 12.dp, top = 16.dp, bottom = 16.dp),
         leadingIcon = {
-            Icon(
-                imageVector = ImageVector.vectorResource(leadingIcon),
-                contentDescription = null,
-                tint = bbangZipTextFieldInputState.getIconColor(),
-            )
+            Box(
+                modifier = Modifier
+                    .size(24.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(leadingIcon),
+                    modifier = Modifier.size(16.dp),
+                    contentDescription = null,
+                    tint = bbangZipTextFieldInputState.getIconColor(),
+                )
+            }
         },
         content = {
             BasicTextField(
