@@ -62,6 +62,8 @@ fun BbangZipBasicTextField(
     focusManager: FocusManager,
     keyboardActions: KeyboardActions = KeyboardActions(
         onDone = {
+            val trimmedValue = value.trim()
+            onValueChange(trimmedValue)
             focusManager.clearFocus(force = true)
         }
     ),
@@ -138,6 +140,7 @@ fun BbangZipBasicTextField(
                 Icon(
                     modifier =
                         Modifier
+                            .padding(start = 8.dp)
                             .noRippleClickable { onDeleteButtonClick() },
                     imageVector = ImageVector.vectorResource(R.drawable.ic_x_circle_default_24),
                     tint = bbangZipTextFieldInputState.getIconColor(),
