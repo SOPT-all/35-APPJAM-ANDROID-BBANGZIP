@@ -7,7 +7,6 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
-import org.android.bbangzip.UserPreferences
 import org.android.bbangzip.presentation.ui.onboarding.OnboardingContract
 import org.android.bbangzip.presentation.ui.onboarding.OnboardingViewModel
 import timber.log.Timber

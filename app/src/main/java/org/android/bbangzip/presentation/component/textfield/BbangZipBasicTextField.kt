@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.component.textfield
 
-import android.graphics.Paint.Align
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.compose.foundation.background
@@ -85,9 +84,10 @@ fun BbangZipBasicTextField(
                 .padding(start = 16.dp, end = 12.dp, top = 16.dp, bottom = 16.dp),
         leadingIcon = {
             Box(
-                modifier = Modifier
-                    .size(24.dp),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .size(24.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(leadingIcon),

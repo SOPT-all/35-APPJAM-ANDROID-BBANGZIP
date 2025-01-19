@@ -10,7 +10,12 @@ interface UserRepository {
 
     suspend fun clearUserData()
 
-    suspend fun setOnboardingInfo(userName: String, year: Int, semester: String, subject: String)
+    suspend fun setOnboardingInfo(
+        userName: String,
+        year: Int,
+        semester: String,
+        subject: String,
+    )
 
     suspend fun clearOnboardingInfo()
 }
