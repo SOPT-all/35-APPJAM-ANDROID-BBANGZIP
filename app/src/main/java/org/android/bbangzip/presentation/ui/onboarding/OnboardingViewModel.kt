@@ -223,7 +223,7 @@ constructor(
         return when {
             text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
             text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
-            text.contains(Regex("[0-9!@#\$%^&*(),.?\":{}|<>]")) -> BbangZipTextFieldInputState.Alert
+            text.contains(Regex("[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]")) -> BbangZipTextFieldInputState.Alert
             text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
             else -> BbangZipTextFieldInputState.Field
         }
