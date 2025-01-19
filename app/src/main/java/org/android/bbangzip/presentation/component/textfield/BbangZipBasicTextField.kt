@@ -12,7 +12,6 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -64,9 +63,6 @@ fun BbangZipBasicTextField(
     focusManager: FocusManager
 ) {
     var isFocused by remember { mutableStateOf(false) }
-    LaunchedEffect(isFocused) {
-        Timber.d("[TextField] isFocused -> $isFocused")
-    }
 
     BbangZipTextFieldSlot(
         columnModifier = modifier,
@@ -91,13 +87,13 @@ fun BbangZipBasicTextField(
                         .focusRequester(FocusRequester())
                         .onFocusChanged { focusState ->
                             isFocused = focusState.isFocused
-                            if(!focusState.isFocused) {
-                                onFocusChange(isFocused)
-                            }
+                            onFocusChange(focusState.isFocused)
+                            Timber.d("[TextField] onFocusChange -> $isFocused")
                         }
                         .onKeyEvent { keyEvent ->
                             if (keyEvent.key == Key.Enter && keyEvent.type == KeyEventType.KeyUp) {
                                 focusManager.clearFocus()
+                                onFocusChange(false)
                                 true
                             } else {
                                 false

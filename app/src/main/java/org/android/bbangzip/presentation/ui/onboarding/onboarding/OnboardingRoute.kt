@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
+import org.android.bbangzip.UserPreferences
 import org.android.bbangzip.presentation.ui.onboarding.OnboardingContract
 import org.android.bbangzip.presentation.ui.onboarding.OnboardingViewModel
 import timber.log.Timber
@@ -18,6 +19,7 @@ fun OnboardingRoute(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { 3 })
+    val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle(initialValue = UserPreferences.getDefaultInstance())
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest {

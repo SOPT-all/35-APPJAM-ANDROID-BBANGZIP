@@ -2,18 +2,32 @@ package org.android.bbangzip.presentation.ui.onboarding
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.launch
+import org.android.bbangzip.OnboardingInfo
+import org.android.bbangzip.UserPreferences
+import org.android.bbangzip.domain.repository.local.UserRepository
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
+import org.android.bbangzip.presentation.type.SemesterType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class OnboardingViewModel @Inject constructor(
+    private val userRepository: UserRepository,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<OnboardingContract.OnboardingEvent, OnboardingContract.OnboardingState, OnboardingContract.OnboardingReduce, OnboardingContract.OnboardingSideEffect>(
     savedStateHandle = savedStateHandle
 ) {
+    val userPreferencesFlow: Flow<UserPreferences> = userRepository.userPreferenceFlow
+
+    fun setUserOnboardingInfo(onboardingInfo: OnboardingInfo) {
+        viewModelScope.launch { userRepository.setOnboardingInfo(onboardingInfo) }
+    }
+
     override fun createInitialState(savedState: Parcelable?): OnboardingContract.OnboardingState {
         return savedState as? OnboardingContract.OnboardingState ?: OnboardingContract.OnboardingState()
     }
@@ -31,6 +45,7 @@ class OnboardingViewModel @Inject constructor(
                         userName = event.userName
                     )
                 )
+                updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
             }
 
             is OnboardingContract.OnboardingEvent.OnChangeUserNameFocused -> {
@@ -52,6 +67,7 @@ class OnboardingViewModel @Inject constructor(
                         semester = event.semester
                     )
                 )
+                updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
             }
 
             is OnboardingContract.OnboardingEvent.OnChangeSubject -> {
@@ -65,6 +81,7 @@ class OnboardingViewModel @Inject constructor(
                         subject = event.subject
                     )
                 )
+                updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
             }
 
             is OnboardingContract.OnboardingEvent.OnChangeSubjectFocused -> {
@@ -86,6 +103,7 @@ class OnboardingViewModel @Inject constructor(
                         nextPage = event.currentPage
                     )
                 )
+                updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
             }
 
             is OnboardingContract.OnboardingEvent.OnClickDeleteUserName -> {
@@ -145,35 +163,57 @@ class OnboardingViewModel @Inject constructor(
             is OnboardingContract.OnboardingReduce.UpdateSubject -> state.copy(subjectName = reduce.subject)
             is OnboardingContract.OnboardingReduce.DeleteUserName -> state.copy(userName = null)
             is OnboardingContract.OnboardingReduce.DeleteSubject -> state.copy(subjectName = null)
-            is OnboardingContract.OnboardingReduce.UpdateUserNameFocused -> state.copy(userNameFocusedState = reduce.isFocused)
+            is OnboardingContract.OnboardingReduce.UpdateUserNameFocused -> {
+                Timber.d("[TextField] UpdateUserNameFocused -> ${reduce.isFocused}")
+                state.copy(userNameFocusedState = reduce.isFocused)
+            }
+
             is OnboardingContract.OnboardingReduce.UpdateSubjectFocused -> state.copy(subjectNameFocusedState = reduce.isFocused)
             is OnboardingContract.OnboardingReduce.UpdateCurrentPage -> state.copy(currentPage = reduce.nextPage)
             is OnboardingContract.OnboardingReduce.UpdateUserNameTextFieldSate -> {
-                val checkedText = determineTextFieldType(reduce.userName)
-                Timber.d("[온보딩] 텍스트 필드 -> ${reduce.userName} -> $checkedText")
+                val checkedText = determineTextFieldType(reduce.userName, currentUiState.userNameFocusedState)
+                Timber.d("[TextField] UpdateUserNameTextFieldSate -> ${reduce.userName} -> $checkedText")
                 state.copy(userNameTextFieldState = checkedText)
             }
 
             is OnboardingContract.OnboardingReduce.UpdateSubjectNameTextFieldSate -> {
-                val checkedText = determineTextFieldType(reduce.subject)
+                val checkedText = determineTextFieldType(reduce.subject, currentUiState.subjectNameFocusedState)
                 Timber.d("[온보딩] 텍스트 필드 -> ${reduce.subject} -> $checkedText")
                 state.copy(subjectNameTextFieldState = checkedText)
+            }
+
+            is OnboardingContract.OnboardingReduce.UpdateButtonEnabled -> {
+                val buttonEnabled: Boolean =
+                    when (currentUiState.currentPage) {
+                        0 -> {
+                            currentUiState.userNameTextFieldState == BbangZipTextFieldInputState.Typing || currentUiState.userNameTextFieldState == BbangZipTextFieldInputState.Field
+                        }
+
+                        1 -> {
+                            currentUiState.semester.year == "2025" && currentUiState.semester.semester == SemesterType.FIRST
+                        }
+
+                        2 -> {
+                            currentUiState.subjectNameTextFieldState == BbangZipTextFieldInputState.Typing || currentUiState.subjectNameTextFieldState == BbangZipTextFieldInputState.Field
+                        }
+
+                        else -> false
+                    }
+                state.copy(buttonEnabled = buttonEnabled)
             }
         }
     }
 
     private fun determineTextFieldType(
         text: String,
-        isFocused: Boolean = true,
-        isCompleted: Boolean = false
+        isFocused: Boolean,
     ): BbangZipTextFieldInputState {
         return when {
             text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
             text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
             text.contains(Regex("[0-9!@#\$%^&*(),.?\":{}|<>]")) -> BbangZipTextFieldInputState.Alert
             text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
-            isCompleted -> BbangZipTextFieldInputState.Field
-            else -> BbangZipTextFieldInputState.Default
+            else -> BbangZipTextFieldInputState.Field
         }
     }
 }

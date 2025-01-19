@@ -51,6 +51,7 @@ class OnboardingContract {
         data class UpdateCurrentPage(val nextPage: Int) : OnboardingReduce
         data class UpdateUserNameTextFieldSate(val userName: String): OnboardingReduce
         data class UpdateSubjectNameTextFieldSate(val subject: String): OnboardingReduce
+        data object UpdateButtonEnabled: OnboardingReduce
     }
 
     sealed interface OnboardingSideEffect : BaseContract.SideEffect {

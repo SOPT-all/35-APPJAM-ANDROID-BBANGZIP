@@ -135,7 +135,7 @@ private fun OnboardingPager(
                     )
                 } else if (pageIndex == 2) {
                     Text(
-                        text = stringResource(id = descriptionId, state.semester.year + "년", state.semester.semester ?: ""),
+                        text = stringResource(id = descriptionId, state.semester.year + "년", state.semester.semester.text),
                         style = BbangZipTheme.typography.body2Bold,
                         color = BbangZipTheme.colors.labelAlternative_282119_61
                     )
@@ -175,6 +175,7 @@ private fun OnboardingPager(
                 )
 
                 2 -> BbangZipBasicTextField(
+                    bbangZipTextFieldInputState = state.subjectNameTextFieldState,
                     leadingIcon = R.drawable.ic_book_default_24,
                     placeholder = R.string.onboarding_subject_placeholder,
                     guideline = R.string.onboarding_subject_description,
