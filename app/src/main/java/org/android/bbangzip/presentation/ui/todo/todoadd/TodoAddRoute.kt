@@ -17,7 +17,7 @@ fun TodoAddRoute(
     snackBarHostState: SnackbarHostState,
     navigateToToDo: () -> Unit = {},
     navigateToBack: () -> Unit = {},
-    viewModel: TodoAddViewModel = hiltViewModel()
+    viewModel: TodoAddViewModel = hiltViewModel(),
 ) {
     val todoAddState by viewModel.uiState.collectAsStateWithLifecycle()
     val success by viewModel.success.collectAsStateWithLifecycle(initialValue = true)
@@ -77,7 +77,7 @@ fun TodoAddRoute(
                 },
                 onToDoCardClicked = { pieceId, cardState ->
                     viewModel.setEvent(TodoAddContract.TodoAddEvent.OnToDoCardClicked(pieceId = pieceId, cardState = cardState))
-                }
+                },
             )
 
         false ->

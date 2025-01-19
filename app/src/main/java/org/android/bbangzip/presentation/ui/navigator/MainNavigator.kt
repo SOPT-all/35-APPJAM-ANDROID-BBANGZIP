@@ -76,7 +76,6 @@ class MainNavigator(
         navHostController.popBackStack()
     }
 
-
     fun popBackStackIfNotSubject() {
         if (!isSameCurrentDestination<BottomNavigationRoute.Subject>()) {
             popBackStack()

@@ -1,8 +1,5 @@
 package org.android.bbangzip.presentation.type
 
-import androidx.annotation.StringRes
-import org.android.bbangzip.R
-
 enum class ToDoFilterType(
     val filter: String,
     val id: String,

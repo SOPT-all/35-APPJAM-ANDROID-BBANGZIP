@@ -17,7 +17,7 @@ fun TodoAddPendingRoute(
     snackBarHostState: SnackbarHostState,
     navigateToToDo: () -> Unit = {},
     navigateToBack: () -> Unit = {},
-    viewModel: TodoAddPendingViewModel = hiltViewModel()
+    viewModel: TodoAddPendingViewModel = hiltViewModel(),
 ) {
     val todoAddPendingState by viewModel.uiState.collectAsStateWithLifecycle()
     val success by viewModel.success.collectAsStateWithLifecycle(initialValue = true)
@@ -77,7 +77,7 @@ fun TodoAddPendingRoute(
                 },
                 onToDoCardClicked = { pieceId, cardState ->
                     viewModel.setEvent(TodoAddPendingContract.TodoAddPendingEvent.OnToDoCardClicked(pieceId = pieceId, cardState = cardState))
-                }
+                },
             )
 
         false ->

@@ -66,17 +66,18 @@ fun TodoScreen(
     onDefaultScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
 ) {
     Box(
-        modifier =  modifier
-            .fillMaxSize()
-            .padding(bottom = 74.dp)
-            .background(color = BbangZipTheme.colors.staticWhite_FFFFFF)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .padding(bottom = 74.dp)
+                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
     ) {
         LazyColumn {
             item {
                 DateMessageCard(
                     todayDate = todayDate,
                     pendingCount = todoState.pendingCount,
-                    onAddPendingStudyButtonClicked = onAddPendingStudyButtonClicked
+                    onAddPendingStudyButtonClicked = onAddPendingStudyButtonClicked,
                 )
 
                 Spacer(Modifier.height(48.dp))
@@ -112,29 +113,32 @@ fun TodoScreen(
                         text = stringResource(R.string.todo_delete_screen_text),
                         style = BbangZipTheme.typography.heading2Bold,
                         color = BbangZipTheme.colors.labelNormal_282119,
-                        modifier = Modifier.padding(start = 24.dp)
+                        modifier = Modifier.padding(start = 24.dp),
                     )
 
                     Spacer(Modifier.height(4.dp))
 
                     Row(
-                        modifier = Modifier
-                            .padding(horizontal = 16.dp)
-                            .fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically
+                        modifier =
+                            Modifier
+                                .padding(horizontal = 16.dp)
+                                .fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Spacer(modifier = Modifier.weight(1f))
 
                         Box(
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .clickable { onCloseIconClicked() }, contentAlignment = Alignment.Center
+                            modifier =
+                                Modifier
+                                    .clip(CircleShape)
+                                    .clickable { onCloseIconClicked() },
+                            contentAlignment = Alignment.Center,
                         ) {
                             Icon(
                                 imageVector = ImageVector.vectorResource(R.drawable.ic_x_small_24),
                                 contentDescription = null,
                                 modifier = Modifier.padding(8.dp),
-                                tint = BbangZipTheme.colors.labelAlternative_282119_61
+                                tint = BbangZipTheme.colors.labelAlternative_282119_61,
                             )
                         }
                     }
@@ -147,7 +151,8 @@ fun TodoScreen(
                     count = todoState.todoList.size,
                     key = { index ->
                         todoState.todoList[index].pieceId
-                    }) { index ->
+                    },
+                ) { index ->
                     ToDoCard(
                         data = todoState.todoList[index],
                         modifier = Modifier.padding(horizontal = 16.dp, vertical = 6.dp),
@@ -156,34 +161,34 @@ fun TodoScreen(
                                 (todoState.screenType == ToDoScreenType.DEFAULT) && (todoState.todoList[index].cardState == BbangZipCardState.DEFAULT) ->
                                     onDefaultScreenCardClicked(
                                         todoState.todoList[index].pieceId,
-                                        BbangZipCardState.COMPLETE
+                                        BbangZipCardState.COMPLETE,
                                     )
 
                                 (todoState.screenType == ToDoScreenType.DEFAULT) && (todoState.todoList[index].cardState == BbangZipCardState.COMPLETE) ->
                                     onDefaultScreenCardClicked(
                                         todoState.todoList[index].pieceId,
-                                        BbangZipCardState.DEFAULT
+                                        BbangZipCardState.DEFAULT,
                                     )
 
                                 (todoState.screenType == ToDoScreenType.DELETE) && (todoState.todoList[index].cardState == BbangZipCardState.CHECKED) ->
                                     onDeleteScreenCardClicked(
                                         todoState.todoList[index].pieceId,
-                                        BbangZipCardState.CHECKABLE
+                                        BbangZipCardState.CHECKABLE,
                                     )
 
                                 (todoState.screenType == ToDoScreenType.DELETE) && (todoState.todoList[index].cardState == BbangZipCardState.CHECKABLE) ->
                                     onDeleteScreenCardClicked(
                                         todoState.todoList[index].pieceId,
-                                        BbangZipCardState.CHECKED
+                                        BbangZipCardState.CHECKED,
                                     )
 
                                 else ->
                                     onDeleteScreenCardClicked(
                                         todoState.todoList[index].pieceId,
-                                        BbangZipCardState.COMPLETE
+                                        BbangZipCardState.COMPLETE,
                                     )
                             }
-                        }
+                        },
                     )
                 }
             }
@@ -194,11 +199,12 @@ fun TodoScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 onClick = { onItemDeleteButtonClicked() },
                 label = stringResource(R.string.todo_delete_screen_delete_button_text, todoState.selectedItemList.size),
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter)
-                    .padding(bottom = 6.dp),
+                modifier =
+                    Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth()
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 6.dp),
                 isEnable = todoState.selectedItemList.isNotEmpty(),
                 trailingIcon = R.drawable.ic_plus_thick_24,
             )
@@ -210,29 +216,29 @@ fun TodoScreen(
             bottomSheetTitle = "미완료 상태로 되돌릴까요?",
             onDismissRequest = onRevertCompleteBottomSheetDismissRequest,
             onClickInteractButton = onRevertCompleteBottomSheetApproveButtonClicked,
-            onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked
+            onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
         )
 
         BbangZipToDoFilterPickerBottomSheet(
             isBottomSheetVisible = todoState.todoFilterBottomSheetState,
             selectedItem = todoState.selectedFilterItem,
             onSelectedItemChanged = onFilterBottomSheetItemClicked,
-            onDismissRequest = onFilterBottomSheetDismissRequest
+            onDismissRequest = onFilterBottomSheetDismissRequest,
         )
     }
 }
-
 
 @Composable
 fun DateMessageCard(
     todayDate: List<String>,
     pendingCount: Int,
     onAddPendingStudyButtonClicked: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Box(
-        modifier = modifier
-            .fillMaxWidth()
+        modifier =
+            modifier
+                .fillMaxWidth(),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Column(
@@ -240,24 +246,24 @@ fun DateMessageCard(
                     .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
                     .fillMaxWidth()
                     .height(LocalConfiguration.current.screenHeightDp.dp * (172f / 764f))
-                    .padding(start = 24.dp)
+                    .padding(start = 24.dp),
             ) {
                 Spacer(modifier = Modifier.height(44.dp))
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(start = 8.dp)
+                    modifier = Modifier.padding(start = 8.dp),
                 ) {
                     Text(
                         text = todayDate[0].toInt().toString(),
                         style = BbangZipTheme.typography.title3Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119
+                        color = BbangZipTheme.colors.labelNormal_282119,
                     )
 
                     Text(
                         text = stringResource(R.string.todo_month_text),
                         style = BbangZipTheme.typography.headline1Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61
+                        color = BbangZipTheme.colors.labelAlternative_282119_61,
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -265,13 +271,13 @@ fun DateMessageCard(
                     Text(
                         text = todayDate[1].toInt().toString(),
                         style = BbangZipTheme.typography.title3Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119
+                        color = BbangZipTheme.colors.labelNormal_282119,
                     )
 
                     Text(
                         text = stringResource(R.string.todo_day_text),
                         style = BbangZipTheme.typography.headline1Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61
+                        color = BbangZipTheme.colors.labelAlternative_282119_61,
                     )
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -279,7 +285,7 @@ fun DateMessageCard(
                     Text(
                         text = todayDate[2],
                         style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119
+                        color = BbangZipTheme.colors.labelNormal_282119,
                     )
                 }
 
@@ -289,7 +295,7 @@ fun DateMessageCard(
                     Text(
                         text = stringResource(R.string.todo_pending_count_text),
                         style = BbangZipTheme.typography.headline1Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61
+                        color = BbangZipTheme.colors.labelAlternative_282119_61,
                     )
 
                     Spacer(modifier = Modifier.height(62.dp))
@@ -316,13 +322,13 @@ fun DateMessageCard(
                 Icon(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_announcement_default_24),
                     contentDescription = null,
-                    tint = BbangZipTheme.colors.labelNormal_282119
+                    tint = BbangZipTheme.colors.labelNormal_282119,
                 )
 
                 Spacer(modifier = Modifier.width(6.dp))
             },
             horizontalPadding = 16.dp,
-            modifier = Modifier.align(Alignment.BottomCenter)
+            modifier = Modifier.align(Alignment.BottomCenter),
         )
     }
 }
@@ -331,29 +337,35 @@ fun DateMessageCard(
 fun StudyCountText(
     remainingCount: Int,
     completeCount: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth()
-            .padding(start = 8.dp)
+        modifier =
+            modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .padding(start = 8.dp),
     ) {
         Text(
-            text = when {
-                completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
-                remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
-                else -> stringResource(R.string.todo_complete_nothing_text)
-            },
+            text =
+                when {
+                    completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
+                    remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
+                    else -> stringResource(R.string.todo_complete_nothing_text)
+                },
             style = BbangZipTheme.typography.label1Bold,
-            color = BbangZipTheme.colors.labelAlternative_282119_61
+            color = BbangZipTheme.colors.labelAlternative_282119_61,
         )
 
         Text(
-            text = if (remainingCount != 0) stringResource(R.string.todo_remaing_count_text, remainingCount)
-            else stringResource(R.string.todo_remaining_nothing_text),
+            text =
+                if (remainingCount != 0) {
+                    stringResource(R.string.todo_remaing_count_text, remainingCount)
+                } else {
+                    stringResource(R.string.todo_remaining_nothing_text)
+                },
             style = BbangZipTheme.typography.title3Bold,
-            color = BbangZipTheme.colors.labelNormal_282119
+            color = BbangZipTheme.colors.labelNormal_282119,
         )
     }
 }
@@ -365,37 +377,41 @@ fun DeleteAndFilterIcons(
     onFilterIconClicked: () -> Unit = {},
 ) {
     Row(
-        modifier = modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth(),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
         Box(
-            modifier = Modifier
-                .clip(CircleShape)
-                .clickable { onDeleteIconClicked() }, contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .clip(CircleShape)
+                    .clickable { onDeleteIconClicked() },
+            contentAlignment = Alignment.Center,
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_trash_default_24),
                 contentDescription = null,
                 modifier = Modifier.padding(8.dp),
-                tint = BbangZipTheme.colors.labelAlternative_282119_61
+                tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
 
         Box(
-            modifier = Modifier
-                .clip(CircleShape)
-                .clickable { onFilterIconClicked() }, contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .clip(CircleShape)
+                    .clickable { onFilterIconClicked() },
+            contentAlignment = Alignment.Center,
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_filter_default_24),
                 contentDescription = null,
                 modifier = Modifier.padding(8.dp),
-                tint = BbangZipTheme.colors.labelAlternative_282119_61
-
+                tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
     }
@@ -404,14 +420,16 @@ fun DeleteAndFilterIcons(
 @Composable
 fun EmptyView(
     modifier: Modifier = Modifier,
-    onAddStudyButtonClicked: () -> Unit = {}
+    onAddStudyButtonClicked: () -> Unit = {},
 ) {
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(328.dp)
-                .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)), contentAlignment = Alignment.Center
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .height(328.dp)
+                    .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
+            contentAlignment = Alignment.Center,
         ) {
             Text(text = "Empty View")
         }
@@ -457,14 +475,14 @@ fun BbangZipToDoFilterPickerBottomSheet(
                     Text(
                         text = item.filter,
                         modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .applyFilterOnClick { onSelectedItemChanged(item) }
-                            .background(
-                                color = if (item != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
-                                shape = RoundedCornerShape(16.dp),
-                            )
-                            .padding(vertical = 8.dp),
+                            Modifier
+                                .fillMaxWidth()
+                                .applyFilterOnClick { onSelectedItemChanged(item) }
+                                .background(
+                                    color = if (item != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
+                                    shape = RoundedCornerShape(16.dp),
+                                )
+                                .padding(vertical = 8.dp),
                         textAlign = TextAlign.Center,
                         style = BbangZipTheme.typography.body1Bold,
                         color = BbangZipTheme.colors.labelNormal_282119,
@@ -494,9 +512,9 @@ fun RevertCompleteBottomSheet(
             Text(
                 text = bottomSheetTitle,
                 modifier =
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 15.dp),
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 15.dp),
                 style = BbangZipTheme.typography.headline1Bold,
                 color = BbangZipTheme.colors.labelNeutral_282119_88,
             )
@@ -518,7 +536,7 @@ fun RevertCompleteBottomSheet(
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Outlined,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
-                onClick =  onClickCancelButton,
+                onClick = onClickCancelButton,
                 label = stringResource(R.string.btn_cancle_label),
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -526,179 +544,180 @@ fun RevertCompleteBottomSheet(
     )
 }
 
-
 @Preview(showBackground = true)
 @Composable
 fun TodoScreenMockPreview() {
-    val mockToDoList = listOf(
-        ToDoCardModel(
-            pieceId = 1,
-            subjectName = "Math",
-            examName = "Algebra Exam",
-            studyContents = "Review Chapters 1-3",
-            startPage = 1,
-            finishPage = 50,
-            deadline = "2025-01-20",
-            remainingDays = 2,
-            cardState = BbangZipCardState.DEFAULT
-        ),
-        ToDoCardModel(
-            pieceId = 2,
-            subjectName = "History",
-            examName = "World War II Quiz",
-            studyContents = "Notes on WWII",
-            startPage = 5,
-            finishPage = 30,
-            deadline = "2025-01-22",
-            remainingDays = 4,
-            cardState = BbangZipCardState.COMPLETE
-        ),
-        ToDoCardModel(
-            pieceId = 3,
-            subjectName = "Science",
-            examName = "Physics Midterm",
-            studyContents = "Kinematics and Dynamics",
-            startPage = 20,
-            finishPage = 80,
-            deadline = "2025-01-25",
-            remainingDays = 7,
-            cardState = BbangZipCardState.CHECKED
-        ),
-        ToDoCardModel(
-            pieceId = 4,
-            subjectName = "Art",
-            examName = "Painting Project",
-            studyContents = "Complete abstract art piece",
-            startPage = 0,
-            finishPage = 0,
-            deadline = "2025-01-28",
-            remainingDays = 10,
-            cardState = BbangZipCardState.CHECKABLE
-        ),
-        ToDoCardModel(
-            pieceId = 2,
-            subjectName = "History",
-            examName = "World War II Quiz",
-            studyContents = "Notes on WWII",
-            startPage = 5,
-            finishPage = 30,
-            deadline = "2025-01-22",
-            remainingDays = 4,
-            cardState = BbangZipCardState.COMPLETE
-        ),
-        ToDoCardModel(
-            pieceId = 3,
-            subjectName = "Science",
-            examName = "Physics Midterm",
-            studyContents = "Kinematics and Dynamics",
-            startPage = 20,
-            finishPage = 80,
-            deadline = "2025-01-25",
-            remainingDays = 7,
-            cardState = BbangZipCardState.CHECKED
-        ),
-        ToDoCardModel(
-            pieceId = 4,
-            subjectName = "Art",
-            examName = "Painting Project",
-            studyContents = "Complete abstract art piece",
-            startPage = 0,
-            finishPage = 0,
-            deadline = "2025-01-28",
-            remainingDays = 10,
-            cardState = BbangZipCardState.CHECKABLE
-        ),
-        ToDoCardModel(
-            pieceId = 2,
-            subjectName = "History",
-            examName = "World War II Quiz",
-            studyContents = "Notes on WWII",
-            startPage = 5,
-            finishPage = 30,
-            deadline = "2025-01-22",
-            remainingDays = 4,
-            cardState = BbangZipCardState.COMPLETE
-        ),
-        ToDoCardModel(
-            pieceId = 3,
-            subjectName = "Science",
-            examName = "Physics Midterm",
-            studyContents = "Kinematics and Dynamics",
-            startPage = 20,
-            finishPage = 80,
-            deadline = "2025-01-25",
-            remainingDays = 7,
-            cardState = BbangZipCardState.CHECKED
-        ),
-        ToDoCardModel(
-            pieceId = 4,
-            subjectName = "Art",
-            examName = "Painting Project",
-            studyContents = "Complete abstract art piece",
-            startPage = 0,
-            finishPage = 0,
-            deadline = "2025-01-28",
-            remainingDays = 10,
-            cardState = BbangZipCardState.CHECKABLE
-        ),
-        ToDoCardModel(
-            pieceId = 2,
-            subjectName = "History",
-            examName = "World War II Quiz",
-            studyContents = "Notes on WWII",
-            startPage = 5,
-            finishPage = 30,
-            deadline = "2025-01-22",
-            remainingDays = 4,
-            cardState = BbangZipCardState.COMPLETE
-        ),
-        ToDoCardModel(
-            pieceId = 3,
-            subjectName = "Science",
-            examName = "Physics Midterm",
-            studyContents = "Kinematics and Dynamics",
-            startPage = 20,
-            finishPage = 80,
-            deadline = "2025-01-25",
-            remainingDays = 7,
-            cardState = BbangZipCardState.CHECKED
-        ),
-        ToDoCardModel(
-            pieceId = 4,
-            subjectName = "Art",
-            examName = "Painting Project",
-            studyContents = "Complete abstract art piece",
-            startPage = 0,
-            finishPage = 0,
-            deadline = "2025-01-28",
-            remainingDays = 10,
-            cardState = BbangZipCardState.CHECKABLE
+    val mockToDoList =
+        listOf(
+            ToDoCardModel(
+                pieceId = 1,
+                subjectName = "Math",
+                examName = "Algebra Exam",
+                studyContents = "Review Chapters 1-3",
+                startPage = 1,
+                finishPage = 50,
+                deadline = "2025-01-20",
+                remainingDays = 2,
+                cardState = BbangZipCardState.DEFAULT,
+            ),
+            ToDoCardModel(
+                pieceId = 2,
+                subjectName = "History",
+                examName = "World War II Quiz",
+                studyContents = "Notes on WWII",
+                startPage = 5,
+                finishPage = 30,
+                deadline = "2025-01-22",
+                remainingDays = 4,
+                cardState = BbangZipCardState.COMPLETE,
+            ),
+            ToDoCardModel(
+                pieceId = 3,
+                subjectName = "Science",
+                examName = "Physics Midterm",
+                studyContents = "Kinematics and Dynamics",
+                startPage = 20,
+                finishPage = 80,
+                deadline = "2025-01-25",
+                remainingDays = 7,
+                cardState = BbangZipCardState.CHECKED,
+            ),
+            ToDoCardModel(
+                pieceId = 4,
+                subjectName = "Art",
+                examName = "Painting Project",
+                studyContents = "Complete abstract art piece",
+                startPage = 0,
+                finishPage = 0,
+                deadline = "2025-01-28",
+                remainingDays = 10,
+                cardState = BbangZipCardState.CHECKABLE,
+            ),
+            ToDoCardModel(
+                pieceId = 2,
+                subjectName = "History",
+                examName = "World War II Quiz",
+                studyContents = "Notes on WWII",
+                startPage = 5,
+                finishPage = 30,
+                deadline = "2025-01-22",
+                remainingDays = 4,
+                cardState = BbangZipCardState.COMPLETE,
+            ),
+            ToDoCardModel(
+                pieceId = 3,
+                subjectName = "Science",
+                examName = "Physics Midterm",
+                studyContents = "Kinematics and Dynamics",
+                startPage = 20,
+                finishPage = 80,
+                deadline = "2025-01-25",
+                remainingDays = 7,
+                cardState = BbangZipCardState.CHECKED,
+            ),
+            ToDoCardModel(
+                pieceId = 4,
+                subjectName = "Art",
+                examName = "Painting Project",
+                studyContents = "Complete abstract art piece",
+                startPage = 0,
+                finishPage = 0,
+                deadline = "2025-01-28",
+                remainingDays = 10,
+                cardState = BbangZipCardState.CHECKABLE,
+            ),
+            ToDoCardModel(
+                pieceId = 2,
+                subjectName = "History",
+                examName = "World War II Quiz",
+                studyContents = "Notes on WWII",
+                startPage = 5,
+                finishPage = 30,
+                deadline = "2025-01-22",
+                remainingDays = 4,
+                cardState = BbangZipCardState.COMPLETE,
+            ),
+            ToDoCardModel(
+                pieceId = 3,
+                subjectName = "Science",
+                examName = "Physics Midterm",
+                studyContents = "Kinematics and Dynamics",
+                startPage = 20,
+                finishPage = 80,
+                deadline = "2025-01-25",
+                remainingDays = 7,
+                cardState = BbangZipCardState.CHECKED,
+            ),
+            ToDoCardModel(
+                pieceId = 4,
+                subjectName = "Art",
+                examName = "Painting Project",
+                studyContents = "Complete abstract art piece",
+                startPage = 0,
+                finishPage = 0,
+                deadline = "2025-01-28",
+                remainingDays = 10,
+                cardState = BbangZipCardState.CHECKABLE,
+            ),
+            ToDoCardModel(
+                pieceId = 2,
+                subjectName = "History",
+                examName = "World War II Quiz",
+                studyContents = "Notes on WWII",
+                startPage = 5,
+                finishPage = 30,
+                deadline = "2025-01-22",
+                remainingDays = 4,
+                cardState = BbangZipCardState.COMPLETE,
+            ),
+            ToDoCardModel(
+                pieceId = 3,
+                subjectName = "Science",
+                examName = "Physics Midterm",
+                studyContents = "Kinematics and Dynamics",
+                startPage = 20,
+                finishPage = 80,
+                deadline = "2025-01-25",
+                remainingDays = 7,
+                cardState = BbangZipCardState.CHECKED,
+            ),
+            ToDoCardModel(
+                pieceId = 4,
+                subjectName = "Art",
+                examName = "Painting Project",
+                studyContents = "Complete abstract art piece",
+                startPage = 0,
+                finishPage = 0,
+                deadline = "2025-01-28",
+                remainingDays = 10,
+                cardState = BbangZipCardState.CHECKABLE,
+            ),
         )
-    )
 
-    val mockTodoStates = listOf(
-        TodoContract.TodoState(
-            todoList = mockToDoList,
-            pendingCount = 2,
-            remainingStudyCount = 1,
-            completeCount = 1,
-            screenType = ToDoScreenType.DEFAULT
-        ),
-        TodoContract.TodoState(
-            todoList = mockToDoList,
-            pendingCount = 1,
-            remainingStudyCount = 0,
-            completeCount = 3,
-            screenType = ToDoScreenType.DELETE
-        ),
-        TodoContract.TodoState(
-            todoList = mockToDoList,
-            pendingCount = 0,
-            remainingStudyCount = 2,
-            completeCount = 2,
-            screenType = ToDoScreenType.EMPTY
+    val mockTodoStates =
+        listOf(
+            TodoContract.TodoState(
+                todoList = mockToDoList,
+                pendingCount = 2,
+                remainingStudyCount = 1,
+                completeCount = 1,
+                screenType = ToDoScreenType.DEFAULT,
+            ),
+            TodoContract.TodoState(
+                todoList = mockToDoList,
+                pendingCount = 1,
+                remainingStudyCount = 0,
+                completeCount = 3,
+                screenType = ToDoScreenType.DELETE,
+            ),
+            TodoContract.TodoState(
+                todoList = mockToDoList,
+                pendingCount = 0,
+                remainingStudyCount = 2,
+                completeCount = 2,
+                screenType = ToDoScreenType.EMPTY,
+            ),
         )
-    )
 
     TodoScreen(
         todoState = mockTodoStates[0],

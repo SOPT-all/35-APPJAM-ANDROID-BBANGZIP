@@ -53,9 +53,10 @@ fun TodoAddPendingScreen(
     onToDoCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
 ) {
     Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(color = BbangZipTheme.colors.staticWhite_FFFFFF)
+        modifier =
+            modifier
+                .fillMaxSize()
+                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
     ) {
         Column {
             val scrollState = rememberLazyListState()
@@ -68,16 +69,17 @@ fun TodoAddPendingScreen(
                 isShadowed = isShadowed,
                 title = "",
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-                onLeadingIconClick = onBackIconClicked
+                onLeadingIconClick = onBackIconClicked,
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             LazyColumn(
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth(),
-                state = scrollState
+                modifier =
+                    Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth(),
+                state = scrollState,
             ) {
                 item {
                     Text(text = stringResource(R.string.todo_pending_add_title1), style = BbangZipTheme.typography.body1Bold, color = BbangZipTheme.colors.labelAlternative_282119_61)
@@ -91,10 +93,9 @@ fun TodoAddPendingScreen(
 
                 item {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Spacer(modifier = Modifier.width(8.dp))
-
 
                         Text(text = "${todoAddState.selectedItemList.size} ", style = BbangZipTheme.typography.body2Bold, color = BbangZipTheme.colors.labelNormal_282119)
                         Text(text = stringResource(R.string.todo_add_count, todoAddState.todoList.size), style = BbangZipTheme.typography.body2Bold, color = BbangZipTheme.colors.labelAlternative_282119_61)
@@ -102,16 +103,17 @@ fun TodoAddPendingScreen(
                         Spacer(modifier = Modifier.weight(1f))
 
                         Box(
-                            modifier = Modifier
-                                .clip(CircleShape)
-                                .clickable { onFilterIconClicked() }, contentAlignment = Alignment.Center
+                            modifier =
+                                Modifier
+                                    .clip(CircleShape)
+                                    .clickable { onFilterIconClicked() },
+                            contentAlignment = Alignment.Center,
                         ) {
                             Icon(
                                 imageVector = ImageVector.vectorResource(R.drawable.ic_filter_default_24),
                                 contentDescription = null,
                                 modifier = Modifier.padding(8.dp),
-                                tint = BbangZipTheme.colors.labelAlternative_282119_61
-
+                                tint = BbangZipTheme.colors.labelAlternative_282119_61,
                             )
                         }
                     }
@@ -123,30 +125,32 @@ fun TodoAddPendingScreen(
                     count = todoAddState.todoList.size,
                     key = { index ->
                         todoAddState.todoList[index].pieceId
-                    }) { index ->
+                    },
+                ) { index ->
                     ToDoCard(
                         data = todoAddState.todoList[index],
                         modifier = Modifier.padding(vertical = 6.dp),
                         onClick = {
-                            if (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKED)
+                            if (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKED) {
                                 onToDoCardClicked(
                                     todoAddState.todoList[index].pieceId,
-                                    BbangZipCardState.CHECKABLE
+                                    BbangZipCardState.CHECKABLE,
                                 )
-                            else (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKABLE)
+                            } else {
+                                (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKABLE)
+                            }
                             onToDoCardClicked(
                                 todoAddState.todoList[index].pieceId,
-                                BbangZipCardState.CHECKED
+                                BbangZipCardState.CHECKED,
                             )
-
-                        }
+                        },
                     )
                 }
             }
         }
         Column(
             modifier = Modifier.align(Alignment.BottomCenter),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             BbangZipSnackBarHost(snackBarHostState = todoAddSnackBarHostState)
 
@@ -155,10 +159,11 @@ fun TodoAddPendingScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 onClick = { onItemPlusButtonClicked() },
                 label = stringResource(R.string.todo_add_plus_button_label),
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxWidth()
-                    .padding(bottom = 16.dp),
+                modifier =
+                    Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth()
+                        .padding(bottom = 16.dp),
                 isEnable = todoAddState.selectedItemList.isNotEmpty(),
                 trailingIcon = R.drawable.ic_plus_thick_24,
             )
@@ -168,6 +173,6 @@ fun TodoAddPendingScreen(
         isBottomSheetVisible = todoAddState.todoFilterBottomSheetState,
         selectedItem = todoAddState.selectedFilter,
         onSelectedItemChanged = onFilterBottomSheetItemClicked,
-        onDismissRequest = onFilterBottomSheetDismissRequest
+        onDismissRequest = onFilterBottomSheetDismissRequest,
     )
 }

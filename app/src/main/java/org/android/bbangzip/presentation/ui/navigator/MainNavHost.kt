@@ -15,8 +15,8 @@ import org.android.bbangzip.presentation.ui.my.myNavGraph
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
 import org.android.bbangzip.presentation.ui.todo.navigation.todoNavGraph
-import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.todoAddNavGraph
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.todoAddPendingNavGraph
+import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.todoAddNavGraph
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -28,10 +28,10 @@ fun MainNavHost(
 ) {
     Box(
         modifier =
-        modifier
-            .padding(top = padding.calculateTopPadding())
-            .fillMaxSize()
-            .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
+            modifier
+                .padding(top = padding.calculateTopPadding())
+                .fillMaxSize()
+                .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         NavHost(
             navController = navigator.navHostController,
@@ -48,13 +48,13 @@ fun MainNavHost(
             todoAddNavGraph(
                 snackBarHostState = snackBarHostState,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
-                navigateToToDo = { navigator.popBackStackIfNotSubject() }
+                navigateToToDo = { navigator.popBackStackIfNotSubject() },
             )
 
             todoAddPendingNavGraph(
                 snackBarHostState = snackBarHostState,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
-                navigateToToDo = { navigator.popBackStackIfNotSubject() }
+                navigateToToDo = { navigator.popBackStackIfNotSubject() },
             )
 
             friendNavGraph()
@@ -66,7 +66,7 @@ fun MainNavHost(
             todoNavGraph(
                 snackBarHostState = snackBarHostState,
                 navigateToAddToDo = { navigator.navigateToToDoAdd() },
-                navigateToAddPendingToDo = {navigator.navigateToToDoAddPending()},
+                navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
             )
         }
     }

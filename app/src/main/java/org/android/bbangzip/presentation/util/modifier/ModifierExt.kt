@@ -7,7 +7,6 @@ import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.ripple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -74,7 +73,7 @@ fun Modifier.applyFilterOnClick(
             .background(if (isPressed && !isDisabled) finalFilteredColor else baseColor, shape = RoundedCornerShape(size = radius))
             .clickable(
                 interactionSource = interactionSource,
-                indication = if(!isDisabled)rippleIndication else null,
+                indication = if (!isDisabled)rippleIndication else null,
                 onClick = { onClick() },
             )
     }

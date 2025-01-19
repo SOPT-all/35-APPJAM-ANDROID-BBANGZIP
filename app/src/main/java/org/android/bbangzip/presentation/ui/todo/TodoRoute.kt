@@ -19,7 +19,7 @@ fun TodoRoute(
     snackBarHostState: SnackbarHostState,
     navigateToAddToDo: () -> Unit = {},
     navigateToAddPendingToDo: () -> Unit = {},
-    viewModel: TodoViewModel = hiltViewModel()
+    viewModel: TodoViewModel = hiltViewModel(),
 ) {
     val todoState by viewModel.uiState.collectAsStateWithLifecycle()
     val success by viewModel.success.collectAsStateWithLifecycle(initialValue = true)
@@ -63,7 +63,7 @@ fun TodoRoute(
                 },
                 onRevertCompleteBottomSheetApproveButtonClicked = { pieceId ->
                     viewModel.setEvent(
-                        TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)
+                        TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId),
                     )
                 },
                 onRevertCompleteBottomSheetDismissRequest = {
@@ -96,6 +96,5 @@ fun TodoRoute(
             )
 
         false -> Text("땡!")
-
     }
 }
