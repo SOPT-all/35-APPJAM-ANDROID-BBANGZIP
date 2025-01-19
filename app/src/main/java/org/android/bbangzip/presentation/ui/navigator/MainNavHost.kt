@@ -16,6 +16,7 @@ import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
 import org.android.bbangzip.presentation.ui.todo.navigation.todoNavGraph
 import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.todoAddNavGraph
+import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.todoAddPendingNavGraph
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -50,6 +51,11 @@ fun MainNavHost(
                 navigateToToDo = { navigator.popBackStackIfNotSubject() }
             )
 
+            todoAddPendingNavGraph(
+                snackBarHostState = snackBarHostState,
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToToDo = { navigator.popBackStackIfNotSubject() }
+            )
 
             friendNavGraph()
 
@@ -60,7 +66,7 @@ fun MainNavHost(
             todoNavGraph(
                 snackBarHostState = snackBarHostState,
                 navigateToAddToDo = { navigator.navigateToToDoAdd() },
-                navigateToAddPendingToDo = {},
+                navigateToAddPendingToDo = {navigator.navigateToToDoAddPending()},
             )
         }
     }
