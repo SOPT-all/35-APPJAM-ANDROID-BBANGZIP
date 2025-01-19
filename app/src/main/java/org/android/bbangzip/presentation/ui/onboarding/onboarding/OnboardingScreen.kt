@@ -15,6 +15,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,33 +47,38 @@ fun OnboardingScreen(
     onChangeSubjectFocused: (Boolean) -> Unit = {},
     onBackBtnClick: () -> Unit = {},
     onNextBtnClick: () -> Unit = {},
+    clearUserName: () -> Unit = {},
+    clearSubject: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF)
-            .addFocusCleaner(focusManager)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF)
+                .addFocusCleaner(focusManager),
     ) {
         BbangZipBaseTopBar(
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = { onBackBtnClick() }
+            onLeadingIconClick = { onBackBtnClick() },
         )
 
         Spacer(modifier = Modifier.height(11.dp))
 
         OnboardingProgressBar(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 36.dp),
-            onboardingType = OnboardingType.entries[state.currentPage]
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 36.dp),
+            onboardingType = OnboardingType.entries[state.currentPage],
         )
 
         Box(
-            modifier = Modifier
-                .weight(1f)
-                .fillMaxSize()
+            modifier =
+                Modifier
+                    .weight(1f)
+                    .fillMaxSize(),
         ) {
             OnboardingPager(
                 modifier = Modifier.fillMaxSize(),
@@ -83,14 +89,17 @@ fun OnboardingScreen(
                 onSemesterChanged = { onSemesterChanged(it) },
                 onSubjectChanged = { onSubjectChanged(it) },
                 onChangeUserNameFocused = { onChangeUserNameFocused(it) },
-                onChangeSubjectFocused = { onChangeSubjectFocused(it) }
+                onChangeSubjectFocused = { onChangeSubjectFocused(it) },
+                clearUserName = { clearUserName() },
+                clearSubject = { clearSubject() }
             )
         }
 
         BbangZipButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             bbangZipButtonType = BbangZipButtonType.Solid,
             bbangZipButtonSize = BbangZipButtonSize.Large,
             onClick = { onNextBtnClick() },
@@ -111,18 +120,22 @@ private fun OnboardingPager(
     onSubjectChanged: (String) -> Unit = {},
     onChangeUserNameFocused: (Boolean) -> Unit = {},
     onChangeSubjectFocused: (Boolean) -> Unit = {},
+    clearUserName: () -> Unit = {},
+    clearSubject: () -> Unit = {}
 ) {
     HorizontalPager(
         state = pagerState,
-        modifier = modifier
+        modifier = modifier,
+        userScrollEnabled = false
     ) { pageIndex ->
         val onboardingType = OnboardingType.entries[pageIndex]
 
         Timber.d("[온보딩] -> ${state.currentPage}")
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(horizontal = 16.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp),
         ) {
             Spacer(modifier = Modifier.height(37.dp))
 
@@ -131,13 +144,13 @@ private fun OnboardingPager(
                     Text(
                         text = stringResource(id = descriptionId, state.userName ?: ""),
                         style = BbangZipTheme.typography.body2Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61
+                        color = BbangZipTheme.colors.labelAlternative_282119_61,
                     )
                 } else if (pageIndex == 2) {
                     Text(
                         text = stringResource(id = descriptionId, state.semester.year + "년", state.semester.semester.text),
                         style = BbangZipTheme.typography.body2Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61
+                        color = BbangZipTheme.colors.labelAlternative_282119_61,
                     )
                 }
             }
@@ -151,40 +164,45 @@ private fun OnboardingPager(
             Text(
                 text = stringResource(id = onboardingType.title),
                 style = BbangZipTheme.typography.title2Bold,
-                color = BbangZipTheme.colors.labelNormal_282119
+                color = BbangZipTheme.colors.labelNormal_282119,
             )
 
             Spacer(modifier = Modifier.height(32.dp))
 
             when (pageIndex) {
-                0 -> BbangZipBasicTextField(
-                    bbangZipTextFieldInputState = state.userNameTextFieldState,
-                    leadingIcon = R.drawable.ic_user_one_default_24,
-                    placeholder = R.string.onboarding_name_placeholder,
-                    guideline = R.string.onboarding_name_description,
-                    value = state.userName ?: "",
-                    onValueChange = { onUserNameChanged(it) },
-                    maxCharacter = 10,
-                    focusManager = focusManager,
-                    onFocusChange = { onChangeUserNameFocused(it) }
-                )
+                0 ->
+                    BbangZipBasicTextField(
+                        bbangZipTextFieldInputState = state.userNameTextFieldState,
+                        leadingIcon = R.drawable.ic_user_one_default_24,
+                        placeholder = R.string.onboarding_name_placeholder,
+                        guideline = R.string.onboarding_name_description,
+                        value = state.userName ?: "",
+                        onValueChange = { onUserNameChanged(it) },
+                        maxCharacter = 10,
+                        focusManager = focusManager,
+                        onFocusChange = { onChangeUserNameFocused(it) },
+                        onDeleteButtonClick = { clearUserName() }
+                    )
 
-                1 -> BbangZipSemesterPicker(
-                    onConfirm = { onSemesterChanged(it) },
-                    currentSemester = state.semester
-                )
+                1 ->
+                    BbangZipSemesterPicker(
+                        onConfirm = { onSemesterChanged(it) },
+                        currentSemester = state.semester,
+                    )
 
-                2 -> BbangZipBasicTextField(
-                    bbangZipTextFieldInputState = state.subjectNameTextFieldState,
-                    leadingIcon = R.drawable.ic_book_default_24,
-                    placeholder = R.string.onboarding_subject_placeholder,
-                    guideline = R.string.onboarding_subject_description,
-                    value = state.subjectName ?: "",
-                    onValueChange = { onSubjectChanged(it) },
-                    maxCharacter = 20,
-                    focusManager = focusManager,
-                    onFocusChange = { onChangeSubjectFocused(it) }
-                )
+                2 ->
+                    BbangZipBasicTextField(
+                        bbangZipTextFieldInputState = state.subjectNameTextFieldState,
+                        leadingIcon = R.drawable.ic_book_default_24,
+                        placeholder = R.string.onboarding_subject_placeholder,
+                        guideline = R.string.onboarding_subject_description,
+                        value = state.subjectName ?: "",
+                        onValueChange = { onSubjectChanged(it) },
+                        maxCharacter = 20,
+                        focusManager = focusManager,
+                        onFocusChange = { onChangeSubjectFocused(it) },
+                        onDeleteButtonClick = { clearSubject() }
+                    )
             }
         }
     }
@@ -197,13 +215,14 @@ private fun OnboardingScreenPreview() {
         val pagerState = rememberPagerState(pageCount = { 3 })
 
         OnboardingScreen(
-            state = OnboardingContract.OnboardingState(
-                currentPage = 1,
-                buttonEnabled = false,
-            ),
+            state =
+                OnboardingContract.OnboardingState(
+                    currentPage = 1,
+                    buttonEnabled = false,
+                ),
             pagerState = pagerState,
             onBackBtnClick = { },
-            onNextBtnClick = { }
+            onNextBtnClick = { },
         )
     }
 }

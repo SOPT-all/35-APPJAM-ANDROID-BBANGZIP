@@ -19,7 +19,7 @@ enum class BbangZipTextFieldType(
     PLACEHOLDER(
         backgroundColor = defaultBbangZipColors.fillStrong_68645E_16,
         textColor = defaultBbangZipColors.labelAssistive_282119_28,
-        guidelineColor = defaultBbangZipColors.labelAlternative_282119_61
+        guidelineColor = defaultBbangZipColors.labelAlternative_282119_61,
     ),
     TYPING(
         backgroundColor = defaultBbangZipColors.fillStrong_68645E_16,

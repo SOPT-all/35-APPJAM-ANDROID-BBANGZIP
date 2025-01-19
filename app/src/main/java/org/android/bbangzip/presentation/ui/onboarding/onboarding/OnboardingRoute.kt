@@ -15,7 +15,7 @@ import timber.log.Timber
 @Composable
 fun OnboardingRoute(
     navigateToOnboardingEnd: () -> Unit,
-    viewModel: OnboardingViewModel = hiltViewModel()
+    viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { 3 })
@@ -50,6 +50,8 @@ fun OnboardingRoute(
         onSemesterChanged = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeSemester(it)) },
         onSubjectChanged = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeSubject(it)) },
         onChangeUserNameFocused = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeUserNameFocused(it)) },
-        onChangeSubjectFocused = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeSubjectFocused(it)) }
+        onChangeSubjectFocused = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeSubjectFocused(it)) },
+        clearUserName = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickDeleteUserName) },
+        clearSubject = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickDeleteSubject) }
     )
 }
