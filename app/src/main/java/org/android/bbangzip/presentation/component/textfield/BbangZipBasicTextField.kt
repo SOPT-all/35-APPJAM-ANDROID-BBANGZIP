@@ -12,16 +12,24 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.key.Key
+import androidx.compose.ui.input.key.KeyEventType
+import androidx.compose.ui.input.key.key
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
@@ -37,6 +45,7 @@ import org.android.bbangzip.presentation.model.getIconColor
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
+import timber.log.Timber
 
 @Composable
 fun BbangZipBasicTextField(
@@ -48,12 +57,16 @@ fun BbangZipBasicTextField(
     maxCharacter: Int,
     modifier: Modifier = Modifier,
     bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-    onFocusChange: () -> Unit = { },
+    onFocusChange: (Boolean) -> Unit = { },
     onDeleteButtonClick: () -> Unit = { },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Default),
     keyboardActions: KeyboardActions = KeyboardActions.Default,
+    focusManager: FocusManager
 ) {
     var isFocused by remember { mutableStateOf(false) }
+    LaunchedEffect(isFocused) {
+        Timber.d("[TextField] isFocused -> $isFocused")
+    }
 
     BbangZipTextFieldSlot(
         columnModifier = modifier,
@@ -76,7 +89,20 @@ fun BbangZipBasicTextField(
                         .weight(1f)
                         .padding(start = 8.dp)
                         .focusRequester(FocusRequester())
-                        .onFocusChanged { focusState -> isFocused = focusState.isFocused },
+                        .onFocusChanged { focusState ->
+                            isFocused = focusState.isFocused
+                            if(!focusState.isFocused) {
+                                onFocusChange(isFocused)
+                            }
+                        }
+                        .onKeyEvent { keyEvent ->
+                            if (keyEvent.key == Key.Enter && keyEvent.type == KeyEventType.KeyUp) {
+                                focusManager.clearFocus()
+                                true
+                            } else {
+                                false
+                            }
+                        },
                 value = value,
                 onValueChange = {
                     if (it.length <= maxCharacter) onValueChange(it)
@@ -165,6 +191,7 @@ fun BbangZipBasicTextFieldPreview() {
                 text = ""
                 validationState = BbangZipTextFieldInputState.Default
             },
+            focusManager = LocalFocusManager.current
         )
     }
 }
