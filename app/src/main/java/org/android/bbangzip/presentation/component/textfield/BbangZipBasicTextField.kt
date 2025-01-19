@@ -59,10 +59,15 @@ fun BbangZipBasicTextField(
     onFocusChange: (Boolean) -> Unit = { },
     onDeleteButtonClick: () -> Unit = { },
     keyboardOptions: KeyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Default),
-    keyboardActions: KeyboardActions = KeyboardActions.Default,
-    focusManager: FocusManager
+    focusManager: FocusManager,
+    keyboardActions: KeyboardActions = KeyboardActions(
+        onDone = {
+            focusManager.clearFocus(force = true)
+        }
+    ),
 ) {
     var isFocused by remember { mutableStateOf(false) }
+    val focusRequester = remember { FocusRequester() }
 
     BbangZipTextFieldSlot(
         columnModifier = modifier,
@@ -84,7 +89,7 @@ fun BbangZipBasicTextField(
                     Modifier
                         .weight(1f)
                         .padding(start = 8.dp)
-                        .focusRequester(FocusRequester())
+                        .focusRequester(focusRequester)
                         .onFocusChanged { focusState ->
                             isFocused = focusState.isFocused
                             onFocusChange(focusState.isFocused)
@@ -92,7 +97,7 @@ fun BbangZipBasicTextField(
                         }
                         .onKeyEvent { keyEvent ->
                             if (keyEvent.key == Key.Enter && keyEvent.type == KeyEventType.KeyUp) {
-                                focusManager.clearFocus()
+                                focusManager.clearFocus(force = true)
                                 onFocusChange(false)
                                 true
                             } else {
@@ -104,7 +109,7 @@ fun BbangZipBasicTextField(
                     if (it.length <= maxCharacter) onValueChange(it)
                 },
                 keyboardActions = keyboardActions,
-                keyboardOptions = keyboardOptions,
+                keyboardOptions = keyboardOptions.copy(imeAction = ImeAction.Done),
                 cursorBrush = SolidColor(BbangZipTheme.colors.labelNormal_282119),
                 singleLine = true,
                 textStyle = BbangZipTheme.typography.label1Medium,
@@ -187,7 +192,7 @@ fun BbangZipBasicTextFieldPreview() {
                 text = ""
                 validationState = BbangZipTextFieldInputState.Default
             },
-            focusManager = LocalFocusManager.current
+            focusManager = LocalFocusManager.current,
         )
     }
 }
