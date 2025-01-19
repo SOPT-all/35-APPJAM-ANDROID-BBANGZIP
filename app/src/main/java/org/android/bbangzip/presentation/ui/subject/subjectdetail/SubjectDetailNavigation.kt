@@ -14,7 +14,7 @@ fun NavController.navigateSubjectDetail() {
     )
 }
 
-fun NavGraphBuilder.subjectNavGraph(
+fun NavGraphBuilder.subjectDetailNavGraph(
     padding: PaddingValues,
 ) {
     composable<SubjectDetailRoute> {

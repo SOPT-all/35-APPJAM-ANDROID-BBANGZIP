@@ -14,8 +14,10 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicText
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,8 +28,10 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorProducer
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextLayoutResult
 import androidx.compose.ui.text.style.TextOverflow
@@ -35,10 +39,15 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
+import org.android.bbangzip.presentation.component.card.BbangZipCardState
+import org.android.bbangzip.presentation.component.card.ToDoCard
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
+import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.BbangZipShadowType
+import org.android.bbangzip.presentation.type.PieceViewType
+import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -50,11 +59,58 @@ fun SubjectDetailScreen(
 ) {
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
-    val bottomBarPadding = padding.calculateBottomPadding()
     val backgroundHeight = (screenHeightDp * 0.32).toInt()
 
+
     val tabs = listOf("중간고사", "기말고사")
+    val todoList = listOf(
+        ToDoCardModel(
+            subjectName = "경제통계학개론",
+            examName = "중간고사",
+            studyContents = "경제통계학",
+            startPage = 36,
+            finishPage = 60,
+            deadline = "2025년 4월 25일",
+            pieceId = "1",
+            remainingDays = 1,
+        ),
+        ToDoCardModel(
+            subjectName = "경제통계학개론",
+            examName = "중간고사",
+            studyContents = "경제통계학",
+            startPage = 36,
+            finishPage = 60,
+            deadline = "2025년 4월 25일",
+            pieceId = "1",
+            remainingDays = 1,
+        ),
+        ToDoCardModel(
+            subjectName = "경제통계학개론",
+            examName = "중간고사",
+            studyContents = "경제통계학",
+            startPage = 36,
+            finishPage = 60,
+            deadline = "2025년 4월 25일",
+            pieceId = "1",
+            remainingDays = 1,
+        ),
+        ToDoCardModel(
+            subjectName = "경제통계학개론",
+            examName = "중간고사",
+            studyContents = "경제통계학",
+            startPage = 36,
+            finishPage = 60,
+            deadline = "2025년 4월 25일",
+            pieceId = "1",
+            remainingDays = 1,
+        )
+    )
     var selectedIndex by remember { mutableIntStateOf(0) }
+    var isMenuOpen by remember { mutableStateOf(false) }
+    var motivationMessage by remember { mutableStateOf("사장님의 각오 한마디를 작성해보세요") }
+    var todoViewType by remember { mutableStateOf(PieceViewType.DEFAULT) }
+
+    val listState = rememberLazyListState()
 
     Box(
         modifier = Modifier.fillMaxSize()
@@ -63,6 +119,7 @@ fun SubjectDetailScreen(
             modifier = Modifier
                 .fillMaxSize()
                 .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+            state = listState
         ) {
             item {
                 Box(
@@ -74,7 +131,7 @@ fun SubjectDetailScreen(
                             shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)
                         )
                 ){
-                    TwoLineTextWithWordWrap("사장님의 각오 한마디를 작성해보세요")
+                    TwoLineTextWithWordWrap(motivationMessage)
 
                     Box(
                         modifier = Modifier
@@ -115,16 +172,159 @@ fun SubjectDetailScreen(
                 }
             }
             item{
-                Spacer(modifier = Modifier.height(80.dp))
-                EmptySubjectCardView()
+                when(todoViewType){
+                    PieceViewType.EMPTY -> {
+                        Spacer(modifier = Modifier.height(84.dp))
+                        EmptySubjectCardView()
+                    }
+                    PieceViewType.DEFAULT -> {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                            ,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Spacer(modifier = Modifier.height(52.dp))
+
+                            Row(
+                                modifier = Modifier.padding(start = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ){
+                                Text(
+                                    text = "시험까지 D-14",
+                                    style = BbangZipTheme.typography.caption1Medium,
+                                    color = BbangZipTheme.colors.staticWhite_FFFFFF,
+                                    modifier = Modifier
+                                        .background(
+                                            color = BbangZipTheme.colors.statusPositive_3D3730,
+                                            shape = RoundedCornerShape(11.dp)
+                                        )
+                                        .padding(horizontal = 12.dp, vertical = 2.dp)
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                Text(
+                                    text = "2025년 11월 25일",
+                                    style = BbangZipTheme.typography.caption1Medium,
+                                    color = BbangZipTheme.colors.labelAlternative_282119_61
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(40.dp))
+
+                            Row(
+                                modifier = Modifier.fillMaxWidth().padding(start = 8.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ){
+                                Text(
+                                    text = "학습 내용",
+                                    style = BbangZipTheme.typography.heading2Bold,
+                                    color = BbangZipTheme.colors.labelAlternative_282119_61
+
+                                )
+
+                                Spacer(modifier = Modifier.weight(1f))
+
+                                Icon(
+                                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash_default_24),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .applyFilterOnClick(
+                                            radius = 20.dp,
+                                            isDisabled = false
+                                        )
+                                        {  }
+                                        .padding(8.dp)
+                                )
+
+                                Icon(
+                                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
+                                    contentDescription = null,
+                                    modifier = Modifier
+                                        .applyFilterOnClick(
+                                            radius = 20.dp,
+                                            isDisabled = false
+                                        )
+                                        {  }
+                                        .padding(8.dp)
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            todoList.forEach { item ->
+                                ToDoCard(
+                                    state = BbangZipCardState.DEFAULT,
+                                    data = item
+                                )
+
+                                Spacer(modifier = Modifier.height(12.dp))
+                            }
+                        }
+                    }
+                    PieceViewType.DELETE -> {
+
+                    }
+                }
             }
         }
-        BbangZipBaseTopBar(
-            backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
-            leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            trailingIcon = R.drawable.ic_menu_kebab_default_24,
-            title = "경제통계학"
-        )
+        Column(){
+            BbangZipBaseTopBar(
+                scrollState = listState,
+                backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
+                leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
+                trailingIcon = R.drawable.ic_menu_kebab_default_24,
+                onTrailingIconClick = { isMenuOpen = !isMenuOpen },
+                title = "경제통계학"
+            )
+            if (isMenuOpen) {
+                Box(
+                    modifier = Modifier
+                        .padding(end = 16.dp)
+                        .height(128.dp)
+                        .width(200.dp)
+                        .applyShadows(BbangZipShadowType.HEAVY, shape = RoundedCornerShape(32.dp))
+                        .align(Alignment.End)
+                        .offset(y = (-8).dp)
+                ) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(
+                                color = BbangZipTheme.colors.staticWhite_FFFFFF,
+                                shape = RoundedCornerShape(32.dp)
+                            )
+                            .padding(16.dp)
+                    ) {
+                        Text(
+                            text = "각오 한 마디 작성하기",
+                            style = BbangZipTheme.typography.body1Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .applyFilterOnClick(
+                                    radius = 16.dp,
+                                    isDisabled = false
+                                ) { }
+                                .padding(start = 8.dp, top = 12.dp, bottom = 12.dp)
+                        )
+                        Spacer(Modifier.weight(1f))
+                        Text(
+                            text = "과목명 수정하기",
+                            style = BbangZipTheme.typography.body1Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .applyFilterOnClick(
+                                    radius = 16.dp,
+                                    isDisabled = false
+                                ) { }
+                                .padding(start = 8.dp, top = 12.dp, bottom = 12.dp)
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
@@ -150,7 +350,7 @@ private fun examTab(
             modifier = Modifier
                 .height(2.dp)
                 .width(40.dp)
-                .background(color = if(isSelected) BbangZipTheme.colors.labelNormal_282119 else BbangZipTheme.colors.staticWhite_FFFFFF)
+                .background(color = if (isSelected) BbangZipTheme.colors.labelNormal_282119 else BbangZipTheme.colors.staticWhite_FFFFFF)
         )
     }
 }
@@ -240,6 +440,7 @@ private fun EmptySubjectCardView(
         ) {
             Text(
                 text = stringResource(R.string.empty_view_text),
+
                 )
         }
 

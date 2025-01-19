@@ -1,5 +1,5 @@
 package org.android.bbangzip.presentation.type
 
-enum class TodoViewType {
+enum class PieceViewType {
     EMPTY, DEFAULT, DELETE
 }

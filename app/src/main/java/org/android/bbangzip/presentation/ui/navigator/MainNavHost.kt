@@ -14,6 +14,7 @@ import org.android.bbangzip.presentation.ui.login.loginNavGraph
 import org.android.bbangzip.presentation.ui.my.myNavGraph
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
+import org.android.bbangzip.presentation.ui.subject.subjectdetail.subjectDetailNavGraph
 import org.android.bbangzip.presentation.ui.todo.todoNavGraph
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
@@ -48,6 +49,10 @@ fun MainNavHost(
             myNavGraph()
 
             subjectNavGraph()
+
+            subjectDetailNavGraph(
+                padding = padding,
+            )
 
             todoNavGraph()
         }

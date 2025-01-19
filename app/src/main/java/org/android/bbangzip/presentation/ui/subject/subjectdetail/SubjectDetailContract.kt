@@ -2,9 +2,7 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import org.android.bbangzip.presentation.model.card.SubjectCardModel
-import org.android.bbangzip.presentation.type.CardViewType
-import org.android.bbangzip.presentation.type.TodoViewType
+import org.android.bbangzip.presentation.type.PieceViewType
 import org.android.bbangzip.presentation.util.base.BaseContract
 
 class SubjectDetailContract {
@@ -13,7 +11,7 @@ class SubjectDetailContract {
         val tabIndex: Int = 0,
         val isMenuOpen: Boolean = false,
         val isTopBarShadowed: Boolean = false,
-        val todoViewType: TodoViewType = TodoViewType.DEFAULT,
+        val todoViewType: PieceViewType = PieceViewType.DEFAULT,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }

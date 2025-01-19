@@ -1,6 +1,7 @@
 package org.android.bbangzip.presentation.component.topbar
 
 import androidx.annotation.DrawableRes
+import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,9 +11,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -31,7 +38,8 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun BbangZipBaseTopBar(
     modifier: Modifier = Modifier,
-    isShadowed: Boolean = false,
+//    isShadowed: Boolean = false,
+    scrollState: LazyListState = rememberLazyListState(),
     backGroundColor: Color = BbangZipTheme.colors.staticWhite_FFFFFF,
     title: String = "",
     titleColor: Color = BbangZipTheme.colors.labelNormal_282119,
@@ -40,6 +48,7 @@ fun BbangZipBaseTopBar(
     onTrailingIconClick: () -> Unit = {},
     onLeadingIconClick: () -> Unit = {},
 ) {
+    val isShadowed by remember { derivedStateOf { scrollState.firstVisibleItemScrollOffset > 0} }
     Box(
         modifier =
             modifier
@@ -120,24 +129,20 @@ fun BbangZipMenuTopBarPreview() {
         modifier = Modifier.fillMaxSize(),
     ) {
         BbangZipBaseTopBar(
-            isShadowed = true,
             title = "경제통계학",
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
         )
 
         BbangZipBaseTopBar(
-            isShadowed = true,
             title = "",
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
         )
 
         BbangZipBaseTopBar(
-            isShadowed = true,
             title = "",
         )
 
         BbangZipBaseTopBar(
-            isShadowed = true,
             title = "경제통계학",
             backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
