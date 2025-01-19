@@ -3,7 +3,6 @@ package org.android.bbangzip.presentation.ui.todo
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.android.bbangzip.data.dto.request.RequestTodayOrdersDto
 import org.android.bbangzip.domain.repository.remote.PieceRepository
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
@@ -40,6 +39,7 @@ constructor(
                         remainingStudyCount = event.remainingStudyCount,
                         completeCount = event.completeCount,
                         todoList = event.todoList,
+                        screenType = event.screenType
                     ),
                 )
 
@@ -238,6 +238,7 @@ constructor(
                     completeCount = reduce.completeCount,
                     remainingStudyCount = reduce.remainingStudyCount,
                     todoList = reduce.todoList,
+                    screenType = reduce.screenType
                 )
 
             // List
@@ -364,7 +365,8 @@ constructor(
                         },
                         pendingCount = data.pendingCount,
                         remainingStudyCount = data.remainingStudyCount,
-                        completeCount = data.completeCount
+                        completeCount = data.completeCount,
+                        screenType = if (data.todoList.isEmpty()) ToDoScreenType.EMPTY else ToDoScreenType.DEFAULT
                     )
                 )
             }

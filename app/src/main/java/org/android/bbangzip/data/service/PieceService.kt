@@ -1,6 +1,5 @@
 package org.android.bbangzip.data.service
 
-import org.android.bbangzip.data.dto.request.RequestTodayOrdersDto
 import org.android.bbangzip.data.dto.response.ResponseTodayOrdersDto
 import org.android.bbangzip.data.util.base.BaseResponse
 import retrofit2.http.Body

@@ -14,7 +14,7 @@ data class ResponseTodayOrdersDto(
     val todayList: List<TodoInfo>,
     @SerialName("pendingCount")
     val pendingCount: Int,
-    @SerialName("toadyCount")
+    @SerialName("todayCount")
     val todayCount: Int,
 ) {
     fun toTodoInfoEntity() =

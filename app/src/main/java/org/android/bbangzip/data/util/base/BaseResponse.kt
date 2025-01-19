@@ -9,6 +9,5 @@ data class BaseResponse<T>(
     val code: String,
     @SerialName("data")
     val data: T,
-    @SerialName("message")
-    val message: String,
+
 )

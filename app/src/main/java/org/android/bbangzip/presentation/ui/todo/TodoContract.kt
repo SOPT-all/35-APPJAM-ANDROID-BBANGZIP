@@ -166,6 +166,7 @@ class TodoContract {
             val pendingCount: Int,
             val remainingStudyCount: Int,
             val completeCount: Int,
+            val screenType: ToDoScreenType
         ) : TodoEvent
 
         data class OnFilterBottomSheetItemClicked(
@@ -190,6 +191,7 @@ class TodoContract {
             val pendingCount: Int,
             val remainingStudyCount: Int,
             val completeCount: Int,
+            val screenType: ToDoScreenType
         ) : TodoReduce
 
         data object DeleteToDoListItems : TodoReduce
