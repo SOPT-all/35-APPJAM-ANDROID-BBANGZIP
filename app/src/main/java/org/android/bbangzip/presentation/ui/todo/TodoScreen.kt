@@ -71,8 +71,7 @@ fun TodoScreen(
         modifier =
         modifier
             .fillMaxSize()
-            .padding(bottomPadding)
-            .padding(bottom = 10.dp)
+            .padding(bottom = bottomPadding.calculateBottomPadding())
             .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
     ) {
         LazyColumn {
@@ -112,7 +111,7 @@ fun TodoScreen(
                         completeCount = todoState.completeCount,
                     )
 
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(8.dp))
 
                     DeleteAndFilterIcons(
                         onDeleteIconClicked = onDeleteIconClicked,
@@ -125,14 +124,21 @@ fun TodoScreen(
 
             if (todoState.screenType == ToDoScreenType.DELETE) {
                 item {
-                    Text(
-                        text = stringResource(R.string.todo_delete_screen_text),
-                        style = BbangZipTheme.typography.heading2Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
-                        modifier = Modifier.padding(start = 24.dp),
-                    )
+                    Box(
+                        modifier = Modifier
+                            .padding(start = 24.dp)
+                            .fillMaxWidth()
+                            .height(56.dp),
+                        contentAlignment = Alignment.CenterStart
+                    ) {
+                        Text(
+                            text = stringResource(R.string.todo_delete_screen_text),
+                            style = BbangZipTheme.typography.heading2Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119,
+                        )
+                    }
 
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(8.dp))
 
                     Row(
                         modifier =
@@ -207,6 +213,16 @@ fun TodoScreen(
                         },
                     )
                 }
+
+                if (todoState.screenType == ToDoScreenType.DELETE) {
+                    item {
+                        Spacer(modifier = Modifier.height(72.dp))
+                    }
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
             }
         }
         if (todoState.screenType == ToDoScreenType.DELETE) {
@@ -220,7 +236,7 @@ fun TodoScreen(
                     .padding(horizontal = 16.dp)
                     .fillMaxWidth()
                     .align(Alignment.BottomCenter)
-                    .padding(bottom = 6.dp),
+                    .padding(bottom = 16.dp),
                 isEnable = todoState.selectedItemList.isNotEmpty(),
                 trailingIcon = R.drawable.ic_plus_thick_24,
             )
@@ -355,34 +371,41 @@ fun StudyCountText(
     completeCount: Int,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    Box(
         modifier =
         modifier
             .padding(horizontal = 16.dp)
             .fillMaxWidth()
-            .padding(start = 8.dp),
+            .height(56.dp),
+        contentAlignment = Alignment.CenterStart
     ) {
-        Text(
-            text =
-            when {
-                completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
-                remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
-                else -> stringResource(R.string.todo_complete_nothing_text)
-            },
-            style = BbangZipTheme.typography.label1Bold,
-            color = BbangZipTheme.colors.labelAlternative_282119_61,
-        )
+        Column(
+            modifier =
+            Modifier
+                .padding(start = 8.dp),
+        ) {
+            Text(
+                text =
+                when {
+                    completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
+                    remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
+                    else -> stringResource(R.string.todo_complete_nothing_text)
+                },
+                style = BbangZipTheme.typography.label1Bold,
+                color = BbangZipTheme.colors.labelAlternative_282119_61,
+            )
 
-        Text(
-            text =
-            if (remainingCount != 0) {
-                stringResource(R.string.todo_remaing_count_text, remainingCount)
-            } else {
-                stringResource(R.string.todo_remaining_nothing_text)
-            },
-            style = BbangZipTheme.typography.title3Bold,
-            color = BbangZipTheme.colors.labelNormal_282119,
-        )
+            Text(
+                text =
+                if (remainingCount != 0) {
+                    stringResource(R.string.todo_remaing_count_text, remainingCount)
+                } else {
+                    stringResource(R.string.todo_remaining_nothing_text)
+                },
+                style = BbangZipTheme.typography.title3Bold,
+                color = BbangZipTheme.colors.labelNormal_282119,
+            )
+        }
     }
 }
 

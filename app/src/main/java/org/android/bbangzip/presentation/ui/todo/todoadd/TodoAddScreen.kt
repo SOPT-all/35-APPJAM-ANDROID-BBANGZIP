@@ -165,6 +165,10 @@ fun TodoAddScreen(
                         },
                     )
                 }
+
+                item {
+                    Spacer(modifier= Modifier.height(82.dp))
+                }
             }
         }
         Column(

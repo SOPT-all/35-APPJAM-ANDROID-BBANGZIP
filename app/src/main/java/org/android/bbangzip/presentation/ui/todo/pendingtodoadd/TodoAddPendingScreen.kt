@@ -4,6 +4,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -27,6 +28,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
@@ -34,10 +36,14 @@ import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.component.card.ToDoCard
 import org.android.bbangzip.presentation.component.snackbar.BbangZipSnackBarHost
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
+import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.ToDoFilterType
+import org.android.bbangzip.presentation.type.ToDoScreenType
 import org.android.bbangzip.presentation.ui.todo.BbangZipToDoFilterPickerBottomSheet
+import org.android.bbangzip.presentation.ui.todo.TodoContract
+import org.android.bbangzip.presentation.ui.todo.TodoScreen
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -45,18 +51,18 @@ fun TodoAddPendingScreen(
     todoAddState: TodoAddPendingContract.TodoAddPendingState,
     todoAddSnackBarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
-    onBackIconClicked: () -> Unit,
-    onFilterBottomSheetDismissRequest: () -> Unit,
-    onFilterIconClicked: () -> Unit,
-    onFilterBottomSheetItemClicked: (ToDoFilterType) -> Unit,
-    onItemPlusButtonClicked: () -> Unit,
+    onBackIconClicked: () -> Unit = {},
+    onFilterBottomSheetDismissRequest: () -> Unit = {},
+    onFilterIconClicked: () -> Unit = {},
+    onFilterBottomSheetItemClicked: (ToDoFilterType) -> Unit = {},
+    onItemPlusButtonClicked: () -> Unit = {},
     onToDoCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
 ) {
     Box(
         modifier =
-            modifier
-                .fillMaxSize()
-                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+        modifier
+            .fillMaxSize()
+            .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
     ) {
         Column {
             val scrollState = rememberLazyListState()
@@ -74,9 +80,9 @@ fun TodoAddPendingScreen(
 
             LazyColumn(
                 modifier =
-                    Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth(),
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth(),
                 state = scrollState,
             ) {
                 item {
@@ -104,9 +110,9 @@ fun TodoAddPendingScreen(
 
                         Box(
                             modifier =
-                                Modifier
-                                    .clip(CircleShape)
-                                    .clickable { onFilterIconClicked() },
+                            Modifier
+                                .clip(CircleShape)
+                                .clickable { onFilterIconClicked() },
                             contentAlignment = Alignment.Center,
                         ) {
                             Icon(
@@ -146,6 +152,10 @@ fun TodoAddPendingScreen(
                         },
                     )
                 }
+
+                item {
+                    Spacer(modifier= Modifier.height(82.dp))
+                }
             }
         }
         Column(
@@ -160,10 +170,10 @@ fun TodoAddPendingScreen(
                 onClick = { onItemPlusButtonClicked() },
                 label = stringResource(R.string.todo_add_plus_button_label),
                 modifier =
-                    Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp),
                 isEnable = todoAddState.selectedItemList.isNotEmpty(),
                 trailingIcon = R.drawable.ic_plus_thick_24,
             )
@@ -174,5 +184,20 @@ fun TodoAddPendingScreen(
         selectedItem = todoAddState.selectedFilter,
         onSelectedItemChanged = onFilterBottomSheetItemClicked,
         onDismissRequest = onFilterBottomSheetDismissRequest,
+    )
+}
+
+@Preview
+@Composable
+private fun PendingPreview() {
+
+
+    val mockTodoStates =
+        TodoAddPendingContract.TodoAddPendingState()
+
+
+    TodoAddPendingScreen(
+        todoAddState = mockTodoStates,
+        todoAddSnackBarHostState = remember { SnackbarHostState() }
     )
 }
