@@ -21,7 +21,7 @@
     <string name="card_start_end_day_text">%sp - %sp</string>
     <string name="card_subject_exam_name_text">%s / %s</string>
     <string name="card_d_minus">D+</string>
-    <string name="card_d_plus">D-</string>
+    <string name="card_d_plus">D</string>
 
     <!--button-->
     <string name="btn_kakao_login_label">카카오로 로그인하기</string>
@@ -62,13 +62,45 @@
     <string name="onboarding_first_title">사장님의 이름을\n알려주세요</string>
     <string name="onboarding_second_title">현재 재학 중인\n학기를 알려주세요</string>
     <string name="onboarding_second_description">%s 사장님, 안녕하세요!</string>
-    <string name="onboarding_third_title">수강하는 과목 중 한 가지만 먼저 입력해 볼까요?</string>
-    <string name="onboarding_third_description">>%s %s에 재학 중이시네요!</string>
+    <string name="onboarding_third_title">수강하는 과목 중\n한 가지만 먼저 입력해 볼까요?</string>
+    <string name="onboarding_third_description">%s %s에 재학 중이시네요!</string>
+    <string name="onboarding_start_title">제 과제 빵점에 오신 것을\n환영합니다!</string>
+    <string name="onboarding_name_title">사장님의 이름을\n알려주세요</string>
+    <string name="onboarding_name_placeholder">예) 탁구왕김제빵</string>
+    <string name="onboarding_name_description">한글/영문/숫자 조합으로 최대 10자까지 입력 가능해요</string>
+    <string name="onboarding_name_success">사용 가능한 이름이에요</string>
+    <string name="onboarding_subject_placeholder">예) 거시경제학</string>
+    <string name="onboarding_subject_description">한글/영문/숫자 조합으로 최대 20자까지 입력 가능해요</string>
+    <string name="onboarding_subject_success">사용 가능한 과목 이름이에요</string>
+    <string name="onboarding_final_title">제 과제 빵점 오픈을\n축하합니다!</string>
 
     <!-- component - textfield -->
     <string name="textfield_character_counter">%s/%s</string>
 
+    <!-- todo -->
+    <string name="todo_filter_recent">최근 등록 순</string>
+    <string name="todo_filter_least_volume">분량 적은 순</string>
+    <string name="todo_filter_deadline">마감 기한 빠른 순</string>
+    <string name="todo_month_text">월</string>
+    <string name="todo_day_text">일</string>
+    <string name="todo_pending_count_text">사장님의 밀린 공부는 빵 개!</string>
+    <string name="todo_top_tail_balloon_text">사장님의 과제 빵점 탈출을 응원해요!</string>
+    <string name="todo_complete_count_text">벌써 %s개나 완료 하셨네요!</string>
+    <string name="todo_complete_nothing_text">아직 완료된 할일이 없네요!</string>
+    <string name="todo_remaing_count_text">총 %s개의 공부가 남았어요</string>
+    <string name="todo_remaining_nothing_text">오늘의 공부를 모두 끝냈어요!</string>
+    <string name="todo_complete_remaining_nothing_text">사장님 퇴근 준비 완료</string>
+    <string name="todo_delete_screen_text">삭제할 오늘의 공부를 \n선택해 주세요</string>
+    <string name="todo_delete_screen_delete_button_text">%s개 삭제하기</string>
+
     <!-- login -->
     <string name="login_title">제 과제 빵점 사장님은\n이번 학기 백점!</string>
     <string name="login_ballon_label">5초 만에 빵집 사장님 되기</string>
+    <string name="todo_revert_bottomsheet_approve_text">되돌리기</string>
+    <string name="todo_pending_add_title1">이제는 미룰 수 없다!</string>
+    <string name="todo_pending_add_title2">아직 늦지 않았어요!\n밀린 공부를 시작해봐요</string>
+    <string name="todo_add_title1">시작이 빵이다!</string>
+    <string name="todo_add_title2">오늘부터 하나씩!\n공부할 내용을 선택해 보세요</string>
+    <string name="todo_add_count">개 / 총 %s개</string>
+    <string name="todo_add_plus_button_label">오늘 할 공부 추가하기</string>
 </resources>

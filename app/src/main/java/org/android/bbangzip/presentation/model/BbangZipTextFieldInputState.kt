@@ -7,24 +7,24 @@ import org.android.bbangzip.presentation.type.BbangZipTextFieldType
 
 @Parcelize
 sealed class BbangZipTextFieldInputState : Parcelable {
-    data object Empty : BbangZipTextFieldInputState()
+    data object Default : BbangZipTextFieldInputState()
+
+    data object Placeholder : BbangZipTextFieldInputState()
 
     data object Typing : BbangZipTextFieldInputState()
 
-    data object Error : BbangZipTextFieldInputState()
-
     data object Field : BbangZipTextFieldInputState()
 
-    data object Complete : BbangZipTextFieldInputState()
+    data object Alert : BbangZipTextFieldInputState()
 }
 
 private val stateToTypeMap =
     mapOf(
-        BbangZipTextFieldInputState.Empty to BbangZipTextFieldType.EMPTY,
+        BbangZipTextFieldInputState.Default to BbangZipTextFieldType.DEFAULT,
+        BbangZipTextFieldInputState.Placeholder to BbangZipTextFieldType.PLACEHOLDER,
         BbangZipTextFieldInputState.Typing to BbangZipTextFieldType.TYPING,
-        BbangZipTextFieldInputState.Error to BbangZipTextFieldType.ERROR,
         BbangZipTextFieldInputState.Field to BbangZipTextFieldType.FIELD,
-        BbangZipTextFieldInputState.Complete to BbangZipTextFieldType.COMPLETE,
+        BbangZipTextFieldInputState.Alert to BbangZipTextFieldType.ALERT,
     )
 
 fun BbangZipTextFieldInputState.getIconColor(): Color {

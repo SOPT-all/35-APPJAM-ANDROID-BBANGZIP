@@ -93,7 +93,7 @@ abstract class BaseViewModel<Event : BaseContract.Event, State : BaseContract.St
                 reduceState(currentUiState, reducer).also { state ->
                     savedStateHandle[STATE_KEY] = state.toParcelable()
                 }
-        }
+        }.launchIn(viewModelScope)
     }
 
     protected fun updateState(
