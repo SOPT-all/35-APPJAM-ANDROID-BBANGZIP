@@ -57,7 +57,10 @@ data class TodoInfo(
             studyContents = studyContents,
             startPage = startPage,
             finishPage = finishPage,
-            deadline = deadline,
+            deadline =
+                deadline.split("-").let { parts ->
+                    "${parts[0]}년 ${parts[1].toInt()}월 ${parts[2].toInt()}일"
+                },
             remainingDays = remainingDays,
             isFinished = isFinished,
         )
