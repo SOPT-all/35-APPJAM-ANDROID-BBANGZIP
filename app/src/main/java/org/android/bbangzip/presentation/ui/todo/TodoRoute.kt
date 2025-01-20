@@ -24,7 +24,7 @@ fun TodoRoute(
     viewModel: TodoViewModel = hiltViewModel(),
 ) {
     val todoState by viewModel.uiState.collectAsStateWithLifecycle()
-    val success by viewModel.success.collectAsStateWithLifecycle(initialValue = true)
+    val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
     val todayDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-E").withLocale(Locale.forLanguageTag("ko"))).split("-")
 
     LaunchedEffect(viewModel.uiSideEffect) {
