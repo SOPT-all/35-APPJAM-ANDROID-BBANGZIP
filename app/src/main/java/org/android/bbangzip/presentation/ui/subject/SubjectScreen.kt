@@ -142,7 +142,7 @@ fun SubjectScreen(
                     bbangZipButtonSize = BbangZipButtonSize.Large,
                     onClick = { onClickCancleBtn() },
                     modifier = Modifier.fillMaxWidth(),
-                    label = if(deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
+                    label = if (deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
                     trailingIcon = R.drawable.ic_trash_default_24,
                     isEnable = deletedSet.isNotEmpty(),
                 )

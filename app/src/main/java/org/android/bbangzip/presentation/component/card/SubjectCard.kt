@@ -82,7 +82,7 @@ fun SubjectCard(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevronright_thick_small_24),
                 tint = BbangZipTheme.colors.labelAssistive_282119_28,
                 contentDescription = stringResource(R.string.card_subject_button_description),
-                modifier = Modifier.size(16.dp)
+                modifier = Modifier.size(16.dp),
             )
         }
     }
