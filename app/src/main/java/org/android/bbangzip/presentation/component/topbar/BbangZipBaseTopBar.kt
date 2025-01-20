@@ -1,7 +1,6 @@
 package org.android.bbangzip.presentation.component.topbar
 
 import androidx.annotation.DrawableRes
-import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -48,7 +46,7 @@ fun BbangZipBaseTopBar(
     onTrailingIconClick: () -> Unit = {},
     onLeadingIconClick: () -> Unit = {},
 ) {
-    val isShadowed by remember { derivedStateOf { scrollState.firstVisibleItemScrollOffset > 0} }
+    val isShadowed by remember { derivedStateOf { scrollState.firstVisibleItemScrollOffset > 0 } }
     Box(
         modifier =
             modifier

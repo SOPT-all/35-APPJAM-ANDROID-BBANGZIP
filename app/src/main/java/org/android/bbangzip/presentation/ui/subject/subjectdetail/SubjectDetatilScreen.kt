@@ -64,7 +64,7 @@ fun SubjectDetailScreen(
     todoList: List<ToDoCardModel>,
     pieceViewType: PieceViewType,
     deletedSet: Set<Int>,
-    revertCompleteBottomSheetState : Boolean,
+    revertCompleteBottomSheetState: Boolean,
     selectedItemId: Int,
     onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
     onRevertCompleteBottomSheetApproveButtonClicked: () -> Unit = {},
@@ -74,12 +74,11 @@ fun SubjectDetailScreen(
     onDeleteModeCardClicked: (Int) -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit = {},
-    onCompleteCardClicked: (Int) -> Unit = {}
+    onCompleteCardClicked: (Int) -> Unit = {},
 ) {
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
     val backgroundHeight = (screenHeightDp * 0.32).toInt()
-
 
     val tabs = listOf("중간고사", "기말고사")
     var selectedIndex by remember { mutableIntStateOf(0) }
@@ -90,66 +89,70 @@ fun SubjectDetailScreen(
 
     Timber.d("${deletedSet.size}")
     Box(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
     ) {
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
-            state = listState
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+            state = listState,
         ) {
             item {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(backgroundHeight.dp)
-                        .background(
-                            color = BbangZipTheme.colors.backgroundAccent_FFDAA0,
-                            shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)
-                        )
-                ){
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(backgroundHeight.dp)
+                            .background(
+                                color = BbangZipTheme.colors.backgroundAccent_FFDAA0,
+                                shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp),
+                            ),
+                ) {
                     TwoLineTextWithWordWrap(motivationMessage)
 
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                            .offset(y = 32.dp)
-                            .height(64.dp)
-                            .background(
-                                color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                                shape = RoundedCornerShape(32.dp)
-                            )
-                            .align(Alignment.BottomCenter)
-                            .applyShadows(
-                                BbangZipShadowType.EMPHASIZE,
-                                shape = RoundedCornerShape(32.dp)
-                            )
-                    ){
-                        Row(
-                            modifier = Modifier
-                                .fillMaxSize()
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 16.dp)
+                                .offset(y = 32.dp)
+                                .height(64.dp)
                                 .background(
                                     color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                                    shape = RoundedCornerShape(32.dp)
+                                    shape = RoundedCornerShape(32.dp),
                                 )
-                                .padding(horizontal = 76.dp),
+                                .align(Alignment.BottomCenter)
+                                .applyShadows(
+                                    BbangZipShadowType.EMPHASIZE,
+                                    shape = RoundedCornerShape(32.dp),
+                                ),
+                    ) {
+                        Row(
+                            modifier =
+                                Modifier
+                                    .fillMaxSize()
+                                    .background(
+                                        color = BbangZipTheme.colors.staticWhite_FFFFFF,
+                                        shape = RoundedCornerShape(32.dp),
+                                    )
+                                    .padding(horizontal = 76.dp),
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ){
+                            horizontalArrangement = Arrangement.SpaceBetween,
+                        ) {
                             tabs.forEachIndexed { index, tabName ->
                                 examTab(
                                     text = tabName,
                                     isSelected = selectedIndex == index,
-                                    onClick = { selectedIndex = index } // 클릭 시 인덱스 변경
+                                    onClick = { selectedIndex = index }, // 클릭 시 인덱스 변경
                                 )
                             }
                         }
                     }
                 }
             }
-            item{
-                when(pieceViewType){
+            item {
+                when (pieceViewType) {
                     PieceViewType.EMPTY -> {
                         Spacer(modifier = Modifier.height(84.dp))
                         EmptySubjectCardView()
@@ -159,71 +162,75 @@ fun SubjectDetailScreen(
                             todoList = todoList,
                             onTrashIconClicked = onTrashIconClicked,
                             onDefaultCardClicked = onDefaultCardClicked,
-                            onCompleteCardClicked = onCompleteCardClicked
+                            onCompleteCardClicked = onCompleteCardClicked,
                         )
                     }
                     PieceViewType.DELETE -> {
                         DeletePieceView(
                             todoList = todoList,
                             onCloseIconClicked = onCloseIconClicked,
-                            onDeleteModeCardClicked = onDeleteModeCardClicked
+                            onDeleteModeCardClicked = onDeleteModeCardClicked,
                         )
                     }
                 }
             }
         }
-        Column(){
+        Column {
             BbangZipBaseTopBar(
                 scrollState = listState,
                 backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 trailingIcon = R.drawable.ic_menu_kebab_default_24,
                 onTrailingIconClick = { isMenuOpen = !isMenuOpen },
-                title = "경제통계학"
+                title = "경제통계학",
             )
             if (isMenuOpen) {
                 Box(
-                    modifier = Modifier
-                        .padding(end = 16.dp)
-                        .height(128.dp)
-                        .width(200.dp)
-                        .applyShadows(BbangZipShadowType.HEAVY, shape = RoundedCornerShape(32.dp))
-                        .align(Alignment.End)
-                        .offset(y = (-8).dp)
+                    modifier =
+                        Modifier
+                            .padding(end = 16.dp)
+                            .height(128.dp)
+                            .width(200.dp)
+                            .applyShadows(BbangZipShadowType.HEAVY, shape = RoundedCornerShape(32.dp))
+                            .align(Alignment.End)
+                            .offset(y = (-8).dp),
                 ) {
                     Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                                shape = RoundedCornerShape(32.dp)
-                            )
-                            .padding(16.dp)
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .background(
+                                    color = BbangZipTheme.colors.staticWhite_FFFFFF,
+                                    shape = RoundedCornerShape(32.dp),
+                                )
+                                .padding(16.dp),
                     ) {
                         Text(
                             text = "각오 한 마디 작성하기",
                             style = BbangZipTheme.typography.body1Bold,
                             color = BbangZipTheme.colors.labelNormal_282119,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .applyFilterOnClick(
-                                    radius = 16.dp,
-                                    isDisabled = false
-                                ) { }
-                                .padding(start = 8.dp, top = 12.dp, bottom = 12.dp)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .applyFilterOnClick(
+                                        radius = 16.dp,
+                                        isDisabled = false,
+                                    ) { }
+                                    .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
                         )
                         Spacer(Modifier.weight(1f))
                         Text(
                             text = "과목명 수정하기",
                             style = BbangZipTheme.typography.body1Bold,
                             color = BbangZipTheme.colors.labelNormal_282119,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .applyFilterOnClick(
-                                    radius = 16.dp,
-                                    isDisabled = false
-                                ) { }
-                                .padding(start = 8.dp, top = 12.dp, bottom = 12.dp)
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .applyFilterOnClick(
+                                        radius = 16.dp,
+                                        isDisabled = false,
+                                    ) { }
+                                    .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
                         )
                     }
                 }
@@ -232,16 +239,16 @@ fun SubjectDetailScreen(
         if (pieceViewType == PieceViewType.DELETE) {
             Box(
                 modifier =
-                Modifier
-                    .align(alignment = Alignment.BottomCenter)
-                    .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
+                    Modifier
+                        .align(alignment = Alignment.BottomCenter)
+                        .padding(bottom = 16.dp, start = 16.dp, end = 16.dp),
             ) {
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
                     onClick = { onClickCancleBtn() },
                     modifier = Modifier.fillMaxWidth(),
-                    label = if(deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
+                    label = if (deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
                     trailingIcon = R.drawable.ic_trash_default_24,
                     isEnable = deletedSet.isNotEmpty(),
                 )
@@ -263,51 +270,54 @@ private fun DefaultPieceView(
     todoList: List<ToDoCardModel>,
     onTrashIconClicked: () -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit,
-    onCompleteCardClicked: (Int) -> Unit
-    ) {
+    onCompleteCardClicked: (Int) -> Unit,
+) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(52.dp))
 
         Row(
             modifier = Modifier.padding(start = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = "시험까지 D-14",
                 style = BbangZipTheme.typography.caption1Medium,
                 color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                modifier = Modifier
-                    .background(
-                        color = BbangZipTheme.colors.statusPositive_3D3730,
-                        shape = RoundedCornerShape(11.dp)
-                    )
-                    .padding(horizontal = 12.dp, vertical = 2.dp)
+                modifier =
+                    Modifier
+                        .background(
+                            color = BbangZipTheme.colors.statusPositive_3D3730,
+                            shape = RoundedCornerShape(11.dp),
+                        )
+                        .padding(horizontal = 12.dp, vertical = 2.dp),
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "2025년 11월 25일",
                 style = BbangZipTheme.typography.caption1Medium,
-                color = BbangZipTheme.colors.labelAlternative_282119_61
+                color = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
 
         Spacer(modifier = Modifier.height(40.dp))
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = "학습 내용",
                 style = BbangZipTheme.typography.headline2Bold,
-                color = BbangZipTheme.colors.labelAlternative_282119_61
+                color = BbangZipTheme.colors.labelAlternative_282119_61,
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -315,27 +325,27 @@ private fun DefaultPieceView(
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash_default_24),
                 contentDescription = null,
-                modifier = Modifier
-                    .applyFilterOnClick(
-                        radius = 20.dp,
-                        isDisabled = false
-                    )
-                    { onTrashIconClicked() }
-                    .padding(8.dp),
-                tint = BbangZipTheme.colors.labelAlternative_282119_61
+                modifier =
+                    Modifier
+                        .applyFilterOnClick(
+                            radius = 20.dp,
+                            isDisabled = false,
+                        ) { onTrashIconClicked() }
+                        .padding(8.dp),
+                tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
 
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
                 contentDescription = null,
-                modifier = Modifier
-                    .applyFilterOnClick(
-                        radius = 20.dp,
-                        isDisabled = false
-                    )
-                    { }
-                    .padding(8.dp),
-                tint = BbangZipTheme.colors.labelAlternative_282119_61
+                modifier =
+                    Modifier
+                        .applyFilterOnClick(
+                            radius = 20.dp,
+                            isDisabled = false,
+                        ) { }
+                        .padding(8.dp),
+                tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
 
@@ -346,45 +356,48 @@ private fun DefaultPieceView(
                 data = item,
                 onClick = {
                     onDefaultCardClicked(item.pieceId)
-                    if(item.state == BbangZipCardState.COMPLETE) onCompleteCardClicked(item.pieceId)
-                }
+                    if (item.state == BbangZipCardState.COMPLETE) onCompleteCardClicked(item.pieceId)
+                },
             )
 
             Spacer(modifier = Modifier.height(12.dp))
         }
 
         Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .border(
-                    width = 2.dp,
-                    color = BbangZipTheme.colors.lineAlternative_68645E_08,
-                    shape = RoundedCornerShape(24.dp)
-                )
-                .applyFilterOnClick(
-                    radius = 24.dp,
-                    isDisabled = false
-                ) {  }
-        ){
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .border(
+                        width = 2.dp,
+                        color = BbangZipTheme.colors.lineAlternative_68645E_08,
+                        shape = RoundedCornerShape(24.dp),
+                    )
+                    .applyFilterOnClick(
+                        radius = 24.dp,
+                        isDisabled = false,
+                    ) { },
+        ) {
             Row(
-                modifier = Modifier
-                    .padding(vertical = 23.dp)
-                    .align(Alignment.Center),
-                verticalAlignment = Alignment.CenterVertically
-            ){
+                modifier =
+                    Modifier
+                        .padding(vertical = 23.dp)
+                        .align(Alignment.Center),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
                 Box(
-                    modifier = Modifier
-                        .size(40.dp)
-                        .border(
-                            width = 1.dp,
-                            color = BbangZipTheme.colors.lineNormal_68645E_22,
-                            shape = CircleShape
-                        )
-                ){
+                    modifier =
+                        Modifier
+                            .size(40.dp)
+                            .border(
+                                width = 1.dp,
+                                color = BbangZipTheme.colors.lineNormal_68645E_22,
+                                shape = CircleShape,
+                            ),
+                ) {
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
                         contentDescription = null,
-                        modifier = Modifier.size(20.dp).align(Alignment.Center)
+                        modifier = Modifier.size(20.dp).align(Alignment.Center),
                     )
                 }
 
@@ -405,52 +418,54 @@ private fun DefaultPieceView(
 private fun DeletePieceView(
     todoList: List<ToDoCardModel>,
     onCloseIconClicked: () -> Unit,
-    onDeleteModeCardClicked: (Int) -> Unit = {}
+    onDeleteModeCardClicked: (Int) -> Unit = {},
 ) {
     Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(52.dp))
 
         Row(
             modifier = Modifier.padding(start = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = "시험까지 D-14",
                 style = BbangZipTheme.typography.caption1Medium,
                 color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                modifier = Modifier
-                    .background(
-                        color = BbangZipTheme.colors.statusPositive_3D3730,
-                        shape = RoundedCornerShape(11.dp)
-                    )
-                    .padding(horizontal = 12.dp, vertical = 2.dp)
+                modifier =
+                    Modifier
+                        .background(
+                            color = BbangZipTheme.colors.statusPositive_3D3730,
+                            shape = RoundedCornerShape(11.dp),
+                        )
+                        .padding(horizontal = 12.dp, vertical = 2.dp),
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
                 text = "2025년 11월 25일",
                 style = BbangZipTheme.typography.caption1Medium,
-                color = BbangZipTheme.colors.labelAlternative_282119_61
+                color = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
 
         Spacer(modifier = Modifier.height(40.dp))
 
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 8.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 8.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
                 text = "삭제할 항목을 눌러서 선택해 주세요",
                 style = BbangZipTheme.typography.headline2Bold,
-                color = BbangZipTheme.colors.labelAlternative_282119_61
-
+                color = BbangZipTheme.colors.labelAlternative_282119_61,
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -458,14 +473,14 @@ private fun DeletePieceView(
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_small_24),
                 contentDescription = null,
-                modifier = Modifier
-                    .applyFilterOnClick(
-                        radius = 20.dp,
-                        isDisabled = false
-                    )
-                    { onCloseIconClicked() }
-                    .padding(8.dp),
-                tint = BbangZipTheme.colors.labelAlternative_282119_61
+                modifier =
+                    Modifier
+                        .applyFilterOnClick(
+                            radius = 20.dp,
+                            isDisabled = false,
+                        ) { onCloseIconClicked() }
+                        .padding(8.dp),
+                tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
 
@@ -476,7 +491,7 @@ private fun DeletePieceView(
                 data = item,
                 onClick = {
                     onDeleteModeCardClicked(item.pieceId)
-                }
+                },
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -488,27 +503,28 @@ private fun DeletePieceView(
 
 @Composable
 private fun examTab(
-    text : String,
-    isSelected : Boolean,
-    onClick : () -> Unit
+    text: String,
+    isSelected: Boolean,
+    onClick: () -> Unit,
 ) {
     Column(
         modifier = Modifier.noRippleClickable { onClick() },
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = text,
             style = BbangZipTheme.typography.body1Bold,
-            color = if(isSelected) BbangZipTheme.colors.labelNormal_282119 else BbangZipTheme.colors.labelAssistive_282119_28
+            color = if (isSelected) BbangZipTheme.colors.labelNormal_282119 else BbangZipTheme.colors.labelAssistive_282119_28,
         )
 
         Spacer(Modifier.height(4.dp))
 
         Box(
-            modifier = Modifier
-                .height(2.dp)
-                .width(40.dp)
-                .background(color = if (isSelected) BbangZipTheme.colors.labelNormal_282119 else BbangZipTheme.colors.staticWhite_FFFFFF)
+            modifier =
+                Modifier
+                    .height(2.dp)
+                    .width(40.dp)
+                    .background(color = if (isSelected) BbangZipTheme.colors.labelNormal_282119 else BbangZipTheme.colors.staticWhite_FFFFFF),
         )
     }
 }
@@ -521,11 +537,11 @@ fun TwoLineTextWithWordWrap(
 
     BasicText(
         text = displayText ?: AnnotatedString(text),
-        modifier = Modifier
-            .width(200.dp)
-            .padding(top = 92.dp, start = 20.dp)
-            .height(56.dp)
-        ,
+        modifier =
+            Modifier
+                .width(200.dp)
+                .padding(top = 92.dp, start = 20.dp)
+                .height(56.dp),
         style = BbangZipTheme.typography.heading2Bold,
         onTextLayout = { textLayoutResult ->
             if (displayText == null) { // 텍스트 변경 시 재계산
@@ -534,14 +550,14 @@ fun TwoLineTextWithWordWrap(
         },
         maxLines = 2,
         overflow = TextOverflow.Ellipsis,
-        color = { defaultBbangZipColors.labelAlternative_282119_61 }
+        color = { defaultBbangZipColors.labelAlternative_282119_61 },
     )
 }
 
 private fun processTextForWordWrap(
     text: String,
     textLayoutResult: TextLayoutResult,
-    maxLines: Int
+    maxLines: Int,
 ): AnnotatedString {
     val lines = textLayoutResult.lineCount.coerceAtMost(maxLines)
     if (lines <= 1) return AnnotatedString(text)
@@ -579,15 +595,15 @@ private fun EmptySubjectCardView(
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
         Box(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(328.dp)
-                .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
+                Modifier
+                    .fillMaxWidth()
+                    .height(328.dp)
+                    .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
             contentAlignment = Alignment.Center,
         ) {
             Text(
                 text = stringResource(R.string.empty_view_text),
-                )
+            )
         }
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -621,9 +637,9 @@ fun RevertCompleteBottomSheet(
             Text(
                 text = bottomSheetTitle,
                 modifier =
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(vertical = 15.dp),
+                    Modifier
+                        .align(Alignment.CenterHorizontally)
+                        .padding(vertical = 15.dp),
                 style = BbangZipTheme.typography.headline1Bold,
                 color = BbangZipTheme.colors.labelNeutral_282119_88,
             )
@@ -655,7 +671,7 @@ fun RevertCompleteBottomSheet(
 
 @Preview(
     showBackground = true,
-    showSystemUi = true
+    showSystemUi = true,
 )
 @Composable
 private fun SubjectDetailScreenPreview() {
@@ -665,6 +681,6 @@ private fun SubjectDetailScreenPreview() {
         PieceViewType.DEFAULT,
         emptySet(),
         false,
-        selectedItemId = 0
+        selectedItemId = 0,
     )
 }

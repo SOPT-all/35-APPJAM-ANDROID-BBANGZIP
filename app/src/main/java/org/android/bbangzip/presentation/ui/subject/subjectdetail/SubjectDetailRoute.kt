@@ -10,7 +10,7 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun SubjectDetailRoute(
     padding: PaddingValues,
     viewModel: SubjectDetailViewModel = hiltViewModel(),
-){
+) {
     val subjectDetailState by viewModel.uiState.collectAsStateWithLifecycle()
 
     SubjectDetailScreen(
@@ -20,13 +20,13 @@ fun SubjectDetailRoute(
         deletedSet = subjectDetailState.selectedItemSet,
         revertCompleteBottomSheetState = subjectDetailState.revertCompleteBottomSheetState,
         selectedItemId = subjectDetailState.selectedItemId,
-        onCloseIconClicked = {viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked)},
-        onTrashIconClicked = {viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked)},
-        onDeleteModeCardClicked = {id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked(id))},
-        onDefaultCardClicked = {id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked(id))},
-        onCompleteCardClicked = {id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked(id))},
-        onRevertCompleteBottomSheetDismissRequest = {viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest)},
-        onRevertCompleteBottomSheetApproveButtonClicked = {viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked)},
-        onRevertCompleteBottomSheetDismissButtonClicked = {viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked)}
+        onCloseIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked) },
+        onTrashIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked) },
+        onDeleteModeCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked(id)) },
+        onDefaultCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked(id)) },
+        onCompleteCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked(id)) },
+        onRevertCompleteBottomSheetDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest) },
+        onRevertCompleteBottomSheetApproveButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked) },
+        onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },
     )
 }

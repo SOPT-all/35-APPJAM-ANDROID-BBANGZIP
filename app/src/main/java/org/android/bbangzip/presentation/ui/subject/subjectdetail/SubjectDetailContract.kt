@@ -17,7 +17,7 @@ class SubjectDetailContract {
         val selectedItemSet: Set<Int> = setOf(),
         val revertCompleteBottomSheetState: Boolean = false,
         val selectedItemId: Int = -1,
-        val todoList:List<ToDoCardModel> =
+        val todoList: List<ToDoCardModel> =
             listOf(
                 ToDoCardModel(
                     pieceId = 1,
@@ -28,7 +28,7 @@ class SubjectDetailContract {
                     finishPage = 50,
                     deadline = "2025-01-20",
                     remainingDays = 2,
-                    state = BbangZipCardState.COMPLETE
+                    state = BbangZipCardState.COMPLETE,
                 ),
                 ToDoCardModel(
                     pieceId = 2,
@@ -49,7 +49,7 @@ class SubjectDetailContract {
                     finishPage = 80,
                     deadline = "2025-01-25",
                     remainingDays = 7,
-                    state = BbangZipCardState.COMPLETE
+                    state = BbangZipCardState.COMPLETE,
                 ),
                 ToDoCardModel(
                     pieceId = 4,
@@ -121,7 +121,7 @@ class SubjectDetailContract {
                     deadline = "2025-01-28",
                     remainingDays = -5,
                 ),
-        )
+            ),
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -137,22 +137,22 @@ class SubjectDetailContract {
 
         data object OnDeleteButtonClicked : SubjectDetailEvent
 
-        data object OnRevertCompleteBottomSheetApproveButtonClicked: SubjectDetailEvent
+        data object OnRevertCompleteBottomSheetApproveButtonClicked : SubjectDetailEvent
 
         data object OnRevertCompleteBottomSheetDismissButtonClicked : SubjectDetailEvent
 
         data object OnRevertCompleteBottomSheetDissmissRequest : SubjectDetailEvent
 
         data class OnDeleteModeCardClicked(
-            val pieceId: Int
+            val pieceId: Int,
         ) : SubjectDetailEvent
 
         data class OnDefaultCardClicked(
-            val pieceId: Int
+            val pieceId: Int,
         ) : SubjectDetailEvent
 
         data class OnCompleteCardClicked(
-            val pieceId: Int
+            val pieceId: Int,
         ) : SubjectDetailEvent
     }
 
