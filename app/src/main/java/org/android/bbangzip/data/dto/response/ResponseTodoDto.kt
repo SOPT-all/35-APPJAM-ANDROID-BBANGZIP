@@ -1,44 +1,33 @@
 package org.android.bbangzip.data.dto.response
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.android.bbangzip.domain.model.ToDoCardEntity
 import org.android.bbangzip.domain.model.ToDoInfoEntity
 
 @Serializable
-data class ResponseTodayOrdersDto(
-    @SerialName("completeCount")
-    val completeCount: Int,
-    @SerialName("todoPiecesList")
-    val todayList: List<TodoInfo>,
-    @SerialName("pendingCount")
-    val pendingCount: Int,
-    @SerialName("todayCount")
-    val todayCount: Int,
+data class ResponseTodoDto(
+    @SerialName("todoCount")
+    val todoCount: Int,
+    @SerialName("todoList")
+    val todoList: List<TodoCardInfo>
 ) {
-    fun toTodoInfoEntity() =
+    fun toTodoCardInfoEntity() =
         ToDoInfoEntity(
-            todoList = todayList.map { todoItem ->
+            todoList = todoList.map { todoItem ->
                 todoItem.toTodoCardEntity()
             },
-            pendingCount = pendingCount,
-            remainingStudyCount = todayCount,
-            completeCount = completeCount
         )
 }
 
-
 @Serializable
-data class TodoInfo(
+data class TodoCardInfo(
     @SerialName("deadline")
     val deadline: String,
     @SerialName("examName")
     val examName: String,
     @SerialName("finishPage")
     val finishPage: Int,
-    @SerialName("isFinished")
-    val isFinished: Boolean,
     @SerialName("pieceId")
     val pieceId: Int,
     @SerialName("remainingDays")
@@ -60,6 +49,5 @@ data class TodoInfo(
             finishPage = finishPage,
             deadline = deadline,
             remainingDays = remainingDays,
-            isFinished = isFinished
         )
 }

@@ -2,13 +2,15 @@ package org.android.bbangzip.presentation.ui.todo
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.android.bbangzip.domain.repository.remote.PieceRepository
+import kotlinx.coroutines.launch
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.ToDoScreenType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import org.android.bbangzip.presentation.util.constant.ToDoConstants
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -26,7 +28,7 @@ constructor(
     }
 
     init {
-        setEvent(TodoContract.TodoEvent.Initialize)
+//        setEvent(TodoContract.TodoEvent.Initialize)
     }
 
     override fun handleEvent(event: TodoContract.TodoEvent) {
@@ -47,11 +49,14 @@ constructor(
 
             // Filter BottomSheet
             is TodoContract.TodoEvent.OnFilterBottomSheetItemClicked -> {
+                viewModelScope.launch {
+                    getToDoInfo(area = ToDoConstants.AREA, year = 2025, semester = "1학기", sortOption = event.selectedFilterItem.id)
+                }
                 updateState(TodoContract.TodoReduce.UpdateFilterType(selectedFilter = event.selectedFilterItem))
                 updateState(
                     TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
                         todoFilterBottomSheetState = false,
-                    ),
+                    )
                 )
                 setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
                 // TODO index를 이용해 서버로 FetchInfo 보내주기 다시 정렬하기 ㅋㅋ
@@ -329,8 +334,8 @@ constructor(
         getToDoInfo(
             area = "todo",
             year = 2025,
-            semester = "1",
-            sortOption = "recent"
+            semester = "1학기",
+            sortOption = currentUiState.selectedFilterItem.id
         )
     }
 
@@ -345,38 +350,35 @@ constructor(
             year = year,
             semester = semester,
             sortOption = sortOption
-        )
-            .onSuccess { data ->
-                Timber.tag("ㅋㅋ").d("server viewmodel")
-                updateState(
-                    TodoContract.TodoReduce.UpdateToDoInfo(
-                        todoList = data.todoList.map { item ->
-                            ToDoCardModel(
-                                pieceId = item.pieceId,
-                                subjectName = item.subjectName,
-                                examName = item.examName,
-                                studyContents = item.studyContents,
-                                startPage = item.startPage,
-                                finishPage = item.finishPage,
-                                deadline = item.deadline,
-                                remainingDays = item.remainingDays,
-                                cardState = if (item.isFinished) BbangZipCardState.COMPLETE else BbangZipCardState.DEFAULT
-                            )
-                        },
-                        pendingCount = data.pendingCount,
-                        remainingStudyCount = data.remainingStudyCount,
-                        completeCount = data.completeCount,
-                        screenType = if (data.todoList.isEmpty()) ToDoScreenType.EMPTY else ToDoScreenType.DEFAULT
-                    )
+        ).onSuccess { data ->
+            Timber.tag("ㅋㅋ").d("server viewmodel")
+            updateState(
+                TodoContract.TodoReduce.UpdateToDoInfo(
+                    todoList = data.todoList.map { item ->
+                        ToDoCardModel(
+                            pieceId = item.pieceId,
+                            subjectName = item.subjectName,
+                            examName = item.examName,
+                            studyContents = item.studyContents,
+                            startPage = item.startPage,
+                            finishPage = item.finishPage,
+                            deadline = item.deadline,
+                            remainingDays = item.remainingDays,
+                            cardState = if (item.isFinished) BbangZipCardState.COMPLETE else BbangZipCardState.DEFAULT
+                        )
+                    },
+                    pendingCount = data.pendingCount,
+                    remainingStudyCount = data.remainingStudyCount,
+                    completeCount = data.completeCount,
+                    screenType = if (data.todoList.isEmpty()) ToDoScreenType.EMPTY else ToDoScreenType.DEFAULT
                 )
-            }
-            .onFailure { message ->
+            )
+        }
+            .onFailure { error ->
                 Timber.run {
                     tag("ㅋㅋ").d("server viewmodel fail")
-                    tag("ㅋㅋ").d(message.message)
+                    tag("ㅋㅋ").d(error.message)
                 }
-
             }
-
     }
 }

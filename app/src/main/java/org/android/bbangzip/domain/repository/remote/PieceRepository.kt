@@ -9,5 +9,11 @@ interface PieceRepository {
         semester: String,
         sortOption: String
     ): Result<ToDoInfoEntity>
+
+    suspend fun  getAddTodoList(
+        year: Int,
+        semester: String,
+        sortOption: String
+    ): Result<ToDoInfoEntity>
 }
 

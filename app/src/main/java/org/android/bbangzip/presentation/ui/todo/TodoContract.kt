@@ -125,13 +125,13 @@ class TodoContract {
                 ),
             ),
         val pendingCount: Int = 10,
-        val remainingStudyCount: Int = 5,
+        val remainingStudyCount: Int = 0,
         val completeCount: Int = 5,
         val todoFilterBottomSheetState: Boolean = false,
         val selectedFilterItem: ToDoFilterType = ToDoFilterType.RECENT,
         val selectedItemList: List<Int> = listOf(),
         val revertCompleteBottomSheetState: Boolean = false,
-        val screenType: ToDoScreenType = ToDoScreenType.DEFAULT,
+        val screenType: ToDoScreenType = ToDoScreenType.EMPTY,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }

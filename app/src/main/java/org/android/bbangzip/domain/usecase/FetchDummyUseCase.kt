@@ -6,6 +6,6 @@ import org.android.bbangzip.domain.repository.remote.DummyRepository
 class FetchDummyUseCase(
     private val dummyRepository: DummyRepository,
 ) {
-    suspend operator fun invoke(): Result<DummyEntity> =
+    suspend operator fun invoke(): Result<DummyEntity?> =
         dummyRepository.fetchDummy()
 }

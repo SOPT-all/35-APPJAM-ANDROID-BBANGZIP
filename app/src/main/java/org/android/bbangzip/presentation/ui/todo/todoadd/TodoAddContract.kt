@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.ToDoFilterType
+import org.android.bbangzip.presentation.type.ToDoScreenType
 import org.android.bbangzip.presentation.util.base.BaseContract
 
 class TodoAddContract {
@@ -148,6 +149,10 @@ class TodoAddContract {
 
     sealed interface TodoAddReduce : BaseContract.Reduce {
         data object ResetSelectedItemList : TodoAddReduce
+
+        data class UpdateToDoList(
+            val todoList: List<ToDoCardModel>,
+        ): TodoAddReduce
 
         data class UpdateSelectedItemList(
             val pieceId: Int,
