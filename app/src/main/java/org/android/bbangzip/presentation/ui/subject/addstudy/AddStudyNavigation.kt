@@ -11,7 +11,7 @@ fun NavController.navigateAddStudy() {
     )
 }
 
-fun NavGraphBuilder.AddStudyNavGraph() {
+fun NavGraphBuilder.addStudyNavGraph() {
     composable<AddStudyRoute> {
         AddStudyRoute()
     }

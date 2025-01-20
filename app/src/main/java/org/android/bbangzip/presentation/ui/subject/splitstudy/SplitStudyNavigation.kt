@@ -11,7 +11,7 @@ fun NavController.navigateSplitStudy() {
     )
 }
 
-fun NavGraphBuilder.SplitStudyNavGraph() {
+fun NavGraphBuilder.splitStudyNavGraph() {
     composable<SplitStudyRoute> {
         SplitStudyScreen()
     }
