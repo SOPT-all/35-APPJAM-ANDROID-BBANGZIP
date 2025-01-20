@@ -10,31 +10,30 @@ interface PieceRepository {
         area: String,
         year: Int,
         semester: String,
-        sortOption: String
+        sortOption: String,
     ): Result<ToDoInfoEntity>
 
-    suspend fun  getAddTodoList(
+    suspend fun getAddTodoList(
         year: Int,
         semester: String,
-        sortOption: String
+        sortOption: String,
     ): Result<ToDoInfoEntity>
 
     suspend fun postDeletedItemList(
-        requestPieceIdDto: RequestPieceIdDto
-    ) : Result<Unit>
+        requestPieceIdDto: RequestPieceIdDto,
+    ): Result<Unit>
 
     suspend fun postAddTodoItemList(
-        requestPieceIdDto: RequestPieceIdDto
-    ) : Result<Unit>
+        requestPieceIdDto: RequestPieceIdDto,
+    ): Result<Unit>
 
     suspend fun postCompleteCardID(
-        pieceId:Int,
-        requestMarkDoneDto: RequestMarkDoneDto
-    ):Result<BadgeCardListEntity>
+        pieceId: Int,
+        requestMarkDoneDto: RequestMarkDoneDto,
+    ): Result<BadgeCardListEntity>
 
     suspend fun postUnCompleteCardId(
-        pieceId:Int,
-        requestMarkDoneDto: RequestMarkDoneDto
-    ):Result<Unit>
+        pieceId: Int,
+        requestMarkDoneDto: RequestMarkDoneDto,
+    ): Result<Unit>
 }
-

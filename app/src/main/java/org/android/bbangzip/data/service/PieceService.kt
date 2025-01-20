@@ -18,35 +18,35 @@ interface PieceService {
         @Query("area") area: String,
         @Query("year") year: Int,
         @Query("semester") semester: String,
-        @Query("sortOption") sortOption: String
+        @Query("sortOption") sortOption: String,
     ): BaseResponse<ResponseTodayOrdersDto?>
 
     @POST("/api/v1/pieces/{pieceId}/mark-done")
     suspend fun postCompleteCardId(
         @Path("pieceId") pieceId: Int,
-        @Body requestMarkDoneDto: RequestMarkDoneDto
-    ):BaseResponse<ResponseMarkDoneDto?>
+        @Body requestMarkDoneDto: RequestMarkDoneDto,
+    ): BaseResponse<ResponseMarkDoneDto?>
 
     @POST("/api/v1/pieces/{pieceId}/mark-undone")
     suspend fun postUnCompleteCardId(
         @Path("pieceId") pieceId: Int,
-        @Body requestMarkDoneDto: RequestMarkDoneDto
-    ):BaseResponse<Unit?>
+        @Body requestMarkDoneDto: RequestMarkDoneDto,
+    ): BaseResponse<Unit?>
 
     @GET("/api/v1/pieces/todo")
     suspend fun getAddTodoList(
         @Query("year") year: Int,
         @Query("semester") semester: String,
-        @Query("sortOption") sortOption: String
+        @Query("sortOption") sortOption: String,
     ): BaseResponse<ResponseTodoDto?>
 
     @POST("/api/v1/pieces/hide")
     suspend fun postDeletedItemList(
-        @Body requestPieceIdDto: RequestPieceIdDto
+        @Body requestPieceIdDto: RequestPieceIdDto,
     ): BaseResponse<Unit?>
 
     @POST("/api/v1/pieces/assign-to-today")
     suspend fun postAddTodoItemList(
-        @Body requestPieceIdDto: RequestPieceIdDto
+        @Body requestPieceIdDto: RequestPieceIdDto,
     ): BaseResponse<Unit?>
 }

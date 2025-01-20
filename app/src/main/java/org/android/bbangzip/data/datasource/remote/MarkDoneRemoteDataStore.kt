@@ -6,11 +6,13 @@ import org.android.bbangzip.data.service.PieceService
 import org.android.bbangzip.data.util.base.BaseResponse
 import javax.inject.Inject
 
-class MarkDoneRemoteDataStore @Inject
-constructor(
-    private val pieceService: PieceService,
-) {
-    suspend fun postCompleteCardId(
-        pieceId:Int , requestMarkDoneDto: RequestMarkDoneDto
-    ): BaseResponse<ResponseMarkDoneDto?> = pieceService.postCompleteCardId(pieceId = pieceId, requestMarkDoneDto = requestMarkDoneDto)
-}
+class MarkDoneRemoteDataStore
+    @Inject
+    constructor(
+        private val pieceService: PieceService,
+    ) {
+        suspend fun postCompleteCardId(
+            pieceId: Int,
+            requestMarkDoneDto: RequestMarkDoneDto,
+        ): BaseResponse<ResponseMarkDoneDto?> = pieceService.postCompleteCardId(pieceId = pieceId, requestMarkDoneDto = requestMarkDoneDto)
+    }

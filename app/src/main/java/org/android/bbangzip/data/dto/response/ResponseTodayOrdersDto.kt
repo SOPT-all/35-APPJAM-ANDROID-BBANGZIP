@@ -1,6 +1,5 @@
 package org.android.bbangzip.data.dto.response
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.android.bbangzip.domain.model.ToDoCardEntity
@@ -19,15 +18,15 @@ data class ResponseTodayOrdersDto(
 ) {
     fun toTodoInfoEntity() =
         ToDoInfoEntity(
-            todoList = todayList.map { todoItem ->
-                todoItem.toTodoCardEntity()
-            },
+            todoList =
+                todayList.map { todoItem ->
+                    todoItem.toTodoCardEntity()
+                },
             pendingCount = pendingCount,
-            remainingStudyCount = todayCount?:0,
-            completeCount = completeCount?:0
+            remainingStudyCount = todayCount ?: 0,
+            completeCount = completeCount ?: 0,
         )
 }
-
 
 @Serializable
 data class TodoInfo(
@@ -48,7 +47,7 @@ data class TodoInfo(
     @SerialName("studyContents")
     val studyContents: String,
     @SerialName("subjectName")
-    val subjectName: String
+    val subjectName: String,
 ) {
     fun toTodoCardEntity() =
         ToDoCardEntity(
@@ -60,6 +59,6 @@ data class TodoInfo(
             finishPage = finishPage,
             deadline = deadline,
             remainingDays = remainingDays,
-            isFinished = isFinished
+            isFinished = isFinished,
         )
 }

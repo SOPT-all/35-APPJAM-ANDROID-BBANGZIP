@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -89,10 +88,11 @@ fun TodoAddRoute(
 
         false ->
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .fillMaxSize()
+                        .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+                contentAlignment = Alignment.Center,
             ) {
                 CircularProgressIndicator(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)
             }

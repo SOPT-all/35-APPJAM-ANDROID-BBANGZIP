@@ -10,13 +10,14 @@ data class ResponseTodoDto(
     @SerialName("todoCount")
     val todoCount: Int,
     @SerialName("todoList")
-    val todoList: List<TodoCardInfo>
+    val todoList: List<TodoCardInfo>,
 ) {
     fun toTodoCardInfoEntity() =
         ToDoInfoEntity(
-            todoList = todoList.map { todoItem ->
-                todoItem.toTodoCardEntity()
-            },
+            todoList =
+                todoList.map { todoItem ->
+                    todoItem.toTodoCardEntity()
+                },
         )
 }
 
@@ -37,7 +38,7 @@ data class TodoCardInfo(
     @SerialName("studyContents")
     val studyContents: String,
     @SerialName("subjectName")
-    val subjectName: String
+    val subjectName: String,
 ) {
     fun toTodoCardEntity() =
         ToDoCardEntity(

@@ -5,11 +5,12 @@ import org.android.bbangzip.data.service.PieceService
 import org.android.bbangzip.data.util.base.BaseResponse
 import javax.inject.Inject
 
-class HideRemoteDataSource @Inject
-constructor(
-    private val pieceService: PieceService,
-) {
-    suspend fun postDeletedItemList(
-        requestPieceIdDto: RequestPieceIdDto
-    ): BaseResponse<Unit?> = pieceService.postDeletedItemList(requestPieceIdDto = requestPieceIdDto)
-}
+class HideRemoteDataSource
+    @Inject
+    constructor(
+        private val pieceService: PieceService,
+    ) {
+        suspend fun postDeletedItemList(
+            requestPieceIdDto: RequestPieceIdDto,
+        ): BaseResponse<Unit?> = pieceService.postDeletedItemList(requestPieceIdDto = requestPieceIdDto)
+    }

@@ -1,6 +1,5 @@
 package org.android.bbangzip.data.dto.response
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.android.bbangzip.domain.model.BadgeCardEntity
@@ -13,16 +12,14 @@ data class ResponseMarkDoneDto(
     @SerialName("completeCounts")
     val completeCounts: Int,
     @SerialName("todayCounts")
-    val todayCounts: Int
-){
+    val todayCounts: Int,
+) {
     fun toBadgeCardListEntity() =
         BadgeCardListEntity(
             badgeCardList =
-            badges?.map { item ->
-                item.toBadgeCardEntity()
-            } ?: listOf()
-
-
+                badges?.map { item ->
+                    item.toBadgeCardEntity()
+                } ?: listOf(),
         )
 }
 
@@ -33,12 +30,12 @@ data class Badge(
     @SerialName("badgeName")
     val badgeName: String,
     @SerialName("hashTags")
-    val hashTags: List<String>
-){
+    val hashTags: List<String>,
+) {
     fun toBadgeCardEntity() =
         BadgeCardEntity(
             badgeImage = badgeImage,
             badgeName = badgeName,
-            hashTags = hashTags
+            hashTags = hashTags,
         )
 }
