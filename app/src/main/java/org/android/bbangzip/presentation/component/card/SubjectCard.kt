@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
@@ -81,6 +82,7 @@ fun SubjectCard(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevronright_thick_small_24),
                 tint = BbangZipTheme.colors.labelAssistive_282119_28,
                 contentDescription = stringResource(R.string.card_subject_button_description),
+                modifier = Modifier.size(16.dp)
             )
         }
     }
