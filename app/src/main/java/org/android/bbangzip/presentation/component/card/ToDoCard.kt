@@ -33,12 +33,11 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun ToDoCard(
-    state: BbangZipCardState,
     data: ToDoCardModel,
     modifier: Modifier = Modifier,
-    isDeleted: Boolean = false,
     onClick: () -> Unit = {},
 ) {
+    val state = data.cardState
     val radius = state.getRadius()
     val infoOpacity = state.getInfoOpacity()
     Box(
@@ -60,9 +59,9 @@ fun ToDoCard(
                 )
                 .applyFilterOnClick(
                     baseColor = state.getBackgroundColor(),
-                    isDisabled = isDeleted,
+                    isDisabled = false,
                     radius = radius,
-                ) { if (!isDeleted) onClick() }
+                ) { onClick() }
                 .padding(horizontal = 16.dp, vertical = 10.dp),
     ) {
         Row(
@@ -105,9 +104,9 @@ fun ToDoInfo(
 
     val chipBackgroundColor =
         if (data.remainingDays >= 0) {
-            getColor(BbangZipTheme.colors.labelAlternative_282119_61)
-        } else {
             getColor(BbangZipTheme.colors.statusDestructive_FF8345)
+        } else {
+            getColor(BbangZipTheme.colors.labelAlternative_282119_61)
         }
 
     Column(modifier = modifier) {
@@ -196,7 +195,6 @@ fun ToDoCardPreview() {
     BBANGZIPTheme {
         Column {
             ToDoCard(
-                state = BbangZipCardState.DEFAULT,
                 data =
                     ToDoCardModel(
                         subjectName = "경제통계학개론",
@@ -205,15 +203,15 @@ fun ToDoCardPreview() {
                         startPage = 36,
                         finishPage = 60,
                         deadline = "2025년 4월 25일",
-                        pieceId = "1",
+                        pieceId = 1,
                         remainingDays = 1,
+                        cardState = BbangZipCardState.DEFAULT,
                     ),
                 modifier =
                     Modifier
                         .padding(16.dp),
             )
             ToDoCard(
-                state = BbangZipCardState.CHECKABLE,
                 data =
                     ToDoCardModel(
                         subjectName = "경제통계학개론",
@@ -222,15 +220,15 @@ fun ToDoCardPreview() {
                         startPage = 36,
                         finishPage = 60,
                         deadline = "2025년 4월 25일",
-                        pieceId = "1",
+                        pieceId = 1,
                         remainingDays = 1,
+                        cardState = BbangZipCardState.CHECKED,
                     ),
                 modifier =
                     Modifier
                         .padding(16.dp),
             )
             ToDoCard(
-                state = BbangZipCardState.CHECKED,
                 data =
                     ToDoCardModel(
                         subjectName = "",
@@ -239,15 +237,15 @@ fun ToDoCardPreview() {
                         startPage = 36,
                         finishPage = 60,
                         deadline = "2025년 4월 25일",
-                        pieceId = "1",
+                        pieceId = 1,
                         remainingDays = 1,
+                        cardState = BbangZipCardState.CHECKABLE,
                     ),
                 modifier =
                     Modifier
                         .padding(16.dp),
             )
             ToDoCard(
-                state = BbangZipCardState.COMPLETE,
                 data =
                     ToDoCardModel(
                         subjectName = "경제통계학개론",
@@ -256,8 +254,9 @@ fun ToDoCardPreview() {
                         startPage = 36,
                         finishPage = 60,
                         deadline = "2025년 4월 25일",
-                        pieceId = "1",
+                        pieceId = 1,
                         remainingDays = 1,
+                        cardState = BbangZipCardState.COMPLETE,
                     ),
                 modifier =
                     Modifier

@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.SheetState
@@ -38,6 +39,7 @@ fun BbangZipBasicModalBottomSheet(
         ModalBottomSheet(
             onDismissRequest = onDismissRequest,
             sheetState = sheetState,
+            dragHandle = { BottomSheetDefaults.DragHandle(color = BbangZipTheme.colors.interactionInactive_D4D3D1) },
             shape = RoundedCornerShape(topStart = 48.dp, topEnd = 48.dp),
             containerColor = BbangZipTheme.colors.backgroundNormal_FFFFFF,
             scrimColor = BbangZipTheme.colors.materialDimmer_282119_52,

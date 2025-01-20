@@ -19,7 +19,9 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
-import org.android.bbangzip.presentation.ui.todo.navigateTodo
+import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
+import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
+import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.navigateTodoAdd
 import timber.log.Timber
 
 class MainNavigator(
@@ -75,6 +77,14 @@ class MainNavigator(
 
     fun navigateToOnboardingEnd() {
         navHostController.navigateOnboardingEnd()
+    }
+
+    fun navigateToToDoAdd() {
+        navHostController.navigateTodoAdd()
+    }
+
+    fun navigateToToDoAddPending() {
+        navHostController.navigateTodoAddPending()
     }
 
     private fun popBackStack() {
