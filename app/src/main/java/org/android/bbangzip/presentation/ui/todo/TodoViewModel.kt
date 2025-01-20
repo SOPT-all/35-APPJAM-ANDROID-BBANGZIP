@@ -5,8 +5,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
 import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
+import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
 import org.android.bbangzip.domain.usecase.PostDeletedItemListUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
@@ -22,6 +24,7 @@ class TodoViewModel
 constructor(
     private val getTodoInfoUseCase: GetToInfoUseCase,
     private val postDeletedItemListUseCase: PostDeletedItemListUseCase,
+    private val postCompleteCardIdUseCase: PostCompleteCardIdUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TodoContract.TodoEvent, TodoContract.TodoState, TodoContract.TodoReduce, TodoContract.TodoSideEffect>(
     savedStateHandle = savedStateHandle,
@@ -164,6 +167,9 @@ constructor(
                             remainingStudyCount = currentUiState.remainingStudyCount - 1,
                         ),
                     )
+                    viewModelScope.launch {
+                        postCompleteCardId(pieceId = event.pieceId)
+                    }
                     TodoContract.TodoSideEffect.ShowSnackBar("공부완료 ! 오늘의 빵굽기 성공!")
                 } else {
                     updateState(
@@ -385,7 +391,7 @@ constructor(
             )
         }
             .onFailure { error ->
-                Timber.tag("todayOrders").d(error.message)
+                Timber.tag("todayOrders").d(error)
             }
     }
 
@@ -394,6 +400,24 @@ constructor(
     ) {
         postDeletedItemListUseCase(
             requestPieceIdDto = RequestPieceIdDto(pieceIds = selectedItemList)
-        ).onSuccess { }
+        ).onSuccess {
+            Timber.tag("hide").e("삭제 성공!")
+        }.onFailure {
+            Timber.tag("hide").e("삭제 성공!")
+
+        }
+    }
+
+    private suspend fun postCompleteCardId(
+        pieceId: Int
+    ) {
+        postCompleteCardIdUseCase(
+            pieceId = pieceId, requestMarkDoneDto = RequestMarkDoneDto(isFinished = true)
+        ).onSuccess {
+            Timber.tag("markDone").e("완료 성공!")
+        }.onFailure { error ->
+            Timber.tag("markDone").e(error)
+
+        }
     }
 }

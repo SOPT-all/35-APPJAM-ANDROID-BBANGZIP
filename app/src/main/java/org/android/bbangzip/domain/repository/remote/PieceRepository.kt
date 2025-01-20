@@ -1,6 +1,8 @@
 package org.android.bbangzip.domain.repository.remote
 
+import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
 import org.android.bbangzip.data.dto.request.RequestPieceIdDto
+import org.android.bbangzip.domain.model.BadgeCardListEntity
 import org.android.bbangzip.domain.model.ToDoInfoEntity
 
 interface PieceRepository {
@@ -24,5 +26,10 @@ interface PieceRepository {
     suspend fun postAddTodoItemList(
         requestPieceIdDto: RequestPieceIdDto
     ) : Result<Unit>
+
+    suspend fun postCompleteCardID(
+        pieceId:Int,
+        requestMarkDoneDto: RequestMarkDoneDto
+    ):Result<BadgeCardListEntity>
 }
 

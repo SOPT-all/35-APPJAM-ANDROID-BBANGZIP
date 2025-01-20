@@ -10,6 +10,7 @@ import org.android.bbangzip.domain.usecase.FetchDummyUseCase
 import org.android.bbangzip.domain.usecase.GetAddTodoListUseCase
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
+import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
 import org.android.bbangzip.domain.usecase.PostDeletedItemListUseCase
 import javax.inject.Singleton
 
@@ -40,4 +41,9 @@ class UseCaseModule {
     @Singleton
     fun providesAddTodoItemListPostUseCase(pieceRepository: PieceRepository): PostAddTodoItemListUseCase =
         PostAddTodoItemListUseCase(pieceRepository = pieceRepository)
+
+    @Provides
+    @Singleton
+    fun providesCompleteCardIdPostUseCase(pieceRepository: PieceRepository): PostCompleteCardIdUseCase =
+        PostCompleteCardIdUseCase(pieceRepository = pieceRepository)
 }

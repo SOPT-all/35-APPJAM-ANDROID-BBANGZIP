@@ -11,5 +11,5 @@ constructor(
 ) {
     suspend fun postDeletedItemList(
         requestPieceIdDto: RequestPieceIdDto
-    ): BaseResponse<Unit?>? = pieceService.postDeletedItemList(requestPieceIdDto = requestPieceIdDto)
+    ): BaseResponse<Unit?> = pieceService.postDeletedItemList(requestPieceIdDto = requestPieceIdDto)
 }
