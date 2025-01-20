@@ -18,7 +18,7 @@ fun NavController.navigateTodo(navOptions: NavOptions) {
 
 fun NavGraphBuilder.todoNavGraph(
     snackBarHostState: SnackbarHostState,
-    bottomPadding :PaddingValues,
+    bottomPadding: PaddingValues,
     navigateToAddToDo: () -> Unit,
     navigateToAddPendingToDo: () -> Unit = {},
 ) {
