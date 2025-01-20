@@ -83,6 +83,8 @@ fun BbangZipButton(
             )
         },
         trailingIcon = {
+            Spacer(modifier = Modifier.width(bbangZipButtonSize.spacing))
+
             if (trailingIcon != null) {
                 Spacer(modifier = Modifier.width(bbangZipButtonSize.spacing))
                 Icon(

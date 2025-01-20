@@ -15,8 +15,13 @@ import org.android.bbangzip.presentation.ui.friend.navigateFriend
 import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
 import org.android.bbangzip.presentation.ui.my.navigateMy
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
-import org.android.bbangzip.presentation.ui.todo.navigateTodo
+import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
+import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
+import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.navigateTodoAdd
 import timber.log.Timber
 
 class MainNavigator(
@@ -60,6 +65,26 @@ class MainNavigator(
 
     fun navigateToLogin() {
         navHostController.navigateLogin()
+    }
+
+    fun navigateToOnboardingStart() {
+        navHostController.navigateOnboardingStart()
+    }
+
+    fun navigateToOnboarding() {
+        navHostController.navigateOnboarding()
+    }
+
+    fun navigateToOnboardingEnd() {
+        navHostController.navigateOnboardingEnd()
+    }
+
+    fun navigateToToDoAdd() {
+        navHostController.navigateTodoAdd()
+    }
+
+    fun navigateToToDoAddPending() {
+        navHostController.navigateTodoAddPending()
     }
 
     private fun popBackStack() {

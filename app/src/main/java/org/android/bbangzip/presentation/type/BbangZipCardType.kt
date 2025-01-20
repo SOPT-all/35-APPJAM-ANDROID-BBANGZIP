@@ -19,19 +19,19 @@ enum class BbangZipCardType(
         backgroundColor = defaultBbangZipColors.backgroundNormal_FFFFFF,
         borderColor = defaultBbangZipColors.lineAlternative_68645E_08,
         borderWidth = 1.dp,
-        shadowOptions = BbangZipShadowType.EMPHASIZE,
+        shadowOptions = BbangZipShadowType.NORMAL,
     ),
     CHECKABLE(
         backgroundColor = defaultBbangZipColors.backgroundAlternative_F5F5F5,
         borderColor = defaultBbangZipColors.lineAlternative_68645E_08,
         borderWidth = 1.dp,
-        shadowOptions = BbangZipShadowType.STRONG,
+        shadowOptions = BbangZipShadowType.EMPHASIZE,
     ),
     CHECKED(
         backgroundColor = defaultBbangZipColors.backgroundAlternative_F5F5F5,
         borderColor = defaultBbangZipColors.lineStrong_68645E_52,
-        borderWidth = 3.dp,
-        shadowOptions = BbangZipShadowType.EMPHASIZE,
+        borderWidth = 2.dp,
+        shadowOptions = BbangZipShadowType.NORMAL,
     ),
     COMPLETE(
         backgroundColor = defaultBbangZipColors.backgroundNormal_FFFFFF,
