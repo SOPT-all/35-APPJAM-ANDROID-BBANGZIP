@@ -27,6 +27,12 @@ interface PieceService {
         @Body requestMarkDoneDto: RequestMarkDoneDto
     ):BaseResponse<ResponseMarkDoneDto?>
 
+    @POST("/api/v1/pieces/{pieceId}/mark-undone")
+    suspend fun postUnCompleteCardId(
+        @Path("pieceId") pieceId: Int,
+        @Body requestMarkDoneDto: RequestMarkDoneDto
+    ):BaseResponse<Unit?>
+
     @GET("/api/v1/pieces/todo")
     suspend fun getAddTodoList(
         @Query("year") year: Int,
@@ -42,6 +48,5 @@ interface PieceService {
     @POST("/api/v1/pieces/assign-to-today")
     suspend fun postAddTodoItemList(
         @Body requestPieceIdDto: RequestPieceIdDto
-
     ): BaseResponse<Unit?>
 }

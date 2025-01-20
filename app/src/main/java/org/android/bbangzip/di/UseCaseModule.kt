@@ -12,6 +12,7 @@ import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
 import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
 import org.android.bbangzip.domain.usecase.PostDeletedItemListUseCase
+import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
 import javax.inject.Singleton
 
 @Module
@@ -46,4 +47,9 @@ class UseCaseModule {
     @Singleton
     fun providesCompleteCardIdPostUseCase(pieceRepository: PieceRepository): PostCompleteCardIdUseCase =
         PostCompleteCardIdUseCase(pieceRepository = pieceRepository)
+
+    @Provides
+    @Singleton
+    fun providesUnCompleteCardIdPostUseCase(pieceRepository: PieceRepository): PostUnCompleteCardIdUseCase =
+        PostUnCompleteCardIdUseCase(pieceRepository = pieceRepository)
 }

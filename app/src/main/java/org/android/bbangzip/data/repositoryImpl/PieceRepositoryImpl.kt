@@ -3,11 +3,11 @@ package org.android.bbangzip.data.repositoryImpl
 import org.android.bbangzip.data.datasource.remote.AssignToTodayRemoteDataSource
 import org.android.bbangzip.data.datasource.remote.HideRemoteDataSource
 import org.android.bbangzip.data.datasource.remote.MarkDoneRemoteDataStore
+import org.android.bbangzip.data.datasource.remote.MarkUnDoneRemoteDataStore
 import org.android.bbangzip.data.datasource.remote.TodayOrdersRemoteDataSource
 import org.android.bbangzip.data.datasource.remote.TodoRemoteDataSource
 import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
 import org.android.bbangzip.data.dto.request.RequestPieceIdDto
-import org.android.bbangzip.domain.model.BadgeCardEntity
 import org.android.bbangzip.domain.model.BadgeCardListEntity
 import org.android.bbangzip.domain.model.ToDoInfoEntity
 import org.android.bbangzip.domain.repository.remote.PieceRepository
@@ -20,7 +20,8 @@ constructor(
     private val todoRemoteDataSource: TodoRemoteDataSource,
     private val hideRemoteDataSource: HideRemoteDataSource,
     private val assignToTodayRemoteDataSource: AssignToTodayRemoteDataSource,
-    private val markDoneRemoteDataStore: MarkDoneRemoteDataStore
+    private val markDoneRemoteDataStore: MarkDoneRemoteDataStore,
+    private val markUnDoneRemoteDataStore: MarkUnDoneRemoteDataStore
 ) : PieceRepository {
     override suspend fun getTodoInfo(
         area: String,
@@ -83,6 +84,16 @@ constructor(
             val responseData = response.data ?: throw IllegalStateException(response.message ?: "Null Error")
             responseData.toBadgeCardListEntity()
         }
+
+    override suspend fun postUnCompleteCardId(pieceId: Int,requestMarkDoneDto: RequestMarkDoneDto): Result<Unit> =
+        runCatching {
+            val response = markUnDoneRemoteDataStore.postUnCompleteCardId(
+                pieceId = pieceId,
+                requestMarkDoneDto = requestMarkDoneDto
+            )
+            response
+        }
 }
+
 
 

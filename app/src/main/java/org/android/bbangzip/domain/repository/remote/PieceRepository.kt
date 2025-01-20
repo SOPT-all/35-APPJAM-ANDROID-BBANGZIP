@@ -31,5 +31,10 @@ interface PieceRepository {
         pieceId:Int,
         requestMarkDoneDto: RequestMarkDoneDto
     ):Result<BadgeCardListEntity>
+
+    suspend fun postUnCompleteCardId(
+        pieceId:Int,
+        requestMarkDoneDto: RequestMarkDoneDto
+    ):Result<Unit>
 }
 

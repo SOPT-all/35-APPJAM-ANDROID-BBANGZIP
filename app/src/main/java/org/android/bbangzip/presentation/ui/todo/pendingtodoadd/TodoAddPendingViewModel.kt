@@ -58,6 +58,14 @@ constructor(
                 )
 
             is TodoAddPendingContract.TodoAddPendingEvent.OnFilterBottomSheetItemClicked -> {
+                viewModelScope.launch {
+                    getToDoInfo(
+                        area = ToDoConstants.PENDING,
+                        year = 2025,
+                        semester = "1학기",
+                        sortOption = event.selectedFilterItem.id
+                    )
+                }
                 updateState(
                     TodoAddPendingContract.TodoAddPendingReduce.UpdateFilterType(
                         selectedFilter = event.selectedFilterItem
@@ -69,7 +77,6 @@ constructor(
                     ),
                 )
                 setSideEffect(TodoAddPendingContract.TodoAddPendingSideEffect.ShowTodoAddSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
-                // TODO 받아오고 다시 정렬해야됨 ㅋㅋ
             }
 
             TodoAddPendingContract.TodoAddPendingEvent.OnItemPlusButtonClicked -> {
@@ -129,14 +136,6 @@ constructor(
                 )
 
             is TodoAddPendingContract.TodoAddPendingReduce.UpdateFilterType -> {
-                viewModelScope.launch {
-                    getToDoInfo(
-                        area = ToDoConstants.PENDING,
-                        year = 2025,
-                        semester = "1학기",
-                        sortOption = reduce.selectedFilter.id
-                    )
-                }
                 state.copy(
                     selectedFilter = reduce.selectedFilter,
                 )
@@ -204,7 +203,7 @@ constructor(
                 )
             )
         }.onFailure { error ->
-            Timber.tag("todayOrders").e(error.message)
+            Timber.tag("todayOrders").e(error)
         }
     }
 
@@ -216,7 +215,7 @@ constructor(
         ).onSuccess {
             Timber.tag("postAdd").d("성공")
         }.onFailure { error ->
-            Timber.tag("postAdd").d(error.message)
+            Timber.tag("postAdd").d(error)
         }
     }
 }

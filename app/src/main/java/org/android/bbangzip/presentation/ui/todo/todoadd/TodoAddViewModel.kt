@@ -70,11 +70,9 @@ constructor(
                     ),
                 )
                 setSideEffect(TodoAddContract.TodoAddSideEffect.ShowTodoAddSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
-                // TODO 받아오고 다시 정렬해야됨 ㅋㅋ
             }
 
             TodoAddContract.TodoAddEvent.OnItemPlusButtonClicked -> {
-                // TODO 서버로 보내기
                 viewModelScope.launch {
                     postAddTodoItemList(selectedItemList = currentUiState.selectedItemList)
                 }
@@ -190,7 +188,7 @@ constructor(
             )
         }
             .onFailure { error ->
-                Timber.tag("todo").d(error.message)
+                Timber.tag("todo").d(error)
             }
     }
 
@@ -202,7 +200,7 @@ constructor(
         ).onSuccess {
             Timber.tag("assignToToday").d("server viewmodel")
         }.onFailure { error ->
-            Timber.tag("assignToToday").d(error.message)
+            Timber.tag("assignToToday").d(error)
         }
     }
 }

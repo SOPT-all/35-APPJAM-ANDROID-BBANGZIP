@@ -10,6 +10,7 @@ import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
 import org.android.bbangzip.domain.usecase.PostDeletedItemListUseCase
+import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.ToDoScreenType
@@ -25,6 +26,7 @@ constructor(
     private val getTodoInfoUseCase: GetToInfoUseCase,
     private val postDeletedItemListUseCase: PostDeletedItemListUseCase,
     private val postCompleteCardIdUseCase: PostCompleteCardIdUseCase,
+    private val postUnCompleteCardIdUseCase: PostUnCompleteCardIdUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TodoContract.TodoEvent, TodoContract.TodoState, TodoContract.TodoReduce, TodoContract.TodoSideEffect>(
     savedStateHandle = savedStateHandle,
@@ -84,6 +86,9 @@ constructor(
 
             // revertComplete BottomSheet
             is TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveButtonClicked -> {
+                viewModelScope.launch {
+                    postUnCompleteCardId(event.pieceId)
+                }
                 updateState(
                     TodoContract.TodoReduce.UpdateCardState(
                         pieceId = event.pieceId,
@@ -170,7 +175,7 @@ constructor(
                     viewModelScope.launch {
                         postCompleteCardId(pieceId = event.pieceId)
                     }
-                    TodoContract.TodoSideEffect.ShowSnackBar("공부완료 ! 오늘의 빵굽기 성공!")
+                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("공부완료 ! 오늘의 빵굽기 성공!"))
                 } else {
                     updateState(
                         TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
@@ -179,7 +184,6 @@ constructor(
                     )
                     updateState(TodoContract.TodoReduce.UpdateSelectedItemList(pieceId = event.pieceId))
                 }
-                // TODO 서버로 pieceId 이용해서 완료 API 쏘기
             }
 
             TodoContract.TodoEvent.OnDeleteIconClicked -> {
@@ -193,7 +197,6 @@ constructor(
             }
 
             TodoContract.TodoEvent.OnItemDeleteButtonClicked -> {
-                // TODO setlectedItemlist 사용해서 서버로 삭제한 card API 전송
                 viewModelScope.launch {
                     postDeletedItemList(selectedItemList = currentUiState.selectedItemList)
                 }
@@ -208,7 +211,8 @@ constructor(
                         pendingCount = currentUiState.pendingCount + currentUiState.selectedItemList.size
                     ),
                 )
-                if (currentUiState.remainingStudyCount - currentUiState.selectedItemList.size != 0) {
+
+                if (currentUiState.completeCount > 0 || currentUiState.remainingStudyCount - currentUiState.selectedItemList.size != 0) {
                     updateState(TodoContract.TodoReduce.DeleteToDoListItems)
                     updateState(
                         TodoContract.TodoReduce.UpdateToDoListCardState(
@@ -220,6 +224,9 @@ constructor(
                 } else {
                     updateState(TodoContract.TodoReduce.UpdateScreenType(screenType = ToDoScreenType.EMPTY))
                 }
+
+
+
                 updateState(TodoContract.TodoReduce.ResetSelectedItemList)
                 setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("오늘 할 공부를 삭제했어요"))
             }
@@ -413,6 +420,19 @@ constructor(
     ) {
         postCompleteCardIdUseCase(
             pieceId = pieceId, requestMarkDoneDto = RequestMarkDoneDto(isFinished = true)
+        ).onSuccess {
+            Timber.tag("markDone").e("완료 성공!")
+        }.onFailure { error ->
+            Timber.tag("markDone").e(error)
+
+        }
+    }
+
+    private suspend fun postUnCompleteCardId(
+        pieceId: Int
+    ) {
+        postUnCompleteCardIdUseCase(
+            pieceId = pieceId, requestMarkDoneDto = RequestMarkDoneDto(isFinished = false)
         ).onSuccess {
             Timber.tag("markDone").e("완료 성공!")
         }.onFailure { error ->

@@ -23,6 +23,6 @@ class AuthInterceptor
         }
 
         companion object {
-            const val ACCESS_TOKEN = "accessToken"
+            const val ACCESS_TOKEN = "Authorization"
         }
     }
