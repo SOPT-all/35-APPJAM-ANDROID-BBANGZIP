@@ -2,6 +2,7 @@ package org.android.bbangzip.ui.theme
 
 import androidx.compose.runtime.Immutable
 import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.text.PlatformTextStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -78,21 +79,21 @@ val defaultBbangZipTypography =
                 lineHeight = 48.sp,
                 letterSpacing = (-0.027).em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         title1Medium =
             TextStyle(
                 fontSize = 36.sp,
                 lineHeight = 48.sp,
                 letterSpacing = (-0.027).em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         title1Small =
             TextStyle(
                 fontSize = 36.sp,
                 lineHeight = 48.sp,
                 letterSpacing = (-0.027).em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Title 2
         title2Bold =
             TextStyle(
@@ -100,21 +101,21 @@ val defaultBbangZipTypography =
                 lineHeight = 38.sp,
                 letterSpacing = (-0.0236).em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         title2Medium =
             TextStyle(
                 fontSize = 28.sp,
                 lineHeight = 38.sp,
                 letterSpacing = (-0.0236).em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         title2Small =
             TextStyle(
                 fontSize = 28.sp,
                 lineHeight = 38.sp,
                 letterSpacing = (-0.0236).em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Title 3
         title3Bold =
             TextStyle(
@@ -122,21 +123,21 @@ val defaultBbangZipTypography =
                 lineHeight = 32.sp,
                 letterSpacing = (-0.023).em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         title3Medium =
             TextStyle(
                 fontSize = 24.sp,
                 lineHeight = 32.sp,
                 letterSpacing = (-0.023).em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         title3Small =
             TextStyle(
                 fontSize = 24.sp,
                 lineHeight = 32.sp,
                 letterSpacing = (-0.023).em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Heading 1
         heading1Bold =
             TextStyle(
@@ -144,21 +145,21 @@ val defaultBbangZipTypography =
                 lineHeight = 30.sp,
                 letterSpacing = (-0.0194).em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         heading1Medium =
             TextStyle(
                 fontSize = 22.sp,
                 lineHeight = 30.sp,
                 letterSpacing = (-0.0194).em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         heading1Small =
             TextStyle(
                 fontSize = 22.sp,
                 lineHeight = 30.sp,
                 letterSpacing = (-0.0194).em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Heading 2
         heading2Bold =
             TextStyle(
@@ -166,21 +167,21 @@ val defaultBbangZipTypography =
                 lineHeight = 28.sp,
                 letterSpacing = (-0.012).em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         heading2Medium =
             TextStyle(
                 fontSize = 20.sp,
                 lineHeight = 28.sp,
                 letterSpacing = (-0.012).em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         heading2Small =
             TextStyle(
                 fontSize = 20.sp,
                 lineHeight = 28.sp,
                 letterSpacing = (-0.012).em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Headline 1
         headline1Bold =
             TextStyle(
@@ -188,40 +189,40 @@ val defaultBbangZipTypography =
                 lineHeight = 26.sp,
                 letterSpacing = (-0.002).em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         headline1Medium =
             TextStyle(
                 fontSize = 18.sp,
                 lineHeight = 26.sp,
                 letterSpacing = (-0.002).em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         headline1Small =
             TextStyle(
                 fontSize = 18.sp,
                 lineHeight = 26.sp,
                 letterSpacing = (-0.002).em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Headline 2
         headline2Bold =
             TextStyle(
                 fontSize = 17.sp,
                 lineHeight = 24.sp,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         headline2Medium =
             TextStyle(
                 fontSize = 17.sp,
                 lineHeight = 24.sp,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         headline2Small =
             TextStyle(
                 fontSize = 17.sp,
                 lineHeight = 24.sp,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Body 1
         body1Bold =
             TextStyle(
@@ -229,21 +230,21 @@ val defaultBbangZipTypography =
                 lineHeight = 24.sp,
                 letterSpacing = 0.0057.em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         body1Medium =
             TextStyle(
                 fontSize = 16.sp,
                 lineHeight = 24.sp,
                 letterSpacing = 0.0057.em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         body1Small =
             TextStyle(
                 fontSize = 16.sp,
                 lineHeight = 24.sp,
                 letterSpacing = 0.0057.em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Body 2
         body2Bold =
             TextStyle(
@@ -251,21 +252,21 @@ val defaultBbangZipTypography =
                 lineHeight = 22.sp,
                 letterSpacing = 0.0096.em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         body2Medium =
             TextStyle(
                 fontSize = 15.sp,
                 lineHeight = 22.sp,
                 letterSpacing = 0.0096.em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         body2Small =
             TextStyle(
                 fontSize = 15.sp,
                 lineHeight = 22.sp,
                 letterSpacing = 0.0096.em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Label 1
         label1Bold =
             TextStyle(
@@ -273,21 +274,21 @@ val defaultBbangZipTypography =
                 lineHeight = 20.sp,
                 letterSpacing = 0.0145.em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         label1Medium =
             TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
                 letterSpacing = 0.0145.em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         label1Small =
             TextStyle(
                 fontSize = 14.sp,
                 lineHeight = 20.sp,
                 letterSpacing = 0.0145.em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Label 2
         label2Bold =
             TextStyle(
@@ -295,21 +296,21 @@ val defaultBbangZipTypography =
                 lineHeight = 18.sp,
                 letterSpacing = 0.0194.em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         label2Medium =
             TextStyle(
                 fontSize = 13.sp,
                 lineHeight = 18.sp,
                 letterSpacing = 0.0194.em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         label2Small =
             TextStyle(
                 fontSize = 13.sp,
                 lineHeight = 18.sp,
                 letterSpacing = 0.0194.em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Caption 1
         caption1Bold =
             TextStyle(
@@ -317,21 +318,21 @@ val defaultBbangZipTypography =
                 lineHeight = 16.sp,
                 letterSpacing = 0.0252.em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         caption1Medium =
             TextStyle(
                 fontSize = 12.sp,
                 lineHeight = 16.sp,
                 letterSpacing = 0.0252.em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         caption1Small =
             TextStyle(
                 fontSize = 12.sp,
                 lineHeight = 16.sp,
                 letterSpacing = 0.0252.em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
         // Caption 2
         caption2Bold =
             TextStyle(
@@ -339,21 +340,25 @@ val defaultBbangZipTypography =
                 lineHeight = 14.sp,
                 letterSpacing = 0.0311.em,
                 fontFamily = PretendardBold,
-            ),
+            ).withoutFontPadding(),
         caption2Medium =
             TextStyle(
                 fontSize = 11.sp,
                 lineHeight = 14.sp,
                 letterSpacing = 0.0311.em,
                 fontFamily = PretendardMedium,
-            ),
+            ).withoutFontPadding(),
         caption2Small =
             TextStyle(
                 fontSize = 11.sp,
                 lineHeight = 14.sp,
                 letterSpacing = 0.0311.em,
                 fontFamily = PretendardSmall,
-            ),
+            ).withoutFontPadding(),
     )
 
 val LocalBbangZipTypography = staticCompositionLocalOf { defaultBbangZipTypography }
+
+fun TextStyle.withoutFontPadding(): TextStyle {
+    return this.copy(platformStyle = PlatformTextStyle(includeFontPadding = false))
+}
