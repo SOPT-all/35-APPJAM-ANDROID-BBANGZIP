@@ -144,7 +144,7 @@ fun SubjectDetailScreen(
                                 examTab(
                                     text = tabName,
                                     isSelected = selectedIndex == index,
-                                    onClick = { selectedIndex = index }, // 클릭 시 인덱스 변경
+                                    onClick = { selectedIndex = index },
                                 )
                             }
                         }
@@ -544,7 +544,7 @@ fun TwoLineTextWithWordWrap(
                 .height(56.dp),
         style = BbangZipTheme.typography.heading2Bold,
         onTextLayout = { textLayoutResult ->
-            if (displayText == null) { // 텍스트 변경 시 재계산
+            if (displayText == null) {
                 displayText = processTextForWordWrap(text, textLayoutResult, 2)
             }
         },
