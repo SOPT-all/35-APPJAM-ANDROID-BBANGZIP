@@ -1,6 +1,7 @@
 package org.android.bbangzip.data.repositoryImpl
 
 import kotlinx.coroutines.flow.Flow
+import org.android.bbangzip.OnboardingInfo
 import org.android.bbangzip.UserPreferences
 import org.android.bbangzip.data.datasource.local.UserLocalDataSource
 import org.android.bbangzip.domain.repository.local.UserRepository
@@ -27,6 +28,38 @@ class UserRepositoryImpl
                 userData
                     .toBuilder()
                     .clearAccessToken()
+                    .clearOnboardingInfo()
+                    .build()
+            }
+        }
+
+        override suspend fun setOnboardingInfo(
+            userName: String,
+            year: Int,
+            semester: String,
+            subject: String,
+        ) {
+            userDataSource.updateUserPreferences { userData ->
+                val onboardingInfo =
+                    OnboardingInfo.newBuilder()
+                        .setUserName(userName)
+                        .setYear(year)
+                        .setSemester(semester)
+                        .setSubjectName(subject)
+                        .build()
+
+                userData
+                    .toBuilder()
+                    .setOnboardingInfo(onboardingInfo)
+                    .build()
+            }
+        }
+
+        override suspend fun clearOnboardingInfo() {
+            userDataSource.updateUserPreferences { userData ->
+                userData
+                    .toBuilder()
+                    .clearOnboardingInfo()
                     .build()
             }
         }
