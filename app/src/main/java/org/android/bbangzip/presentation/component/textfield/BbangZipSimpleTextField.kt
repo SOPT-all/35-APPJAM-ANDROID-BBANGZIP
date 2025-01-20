@@ -42,7 +42,7 @@ fun BbangZipSimpleTextField(
     @StringRes guideline: Int,
     value: String,
     modifier: Modifier = Modifier,
-    bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Empty,
+    bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onFocusChange: () -> Unit = { },
     onValueChange: (String) -> Unit = { },
 ) {
@@ -109,16 +109,16 @@ fun BbangZipSimpleTextFieldPreview() {
         var text by remember { mutableStateOf("") }
         var validationState by remember {
             mutableStateOf<BbangZipTextFieldInputState>(
-                BbangZipTextFieldInputState.Empty,
+                BbangZipTextFieldInputState.Default,
             )
         }
 
         fun validateText(text: String) {
             validationState =
                 when {
-                    text.isEmpty() -> BbangZipTextFieldInputState.Empty
+                    text.isEmpty() -> BbangZipTextFieldInputState.Default
                     text.length == 1 -> BbangZipTextFieldInputState.Typing
-                    5 < text.length -> BbangZipTextFieldInputState.Error
+                    5 < text.length -> BbangZipTextFieldInputState.Default
                     else -> BbangZipTextFieldInputState.Field
                 }
         }
@@ -130,7 +130,7 @@ fun BbangZipSimpleTextFieldPreview() {
             value = text,
             bbangZipTextFieldInputState = validationState,
             onFocusChange = {
-                if (validationState == BbangZipTextFieldInputState.Empty) validationState = BbangZipTextFieldInputState.Typing else Unit
+                if (validationState == BbangZipTextFieldInputState.Default) validationState = BbangZipTextFieldInputState.Typing else Unit
             },
             onValueChange = { newValue ->
                 text = newValue

@@ -5,4 +5,12 @@ option java_multiple_files = true;
 
 message UserPreferences {
     string accessToken = 1;
+    OnboardingInfo onboardingInfo = 2;
+}
+
+message OnboardingInfo {
+    string userName = 1;
+    int32 year = 2;
+    string semester = 3;
+    string subjectName = 4;
 }
