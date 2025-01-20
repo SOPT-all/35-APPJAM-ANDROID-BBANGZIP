@@ -30,8 +30,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import okhttp3.internal.toImmutableList
 import org.android.bbangzip.R
+import org.android.bbangzip.presentation.type.BbangZipShadowType
 import org.android.bbangzip.presentation.type.BottomNavigationType
-import org.android.bbangzip.presentation.util.modifier.dropShadow
+import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -51,23 +52,24 @@ fun BottomNavigationBar(
     ) {
         Box(
             modifier =
-                modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Transparent)
-                    .dropShadow(
-                        offsetY = (-4).dp,
-                        shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-                    ),
+            modifier
+                .applyShadows(
+                    shadowType = BbangZipShadowType.EMPHASIZE_INVERSE,
+                    shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+                )
+                .fillMaxWidth()
+                .background(color = Color.Transparent)
+
         ) {
             Row(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .clip(
-                            shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-                        )
-                        .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF)
-                        .padding(top = 12.dp, bottom = 8.dp, start = 12.dp, end = 12.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .clip(
+                        shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
+                    )
+                    .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF)
+                    .padding(top = 12.dp, bottom = 8.dp, start = 12.dp, end = 12.dp),
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.SpaceBetween,
             ) {
@@ -97,10 +99,10 @@ private fun BottomNavigationItem(
 ) {
     Column(
         modifier =
-            modifier
-                .noRippleClickable {
-                    onBottomNaviBarItemSelected(bottomNaviType)
-                },
+        modifier
+            .noRippleClickable {
+                onBottomNaviBarItemSelected(bottomNaviType)
+            },
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Box(
@@ -110,11 +112,11 @@ private fun BottomNavigationItem(
                 imageVector = ImageVector.vectorResource(id = bottomNaviIcon),
                 contentDescription = stringResource(id = R.string.app_name),
                 tint =
-                    if (isSelected) {
-                        BbangZipTheme.colors.labelNormal_282119
-                    } else {
-                        BbangZipTheme.colors.labelAssistive_282119_28
-                    },
+                if (isSelected) {
+                    BbangZipTheme.colors.labelNormal_282119
+                } else {
+                    BbangZipTheme.colors.labelAssistive_282119_28
+                },
             )
         }
 
@@ -123,11 +125,11 @@ private fun BottomNavigationItem(
         Text(
             text = stringResource(bottomNaviTitle),
             color =
-                if (isSelected) {
-                    BbangZipTheme.colors.labelNormal_282119
-                } else {
-                    BbangZipTheme.colors.labelAssistive_282119_28
-                },
+            if (isSelected) {
+                BbangZipTheme.colors.labelNormal_282119
+            } else {
+                BbangZipTheme.colors.labelAssistive_282119_28
+            },
             style = BbangZipTheme.typography.caption1Bold,
         )
     }
