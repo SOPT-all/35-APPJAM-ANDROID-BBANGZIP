@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.todo.navigation
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -17,11 +18,13 @@ fun NavController.navigateTodo(navOptions: NavOptions) {
 
 fun NavGraphBuilder.todoNavGraph(
     snackBarHostState: SnackbarHostState,
+    bottomPadding :PaddingValues,
     navigateToAddToDo: () -> Unit,
     navigateToAddPendingToDo: () -> Unit = {},
 ) {
     composable<BottomNavigationRoute.Todo> {
         TodoRoute(
+            bottomPadding = bottomPadding,
             snackBarHostState = snackBarHostState,
             navigateToAddToDo = navigateToAddToDo,
             navigateToAddPendingToDo = navigateToAddPendingToDo,

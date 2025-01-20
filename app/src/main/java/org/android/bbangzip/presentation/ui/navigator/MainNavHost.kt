@@ -65,6 +65,7 @@ fun MainNavHost(
 
             todoNavGraph(
                 snackBarHostState = snackBarHostState,
+                bottomPadding = padding,
                 navigateToAddToDo = { navigator.navigateToToDoAdd() },
                 navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
             )

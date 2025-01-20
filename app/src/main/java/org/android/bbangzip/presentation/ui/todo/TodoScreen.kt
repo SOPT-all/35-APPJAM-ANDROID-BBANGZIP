@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,6 +51,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun TodoScreen(
     todoState: TodoContract.TodoState,
     todayDate: List<String>,
+    bottomPadding : PaddingValues,
     modifier: Modifier = Modifier,
     onAddPendingStudyButtonClicked: () -> Unit = {},
     onAddStudyButtonClicked: () -> Unit = {},
@@ -69,7 +71,8 @@ fun TodoScreen(
         modifier =
             modifier
                 .fillMaxSize()
-                .padding(bottom = 74.dp)
+                .padding(bottomPadding)
+                .padding(bottom = 10.dp)
                 .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
     ) {
         LazyColumn {
@@ -722,5 +725,6 @@ fun TodoScreenMockPreview() {
     TodoScreen(
         todoState = mockTodoStates[0],
         todayDate = listOf("2025", "01", "18"),
+        bottomPadding = PaddingValues()
     )
 }
