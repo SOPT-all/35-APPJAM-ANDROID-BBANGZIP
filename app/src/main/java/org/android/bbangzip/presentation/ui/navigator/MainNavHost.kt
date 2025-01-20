@@ -12,6 +12,12 @@ import androidx.navigation.compose.NavHost
 import org.android.bbangzip.presentation.ui.friend.friendNavGraph
 import org.android.bbangzip.presentation.ui.login.loginNavGraph
 import org.android.bbangzip.presentation.ui.my.myNavGraph
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
+import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingEndNavGraph
+import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavGraph
+import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
 import org.android.bbangzip.presentation.ui.todo.navigation.todoNavGraph
@@ -40,9 +46,20 @@ fun MainNavHost(
             loginNavGraph(
                 navigateToSubject = { navigator.navHostController.navigateSubject() },
                 navigateToOnboarding = {
-                    navigator.navHostController.navigateSubject()
-                    // TODO onboarding 만들어서 넣기
+                    navigator.navHostController.navigateOnboardingStart()
                 },
+            )
+
+            onboardingStartNavGraph(
+                navigateToOnboarding = { navigator.navHostController.navigateOnboarding() },
+            )
+
+            onboardingNavGraph(
+                navigateToOnboardingEnd = { navigator.navHostController.navigateOnboardingEnd() },
+            )
+
+            onboardingEndNavGraph(
+                navigateToSubject = { navigator.navHostController.navigateSubject() },
             )
 
             todoAddNavGraph(
@@ -65,6 +82,7 @@ fun MainNavHost(
 
             todoNavGraph(
                 snackBarHostState = snackBarHostState,
+                bottomPadding = padding,
                 navigateToAddToDo = { navigator.navigateToToDoAdd() },
                 navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
             )

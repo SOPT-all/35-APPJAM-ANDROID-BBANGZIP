@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.todo
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,12 +18,13 @@ import java.util.Locale
 @Composable
 fun TodoRoute(
     snackBarHostState: SnackbarHostState,
+    bottomPadding: PaddingValues,
     navigateToAddToDo: () -> Unit = {},
     navigateToAddPendingToDo: () -> Unit = {},
     viewModel: TodoViewModel = hiltViewModel(),
 ) {
     val todoState by viewModel.uiState.collectAsStateWithLifecycle()
-    val success by viewModel.success.collectAsStateWithLifecycle(initialValue = true)
+    val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
     val todayDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-E").withLocale(Locale.forLanguageTag("ko"))).split("-")
 
     LaunchedEffect(viewModel.uiSideEffect) {
@@ -52,6 +54,7 @@ fun TodoRoute(
             TodoScreen(
                 todoState = todoState,
                 todayDate = todayDate,
+                bottomPadding = bottomPadding,
                 onAddPendingStudyButtonClicked = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnAddPendingStudyButtonClicked)
                 },

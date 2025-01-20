@@ -52,6 +52,7 @@ fun OnboardingProgressBar(
     Spacer(modifier = Modifier.height(8.dp))
 
     BbangZipBasicProgressBar(
+        modifier = modifier,
         progress = progress,
         backgroundColor = BbangZipTheme.colors.fillStrong_68645E_16,
     )

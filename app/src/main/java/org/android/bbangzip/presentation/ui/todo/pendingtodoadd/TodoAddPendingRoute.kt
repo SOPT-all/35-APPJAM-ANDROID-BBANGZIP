@@ -20,7 +20,7 @@ fun TodoAddPendingRoute(
     viewModel: TodoAddPendingViewModel = hiltViewModel(),
 ) {
     val todoAddPendingState by viewModel.uiState.collectAsStateWithLifecycle()
-    val success by viewModel.success.collectAsStateWithLifecycle(initialValue = true)
+    val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
     val todoAddsSnackBarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(viewModel.uiSideEffect) {

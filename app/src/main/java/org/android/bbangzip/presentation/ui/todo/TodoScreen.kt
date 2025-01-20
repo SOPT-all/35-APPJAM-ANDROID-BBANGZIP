@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -50,6 +51,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun TodoScreen(
     todoState: TodoContract.TodoState,
     todayDate: List<String>,
+    bottomPadding: PaddingValues,
     modifier: Modifier = Modifier,
     onAddPendingStudyButtonClicked: () -> Unit = {},
     onAddStudyButtonClicked: () -> Unit = {},
@@ -69,7 +71,7 @@ fun TodoScreen(
         modifier =
             modifier
                 .fillMaxSize()
-                .padding(bottom = 74.dp)
+                .padding(bottom = bottomPadding.calculateBottomPadding())
                 .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
     ) {
         LazyColumn {
@@ -85,7 +87,20 @@ fun TodoScreen(
 
             if (todoState.screenType == ToDoScreenType.EMPTY) {
                 item {
-                    EmptyView(onAddStudyButtonClicked = onAddStudyButtonClicked)
+                    Column(modifier = modifier.padding(horizontal = 16.dp)) {
+                        EmptyView()
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        BbangZipButton(
+                            bbangZipButtonType = BbangZipButtonType.Solid,
+                            bbangZipButtonSize = BbangZipButtonSize.Large,
+                            onClick = { onAddStudyButtonClicked() },
+                            label = stringResource(R.string.btn_add_todo_label),
+                            modifier = Modifier.fillMaxWidth(),
+                            trailingIcon = R.drawable.ic_plus_thick_24,
+                        )
+                    }
                 }
             }
 
@@ -96,7 +111,7 @@ fun TodoScreen(
                         completeCount = todoState.completeCount,
                     )
 
-                    Spacer(Modifier.height(16.dp))
+                    Spacer(Modifier.height(8.dp))
 
                     DeleteAndFilterIcons(
                         onDeleteIconClicked = onDeleteIconClicked,
@@ -109,14 +124,22 @@ fun TodoScreen(
 
             if (todoState.screenType == ToDoScreenType.DELETE) {
                 item {
-                    Text(
-                        text = stringResource(R.string.todo_delete_screen_text),
-                        style = BbangZipTheme.typography.heading2Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
-                        modifier = Modifier.padding(start = 24.dp),
-                    )
+                    Box(
+                        modifier =
+                            Modifier
+                                .padding(start = 24.dp)
+                                .fillMaxWidth()
+                                .height(56.dp),
+                        contentAlignment = Alignment.CenterStart,
+                    ) {
+                        Text(
+                            text = stringResource(R.string.todo_delete_screen_text),
+                            style = BbangZipTheme.typography.heading2Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119,
+                        )
+                    }
 
-                    Spacer(Modifier.height(4.dp))
+                    Spacer(Modifier.height(8.dp))
 
                     Row(
                         modifier =
@@ -191,6 +214,16 @@ fun TodoScreen(
                         },
                     )
                 }
+
+                if (todoState.screenType == ToDoScreenType.DELETE) {
+                    item {
+                        Spacer(modifier = Modifier.height(72.dp))
+                    }
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(10.dp))
+                }
             }
         }
         if (todoState.screenType == ToDoScreenType.DELETE) {
@@ -204,7 +237,7 @@ fun TodoScreen(
                         .padding(horizontal = 16.dp)
                         .fillMaxWidth()
                         .align(Alignment.BottomCenter)
-                        .padding(bottom = 6.dp),
+                        .padding(bottom = 16.dp),
                 isEnable = todoState.selectedItemList.isNotEmpty(),
                 trailingIcon = R.drawable.ic_plus_thick_24,
             )
@@ -339,34 +372,41 @@ fun StudyCountText(
     completeCount: Int,
     modifier: Modifier = Modifier,
 ) {
-    Column(
+    Box(
         modifier =
             modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
-                .padding(start = 8.dp),
+                .height(56.dp),
+        contentAlignment = Alignment.CenterStart,
     ) {
-        Text(
-            text =
-                when {
-                    completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
-                    remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
-                    else -> stringResource(R.string.todo_complete_nothing_text)
-                },
-            style = BbangZipTheme.typography.label1Bold,
-            color = BbangZipTheme.colors.labelAlternative_282119_61,
-        )
+        Column(
+            modifier =
+                Modifier
+                    .padding(start = 8.dp),
+        ) {
+            Text(
+                text =
+                    when {
+                        completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
+                        remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
+                        else -> stringResource(R.string.todo_complete_nothing_text)
+                    },
+                style = BbangZipTheme.typography.label1Bold,
+                color = BbangZipTheme.colors.labelAlternative_282119_61,
+            )
 
-        Text(
-            text =
-                if (remainingCount != 0) {
-                    stringResource(R.string.todo_remaing_count_text, remainingCount)
-                } else {
-                    stringResource(R.string.todo_remaining_nothing_text)
-                },
-            style = BbangZipTheme.typography.title3Bold,
-            color = BbangZipTheme.colors.labelNormal_282119,
-        )
+            Text(
+                text =
+                    if (remainingCount != 0) {
+                        stringResource(R.string.todo_remaing_count_text, remainingCount)
+                    } else {
+                        stringResource(R.string.todo_remaining_nothing_text)
+                    },
+                style = BbangZipTheme.typography.title3Bold,
+                color = BbangZipTheme.colors.labelNormal_282119,
+            )
+        }
     }
 }
 
@@ -420,30 +460,16 @@ fun DeleteAndFilterIcons(
 @Composable
 fun EmptyView(
     modifier: Modifier = Modifier,
-    onAddStudyButtonClicked: () -> Unit = {},
 ) {
-    Column(modifier = modifier.padding(horizontal = 16.dp)) {
-        Box(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(328.dp)
-                    .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(text = "Empty View")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        BbangZipButton(
-            bbangZipButtonType = BbangZipButtonType.Solid,
-            bbangZipButtonSize = BbangZipButtonSize.Large,
-            onClick = { onAddStudyButtonClicked() },
-            label = stringResource(R.string.btn_add_todo_label),
-            modifier = Modifier.fillMaxWidth(),
-            trailingIcon = R.drawable.ic_plus_thick_24,
-        )
+    Box(
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .height(328.dp)
+                .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(text = "Empty View")
     }
 }
 
@@ -722,5 +748,6 @@ fun TodoScreenMockPreview() {
     TodoScreen(
         todoState = mockTodoStates[0],
         todayDate = listOf("2025", "01", "18"),
+        bottomPadding = PaddingValues(),
     )
 }

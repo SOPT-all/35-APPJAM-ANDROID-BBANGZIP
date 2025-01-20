@@ -18,6 +18,7 @@ import androidx.compose.ui.unit.dp
 import org.android.bbangzip.presentation.model.Semester
 import org.android.bbangzip.presentation.type.SemesterType
 import org.android.bbangzip.presentation.util.constant.DateConstants
+import timber.log.Timber
 
 @Composable
 fun BbangZipSemesterPicker(
@@ -28,16 +29,17 @@ fun BbangZipSemesterPicker(
         modifier = Modifier.fillMaxWidth(),
     ) {
         val years = DateConstants.YEARS_LIST
-        val yearPickerState by remember { mutableStateOf("") }
+        var yearPickerState by remember { mutableStateOf(currentSemester.year) }
         val startYear = currentSemester.year.toInt() - DateConstants.YEAR_OF_TODAY
 
         val semesters = SemesterType.entries.map { entry -> entry.text }
-        val semesterPickerState by remember { mutableStateOf("") }
+        var semesterPickerState by remember { mutableStateOf(currentSemester.semester.text) }
         val startSemester = SemesterType.entries.find { it == currentSemester.semester }?.ordinal
 
         LaunchedEffect(yearPickerState, semesterPickerState) {
             val year = yearPickerState.filter { it.isDigit() }
             val semester = SemesterType.entries.find { it.text == semesterPickerState }
+            Timber.d("[온보딩] semester picker -> $year , $semester")
             onConfirm(
                 Semester(
                     year = year,
@@ -50,12 +52,18 @@ fun BbangZipSemesterPicker(
             items = years,
             modifier = Modifier.weight(5f),
             startIndex = startYear,
+            onItemChanged = { selectedYear ->
+                yearPickerState = selectedYear
+            },
         )
 
         BbangZipPicker(
             items = semesters,
             modifier = Modifier.weight(4f),
             startIndex = startSemester ?: 0,
+            onItemChanged = { selectedSemester ->
+                semesterPickerState = selectedSemester
+            },
         )
     }
 }

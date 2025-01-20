@@ -27,6 +27,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
@@ -45,11 +46,11 @@ fun TodoAddPendingScreen(
     todoAddState: TodoAddPendingContract.TodoAddPendingState,
     todoAddSnackBarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
-    onBackIconClicked: () -> Unit,
-    onFilterBottomSheetDismissRequest: () -> Unit,
-    onFilterIconClicked: () -> Unit,
-    onFilterBottomSheetItemClicked: (ToDoFilterType) -> Unit,
-    onItemPlusButtonClicked: () -> Unit,
+    onBackIconClicked: () -> Unit = {},
+    onFilterBottomSheetDismissRequest: () -> Unit = {},
+    onFilterIconClicked: () -> Unit = {},
+    onFilterBottomSheetItemClicked: (ToDoFilterType) -> Unit = {},
+    onItemPlusButtonClicked: () -> Unit = {},
     onToDoCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
 ) {
     Box(
@@ -72,8 +73,6 @@ fun TodoAddPendingScreen(
                 onLeadingIconClick = onBackIconClicked,
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
-
             LazyColumn(
                 modifier =
                     Modifier
@@ -82,6 +81,8 @@ fun TodoAddPendingScreen(
                 state = scrollState,
             ) {
                 item {
+                    Spacer(modifier = Modifier.height(32.dp))
+
                     Text(text = stringResource(R.string.todo_pending_add_title1), style = BbangZipTheme.typography.body1Bold, color = BbangZipTheme.colors.labelAlternative_282119_61)
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -138,13 +139,17 @@ fun TodoAddPendingScreen(
                                 )
                             } else {
                                 (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKABLE)
+                                onToDoCardClicked(
+                                    todoAddState.todoList[index].pieceId,
+                                    BbangZipCardState.CHECKED,
+                                )
                             }
-                            onToDoCardClicked(
-                                todoAddState.todoList[index].pieceId,
-                                BbangZipCardState.CHECKED,
-                            )
                         },
                     )
+                }
+
+                item {
+                    Spacer(modifier = Modifier.height(82.dp))
                 }
             }
         }
@@ -174,5 +179,17 @@ fun TodoAddPendingScreen(
         selectedItem = todoAddState.selectedFilter,
         onSelectedItemChanged = onFilterBottomSheetItemClicked,
         onDismissRequest = onFilterBottomSheetDismissRequest,
+    )
+}
+
+@Preview
+@Composable
+private fun PendingPreview() {
+    val mockTodoStates =
+        TodoAddPendingContract.TodoAddPendingState()
+
+    TodoAddPendingScreen(
+        todoAddState = mockTodoStates,
+        todoAddSnackBarHostState = remember { SnackbarHostState() },
     )
 }
