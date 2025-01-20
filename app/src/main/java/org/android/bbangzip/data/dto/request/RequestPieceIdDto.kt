@@ -4,7 +4,7 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class RequestHideDto(
+data class RequestPieceIdDto(
     @SerialName("pieceIds")
     val pieceIds: List<Int>,
 )

@@ -9,13 +9,13 @@ import org.android.bbangzip.domain.model.ToDoInfoEntity
 @Serializable
 data class ResponseTodayOrdersDto(
     @SerialName("completeCount")
-    val completeCount: Int,
+    val completeCount: Int?,
     @SerialName("todoPiecesList")
     val todayList: List<TodoInfo>,
     @SerialName("pendingCount")
     val pendingCount: Int,
     @SerialName("todayCount")
-    val todayCount: Int,
+    val todayCount: Int?,
 ) {
     fun toTodoInfoEntity() =
         ToDoInfoEntity(
@@ -23,8 +23,8 @@ data class ResponseTodayOrdersDto(
                 todoItem.toTodoCardEntity()
             },
             pendingCount = pendingCount,
-            remainingStudyCount = todayCount,
-            completeCount = completeCount
+            remainingStudyCount = todayCount?:0,
+            completeCount = completeCount?:0
         )
 }
 

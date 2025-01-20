@@ -5,11 +5,11 @@ import org.android.bbangzip.data.service.PieceService
 import org.android.bbangzip.data.util.base.BaseResponse
 import javax.inject.Inject
 
-class HideRemoteDataSource @Inject
+class AssignToTodayRemoteDataSource @Inject
 constructor(
     private val pieceService: PieceService,
 ) {
     suspend fun postDeletedItemList(
         requestPieceIdDto: RequestPieceIdDto
-    ): BaseResponse<Unit?>? = pieceService.postDeletedItemList(requestPieceIdDto = requestPieceIdDto)
+    ): BaseResponse<Unit?>? = pieceService.postAddTodoItemList(requestPieceIdDto = requestPieceIdDto)
 }

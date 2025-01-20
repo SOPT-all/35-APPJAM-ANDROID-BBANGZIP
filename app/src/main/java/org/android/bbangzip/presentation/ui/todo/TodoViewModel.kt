@@ -5,9 +5,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import org.android.bbangzip.data.dto.request.RequestHideDto
+import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
-import org.android.bbangzip.domain.usecase.PostDeletedItemList
+import org.android.bbangzip.domain.usecase.PostDeletedItemListUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.ToDoScreenType
@@ -20,8 +20,8 @@ import javax.inject.Inject
 class TodoViewModel
 @Inject
 constructor(
-    private val getToInfoUseCase: GetToInfoUseCase,
-    private val postDeletedItemList: PostDeletedItemList,
+    private val getTodoInfoUseCase: GetToInfoUseCase,
+    private val postDeletedItemListUseCase: PostDeletedItemListUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TodoContract.TodoEvent, TodoContract.TodoState, TodoContract.TodoReduce, TodoContract.TodoSideEffect>(
     savedStateHandle = savedStateHandle,
@@ -53,12 +53,7 @@ constructor(
             // Filter BottomSheet
             is TodoContract.TodoEvent.OnFilterBottomSheetItemClicked -> {
                 viewModelScope.launch {
-                    getToDoInfo(
-                        area = ToDoConstants.TODO,
-                        year = 2025,
-                        semester = "1학기",
-                        sortOption = event.selectedFilterItem.id
-                    )
+                    initDataLoad()
                 }
                 updateState(TodoContract.TodoReduce.UpdateFilterType(selectedFilter = event.selectedFilterItem))
                 updateState(
@@ -202,7 +197,12 @@ constructor(
                         remainingStudyCount = currentUiState.remainingStudyCount - currentUiState.selectedItemList.size,
                     ),
                 )
-                if (currentUiState.remainingStudyCount != 0) {
+                updateState(
+                    TodoContract.TodoReduce.UpdatePendingToDoCount(
+                        pendingCount = currentUiState.pendingCount + currentUiState.selectedItemList.size
+                    ),
+                )
+                if (currentUiState.remainingStudyCount - currentUiState.selectedItemList.size != 0) {
                     updateState(TodoContract.TodoReduce.DeleteToDoListItems)
                     updateState(
                         TodoContract.TodoReduce.UpdateToDoListCardState(
@@ -342,7 +342,7 @@ constructor(
 
     private suspend fun initDataLoad() {
         getToDoInfo(
-            area = "todo",
+            area = ToDoConstants.TODO,
             year = 2025,
             semester = "1학기",
             sortOption = currentUiState.selectedFilterItem.id
@@ -355,13 +355,13 @@ constructor(
         semester: String,
         sortOption: String
     ) {
-        getToInfoUseCase(
+        getTodoInfoUseCase(
             area = area,
             year = year,
             semester = semester,
             sortOption = sortOption
         ).onSuccess { data ->
-            Timber.tag("ㅋㅋ").d("server viewmodel")
+            Timber.tag("todayOrders").d("server viewmodel")
             updateState(
                 TodoContract.TodoReduce.UpdateToDoInfo(
                     todoList = data.todoList.map { item ->
@@ -385,18 +385,15 @@ constructor(
             )
         }
             .onFailure { error ->
-                Timber.run {
-                    tag("ㅋㅋ").d("server viewmodel fail")
-                    tag("ㅋㅋ").d(error.message)
-                }
+                Timber.tag("todayOrders").d(error.message)
             }
     }
 
     private suspend fun postDeletedItemList(
         selectedItemList: List<Int>
     ) {
-        postDeletedItemList(
-            requestHideDto = RequestHideDto(pieceIds = selectedItemList)
-        ).onSuccess {  }
+        postDeletedItemListUseCase(
+            requestPieceIdDto = RequestPieceIdDto(pieceIds = selectedItemList)
+        ).onSuccess { }
     }
 }

@@ -5,7 +5,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.usecase.GetAddTodoListUseCase
+import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.util.base.BaseViewModel
@@ -17,6 +19,7 @@ class TodoAddViewModel
 @Inject
 constructor(
     private val getAddTodoListUseCase: GetAddTodoListUseCase,
+    private val postAddTodoItemListUseCase: PostAddTodoItemListUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TodoAddContract.TodoAddEvent, TodoAddContract.TodoAddState, TodoAddContract.TodoAddReduce, TodoAddContract.TodoAddSideEffect>(
     savedStateHandle = savedStateHandle,
@@ -59,7 +62,7 @@ constructor(
                         semester = "1학기",
                         sortOption = event.selectedFilterItem.id
                     )
-                }.isCompleted
+                }
                 updateState(TodoAddContract.TodoAddReduce.UpdateFilterType(selectedFilter = event.selectedFilterItem))
                 updateState(
                     TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
@@ -72,6 +75,9 @@ constructor(
 
             TodoAddContract.TodoAddEvent.OnItemPlusButtonClicked -> {
                 // TODO 서버로 보내기
+                viewModelScope.launch {
+                    postAddTodoItemList(selectedItemList = currentUiState.selectedItemList)
+                }
                 setSideEffect(TodoAddContract.TodoAddSideEffect.NavigateToToDo)
                 setSideEffect(TodoAddContract.TodoAddSideEffect.ShowSnackBar("오늘 할 공부를 추가했어요!"))
             }
@@ -161,35 +167,43 @@ constructor(
             year = year,
             semester = semester,
             sortOption = sortOption
-        )
-            .onSuccess { data ->
-                Timber.tag("ㅋㅋ").d("server viewmodel")
-                updateState(
-                    TodoAddContract.TodoAddReduce.UpdateToDoList(
-                        todoList = data.todoList.map { item ->
-                            ToDoCardModel(
-                                pieceId = item.pieceId,
-                                subjectName = item.subjectName,
-                                examName = item.examName,
-                                studyContents = item.studyContents,
-                                startPage = item.startPage,
-                                finishPage = item.finishPage,
-                                deadline = item.deadline,
-                                remainingDays = item.remainingDays,
-                                cardState = if (currentUiState.selectedItemList.toSet()
-                                        .contains(item.pieceId)
-                                ) BbangZipCardState.CHECKED else BbangZipCardState.CHECKABLE
-                            )
-                        },
-                    )
+        ).onSuccess { data ->
+            Timber.tag("todo").d("server viewmodel")
+            updateState(
+                TodoAddContract.TodoAddReduce.UpdateToDoList(
+                    todoList = data.todoList.map { item ->
+                        ToDoCardModel(
+                            pieceId = item.pieceId,
+                            subjectName = item.subjectName,
+                            examName = item.examName,
+                            studyContents = item.studyContents,
+                            startPage = item.startPage,
+                            finishPage = item.finishPage,
+                            deadline = item.deadline,
+                            remainingDays = item.remainingDays,
+                            cardState = if (currentUiState.selectedItemList.toSet()
+                                    .contains(item.pieceId)
+                            ) BbangZipCardState.CHECKED else BbangZipCardState.CHECKABLE
+                        )
+                    },
                 )
-            }
+            )
+        }
             .onFailure { error ->
-                Timber.run {
-                    tag("ㅋㅋ").d(error.message)
-                }
-
+                Timber.tag("todo").d(error.message)
             }
+    }
+
+    private suspend fun postAddTodoItemList(
+        selectedItemList: List<Int>
+    ) {
+        postAddTodoItemListUseCase(
+            requestPieceIdDto = RequestPieceIdDto(pieceIds = selectedItemList)
+        ).onSuccess {
+            Timber.tag("assignToToday").d("server viewmodel")
+        }.onFailure { error ->
+            Timber.tag("assignToToday").d(error.message)
+        }
     }
 }
 

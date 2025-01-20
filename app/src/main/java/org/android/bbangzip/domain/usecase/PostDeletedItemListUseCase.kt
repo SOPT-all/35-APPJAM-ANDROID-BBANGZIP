@@ -1,15 +1,15 @@
 package org.android.bbangzip.domain.usecase
 
-import org.android.bbangzip.data.dto.request.RequestHideDto
+import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.repository.remote.PieceRepository
 
-class PostDeletedItemList(
+class PostDeletedItemListUseCase(
     private val pieceRepository: PieceRepository
 ) {
     suspend operator fun invoke(
-       requestHideDto: RequestHideDto
+        requestPieceIdDto: RequestPieceIdDto
     ): Result<Unit> =
         pieceRepository.postDeletedItemList(
-           requestHideDto= requestHideDto
+           requestPieceIdDto= requestPieceIdDto
         )
 }

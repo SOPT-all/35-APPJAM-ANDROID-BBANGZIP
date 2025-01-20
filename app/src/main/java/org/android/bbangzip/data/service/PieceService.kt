@@ -1,6 +1,6 @@
 package org.android.bbangzip.data.service
 
-import org.android.bbangzip.data.dto.request.RequestHideDto
+import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.data.dto.response.ResponseTodayOrdersDto
 import org.android.bbangzip.data.dto.response.ResponseTodoDto
 import org.android.bbangzip.data.util.base.BaseResponse
@@ -33,6 +33,12 @@ interface PieceService {
 
     @POST("/api/v1/pieces/hide")
     suspend fun postDeletedItemList(
-        @Body requestHideDto: RequestHideDto
-    ): BaseResponse<Unit>
+        @Body requestPieceIdDto: RequestPieceIdDto
+    ): BaseResponse<Unit?>?
+
+    @POST("/api/v1/pieces/assign-to-today")
+    suspend fun postAddTodoItemList(
+        @Body requestPieceIdDto: RequestPieceIdDto
+
+    ): BaseResponse<Unit?>?
 }

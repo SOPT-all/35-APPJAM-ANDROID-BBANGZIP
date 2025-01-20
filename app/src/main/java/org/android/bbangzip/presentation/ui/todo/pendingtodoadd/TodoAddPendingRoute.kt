@@ -1,16 +1,23 @@
 package org.android.bbangzip.presentation.ui.todo.pendingtodoadd
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
+import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun TodoAddPendingRoute(
@@ -81,6 +88,13 @@ fun TodoAddPendingRoute(
             )
 
         false ->
-            Text("땡!")
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)
+            }
     }
 }

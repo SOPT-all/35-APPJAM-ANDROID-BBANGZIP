@@ -1,6 +1,6 @@
 package org.android.bbangzip.domain.repository.remote
 
-import org.android.bbangzip.data.dto.request.RequestHideDto
+import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.model.ToDoInfoEntity
 
 interface PieceRepository {
@@ -18,7 +18,11 @@ interface PieceRepository {
     ): Result<ToDoInfoEntity>
 
     suspend fun postDeletedItemList(
-        requestHideDto: RequestHideDto
+        requestPieceIdDto: RequestPieceIdDto
+    ) : Result<Unit>
+
+    suspend fun postAddTodoItemList(
+        requestPieceIdDto: RequestPieceIdDto
     ) : Result<Unit>
 }
 
