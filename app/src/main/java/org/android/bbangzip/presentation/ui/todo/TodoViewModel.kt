@@ -5,7 +5,9 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.android.bbangzip.data.dto.request.RequestHideDto
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
+import org.android.bbangzip.domain.usecase.PostDeletedItemList
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.ToDoScreenType
@@ -19,6 +21,7 @@ class TodoViewModel
 @Inject
 constructor(
     private val getToInfoUseCase: GetToInfoUseCase,
+    private val postDeletedItemList: PostDeletedItemList,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<TodoContract.TodoEvent, TodoContract.TodoState, TodoContract.TodoReduce, TodoContract.TodoSideEffect>(
     savedStateHandle = savedStateHandle,
@@ -50,7 +53,12 @@ constructor(
             // Filter BottomSheet
             is TodoContract.TodoEvent.OnFilterBottomSheetItemClicked -> {
                 viewModelScope.launch {
-                    getToDoInfo(area = ToDoConstants.TODO, year = 2025, semester = "1학기", sortOption = event.selectedFilterItem.id)
+                    getToDoInfo(
+                        area = ToDoConstants.TODO,
+                        year = 2025,
+                        semester = "1학기",
+                        sortOption = event.selectedFilterItem.id
+                    )
                 }
                 updateState(TodoContract.TodoReduce.UpdateFilterType(selectedFilter = event.selectedFilterItem))
                 updateState(
@@ -59,7 +67,6 @@ constructor(
                     )
                 )
                 setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
-                // TODO index를 이용해 서버로 FetchInfo 보내주기 다시 정렬하기 ㅋㅋ
             }
 
             TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest ->
@@ -186,6 +193,9 @@ constructor(
 
             TodoContract.TodoEvent.OnItemDeleteButtonClicked -> {
                 // TODO setlectedItemlist 사용해서 서버로 삭제한 card API 전송
+                viewModelScope.launch {
+                    postDeletedItemList(selectedItemList = currentUiState.selectedItemList)
+                }
                 updateState(
                     TodoContract.TodoReduce.UpdateToDoCount(
                         completeCount = currentUiState.completeCount,
@@ -380,5 +390,13 @@ constructor(
                     tag("ㅋㅋ").d(error.message)
                 }
             }
+    }
+
+    private suspend fun postDeletedItemList(
+        selectedItemList: List<Int>
+    ) {
+        postDeletedItemList(
+            requestHideDto = RequestHideDto(pieceIds = selectedItemList)
+        ).onSuccess {  }
     }
 }

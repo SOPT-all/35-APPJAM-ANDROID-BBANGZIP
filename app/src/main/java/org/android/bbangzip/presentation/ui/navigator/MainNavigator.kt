@@ -30,7 +30,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = LoginRoute
+    val startDestination = BottomNavigationType.TODO.route
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =

@@ -9,6 +9,7 @@ import org.android.bbangzip.domain.repository.remote.PieceRepository
 import org.android.bbangzip.domain.usecase.FetchDummyUseCase
 import org.android.bbangzip.domain.usecase.GetAddTodoListUseCase
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
+import org.android.bbangzip.domain.usecase.PostDeletedItemList
 import javax.inject.Singleton
 
 @Module
@@ -28,4 +29,9 @@ class UseCaseModule {
     @Singleton
     fun providesAddTodoListFetchUseCase(pieceRepository: PieceRepository): GetAddTodoListUseCase =
         GetAddTodoListUseCase(pieceRepository = pieceRepository)
+
+    @Provides
+    @Singleton
+    fun providesDeletedItemListPostUseCase(pieceRepository: PieceRepository): PostDeletedItemList =
+        PostDeletedItemList(pieceRepository = pieceRepository)
 }

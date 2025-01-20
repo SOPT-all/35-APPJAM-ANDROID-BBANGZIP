@@ -125,7 +125,7 @@ class TodoContract {
                 ),
             ),
         val pendingCount: Int = 10,
-        val remainingStudyCount: Int = 0,
+        val remainingStudyCount: Int = 5,
         val completeCount: Int = 5,
         val todoFilterBottomSheetState: Boolean = false,
         val selectedFilterItem: ToDoFilterType = ToDoFilterType.RECENT,
