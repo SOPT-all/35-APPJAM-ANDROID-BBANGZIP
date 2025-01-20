@@ -84,6 +84,8 @@ fun SubjectDetailScreen(
     var selectedIndex by remember { mutableIntStateOf(0) }
     var isMenuOpen by remember { mutableStateOf(false) }
     var motivationMessage by remember { mutableStateOf("사장님의 각오 한마디를 작성해보세요") }
+    var dDay by remember { mutableIntStateOf(14) }
+    var examDay by remember { mutableStateOf("2025년 11월 25일") }
 
     val listState = rememberLazyListState()
 
@@ -163,6 +165,8 @@ fun SubjectDetailScreen(
                             onTrashIconClicked = onTrashIconClicked,
                             onDefaultCardClicked = onDefaultCardClicked,
                             onCompleteCardClicked = onCompleteCardClicked,
+                            dDay = dDay.toString(),
+                            examDay = examDay,
                         )
                     }
                     PieceViewType.DELETE -> {
@@ -268,6 +272,8 @@ fun SubjectDetailScreen(
 @Composable
 private fun DefaultPieceView(
     todoList: List<ToDoCardModel>,
+    dDay: String,
+    examDay: String,
     onTrashIconClicked: () -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit,
     onCompleteCardClicked: (Int) -> Unit,
@@ -286,7 +292,7 @@ private fun DefaultPieceView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "시험까지 D-14",
+                text = "시험까지 D-${dDay}",
                 style = BbangZipTheme.typography.caption1Medium,
                 color = BbangZipTheme.colors.staticWhite_FFFFFF,
                 modifier =
@@ -299,7 +305,7 @@ private fun DefaultPieceView(
             )
             Spacer(modifier = Modifier.width(8.dp))
             Text(
-                text = "2025년 11월 25일",
+                text = examDay,
                 style = BbangZipTheme.typography.caption1Medium,
                 color = BbangZipTheme.colors.labelAlternative_282119_61,
             )
