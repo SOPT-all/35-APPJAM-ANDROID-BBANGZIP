@@ -28,7 +28,7 @@ constructor(
     }
 
     init {
-//        setEvent(TodoContract.TodoEvent.Initialize)
+        setEvent(TodoContract.TodoEvent.Initialize)
     }
 
     override fun handleEvent(event: TodoContract.TodoEvent) {
@@ -50,7 +50,7 @@ constructor(
             // Filter BottomSheet
             is TodoContract.TodoEvent.OnFilterBottomSheetItemClicked -> {
                 viewModelScope.launch {
-                    getToDoInfo(area = ToDoConstants.AREA, year = 2025, semester = "1학기", sortOption = event.selectedFilterItem.id)
+                    getToDoInfo(area = ToDoConstants.TODO, year = 2025, semester = "1학기", sortOption = event.selectedFilterItem.id)
                 }
                 updateState(TodoContract.TodoReduce.UpdateFilterType(selectedFilter = event.selectedFilterItem))
                 updateState(

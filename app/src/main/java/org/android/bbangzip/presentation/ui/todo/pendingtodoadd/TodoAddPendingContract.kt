@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.ToDoFilterType
+import org.android.bbangzip.presentation.ui.todo.todoadd.TodoAddContract.TodoAddReduce
 import org.android.bbangzip.presentation.util.base.BaseContract
 
 class TodoAddPendingContract {
@@ -156,6 +157,10 @@ class TodoAddPendingContract {
         data class UpdateToDoFilterBottomSheetState(
             val todoFilterBottomSheetState: Boolean,
         ) : TodoAddPendingReduce
+
+        data class UpdateToDoList(
+            val todoList: List<ToDoCardModel>,
+        ): TodoAddPendingReduce
 
         data class UpdateFilterType(
             val selectedFilter: ToDoFilterType,
