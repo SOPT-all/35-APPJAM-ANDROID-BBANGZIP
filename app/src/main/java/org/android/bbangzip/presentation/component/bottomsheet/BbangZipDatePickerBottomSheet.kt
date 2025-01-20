@@ -14,7 +14,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.android.bbangzip.presentation.component.button.BbangZipButton
+import org.android.bbangzip.presentation.component.wheelpicker.BbangZipDatePicker
 import org.android.bbangzip.presentation.model.Date
+import org.android.bbangzip.presentation.type.BbangZipButtonSize
+import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,9 +27,9 @@ fun BbangZipDatePickerBottomSheet(
     isBottomSheetVisible: Boolean,
     modifier: Modifier = Modifier,
     bottomSheetTitle: String,
-    selectedDate: Date? = null,
+    selectedDate: Date,
     onSelectedDateChanged: (Date) -> Unit = {},
-    onClickInputButton: (Date) -> Unit = {},
+    onClickInputButton: () -> Unit = {},
     onDismissRequest: () -> Unit = {},
 ) {
     BbangZipBasicModalBottomSheet(
@@ -46,13 +50,22 @@ fun BbangZipDatePickerBottomSheet(
         content = {
             Spacer(modifier = Modifier.height(24.dp))
 
-            // TODO Picker 넣기, padding horizontal 24 넣기
+            BbangZipDatePicker(
+                onConfirm = onSelectedDateChanged,
+                currentDate = selectedDate
+            )
 
             Spacer(modifier = Modifier.height(24.dp))
         },
         interactButton = {
             // TODO Button 넣기, Button 클릭 시에 onClickInputButton() 전달
-
+            BbangZipButton(
+                bbangZipButtonType = BbangZipButtonType.Solid,
+                bbangZipButtonSize = BbangZipButtonSize.Large,
+                onClick = onClickInputButton,
+                label = "시험 일자 입력하기",
+                isEnable = true
+            )
             Spacer(modifier = Modifier.height(16.dp))
         },
     )
@@ -67,5 +80,6 @@ private fun BbangZipDatePickerBottomSheetPreview() {
         isBottomSheetVisible = isBottomSheetVisible,
         bottomSheetTitle = "언제까지 공부할까요?",
         onDismissRequest = { isBottomSheetVisible = !isBottomSheetVisible },
+        selectedDate = Date("2025", "1", "21")
     )
 }

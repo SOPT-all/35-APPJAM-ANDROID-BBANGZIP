@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject.addstudy
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -11,9 +12,13 @@ fun NavController.navigateAddStudy() {
     )
 }
 
-fun NavGraphBuilder.addStudyNavGraph() {
+fun NavGraphBuilder.addStudyNavGraph(
+    padding: PaddingValues
+) {
     composable<AddStudyRoute> {
-        AddStudyRoute()
+        AddStudyRoute(
+            padding = padding,
+        )
     }
 }
 

@@ -103,4 +103,11 @@
     <string name="todo_add_title2">오늘부터 하나씩!\n공부할 내용을 선택해 보세요</string>
     <string name="todo_add_count">개 / 총 %s개</string>
     <string name="todo_add_plus_button_label">오늘 할 공부 추가하기</string>
+    <string name="add_study_study_content_placeholder">예) 교재 이름 PPT 1과</string>
+    <string name="add_study_study_content_guideline">교재 이름은 20글자 이내로 입력해 주세요</string>
+    <string name="add_study_start_page_placeholder">시작 페이지</string>
+    <string name="add_study_start_page_guideline">부터</string>
+    <string name="add_study_end_page_placeholder">종료 페이지</string>
+    <string name="add_study_end_page_guideline">까지</string>
+    <string name="add_study_date_picker_bottomsheet_title">시험이 언제인가요?</string>
 </resources>

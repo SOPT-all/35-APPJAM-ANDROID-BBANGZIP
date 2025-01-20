@@ -81,40 +81,6 @@ fun FriendScreen(
             },
             focusManager = LocalFocusManager.current,
         )
-
-        Row {
-            BbangZipSimpleTextField(
-                leadingIcon = R.drawable.ic_page_check_default_24,
-                modifier = Modifier.weight(1f),
-                placeholder = R.string.app_name,
-                guideline = R.string.app_name,
-                value = text2,
-                bbangZipTextFieldInputState = validationState2,
-                onFocusChange = {
-                    if (validationState2 == BbangZipTextFieldInputState.Default) validationState2 = BbangZipTextFieldInputState.Typing else Unit
-                },
-                onValueChange = { newValue ->
-                    text2 = newValue
-                    validate2Text(text = newValue)
-                },
-            )
-
-            BbangZipSimpleTextField(
-                leadingIcon = R.drawable.ic_page_check_default_24,
-                modifier = Modifier.weight(1f),
-                placeholder = R.string.app_name,
-                guideline = R.string.app_name,
-                value = text2,
-                bbangZipTextFieldInputState = validationState2,
-                onFocusChange = {
-                    if (validationState2 == BbangZipTextFieldInputState.Default) validationState2 = BbangZipTextFieldInputState.Typing else Unit
-                },
-                onValueChange = { newValue ->
-                    text2 = newValue
-                    validate2Text(text = newValue)
-                },
-            )
-        }
     }
 }
 
@@ -122,5 +88,6 @@ fun FriendScreen(
 @Composable
 private fun FriendScreenPreview() {
     BBANGZIPTheme {
+
     }
 }

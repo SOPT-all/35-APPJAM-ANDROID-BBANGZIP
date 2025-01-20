@@ -18,6 +18,7 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingEndNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
+import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
 import org.android.bbangzip.presentation.ui.todo.navigation.todoNavGraph
@@ -79,6 +80,10 @@ fun MainNavHost(
             myNavGraph()
 
             subjectNavGraph()
+
+            addStudyNavGraph(
+                padding = padding
+            )
 
             todoNavGraph(
                 snackBarHostState = snackBarHostState,
