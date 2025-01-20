@@ -131,7 +131,7 @@ class TodoContract {
         val selectedFilterItem: ToDoFilterType = ToDoFilterType.RECENT,
         val selectedItemList: List<Int> = listOf(),
         val revertCompleteBottomSheetState: Boolean = false,
-        val screenType: ToDoScreenType = ToDoScreenType.EMPTY,
+        val screenType: ToDoScreenType = ToDoScreenType.DEFAULT,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }

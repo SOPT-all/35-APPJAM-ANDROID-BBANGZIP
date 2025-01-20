@@ -51,7 +51,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun TodoScreen(
     todoState: TodoContract.TodoState,
     todayDate: List<String>,
-    bottomPadding : PaddingValues,
+    bottomPadding: PaddingValues,
     modifier: Modifier = Modifier,
     onAddPendingStudyButtonClicked: () -> Unit = {},
     onAddStudyButtonClicked: () -> Unit = {},
@@ -69,11 +69,11 @@ fun TodoScreen(
 ) {
     Box(
         modifier =
-            modifier
-                .fillMaxSize()
-                .padding(bottomPadding)
-                .padding(bottom = 10.dp)
-                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+        modifier
+            .fillMaxSize()
+            .padding(bottomPadding)
+            .padding(bottom = 10.dp)
+            .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
     ) {
         LazyColumn {
             item {
@@ -88,7 +88,20 @@ fun TodoScreen(
 
             if (todoState.screenType == ToDoScreenType.EMPTY) {
                 item {
-                    EmptyView(onAddStudyButtonClicked = onAddStudyButtonClicked)
+                    Column(modifier = modifier.padding(horizontal = 16.dp)) {
+                        EmptyView()
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        BbangZipButton(
+                            bbangZipButtonType = BbangZipButtonType.Solid,
+                            bbangZipButtonSize = BbangZipButtonSize.Large,
+                            onClick = { onAddStudyButtonClicked() },
+                            label = stringResource(R.string.btn_add_todo_label),
+                            modifier = Modifier.fillMaxWidth(),
+                            trailingIcon = R.drawable.ic_plus_thick_24,
+                        )
+                    }
                 }
             }
 
@@ -123,18 +136,18 @@ fun TodoScreen(
 
                     Row(
                         modifier =
-                            Modifier
-                                .padding(horizontal = 16.dp)
-                                .fillMaxWidth(),
+                        Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Spacer(modifier = Modifier.weight(1f))
 
                         Box(
                             modifier =
-                                Modifier
-                                    .clip(CircleShape)
-                                    .clickable { onCloseIconClicked() },
+                            Modifier
+                                .clip(CircleShape)
+                                .clickable { onCloseIconClicked() },
                             contentAlignment = Alignment.Center,
                         ) {
                             Icon(
@@ -203,11 +216,11 @@ fun TodoScreen(
                 onClick = { onItemDeleteButtonClicked() },
                 label = stringResource(R.string.todo_delete_screen_delete_button_text, todoState.selectedItemList.size),
                 modifier =
-                    Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .padding(bottom = 6.dp),
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 6.dp),
                 isEnable = todoState.selectedItemList.isNotEmpty(),
                 trailingIcon = R.drawable.ic_plus_thick_24,
             )
@@ -240,8 +253,8 @@ fun DateMessageCard(
 ) {
     Box(
         modifier =
-            modifier
-                .fillMaxWidth(),
+        modifier
+            .fillMaxWidth(),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Column(
@@ -344,29 +357,29 @@ fun StudyCountText(
 ) {
     Column(
         modifier =
-            modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth()
-                .padding(start = 8.dp),
+        modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .padding(start = 8.dp),
     ) {
         Text(
             text =
-                when {
-                    completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
-                    remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
-                    else -> stringResource(R.string.todo_complete_nothing_text)
-                },
+            when {
+                completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
+                remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
+                else -> stringResource(R.string.todo_complete_nothing_text)
+            },
             style = BbangZipTheme.typography.label1Bold,
             color = BbangZipTheme.colors.labelAlternative_282119_61,
         )
 
         Text(
             text =
-                if (remainingCount != 0) {
-                    stringResource(R.string.todo_remaing_count_text, remainingCount)
-                } else {
-                    stringResource(R.string.todo_remaining_nothing_text)
-                },
+            if (remainingCount != 0) {
+                stringResource(R.string.todo_remaing_count_text, remainingCount)
+            } else {
+                stringResource(R.string.todo_remaining_nothing_text)
+            },
             style = BbangZipTheme.typography.title3Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
         )
@@ -381,18 +394,18 @@ fun DeleteAndFilterIcons(
 ) {
     Row(
         modifier =
-            modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
+        modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
         Box(
             modifier =
-                Modifier
-                    .clip(CircleShape)
-                    .clickable { onDeleteIconClicked() },
+            Modifier
+                .clip(CircleShape)
+                .clickable { onDeleteIconClicked() },
             contentAlignment = Alignment.Center,
         ) {
             Icon(
@@ -405,9 +418,9 @@ fun DeleteAndFilterIcons(
 
         Box(
             modifier =
-                Modifier
-                    .clip(CircleShape)
-                    .clickable { onFilterIconClicked() },
+            Modifier
+                .clip(CircleShape)
+                .clickable { onFilterIconClicked() },
             contentAlignment = Alignment.Center,
         ) {
             Icon(
@@ -423,30 +436,16 @@ fun DeleteAndFilterIcons(
 @Composable
 fun EmptyView(
     modifier: Modifier = Modifier,
-    onAddStudyButtonClicked: () -> Unit = {},
 ) {
-    Column(modifier = modifier.padding(horizontal = 16.dp)) {
-        Box(
-            modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(328.dp)
-                    .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(text = "Empty View")
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        BbangZipButton(
-            bbangZipButtonType = BbangZipButtonType.Solid,
-            bbangZipButtonSize = BbangZipButtonSize.Large,
-            onClick = { onAddStudyButtonClicked() },
-            label = stringResource(R.string.btn_add_todo_label),
-            modifier = Modifier.fillMaxWidth(),
-            trailingIcon = R.drawable.ic_plus_thick_24,
-        )
+    Box(
+        modifier =
+        modifier
+            .fillMaxWidth()
+            .height(328.dp)
+            .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
+        contentAlignment = Alignment.Center,
+    ) {
+        Text(text = "Empty View")
     }
 }
 
@@ -478,14 +477,14 @@ fun BbangZipToDoFilterPickerBottomSheet(
                     Text(
                         text = item.filter,
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .applyFilterOnClick { onSelectedItemChanged(item) }
-                                .background(
-                                    color = if (item != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
-                                    shape = RoundedCornerShape(16.dp),
-                                )
-                                .padding(vertical = 8.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .applyFilterOnClick { onSelectedItemChanged(item) }
+                            .background(
+                                color = if (item != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
+                                shape = RoundedCornerShape(16.dp),
+                            )
+                            .padding(vertical = 8.dp),
                         textAlign = TextAlign.Center,
                         style = BbangZipTheme.typography.body1Bold,
                         color = BbangZipTheme.colors.labelNormal_282119,
@@ -515,9 +514,9 @@ fun RevertCompleteBottomSheet(
             Text(
                 text = bottomSheetTitle,
                 modifier =
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(vertical = 15.dp),
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(vertical = 15.dp),
                 style = BbangZipTheme.typography.headline1Bold,
                 color = BbangZipTheme.colors.labelNeutral_282119_88,
             )

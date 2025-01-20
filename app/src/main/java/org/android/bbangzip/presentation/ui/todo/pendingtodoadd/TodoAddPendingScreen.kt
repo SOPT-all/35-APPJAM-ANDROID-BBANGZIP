@@ -72,8 +72,6 @@ fun TodoAddPendingScreen(
                 onLeadingIconClick = onBackIconClicked,
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
-
             LazyColumn(
                 modifier =
                     Modifier
@@ -82,6 +80,8 @@ fun TodoAddPendingScreen(
                 state = scrollState,
             ) {
                 item {
+                    Spacer(modifier = Modifier.height(32.dp))
+
                     Text(text = stringResource(R.string.todo_pending_add_title1), style = BbangZipTheme.typography.body1Bold, color = BbangZipTheme.colors.labelAlternative_282119_61)
 
                     Spacer(modifier = Modifier.height(8.dp))
@@ -138,11 +138,11 @@ fun TodoAddPendingScreen(
                                 )
                             } else {
                                 (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKABLE)
+                                onToDoCardClicked(
+                                    todoAddState.todoList[index].pieceId,
+                                    BbangZipCardState.CHECKED,
+                                )
                             }
-                            onToDoCardClicked(
-                                todoAddState.todoList[index].pieceId,
-                                BbangZipCardState.CHECKED,
-                            )
                         },
                     )
                 }

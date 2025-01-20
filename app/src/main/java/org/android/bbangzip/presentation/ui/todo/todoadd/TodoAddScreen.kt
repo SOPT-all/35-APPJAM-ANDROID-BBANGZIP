@@ -67,12 +67,9 @@ fun TodoAddScreen(
             }
             BbangZipBaseTopBar(
                 isShadowed = isShadowed,
-                title = "",
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 onLeadingIconClick = onBackIconClicked,
             )
-
-            Spacer(modifier = Modifier.height(32.dp))
 
             LazyColumn(
                 modifier =
@@ -82,6 +79,8 @@ fun TodoAddScreen(
                 state = scrollState,
             ) {
                 item {
+                    Spacer(modifier = Modifier.height(32.dp))
+
                     Text(
                         text = stringResource(R.string.todo_add_title1),
                         style = BbangZipTheme.typography.body1Bold,
@@ -158,11 +157,11 @@ fun TodoAddScreen(
                                 )
                             } else {
                                 (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKABLE)
+                                onToDoCardClicked(
+                                    todoAddState.todoList[index].pieceId,
+                                    BbangZipCardState.CHECKED,
+                                )
                             }
-                            onToDoCardClicked(
-                                todoAddState.todoList[index].pieceId,
-                                BbangZipCardState.CHECKED,
-                            )
                         },
                     )
                 }
