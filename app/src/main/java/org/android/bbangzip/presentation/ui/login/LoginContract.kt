@@ -17,7 +17,7 @@ class LoginContract {
                 R.drawable.img_login2,
                 R.drawable.img_login1,
             ),
-        val loginSuccess: Boolean = false,
+        val loginState: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -29,7 +29,7 @@ class LoginContract {
     sealed interface LoginReduce : BaseContract.Reduce {
         data class UpdateState(val state: LoginState) : LoginReduce
 
-        data object UpdateLoginSuccess : LoginReduce
+        data class UpdateLoginSuccess(val success: Boolean) : LoginReduce
     }
 
     sealed interface LoginSideEffect : BaseContract.SideEffect {
