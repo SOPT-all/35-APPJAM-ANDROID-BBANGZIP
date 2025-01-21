@@ -28,7 +28,8 @@ class LoginContract {
 
     sealed interface LoginReduce : BaseContract.Reduce {
         data class UpdateState(val state: LoginState) : LoginReduce
-        data object UpdateLoginSuccess: LoginReduce
+
+        data object UpdateLoginSuccess : LoginReduce
     }
 
     sealed interface LoginSideEffect : BaseContract.SideEffect {

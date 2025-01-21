@@ -9,11 +9,11 @@ data class ResponseReissueDto(
     @SerialName("accessToken")
     val accessToken: String,
     @SerialName("refreshToken")
-    val refreshToken: String
+    val refreshToken: String,
 ) {
     fun toReissueEntity() =
         ReissueEntity(
             accessToken = accessToken,
-            refreshToken = refreshToken
+            refreshToken = refreshToken,
         )
 }

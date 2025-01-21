@@ -11,12 +11,12 @@ data class ResponseUserDto(
     @SerialName("refreshToken")
     val refreshToken: String,
     @SerialName("isOnboardingComplete")
-    val isOnboardingComplete: Boolean
+    val isOnboardingComplete: Boolean,
 ) {
     fun toUserEntity() =
         UserEntity(
             accessToken = accessToken,
             refreshToken = refreshToken,
-            isOnboardingComplete = isOnboardingComplete
+            isOnboardingComplete = isOnboardingComplete,
         )
 }

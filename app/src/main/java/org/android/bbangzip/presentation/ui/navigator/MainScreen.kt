@@ -21,11 +21,11 @@ import org.android.bbangzip.ui.theme.BBANGZIPTheme
 @Composable
 fun MainScreen(
     navigator: MainNavigator,
-    context: Context
+    context: Context,
 ) {
     MainScreenContent(
         navigator = navigator,
-        context = context
+        context = context,
     )
 }
 
@@ -45,7 +45,7 @@ private fun MainScreenContent(
                 navigator = navigator,
                 padding = padding,
                 snackBarHostState = hostState,
-                context = context
+                context = context,
             )
         },
         snackbarHost = { BbangZipSnackBarHost(hostState) },

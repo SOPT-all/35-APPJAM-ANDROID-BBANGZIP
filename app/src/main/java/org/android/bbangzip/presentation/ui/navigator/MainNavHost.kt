@@ -50,7 +50,7 @@ fun MainNavHost(
                 navigateToOnboarding = {
                     navigator.navHostController.navigateOnboardingStart()
                 },
-                context = context
+                context = context,
             )
 
             onboardingStartNavGraph(

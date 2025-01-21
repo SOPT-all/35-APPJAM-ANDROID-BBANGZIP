@@ -23,7 +23,7 @@ import retrofit2.http.Query
 interface UserService {
     @POST("$API/$VERSION/$USER/$AUTH/$SIGN_IN")
     suspend fun login(
-        @Query(CODE) code: String
+        @Query(CODE) code: String,
     ): BaseResponse<ResponseUserDto>
 
     @POST("$API/$VERSION/$USER/$AUTH/$REISSUE")
@@ -37,6 +37,6 @@ interface UserService {
 
     @PATCH("$API/$VERSION/$USER/$AUTH/$SIGN_UP")
     suspend fun onboardingComplete(
-        @Body requestOnboardingDto: RequestOnboardingDto
+        @Body requestOnboardingDto: RequestOnboardingDto,
     ): BaseResponse<String>
 }

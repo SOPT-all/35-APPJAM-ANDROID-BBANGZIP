@@ -12,5 +12,5 @@ data class RequestOnboardingDto(
     @SerialName("semester")
     val semester: String,
     @SerialName("subjectName")
-    val subjectName: String
+    val subjectName: String,
 )

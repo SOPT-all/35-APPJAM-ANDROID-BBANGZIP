@@ -2,7 +2,6 @@ package org.android.bbangzip.data.datasource.local.serializer
 
 import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
-import com.google.protobuf.InvalidProtocolBufferException
 import org.android.bbangzip.UserPreferences
 import timber.log.Timber
 import java.io.InputStream

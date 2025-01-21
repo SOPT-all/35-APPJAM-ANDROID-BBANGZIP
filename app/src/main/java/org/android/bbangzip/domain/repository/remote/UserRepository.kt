@@ -6,8 +6,12 @@ import org.android.bbangzip.domain.model.UserEntity
 
 interface UserRepository {
     suspend fun login(code: String): Result<UserEntity>
+
     suspend fun reissue(): Result<ReissueEntity>
+
     suspend fun logout(): Result<String>
+
     suspend fun withdraw(): Result<String>
+
     suspend fun onboardingComplete(onboardingEntity: OnboardingEntity): Result<String>
 }

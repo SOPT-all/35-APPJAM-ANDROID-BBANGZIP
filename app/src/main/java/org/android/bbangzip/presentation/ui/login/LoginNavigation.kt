@@ -15,13 +15,13 @@ fun NavController.navigateLogin() {
 fun NavGraphBuilder.loginNavGraph(
     navigateToSubject: () -> Unit,
     navigateToOnboarding: () -> Unit,
-    context: Context
+    context: Context,
 ) {
     composable<LoginRoute> {
         LoginRoute(
             navigateToSubject = navigateToSubject,
             navigateToOnboarding = navigateToOnboarding,
-            context = context
+            context = context,
         )
     }
 }
