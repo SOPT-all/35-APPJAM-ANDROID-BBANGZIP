@@ -34,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.bottomsheet.BbangZipDatePickerBottomSheet
+import org.android.bbangzip.presentation.component.bottomsheet.BbangZipListPickerBottomSheet
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.textfield.BbangZipBasicTextField
 import org.android.bbangzip.presentation.component.textfield.BbangZipSimpleTextField
@@ -58,6 +59,7 @@ fun AddStudyScreen(
     datePickerBottomSheetState: Boolean = false,
     piecePickerBottomSheetState: Boolean = false,
     isButtonEnable: Boolean = false,
+    isSplitBtnEnable: Boolean = false,
     studyContentTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onChangeStudyContent: (String) -> Unit = {},
     onChangeStartPage: (String) -> Unit = {},
@@ -67,11 +69,12 @@ fun AddStudyScreen(
     onChangeStartPageFocused: (Boolean) -> Unit = {},
     onChangeEndPageFocused: (Boolean) -> Unit = {},
     onClickDatePicker: () -> Unit = {},
-    onClickPieceNumber: () -> Unit = {},
+    onClickPieceNumber: (Int) -> Unit = {},
     onClickBackIcon: () -> Unit = {},
     onClickSplitBtn: () -> Unit = {},
     onClickNextBtn: () -> Unit = {},
     onClickEnrollBtn: () -> Unit = {},
+    onClickCancleIcon: () -> Unit = {},
     onClickConfirmDateBtn: () -> Unit = {}
 ){
     val title by remember { mutableStateOf("경제통계학") }
@@ -164,6 +167,7 @@ fun AddStudyScreen(
                     onValueChange = { onChangeStudyContent(it) },
                     onFocusChange = { onChangeStudyContentFocused(it) },
                     maxCharacter = 20,
+                    onDeleteButtonClick = { onClickCancleIcon()},
                     focusManager = focusManager
                 )
             }
@@ -221,7 +225,8 @@ fun AddStudyScreen(
                     onClickSplitBtn()
                 },
                 modifier = Modifier.fillMaxWidth(),
-                label = stringResource(R.string.btn_slice_study_label)
+                label = stringResource(R.string.btn_slice_study_label),
+                isEnable = isSplitBtnEnable
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -241,7 +246,7 @@ fun AddStudyScreen(
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_enroll_study_label),
                 trailingIcon = R.drawable.ic_plus_thick_24,
-                isEnable = false
+                isEnable = isButtonEnable
             )
         }
 
@@ -254,7 +259,16 @@ fun AddStudyScreen(
             onDismissRequest = onClickDatePicker,
         )
 
-//        BbangZipListPickerBottomSheet()
+        BbangZipListPickerBottomSheet(
+            isBottomSheetVisible = piecePickerBottomSheetState,
+            itemList = listOf("1조각", "2조각", "3조각", "4조각", "5조각","6조각"),
+            title = {
+                Text(
+                    text = "몇 조각으로 쪼개서 공부할까요?"
+                )
+                    },
+            onSelectedItemChanged = onClickPieceNumber
+        )
     }
 }
 

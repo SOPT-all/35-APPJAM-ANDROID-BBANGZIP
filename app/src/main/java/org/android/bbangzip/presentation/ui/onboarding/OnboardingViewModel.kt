@@ -182,13 +182,11 @@ class OnboardingViewModel
                 is OnboardingContract.OnboardingReduce.UpdateCurrentPage -> state.copy(currentPage = reduce.nextPage)
                 is OnboardingContract.OnboardingReduce.UpdateUserNameTextFieldSate -> {
                     val checkedText = determineTextFieldType(reduce.userName, currentUiState.userNameFocusedState)
-                    Timber.d("[TextField] UpdateUserNameTextFieldSate -> ${reduce.userName} -> $checkedText")
                     state.copy(userNameTextFieldState = checkedText)
                 }
 
                 is OnboardingContract.OnboardingReduce.UpdateSubjectNameTextFieldSate -> {
                     val checkedText = determineTextFieldType(reduce.subject, currentUiState.subjectNameFocusedState)
-                    Timber.d("[온보딩] 텍스트 필드 -> ${reduce.subject} -> $checkedText")
                     state.copy(subjectNameTextFieldState = checkedText)
                 }
 

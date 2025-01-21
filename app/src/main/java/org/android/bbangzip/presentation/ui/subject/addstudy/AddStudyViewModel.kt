@@ -6,7 +6,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.android.bbangzip.domain.repository.local.UserRepository
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.ShortTextFieldType
+import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyContract.AddStudyReduce
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -25,38 +27,46 @@ class AddStudyViewModel
     override fun handleEvent(event: AddStudyContract.AddStudyEvent) {
         when(event){
             is AddStudyContract.AddStudyEvent.OnChangeEndPage -> {
-                updateState(AddStudyContract.AddStudyReduce.UpdateEndPage(endPage = event.endPage))
+                updateState(AddStudyReduce.UpdateEndPage(endPage = event.endPage))
             }
             is AddStudyContract.AddStudyEvent.OnChangeStartPage -> {
-                updateState(AddStudyContract.AddStudyReduce.UpdateStartPage(startPage = event.startPage))
+                updateState(AddStudyReduce.UpdateStartPage(startPage = event.startPage))
             }
             is AddStudyContract.AddStudyEvent.OnChangeStartPageFocused -> {
-                updateState(AddStudyContract.AddStudyReduce.UpdateStartPageFocusedState(startPageFocusedState = event.startPageFocusedState))
+                updateState(AddStudyReduce.UpdateStartPageFocusedState(startPageFocusedState = event.startPageFocusedState))
+                updateState(AddStudyReduce.UpdateStartPageToString)
+                updateState(AddStudyReduce.UpdateSplitButtonEnabled)
+                updateState(AddStudyReduce.UpdateButtonEnabled)
             }
 
             is AddStudyContract.AddStudyEvent.OnChangeEndPageFocused -> {
-                updateState(AddStudyContract.AddStudyReduce.UpdateEndPageFocusedState(endPageFocusedState = event.endPageFocusedState))
+                updateState(AddStudyReduce.UpdateEndPageFocusedState(endPageFocusedState = event.endPageFocusedState))
+                updateState(AddStudyReduce.UpdateEndPageToString)
+                updateState(AddStudyReduce.UpdateSplitButtonEnabled)
+                updateState(AddStudyReduce.UpdateButtonEnabled)
             }
 
             is AddStudyContract.AddStudyEvent.OnChangeStudyContent -> {
-                updateState(AddStudyContract.AddStudyReduce.UpdateStudyContent(studyContent = event.studyContent))
+                updateState(AddStudyReduce.UpdateStudyContent(studyContent = event.studyContent))
             }
             is AddStudyContract.AddStudyEvent.OnChangeStudyContentFocused -> {
-                updateState(AddStudyContract.AddStudyReduce.UpdateStudyContentFocusedState(studyContentFocusedState = event.studyContentFocusedState))
+                updateState(AddStudyReduce.UpdateStudyContentFocusedState(studyContentFocusedState = event.studyContentFocusedState))
+                updateState(AddStudyReduce.UpdateButtonEnabled)
             }
 
             is AddStudyContract.AddStudyEvent.OnClickConfirmDateBtn -> {
-                updateState(AddStudyContract.AddStudyReduce.UpdateDatePickerBottomSheetState)
-                updateState(AddStudyContract.AddStudyReduce.UpdateExamDate)
+                updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
+                updateState(AddStudyReduce.UpdateExamDate)
+                updateState(AddStudyReduce.UpdateButtonEnabled)
             }
 
             is AddStudyContract.AddStudyEvent.OnChangeSelectedDate -> {
-                updateState(AddStudyContract.AddStudyReduce.UpdateSelectedDate(date = event.selectedDate))
+                updateState(AddStudyReduce.UpdateSelectedDate(date = event.selectedDate))
             }
 
             AddStudyContract.AddStudyEvent.OnClickBackIcon -> { }
             AddStudyContract.AddStudyEvent.OnClickDatePicker -> {
-                updateState(AddStudyContract.AddStudyReduce.UpdateDatePickerBottomSheetState)
+                updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
             }
             AddStudyContract.AddStudyEvent.OnClickEnrollBtn -> {
 
@@ -64,14 +74,16 @@ class AddStudyViewModel
             AddStudyContract.AddStudyEvent.OnClickNextBtn -> {
 
             }
-            AddStudyContract.AddStudyEvent.OnClickPieceNumber -> {
-
+            AddStudyContract.AddStudyEvent.OnClickCancleIcon ->{
+                updateState(AddStudyReduce.ResetStudyContent)
+            }
+            is AddStudyContract.AddStudyEvent.OnClickPieceNumber -> {
+                updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
+                updateState(AddStudyReduce.UpdatePieceNumber(event.pieceNumber))
             }
             AddStudyContract.AddStudyEvent.OnClickSplitBtn -> {
-                updateState(AddStudyContract.AddStudyReduce.UpdatePiecePickerBottomSheetState)
+                updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
             }
-
-
         }
     }
 
@@ -140,7 +152,58 @@ class AddStudyViewModel
             AddStudyContract.AddStudyReduce.UpdateStudyContentInputState -> {
                 state
             }
+
+            is AddStudyContract.AddStudyReduce.UpdatePieceNumber -> {
+                state.copy(
+                    pieceNumber = reduce.pieceNumber
+                )
+            }
+
+            is AddStudyContract.AddStudyReduce.UpdateStartPageToString -> {
+                state.copy(
+                    startPage = if(state.startPage.isNullOrEmpty()) {
+                        ""
+                    }else {
+                        if (state.startPageFocusedState) state.startPage.filter { it.isDigit() }.toInt().toString() else state.startPage.toInt().toString() + "p"
+                    },
+                )
+            }
+
+            is AddStudyContract.AddStudyReduce.UpdateEndPageToString -> {
+                state.copy(
+                    endPage = if(state.endPage.isNullOrEmpty()) {
+                        ""
+                    }else {
+                        if (state.endPageFocusedState) state.endPage.filter { it.isDigit() }.toInt().toString() else state.endPage.toInt().toString() + "p"
+                    },
+                )
+            }
+
+            is AddStudyContract.AddStudyReduce.UpdateSplitButtonEnabled -> {
+                Timber.d("[UpdateSplitButtonEnabled]${state.buttonSplitEnabled}")
+                state.copy(
+                    buttonSplitEnabled = !(state.startPage.isNullOrEmpty() || state.endPage.isNullOrEmpty() || unitTextToInt(state.startPage) > unitTextToInt(state.endPage))
+                )
+            }
+
+            is AddStudyReduce.UpdateButtonEnabled -> {
+                state.copy(
+                    buttonEnabled = state.examDate != "시험 일자 입력" && !state.studyContent.isNullOrEmpty() && state.buttonSplitEnabled
+                )
+            }
+
+            is AddStudyReduce.ResetStudyContent -> {
+                state.copy(
+                    studyContent = ""
+                )
+            }
+
+            else -> {state}
         }
+    }
+
+    private fun unitTextToInt(text: String): Int{
+        return text.filter { it.isDigit() }.toInt()
     }
 
     private fun determineLongTextFieldType(

@@ -52,8 +52,11 @@ fun BbangZipListPickerBottomSheet(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
-                                .applyFilterOnClick { onSelectedItemChanged(index) },
+                                .applyFilterOnClick(
+                                    radius = 16.dp,
+                                    isDisabled = false
+                                ) { onSelectedItemChanged(index+1) }
+                                .padding(vertical = 8.dp),
                         textAlign = TextAlign.Center,
                         style = BbangZipTheme.typography.body1Bold,
                         color = BbangZipTheme.colors.labelNormal_282119,

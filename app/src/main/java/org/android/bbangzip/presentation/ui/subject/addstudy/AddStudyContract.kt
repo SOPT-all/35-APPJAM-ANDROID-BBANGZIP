@@ -21,8 +21,10 @@ class AddStudyContract{
         val endPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
         val endPageFocusedState: Boolean = false,
         val buttonEnabled: Boolean = false,
+        val buttonSplitEnabled: Boolean = false,
         val datePickerBottomSheetState: Boolean = false,
         val piecePickerBottomSheetState: Boolean = false,
+        val pieceNumber: Int = 1,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -44,9 +46,11 @@ class AddStudyContract{
 
         data object OnClickDatePicker : AddStudyEvent
 
-        data object OnClickPieceNumber : AddStudyEvent
+        data class OnClickPieceNumber(val pieceNumber: Int) : AddStudyEvent
 
         data object OnClickBackIcon : AddStudyEvent
+
+        data object OnClickCancleIcon : AddStudyEvent
 
         data object OnClickSplitBtn : AddStudyEvent
 
@@ -83,6 +87,18 @@ class AddStudyContract{
         data object UpdateDatePickerBottomSheetState : AddStudyReduce
 
         data object UpdatePiecePickerBottomSheetState : AddStudyReduce
+
+        data class UpdatePieceNumber(val pieceNumber: Int) : AddStudyReduce
+
+        data object UpdateButtonEnabled : AddStudyReduce
+
+        data object UpdateSplitButtonEnabled : AddStudyReduce
+
+        data object UpdateStartPageToString : AddStudyReduce
+
+        data object UpdateEndPageToString : AddStudyReduce
+
+        data object ResetStudyContent : AddStudyReduce
     }
 
     sealed interface AddStudySideEffect : BaseContract.SideEffect {

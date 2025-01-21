@@ -29,6 +29,8 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.input.ImeAction
@@ -179,8 +181,7 @@ fun BbangZipSimpleTextFieldPreview() {
                 text = newValue
                 validateText(text = newValue)
             },
-            modifier = TODO(),
-            focusManager = TODO(),
+            focusManager = LocalFocusManager.current
         )
     }
 }
