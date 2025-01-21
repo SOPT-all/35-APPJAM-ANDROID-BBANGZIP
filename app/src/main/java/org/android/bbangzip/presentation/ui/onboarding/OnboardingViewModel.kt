@@ -34,7 +34,7 @@ constructor(
         semester: String,
         subject: String,
     ) {
-        viewModelScope.launch { userRepository.setOnboardingInfo(userName, year, subject, semester) }
+        viewModelScope.launch { userRepository.setOnboardingInfo(userName, year, semester, subject) }
     }
 
     override fun createInitialState(savedState: Parcelable?): OnboardingContract.OnboardingState {
@@ -151,7 +151,13 @@ constructor(
                     1 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
                     2 -> {
                         updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
-                        setUserOnboardingInfo(currentUiState.userName ?: "", currentUiState.semester.year.toInt(), currentUiState.semester.semester.text, currentUiState.subjectName ?: "")
+                        Timber.d("[온보딩] -> ${currentUiState.userName}, ${currentUiState.semester}, ${currentUiState.subjectName}")
+                        setUserOnboardingInfo(
+                            userName = currentUiState.userName ?: "",
+                            year = currentUiState.semester.year.toInt(),
+                            semester = currentUiState.semester.semester.text,
+                            subject = currentUiState.subjectName ?: ""
+                        )
                         setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboardingEnd)
                     }
                 }
@@ -159,9 +165,8 @@ constructor(
 
             is OnboardingContract.OnboardingEvent.OnClickFinishBtn ->{
                 val onboardingInfo = runBlocking { userRepository.userPreferenceFlow.map { it.onboardingInfo }.firstOrNull() }
-                postOnboardingInfo(
-                    onboardingInfo
-                )
+                Timber.d("[온보딩] -> $onboardingInfo")
+                postOnboardingInfo(onboardingInfo = onboardingInfo)
                 setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToSubject)
             }
         }
@@ -241,6 +246,7 @@ constructor(
 
     private fun postOnboardingInfo(onboardingInfo: org.android.bbangzip.OnboardingInfo?) {
         viewModelScope.launch {
+            Timber.d("[온보딩] 온보딩 POST -> ${onboardingInfo?.userName}, ${onboardingInfo?.year}, ${onboardingInfo?.semester}, ${onboardingInfo?.subjectName} ")
             postOnboardingUseCase.invoke(
                 OnboardingEntity(
                     nickname = onboardingInfo?.userName ?: "",
