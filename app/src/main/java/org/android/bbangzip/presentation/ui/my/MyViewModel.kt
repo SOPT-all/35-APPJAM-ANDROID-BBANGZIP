@@ -8,6 +8,7 @@ import kotlinx.coroutines.launch
 import org.android.bbangzip.data.service.KakaoAuthService
 import org.android.bbangzip.domain.repository.local.UserLocalRepository
 import org.android.bbangzip.domain.usecase.DeleteLogoutUseCase
+import org.android.bbangzip.domain.usecase.DeleteWithdrawUseCase
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
@@ -18,6 +19,7 @@ class MyViewModel
     private val userLocalRepository: UserLocalRepository,
     private val kakaoAuthService: KakaoAuthService,
     private val deleteLogoutUseCase: DeleteLogoutUseCase,
+    private val deleteWithdrawUseCase: DeleteWithdrawUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<MyContract.MyEvent, MyContract.MyState, MyContract.MyReduce, MyContract.MySideEffect>(
     savedStateHandle = savedStateHandle
@@ -35,7 +37,7 @@ class MyViewModel
             }
 
             is MyContract.MyEvent.OnClickWithdrawBtn -> {
-
+                withdraw()
             }
         }
     }
@@ -54,9 +56,23 @@ class MyViewModel
         }
     }
 
+    private fun withdraw() {
+        viewModelScope.launch {
+            deleteWithdrawUseCase.invoke().onSuccess {
+                kakaoAuthService.withdrawKakao()
+                clearDataStore()
+                Timber.d("[마이페이지] 서버 -> 회원탈퇴 성공 $error")
+            }.onFailure {
+                Timber.d("[마이페이지] 서버 -> 회원탈퇴 실패 $error")
+            }
+        }
+    }
+
     private suspend fun clearDataStore() {
         with(userLocalRepository) {
-            clearDataStore()
+            clearAccessToken()
+            clearRefreshToken()
+            clearOnboardingInfo()
         }
     }
 }

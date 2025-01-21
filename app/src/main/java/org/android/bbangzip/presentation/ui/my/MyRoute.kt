@@ -7,6 +7,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 fun MyRoute(
     viewModel: MyViewModel = hiltViewModel()
 ) {
-
-    MyScreen(onClickLogoutBtn = {viewModel.setEvent(MyContract.MyEvent.OnClickLogoutBtn)})
+    MyScreen(
+        onClickLogoutBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutBtn) },
+        onClickWithdrawBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawBtn) }
+    )
 }

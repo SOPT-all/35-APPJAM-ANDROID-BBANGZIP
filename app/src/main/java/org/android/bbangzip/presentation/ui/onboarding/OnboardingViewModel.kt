@@ -167,7 +167,6 @@ constructor(
                 val onboardingInfo = runBlocking { userRepository.userPreferenceFlow.map { it.onboardingInfo }.firstOrNull() }
                 Timber.d("[온보딩] -> $onboardingInfo")
                 postOnboardingInfo(onboardingInfo = onboardingInfo)
-                setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToSubject)
             }
         }
     }
