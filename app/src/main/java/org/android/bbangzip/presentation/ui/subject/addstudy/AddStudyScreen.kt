@@ -51,6 +51,7 @@ import timber.log.Timber
 @Composable
 fun AddStudyScreen(
     padding: PaddingValues,
+    subjectTitle: String = "",
     examDate: String = "",
     studyContent: String = "",
     startPage: String = "",
@@ -77,12 +78,6 @@ fun AddStudyScreen(
     onClickCancleIcon: () -> Unit = {},
     onClickConfirmDateBtn: () -> Unit = {}
 ){
-    val title by remember { mutableStateOf("경제통계학") }
-    LaunchedEffect(selectedDate) {
-        Timber.d("[selectedDate] ->$selectedDate")
-    }
-
-
     val focusManager = LocalFocusManager.current
 
     Column(
@@ -93,7 +88,7 @@ fun AddStudyScreen(
     ){
         BbangZipBaseTopBar(
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            title = title
+            title = subjectTitle
         )
         Column(
             modifier = Modifier
@@ -168,7 +163,8 @@ fun AddStudyScreen(
                     onFocusChange = { onChangeStudyContentFocused(it) },
                     maxCharacter = 20,
                     onDeleteButtonClick = { onClickCancleIcon()},
-                    focusManager = focusManager
+                    focusManager = focusManager,
+                    bbangZipTextFieldInputState = studyContentTextFieldState
                 )
             }
 
@@ -196,7 +192,7 @@ fun AddStudyScreen(
                             onChangeStartPage(it)
                         },
                         onFocusChange = { onChangeStartPageFocused(it) },
-                        focusManager = focusManager
+                        focusManager = focusManager,
                     )
 
                     Spacer(modifier = Modifier.width(16.dp))

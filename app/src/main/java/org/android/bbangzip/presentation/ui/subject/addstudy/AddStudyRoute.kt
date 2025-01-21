@@ -15,6 +15,7 @@ fun AddStudyRoute(
 
     AddStudyScreen(
         padding = padding,
+        subjectTitle = addStudyState.subjectTitle,
         examDate = addStudyState.examDate,
         studyContent = addStudyState.studyContent?: "",
         startPage = addStudyState.startPage?: "",

@@ -9,6 +9,7 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class AddStudyContract{
     @Parcelize
     data class AddStudyState(
+        val subjectName: String = "경제통계학",
         val examDate: String = "시험 일자 입력",
         val selectedDate: Date = Date("2025", "1", "21"),
         val studyContent: String? = null,

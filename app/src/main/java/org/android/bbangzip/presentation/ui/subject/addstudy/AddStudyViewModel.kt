@@ -47,10 +47,13 @@ class AddStudyViewModel
             }
 
             is AddStudyContract.AddStudyEvent.OnChangeStudyContent -> {
+                Timber.d("studyContent : ${event.studyContent}")
                 updateState(AddStudyReduce.UpdateStudyContent(studyContent = event.studyContent))
+                updateState(AddStudyReduce.UpdateStudyContentInputState)
             }
             is AddStudyContract.AddStudyEvent.OnChangeStudyContentFocused -> {
                 updateState(AddStudyReduce.UpdateStudyContentFocusedState(studyContentFocusedState = event.studyContentFocusedState))
+                updateState(AddStudyReduce.UpdateStudyContentInputState)
                 updateState(AddStudyReduce.UpdateButtonEnabled)
             }
 
@@ -150,7 +153,9 @@ class AddStudyViewModel
                 )
             }
             AddStudyContract.AddStudyReduce.UpdateStudyContentInputState -> {
-                state
+                Timber.d("텍스트필드")
+                val checkedText = determineLongTextFieldType(state.studyContent?:"", state.studyContentFocusedState)
+                state.copy(studyContentTextFieldState = checkedText)
             }
 
             is AddStudyContract.AddStudyReduce.UpdatePieceNumber -> {
