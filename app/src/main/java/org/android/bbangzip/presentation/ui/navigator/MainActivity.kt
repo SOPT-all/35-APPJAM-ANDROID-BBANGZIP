@@ -37,7 +37,7 @@ class MainActivity : ComponentActivity() {
                 if (showSplash) {
                     SplashScreen()
                 } else {
-                    MainScreen(navigator = navigator, context = this@MainActivity)
+                    MainScreen(navigator = navigator)
                 }
             }
         }

@@ -31,7 +31,6 @@ fun MainNavHost(
     modifier: Modifier = Modifier,
     navigator: MainNavigator,
     padding: PaddingValues,
-    context: Context,
     snackBarHostState: SnackbarHostState,
 ) {
     Box(
@@ -50,7 +49,6 @@ fun MainNavHost(
                 navigateToOnboarding = {
                     navigator.navHostController.navigateOnboardingStart()
                 },
-                context = context,
             )
 
             onboardingStartNavGraph(
