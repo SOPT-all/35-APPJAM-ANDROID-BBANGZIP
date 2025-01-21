@@ -36,7 +36,6 @@ fun TodoAddRoute(
 
     activity.window.statusBarColor = BbangZipTheme.colors.staticWhite_FFFFFF.toArgb()
 
-
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
