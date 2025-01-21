@@ -9,7 +9,7 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class AddStudyContract{
     @Parcelize
     data class AddStudyState(
-        val subjectName: String = "경제통계학",
+        val subjectName: String = "빵집",
         val examDate: String = "시험 일자 입력",
         val selectedDate: Date = Date("2025", "1", "21"),
         val studyContent: String? = null,
@@ -103,6 +103,6 @@ class AddStudyContract{
     }
 
     sealed interface AddStudySideEffect : BaseContract.SideEffect {
-        data object navigateSplitStudy : AddStudySideEffect
+        data class NavigateSplitStudy(val subjectName: String) : AddStudySideEffect
     }
 }

@@ -20,6 +20,8 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavG
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
+import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
+import org.android.bbangzip.presentation.ui.subject.splitstudy.splitStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
 import org.android.bbangzip.presentation.ui.todo.navigation.todoNavGraph
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.todoAddPendingNavGraph
@@ -82,8 +84,11 @@ fun MainNavHost(
             subjectNavGraph()
 
             addStudyNavGraph(
-                padding = padding
+                padding = padding,
+                navigateSplitStudy = {navigator.navHostController.navigateSplitStudy(it)}
             )
+
+            splitStudyNavGraph()
 
             todoNavGraph(
                 snackBarHostState = snackBarHostState,

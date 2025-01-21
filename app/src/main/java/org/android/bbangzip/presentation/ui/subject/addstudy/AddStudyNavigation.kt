@@ -13,11 +13,13 @@ fun NavController.navigateAddStudy() {
 }
 
 fun NavGraphBuilder.addStudyNavGraph(
-    padding: PaddingValues
+    padding: PaddingValues,
+    navigateSplitStudy: (String) -> Unit,
 ) {
     composable<AddStudyRoute> {
         AddStudyRoute(
             padding = padding,
+            navigateSplitStudy = navigateSplitStudy
         )
     }
 }

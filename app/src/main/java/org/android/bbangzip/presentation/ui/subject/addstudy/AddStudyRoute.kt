@@ -2,16 +2,31 @@ package org.android.bbangzip.presentation.ui.subject.addstudy
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.collectLatest
+import timber.log.Timber
 
 @Composable
 fun AddStudyRoute(
     padding: PaddingValues,
-    viewModel: AddStudyViewModel = hiltViewModel()
+    viewModel: AddStudyViewModel = hiltViewModel(),
+    navigateSplitStudy: (String) -> Unit = {}
 ){
     val addStudyState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect(viewModel.uiSideEffect) {
+        viewModel.uiSideEffect.collectLatest {
+            when (it) {
+                is AddStudyContract.AddStudySideEffect.NavigateSplitStudy -> {
+                    navigateSplitStudy(it.subjectName)
+                    Timber.d("navigateSplitStudy${it.subjectName}")
+                }
+            }
+        }
+    }
 
     AddStudyScreen(
         padding = padding,

@@ -72,7 +72,6 @@ class AddStudyViewModel
                 updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
             }
             AddStudyContract.AddStudyEvent.OnClickEnrollBtn -> {
-
             }
             AddStudyContract.AddStudyEvent.OnClickNextBtn -> {
 
@@ -83,6 +82,7 @@ class AddStudyViewModel
             is AddStudyContract.AddStudyEvent.OnClickPieceNumber -> {
                 updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
                 updateState(AddStudyReduce.UpdatePieceNumber(event.pieceNumber))
+                setSideEffect(AddStudyContract.AddStudySideEffect.NavigateSplitStudy(subjectName = currentUiState.subjectName))
             }
             AddStudyContract.AddStudyEvent.OnClickSplitBtn -> {
                 updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
@@ -202,8 +202,6 @@ class AddStudyViewModel
                     studyContent = ""
                 )
             }
-
-            else -> {state}
         }
     }
 

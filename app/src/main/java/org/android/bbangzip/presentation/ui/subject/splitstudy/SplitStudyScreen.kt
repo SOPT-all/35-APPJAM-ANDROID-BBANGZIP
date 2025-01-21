@@ -30,7 +30,6 @@ import org.android.bbangzip.presentation.model.Date
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.BbangZipShadowType
-import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyContract
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -38,8 +37,11 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun SplitStudyScreen(
     pieceNumber: Int = 6,
+    subjectName: String = "",
     startPage: String = "",
     endPage: String = "",
+    startPageList: List<String> = emptyList(),
+    endPageList: List<String> = emptyList(),
     seletedDate: List<Date> = listOf(
         Date("2025", "1", "21"),
         Date("2025", "1", "21"),
@@ -64,7 +66,7 @@ fun SplitStudyScreen(
     ) {
         BbangZipBaseTopBar(
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            title = "경제 통계학",
+            title = subjectName,
             onLeadingIconClick = { onBackBtnClick() },
         )
 
