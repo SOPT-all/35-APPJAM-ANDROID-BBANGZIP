@@ -7,13 +7,13 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
-import timber.log.Timber
+import org.android.bbangzip.presentation.model.AddStudyData
 
 @Composable
 fun AddStudyRoute(
     padding: PaddingValues,
     viewModel: AddStudyViewModel = hiltViewModel(),
-    navigateSplitStudy: (String) -> Unit = {}
+    navigateSplitStudy: (AddStudyData) -> Unit = {}
 ){
     val addStudyState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -21,8 +21,7 @@ fun AddStudyRoute(
         viewModel.uiSideEffect.collectLatest {
             when (it) {
                 is AddStudyContract.AddStudySideEffect.NavigateSplitStudy -> {
-                    navigateSplitStudy(it.subjectName)
-                    Timber.d("navigateSplitStudy${it.subjectName}")
+                    navigateSplitStudy(it.addStudyData)
                 }
             }
         }

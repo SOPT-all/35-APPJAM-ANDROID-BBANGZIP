@@ -2,6 +2,8 @@ package org.android.bbangzip.presentation.ui.subject.addstudy
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import kotlinx.serialization.descriptors.PrimitiveKind
+import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.model.Date
 import org.android.bbangzip.presentation.util.base.BaseContract
@@ -25,7 +27,7 @@ class AddStudyContract{
         val buttonSplitEnabled: Boolean = false,
         val datePickerBottomSheetState: Boolean = false,
         val piecePickerBottomSheetState: Boolean = false,
-        val pieceNumber: Int = 1,
+        val pieceNumber: Int = 0,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -103,6 +105,6 @@ class AddStudyContract{
     }
 
     sealed interface AddStudySideEffect : BaseContract.SideEffect {
-        data class NavigateSplitStudy(val subjectName: String) : AddStudySideEffect
+        data class NavigateSplitStudy(val addStudyData: AddStudyData) : AddStudySideEffect
     }
 }

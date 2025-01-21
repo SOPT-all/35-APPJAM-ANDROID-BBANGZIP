@@ -2,6 +2,7 @@ package org.android.bbangzip.presentation.ui.subject.splitstudy
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
+import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.model.Date
 import org.android.bbangzip.presentation.util.base.BaseContract
@@ -12,7 +13,7 @@ class SplitStudyContract {
         val subjectName: String = "경제통계학",
         val startPage: String = "",
         val endPage: String = "",
-        val pieceNumber: Int = 1,
+        val pieceNumber: Int = 0,
         val startPageList: List<String> = listOf(),
         val startPageFocusedList: List<Boolean> = listOf(),
         val startPageTextFieldStateList: List<BbangZipTextFieldInputState> = listOf(),
@@ -26,7 +27,7 @@ class SplitStudyContract {
     }
 
     sealed interface SplitStudyEvent : BaseContract.Event {
-        data class Initialize(val subjectName: String) : SplitStudyEvent
+        data class Initialize(val addStudyData: AddStudyData) : SplitStudyEvent
 
         data class OnChangeStartPage(val startPage: String) : SplitStudyEvent
 
@@ -50,7 +51,7 @@ class SplitStudyContract {
     }
 
     sealed interface SplitStudyReduce : BaseContract.Reduce {
-        data class InitializeState(val subjectName: String) : SplitStudyReduce
+        data class InitializeState(val addStudyData: AddStudyData) : SplitStudyReduce
 
         data class UpdateStartPage(val startPage: String) : SplitStudyReduce
 
@@ -75,9 +76,11 @@ class SplitStudyContract {
         data object UpdateStartPageToString : SplitStudyReduce
 
         data object UpdateEndPageToString : SplitStudyReduce
+
+        data object UpdatePieceNumber: SplitStudyReduce
     }
 
     sealed interface SplitStudySideEffect : BaseContract.SideEffect {
-        data object navigateSplitStudy : SplitStudySideEffect
+        data object NavigateAddStudy : SplitStudySideEffect
     }
 }

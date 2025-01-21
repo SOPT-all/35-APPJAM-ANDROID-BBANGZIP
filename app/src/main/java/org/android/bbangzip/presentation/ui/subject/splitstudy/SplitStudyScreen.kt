@@ -33,10 +33,11 @@ import org.android.bbangzip.presentation.type.BbangZipShadowType
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BbangZipTheme
+import timber.log.Timber
 
 @Composable
 fun SplitStudyScreen(
-    pieceNumber: Int = 6,
+    pieceNumber: Int = 0,
     subjectName: String = "",
     startPage: String = "",
     endPage: String = "",
@@ -57,6 +58,8 @@ fun SplitStudyScreen(
     onBackBtnClick: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
+
+    Timber.d("pieceNumber : $pieceNumber")
 
     Box(
         modifier = Modifier
@@ -108,7 +111,7 @@ fun SplitStudyScreen(
                             ){
                                 BbangZipChip(
                                     backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                                    text = "10p",
+                                    text = startPage,
                                 )
 
                                 Spacer(modifier = Modifier.width(4.dp))
@@ -123,7 +126,7 @@ fun SplitStudyScreen(
 
                                 BbangZipChip(
                                     backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                                    text = "110p",
+                                    text = endPage,
                                 )
 
                                 Spacer(modifier = Modifier.width(4.dp))
@@ -169,7 +172,7 @@ fun SplitStudyScreen(
                             leadingIcon = R.drawable.ic_page_check_default_24,
                             placeholder = R.string.add_study_start_page_placeholder,
                             guideline = R.string.add_study_start_page_guideline,
-                            value = startPage,
+                            value = startPageList[index],
                             modifier = Modifier.weight(1f),
                             onValueChange = {
                                 onChangeStartPage(it)
@@ -184,7 +187,7 @@ fun SplitStudyScreen(
                             leadingIcon = R.drawable.ic_page_check_default_24,
                             placeholder = R.string.add_study_end_page_placeholder,
                             guideline = R.string.add_study_end_page_guideline,
-                            value = endPage,
+                            value = endPageList[index],
                             modifier = Modifier.weight(1f),
                             onValueChange = {
                                 onChangeEndPage(it)
@@ -202,10 +205,12 @@ fun SplitStudyScreen(
                         onClick = {},
                         modifier = Modifier.fillMaxWidth(),
                         leadingIcon = R.drawable.ic_page_check_default_24,
-                        label = "${seletedDate[index].year}년 ${seletedDate[index].month}월 ${seletedDate[index].day}일 까지",
+                        label = "${seletedDate[index+1].year}년 ${seletedDate[index+1].month}월 ${seletedDate[index+1].day}일 까지",
                     )
                 }
             }
+
+            item { Spacer(modifier = Modifier.height(88.dp)) }
         }
 
         BbangZipButton(
@@ -226,6 +231,7 @@ fun SplitStudyScreen(
 @Preview(showSystemUi = true)
 @Composable
 fun SplitStudyScreenPreview() {
-    SplitStudyScreen()
+    SplitStudyScreen(
+    )
 }
 

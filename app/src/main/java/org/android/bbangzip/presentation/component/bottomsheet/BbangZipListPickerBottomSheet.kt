@@ -21,6 +21,7 @@ import androidx.compose.ui.unit.dp
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
+import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,7 +56,7 @@ fun BbangZipListPickerBottomSheet(
                                 .applyFilterOnClick(
                                     radius = 16.dp,
                                     isDisabled = false
-                                ) { onSelectedItemChanged(index+1) }
+                                ) { onSelectedItemChanged((index+1))}
                                 .padding(vertical = 8.dp),
                         textAlign = TextAlign.Center,
                         style = BbangZipTheme.typography.body1Bold,
@@ -71,7 +72,7 @@ fun BbangZipListPickerBottomSheet(
 @Composable
 private fun BbangZipListPickerBottomSheetPreview() {
     var isBottomSheetVisible by rememberSaveable { mutableStateOf(true) }
-    var selectedPiece by rememberSaveable { mutableStateOf<Int?>(null) }
+    var selectedPiece by rememberSaveable { mutableStateOf<String>("") }
 
     BBANGZIPTheme {
         BbangZipListPickerBottomSheet(
@@ -98,7 +99,7 @@ private fun BbangZipListPickerBottomSheetPreview() {
                     "6조각",
                 ),
             onSelectedItemChanged = { index ->
-                selectedPiece = index
+                selectedPiece = index.toString()
                 isBottomSheetVisible = !isBottomSheetVisible
             },
         )

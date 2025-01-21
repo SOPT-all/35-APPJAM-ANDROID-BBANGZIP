@@ -5,6 +5,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
+import org.android.bbangzip.presentation.model.AddStudyData
 
 fun NavController.navigateAddStudy() {
     navigate(
@@ -14,7 +15,7 @@ fun NavController.navigateAddStudy() {
 
 fun NavGraphBuilder.addStudyNavGraph(
     padding: PaddingValues,
-    navigateSplitStudy: (String) -> Unit,
+    navigateSplitStudy: (AddStudyData) -> Unit,
 ) {
     composable<AddStudyRoute> {
         AddStudyRoute(

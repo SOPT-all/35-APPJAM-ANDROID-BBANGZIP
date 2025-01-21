@@ -4,6 +4,10 @@ import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import org.android.bbangzip.presentation.util.date.dateStringToLocalDate
+import org.android.bbangzip.presentation.util.date.divideDatesByN
+import org.android.bbangzip.presentation.util.date.localDateToDate
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,20 +27,32 @@ class SplitStudyViewModel
         reduce: SplitStudyContract.SplitStudyReduce
     ): SplitStudyContract.SplitStudyState {
         return when(reduce){
-            SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled -> {state}
-            SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState -> {state}
+            is SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled -> {state}
+            is SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState -> {state}
             is SplitStudyContract.SplitStudyReduce.UpdateEndPage -> {state}
             is SplitStudyContract.SplitStudyReduce.UpdateEndPageFocusedState -> {state}
-            SplitStudyContract.SplitStudyReduce.UpdateEndPageInputState -> {state}
-            SplitStudyContract.SplitStudyReduce.UpdateEndPageToString -> {state}
-            SplitStudyContract.SplitStudyReduce.UpdateExamDate -> {state}
+            is SplitStudyContract.SplitStudyReduce.UpdateEndPageInputState -> {state}
+            is SplitStudyContract.SplitStudyReduce.UpdateEndPageToString -> {state}
+            is SplitStudyContract.SplitStudyReduce.UpdateExamDate -> {state}
             is SplitStudyContract.SplitStudyReduce.UpdateSelectedDate -> {state}
             is SplitStudyContract.SplitStudyReduce.UpdateStartPage -> {state}
             is SplitStudyContract.SplitStudyReduce.UpdateStartPageFocusedState -> {state}
-            SplitStudyContract.SplitStudyReduce.UpdateStartPageInputState -> {state}
-            SplitStudyContract.SplitStudyReduce.UpdateStartPageToString -> {state}
+            is SplitStudyContract.SplitStudyReduce.UpdateStartPageInputState -> {state}
+            is SplitStudyContract.SplitStudyReduce.UpdateStartPageToString -> {state}
+            is SplitStudyContract.SplitStudyReduce.UpdatePieceNumber -> {state}
             is SplitStudyContract.SplitStudyReduce.InitializeState -> {
-                state.copy(subjectName = reduce.subjectName)}
+                state.copy(
+                    subjectName = reduce.addStudyData.subjectName,
+                    startPage = reduce.addStudyData.startPage,
+                    endPage = reduce.addStudyData.endPage,
+                    pieceNumber = reduce.addStudyData.pieceNumber,
+                    startPageList = reduce.addStudyData.startPageList,
+                    endPageList = reduce.addStudyData.endPageList,
+                    dateList = divideDatesByN(
+                        dateStringToLocalDate( reduce.addStudyData.examDate), reduce.addStudyData.pieceNumber
+                    ).map { localDateToDate(it) },
+                    )
+            }
         }
     }
 
@@ -48,7 +64,8 @@ class SplitStudyViewModel
             is SplitStudyContract.SplitStudyEvent.OnChangeStartPage -> {}
             is SplitStudyContract.SplitStudyEvent.OnChangeStartPageFocused -> {}
             is SplitStudyContract.SplitStudyEvent.Initialize -> {
-                updateState(SplitStudyContract.SplitStudyReduce.InitializeState(subjectName = event.subjectName))
+                Timber.d("[쪼개기] Initialize -> ${event.addStudyData}")
+                updateState(SplitStudyContract.SplitStudyReduce.InitializeState(addStudyData = event.addStudyData))
             }
             SplitStudyContract.SplitStudyEvent.OnClickBackIcon -> {}
             SplitStudyContract.SplitStudyEvent.OnClickConfirmDateBtn -> {}

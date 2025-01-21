@@ -5,17 +5,18 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.android.bbangzip.presentation.model.AddStudyData
 import timber.log.Timber
 
 @Composable
-fun SplitStudyRoute(
+fun SplitStudyRoute2(
     viewModel: SplitStudyViewModel = hiltViewModel(),
-    subjectName: String = ""
+    addStudyData: AddStudyData
 ){
-
+    Timber.d("split에 온값 : $addStudyData")
     LaunchedEffect(Unit){
-        viewModel.setEvent(SplitStudyContract.SplitStudyEvent.Initialize(subjectName = subjectName))
-        Timber.d("split에 온값 : $subjectName")
+        viewModel.setEvent(SplitStudyContract.SplitStudyEvent.Initialize(addStudyData = addStudyData))
+        Timber.d("split에 온값 : $addStudyData")
     }
 
     val splitStudyState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -25,5 +26,8 @@ fun SplitStudyRoute(
         subjectName = splitStudyState.subjectName,
         startPage = splitStudyState.startPage,
         endPage = splitStudyState.endPage,
+        startPageList = splitStudyState.startPageList,
+        endPageList = splitStudyState.endPageList,
+        seletedDate = splitStudyState.dateList
     )
 }
