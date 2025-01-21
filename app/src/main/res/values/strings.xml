@@ -103,4 +103,7 @@
     <string name="todo_add_title2">오늘부터 하나씩!\n공부할 내용을 선택해 보세요</string>
     <string name="todo_add_count">개 / 총 %s개</string>
     <string name="todo_add_plus_button_label">오늘 할 공부 추가하기</string>
+    <string name="badge_category_title">%s 사장님\n 열심히 모은 배지에요</string>
+    <string name="badge_detail_achievement">달성 조건</string>
+    <string name="badge_detail_reward">리워드</string>
 </resources>
