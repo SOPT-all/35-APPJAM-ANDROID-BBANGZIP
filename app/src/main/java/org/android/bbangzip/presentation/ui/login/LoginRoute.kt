@@ -43,7 +43,6 @@ fun LoginRoute(
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collectLatest { page ->
-
         }
     }
 

@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.ui.navigator
 
-import android.content.Context
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
@@ -10,7 +9,6 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import okhttp3.internal.toImmutableList
 import org.android.bbangzip.presentation.component.snackbar.BbangZipSnackBarHost

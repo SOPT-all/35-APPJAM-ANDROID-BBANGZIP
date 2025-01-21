@@ -17,19 +17,20 @@ fun MyScreen(
     modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .fillMaxSize()
+        modifier =
+            modifier
+                .fillMaxSize(),
     ) {
         Text(
             text = "로그아웃",
-            modifier = Modifier.clickable { onClickLogoutBtn() }
+            modifier = Modifier.clickable { onClickLogoutBtn() },
         )
 
         Spacer(modifier = Modifier.height(50.dp))
 
         Text(
             text = "회원탈퇴",
-            modifier = Modifier.clickable { onClickWithdrawBtn() }
+            modifier = Modifier.clickable { onClickWithdrawBtn() },
         )
     }
 }
