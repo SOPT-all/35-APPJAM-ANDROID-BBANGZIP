@@ -4,6 +4,7 @@ import androidx.datastore.core.CorruptionException
 import androidx.datastore.core.Serializer
 import com.google.protobuf.InvalidProtocolBufferException
 import org.android.bbangzip.UserPreferences
+import timber.log.Timber
 import java.io.InputStream
 import java.io.OutputStream
 
@@ -12,10 +13,13 @@ object UserSerializer : Serializer<UserPreferences> {
         get() = UserPreferences.getDefaultInstance()
 
     override suspend fun readFrom(input: InputStream): UserPreferences {
-        try {
-            return UserPreferences.parseFrom(input)
-        } catch (exception: InvalidProtocolBufferException) {
-            throw CorruptionException("Cannot Read proto", exception)
+        return try {
+            val data = input.readBytes()
+            Timber.d("[Proto DataStore]: ${data.decodeToString()}")
+            UserPreferences.parseFrom(data)
+        } catch (exception: Exception) {
+            Timber.e("[Proto DataStore]: $exception")
+            throw CorruptionException("Proto 데이터를 읽을 수 없습니다.", exception)
         }
     }
 
