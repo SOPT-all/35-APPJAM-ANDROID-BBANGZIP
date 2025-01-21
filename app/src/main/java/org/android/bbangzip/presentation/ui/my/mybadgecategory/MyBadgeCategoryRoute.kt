@@ -43,8 +43,8 @@ fun MyBadgeCategoryRoute(
                 onBadgeCardClicked = { badgeName ->
                     viewModel.setEvent(
                         MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClicked(
-                            badgeName = badgeName
-                        )
+                            badgeName = badgeName,
+                        ),
                     )
                 },
                 onBadgeDetailBottomSheetDismissRequest = {
@@ -52,7 +52,7 @@ fun MyBadgeCategoryRoute(
                 },
                 onBadgeDetailBottomSheetDismissButtonClicked = {
                     viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissButtonClicked)
-                }
+                },
             )
 
         false ->

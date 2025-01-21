@@ -52,32 +52,35 @@ fun BbangZipBadgeDetailBottomSheet(
         content = {
             Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 if (!badgeDetail.isLocked) {
                     BadgeDetailInfo(badgeDetail = badgeDetail)
                 } else {
                     Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .clip(RoundedCornerShape(48.dp)),
-                        contentAlignment = Alignment.Center
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(48.dp)),
+                        contentAlignment = Alignment.Center,
                     ) {
                         Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .blur(48.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .blur(48.dp),
+                            horizontalAlignment = Alignment.CenterHorizontally,
                         ) {
                             Spacer(modifier = Modifier.height(44.dp))
 
                             AsyncImage(
                                 model = badgeDetail.imageUrl,
                                 contentDescription = null,
-                                modifier = Modifier
-                                    .height((LocalConfiguration.current.screenHeightDp / 5).dp)
-                                    .aspectRatio(1f)
-                                    .clip(RoundedCornerShape(48.dp))
+                                modifier =
+                                    Modifier
+                                        .height((LocalConfiguration.current.screenHeightDp / 5).dp)
+                                        .aspectRatio(1f)
+                                        .clip(RoundedCornerShape(48.dp)),
                             )
 
                             Spacer(modifier = Modifier.height(160.dp))
@@ -86,17 +89,19 @@ fun BbangZipBadgeDetailBottomSheet(
                             imageVector = ImageVector.vectorResource(id = R.drawable.ic_lock_default_28),
                             contentDescription = null,
                             tint = BbangZipTheme.colors.lineStrong_68645E_52,
-                            modifier = Modifier
-                                .height(58.dp)
-                                .width(41.dp)
+                            modifier =
+                                Modifier
+                                    .height(58.dp)
+                                    .width(41.dp),
                         )
                     }
                     Spacer(modifier = Modifier.height(18.dp))
                 }
                 Column(
-                    modifier = Modifier
-                        .padding(horizontal = 40.dp)
-                        .fillMaxWidth()
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 40.dp)
+                            .fillMaxWidth(),
                 ) {
                     Text(
                         text = stringResource(R.string.badge_detail_achievement),
@@ -114,10 +119,11 @@ fun BbangZipBadgeDetailBottomSheet(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Row(
-                    modifier = Modifier
-                        .padding(horizontal = 40.dp)
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 40.dp)
+                            .fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Text(
                         text = stringResource(R.string.badge_detail_reward),
@@ -129,10 +135,11 @@ fun BbangZipBadgeDetailBottomSheet(
 
                     BbangZipChip(
                         backgroundColor = BbangZipTheme.colors.statusCautionary_FFB84A,
-                        text = stringResource(
-                            R.string.badge_bottom_sheet_reward,
-                            badgeDetail.reward
-                        ),
+                        text =
+                            stringResource(
+                                R.string.badge_bottom_sheet_reward,
+                                badgeDetail.reward,
+                            ),
                     )
                 }
             }
@@ -157,11 +164,11 @@ fun BbangZipBadgeDetailBottomSheet(
 @Composable
 fun HashTagText(
     hashTags: List<String>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
             text = "#${hashTags[0]}",
@@ -170,7 +177,7 @@ fun HashTagText(
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.Center
+            horizontalArrangement = Arrangement.Center,
         ) {
             Text(
                 text = "#${hashTags[1]}",
@@ -194,21 +201,22 @@ fun HashTagText(
 @Composable
 fun BadgeDetailInfo(
     badgeDetail: BadgeDetail,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
         modifier = modifier.fillMaxWidth(),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Spacer(modifier = Modifier.height(44.dp))
 
         AsyncImage(
             model = badgeDetail.imageUrl,
             contentDescription = null,
-            modifier = Modifier
-                .height((LocalConfiguration.current.screenHeightDp / 5).dp)
-                .aspectRatio(1f)
-                .clip(RoundedCornerShape(48.dp))
+            modifier =
+                Modifier
+                    .height((LocalConfiguration.current.screenHeightDp / 5).dp)
+                    .aspectRatio(1f)
+                    .clip(RoundedCornerShape(48.dp)),
         )
     }
 
@@ -222,4 +230,3 @@ fun BadgeDetailInfo(
 
     Spacer(modifier = Modifier.height(32.dp))
 }
-

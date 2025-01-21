@@ -5,8 +5,8 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class BadgeCategory(
-    val name : String,
-    val categoryName : String,
-    val isLocked : Boolean,
-    val imageUrl :String
+    val name: String,
+    val categoryName: String,
+    val isLocked: Boolean,
+    val imageUrl: String,
 ) : Parcelable

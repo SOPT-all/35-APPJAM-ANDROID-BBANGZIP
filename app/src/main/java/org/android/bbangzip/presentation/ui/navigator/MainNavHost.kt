@@ -79,8 +79,8 @@ fun MainNavHost(
 
             myNavGraph()
 
-            myBadgeCategoryNavGraph (
-              navigateToBack = { navigator.navigateToMyBadgeCategory() }
+            myBadgeCategoryNavGraph(
+                navigateToBack = { navigator.navigateToMyBadgeCategory() },
             )
 
             subjectNavGraph()
