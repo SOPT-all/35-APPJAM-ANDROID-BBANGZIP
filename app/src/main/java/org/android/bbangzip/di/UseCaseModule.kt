@@ -5,7 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.android.bbangzip.domain.repository.remote.DummyRepository
+import org.android.bbangzip.domain.repository.remote.UserRepository
 import org.android.bbangzip.domain.usecase.FetchDummyUseCase
+import org.android.bbangzip.domain.usecase.PostOnboardingUseCase
 import javax.inject.Singleton
 
 @Module
@@ -15,4 +17,9 @@ class UseCaseModule {
     @Singleton
     fun providesDummyFetchUseCase(dummyRepository: DummyRepository): FetchDummyUseCase =
         FetchDummyUseCase(dummyRepository = dummyRepository)
+
+    @Provides
+    @Singleton
+    fun providesPostOnboardingUseCase(userRepository: UserRepository): PostOnboardingUseCase =
+        PostOnboardingUseCase(userRepository = userRepository)
 }
