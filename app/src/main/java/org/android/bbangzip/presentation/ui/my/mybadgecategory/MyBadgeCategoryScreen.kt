@@ -40,6 +40,7 @@ import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
 import org.android.bbangzip.presentation.model.BadgeCategory
 import org.android.bbangzip.presentation.model.BadgeDetail
 import org.android.bbangzip.presentation.ui.my.mybadgecategory.component.BbangZipBadgeDetailBottomSheet
+import org.android.bbangzip.presentation.ui.my.mybadgecategory.component.LockedBadgeImage
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -66,7 +67,7 @@ fun MyBadgeCategoryScreen(
     ) {
         stickyHeader {
             BbangZipBaseTopBar(
-                title = "얻은 뱃지",
+                title = stringResource(R.string.badge_category_top_bar_title),
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 onLeadingIconClick = onBackIconClicked,
                 backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
@@ -173,19 +174,8 @@ fun BadgeCategoryGridList(
                     contentAlignment = Alignment.Center
                 ) {
                     if (!badgeCategoryList[index].isLocked) {
-                        AsyncImage(
-                            model = badgeCategoryList[index].imageUrl,
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxSize()
-                                .clip(RoundedCornerShape(24.dp))
-                                .blur(24.dp),
-                        )
-
-                        Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_lock_default_28),
-                            contentDescription = null,
-                            tint = BbangZipTheme.colors.staticWhite_FFFFFF // 색상 설정
+                        LockedBadgeImage(
+                            imgUrl = badgeCategoryList[index].imageUrl
                         )
                     } else {
                         AsyncImage(
