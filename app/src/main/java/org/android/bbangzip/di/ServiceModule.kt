@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.android.bbangzip.data.service.DummyService
+import org.android.bbangzip.data.service.MyPageService
 import retrofit2.Retrofit
 import javax.inject.Singleton
 
@@ -17,4 +18,11 @@ object ServiceModule {
         @BbangZip retrofit: Retrofit,
     ): DummyService =
         retrofit.create(DummyService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideMyPageService(
+        @BbangZip retrofit: Retrofit,
+    ): MyPageService =
+        retrofit.create(MyPageService::class.java)
 }

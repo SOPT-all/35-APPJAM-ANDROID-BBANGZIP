@@ -222,7 +222,7 @@ fun BadgeDetailInfo(
 
     Spacer(modifier = Modifier.height(24.dp))
 
-    TopTailBalloon(text = badgeDetail.name, horizontalPadding = 132.dp)
+    TopTailBalloon(text = badgeDetail.categoryName, horizontalPadding = 110.dp)
 
     Spacer(modifier = Modifier.height(32.dp))
 
