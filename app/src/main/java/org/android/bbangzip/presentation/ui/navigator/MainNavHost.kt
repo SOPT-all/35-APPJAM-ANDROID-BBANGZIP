@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.navigator
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -30,6 +31,7 @@ fun MainNavHost(
     modifier: Modifier = Modifier,
     navigator: MainNavigator,
     padding: PaddingValues,
+    context: Context,
     snackBarHostState: SnackbarHostState,
 ) {
     Box(
@@ -48,6 +50,7 @@ fun MainNavHost(
                 navigateToOnboarding = {
                     navigator.navHostController.navigateOnboardingStart()
                 },
+                context = context
             )
 
             onboardingStartNavGraph(

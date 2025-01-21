@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.login
 
+import android.content.Context
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import okhttp3.internal.immutableListOf
@@ -16,16 +17,18 @@ class LoginContract {
                 R.drawable.img_login2,
                 R.drawable.img_login1,
             ),
+        val loginSuccess: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
 
     sealed interface LoginEvent : BaseContract.Event {
-        data object OnClickKakaoLoginBtn : LoginEvent
+        data class OnClickKakaoLoginBtn(val context: Context) : LoginEvent
     }
 
     sealed interface LoginReduce : BaseContract.Reduce {
         data class UpdateState(val state: LoginState) : LoginReduce
+        data object UpdateLoginSuccess: LoginReduce
     }
 
     sealed interface LoginSideEffect : BaseContract.SideEffect {

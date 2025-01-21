@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.login
 
+import android.content.Context
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -14,11 +15,13 @@ fun NavController.navigateLogin() {
 fun NavGraphBuilder.loginNavGraph(
     navigateToSubject: () -> Unit,
     navigateToOnboarding: () -> Unit,
+    context: Context
 ) {
     composable<LoginRoute> {
         LoginRoute(
             navigateToSubject = navigateToSubject,
             navigateToOnboarding = navigateToOnboarding,
+            context = context
         )
     }
 }

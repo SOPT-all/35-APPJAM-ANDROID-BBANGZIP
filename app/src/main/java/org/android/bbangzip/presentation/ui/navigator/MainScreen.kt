@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.navigator
 
+import android.content.Context
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.navigationBars
@@ -9,6 +10,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import okhttp3.internal.toImmutableList
 import org.android.bbangzip.presentation.component.snackbar.BbangZipSnackBarHost
@@ -19,17 +21,20 @@ import org.android.bbangzip.ui.theme.BBANGZIPTheme
 @Composable
 fun MainScreen(
     navigator: MainNavigator,
+    context: Context
 ) {
     MainScreenContent(
         navigator = navigator,
+        context = context
     )
 }
 
 @Composable
 private fun MainScreenContent(
     navigator: MainNavigator,
-    hostState: SnackbarHostState = remember { SnackbarHostState() },
+    context: Context,
     modifier: Modifier = Modifier,
+    hostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
     Scaffold(
         modifier =
@@ -40,6 +45,7 @@ private fun MainScreenContent(
                 navigator = navigator,
                 padding = padding,
                 snackBarHostState = hostState,
+                context = context
             )
         },
         snackbarHost = { BbangZipSnackBarHost(hostState) },
@@ -58,6 +64,6 @@ private fun MainScreenContent(
 @Composable
 fun MainPreview() {
     BBANGZIPTheme {
-        MainScreen(navigator = rememberMainNavigator())
+        MainScreen(navigator = rememberMainNavigator(), context = LocalContext.current)
     }
 }

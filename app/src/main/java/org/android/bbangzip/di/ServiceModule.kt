@@ -5,7 +5,10 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.android.bbangzip.data.service.DummyService
+import org.android.bbangzip.data.service.KakaoAuthService
+import org.android.bbangzip.data.service.UserService
 import retrofit2.Retrofit
+import retrofit2.create
 import javax.inject.Singleton
 
 @Module
@@ -17,4 +20,11 @@ object ServiceModule {
         @BbangZip retrofit: Retrofit,
     ): DummyService =
         retrofit.create(DummyService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideUserService(
+        @BbangZip retrofit: Retrofit
+    ): UserService =
+        retrofit.create(UserService::class.java)
 }

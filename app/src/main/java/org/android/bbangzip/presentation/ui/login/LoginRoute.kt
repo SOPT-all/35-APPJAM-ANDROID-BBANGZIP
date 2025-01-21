@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.login
 
+import android.content.Context
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -8,15 +9,23 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
+import org.android.bbangzip.UserPreferences
+import timber.log.Timber
 
 @Composable
 fun LoginRoute(
     navigateToSubject: () -> Unit,
     navigateToOnboarding: () -> Unit,
+    context: Context,
     viewModel: LoginViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { state.onBoardingList.size })
+
+    val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle(initialValue = UserPreferences.getDefaultInstance())
+    LaunchedEffect(userPreferences) {
+        Timber.d("[Access Token]: ${userPreferences.accessToken}")
+    }
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
@@ -35,6 +44,6 @@ fun LoginRoute(
     LoginScreen(
         state = state,
         pagerState = pagerState,
-        onClickKakaoLoginBtn = { viewModel.setEvent(LoginContract.LoginEvent.OnClickKakaoLoginBtn) },
+        onClickKakaoLoginBtn = { viewModel.setEvent(LoginContract.LoginEvent.OnClickKakaoLoginBtn(context = context)) },
     )
 }
