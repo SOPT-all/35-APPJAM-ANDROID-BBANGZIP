@@ -103,4 +103,22 @@
     <string name="todo_add_title2">오늘부터 하나씩!\n공부할 내용을 선택해 보세요</string>
     <string name="todo_add_count">개 / 총 %s개</string>
     <string name="todo_add_plus_button_label">오늘 할 공부 추가하기</string>
+    
+    <!-- my -->
+    <string name="my_badge_setting">배지 설정하기</string>
+    <string name="my_badge_book">배지 도감</string>
+    <string name="my_badge_book_count">개</string>
+    <string name="my_profile_setting">프로필 설정</string>
+    <string name="my_notice">공지사항</string>
+    <string name="my_personal_terms">개인정보 처리방침</string>
+    <string name="my_service_terms">서비스 이용약관</string>
+    <string name="my_logout">로그아웃</string>
+    <string name="my_withdraw">계정 탈퇴</string>
+
+    <!-- component- bottom sheet -->
+    <string name="logout_title">로그아웃 하시겠어요?</string>
+    <string name="logout_confirm">로그아웃 하기</string>
+    <string name="cancel">취소</string>
+    <string name="withdraw_title">정말 탈퇴하시겠어요?</string>
+    <string name="withdraw_confirm">탈퇴하기</string>
 </resources>

@@ -1,6 +1,7 @@
 package org.android.bbangzip.presentation.component.bottomsheet
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -15,6 +16,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import org.android.bbangzip.presentation.component.button.BbangZipButton
+import org.android.bbangzip.presentation.type.BbangZipButtonSize
+import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -47,30 +51,24 @@ fun BbangZipTwoButtonBottomSheet(
         interactButton = {
             Spacer(modifier = Modifier.height(16.dp))
 
-            Button(
-                onClick = onClickInteractButton,
-            ) {
-                Text(
-                    text = interactButtonText,
-                    style = BbangZipTheme.typography.body1Bold,
-                    color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                )
-            }
-            // TODO Button 집어넣기
+            BbangZipButton(
+                modifier = Modifier.fillMaxWidth(),
+                bbangZipButtonType = BbangZipButtonType.Solid,
+                bbangZipButtonSize = BbangZipButtonSize.Large,
+                onClick = { onClickInteractButton() },
+                label = interactButtonText
+            )
         },
         cancelButton = {
             Spacer(modifier = Modifier.height(8.dp))
 
-            Button(
-                onClick = onClickCancelButton,
-            ) {
-                Text(
-                    text = cancelButtonText,
-                    style = BbangZipTheme.typography.body1Bold,
-                    color = BbangZipTheme.colors.primaryNormal_282119,
-                )
-            }
-            // TODO Button 집어넣기
+            BbangZipButton(
+                modifier = Modifier.fillMaxWidth(),
+                bbangZipButtonType = BbangZipButtonType.Solid,
+                bbangZipButtonSize = BbangZipButtonSize.Large,
+                onClick = { onClickCancelButton() },
+                label = cancelButtonText
+            )
         },
     )
 }

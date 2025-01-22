@@ -1,7 +1,8 @@
-package org.android.bbangzip.presentation.component.progressbar
+package org.android.bbangzip.presentation.ui.my.component
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.chip.BbangZipChip
+import org.android.bbangzip.presentation.component.progressbar.BbangZipBasicProgressBar
 import org.android.bbangzip.presentation.type.BbangZipLevelType
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -82,11 +85,19 @@ private fun BbangZipPoint(
         horizontalArrangement = Arrangement.Start,
         verticalAlignment = Alignment.CenterVertically,
     ) {
-        Icon(
-            imageVector = ImageVector.vectorResource(R.drawable.ic_trophy_default_24),
-            contentDescription = stringResource(R.string.bbangzip_trophy_description),
-            tint = BbangZipTheme.colors.labelAlternative_282119_61,
-        )
+        Box(
+            modifier =
+                Modifier
+                    .size(24.dp),
+            contentAlignment = Alignment.Center,
+        ) {
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_trophy_default_24),
+                modifier = Modifier.size(16.dp),
+                contentDescription = stringResource(R.string.bbangzip_trophy_description),
+                tint = BbangZipTheme.colors.labelAlternative_282119_61,
+            )
+        }
 
         Text(
             text = stringResource(R.string.bbangzip_level_point, currentPoint, totalPoint),
