@@ -61,7 +61,6 @@ class AddStudyViewModel
                 }
 
                 is AddStudyContract.AddStudyEvent.OnChangeStudyContent -> {
-                    Timber.d("studyContent : ${event.studyContent}")
                     updateState(AddStudyReduce.UpdateStudyContent(studyContent = event.studyContent))
                     updateState(AddStudyReduce.UpdateStudyContentInputState)
                 }
