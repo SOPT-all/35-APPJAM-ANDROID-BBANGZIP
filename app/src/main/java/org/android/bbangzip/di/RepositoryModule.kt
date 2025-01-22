@@ -4,10 +4,7 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import org.android.bbangzip.data.repositoryImpl.DummyRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.PieceRepositoryImpl
-import org.android.bbangzip.data.repositoryImpl.UserRepositoryImpl
-import org.android.bbangzip.domain.repository.local.UserRepository
 import org.android.bbangzip.data.repositoryImpl.local.UserLocalRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.remote.DummyRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.remote.UserRepositoryImpl

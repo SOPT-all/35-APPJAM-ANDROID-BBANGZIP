@@ -15,8 +15,8 @@ import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
 import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
 import org.android.bbangzip.domain.usecase.PostDeletedItemListUseCase
-import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
 import org.android.bbangzip.domain.usecase.PostOnboardingUseCase
+import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
 import javax.inject.Singleton
 
 @Module
