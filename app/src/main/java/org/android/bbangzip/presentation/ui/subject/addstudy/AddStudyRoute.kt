@@ -9,7 +9,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.SplitStudyData
-import timber.log.Timber
 
 @Composable
 fun AddStudyRoute(
@@ -19,10 +18,8 @@ fun AddStudyRoute(
     navigateSplitStudy: (AddStudyData) -> Unit = {},
 ) {
     LaunchedEffect(Unit) {
-        Timber.tag("AddStudy 로 진입").d("$splitStudyData")
         viewModel.setEvent(AddStudyContract.AddStudyEvent.Initialize(splitStudyData = splitStudyData))
     }
-    Timber.d("2$splitStudyData")
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest {
@@ -33,12 +30,10 @@ fun AddStudyRoute(
             }
         }
     }
-    Timber.d("3$splitStudyData")
 
     val addStudyState by viewModel.uiState.collectAsStateWithLifecycle()
 
     if (addStudyState.isSuccess) {
-        Timber.d("$addStudyState")
         AddStudyScreen(
             padding = padding,
             pieceNumber = addStudyState.pieceNumber,

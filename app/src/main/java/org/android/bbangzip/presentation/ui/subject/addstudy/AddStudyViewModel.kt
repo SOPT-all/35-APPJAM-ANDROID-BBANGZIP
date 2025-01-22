@@ -3,7 +3,6 @@ package org.android.bbangzip.presentation.ui.subject.addstudy
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
-import org.android.bbangzip.domain.repository.local.UserRepository
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.AddStudyViewType
@@ -17,7 +16,6 @@ import javax.inject.Inject
 class AddStudyViewModel
     @Inject
     constructor(
-        private val userRepository: UserRepository,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<AddStudyContract.AddStudyEvent, AddStudyContract.AddStudyState, AddStudyReduce, AddStudyContract.AddStudySideEffect>(
             savedStateHandle = savedStateHandle,
