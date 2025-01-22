@@ -242,7 +242,7 @@ fun AddStudyScreen(
                 )
             },
             onSelectedItemChanged = onClickPieceNumber,
-            onDismissRequest = onClickSplitBtn
+            onDismissRequest = onClickSplitBtn,
         )
     }
 }

@@ -6,11 +6,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.AddStudyViewType
-import org.android.bbangzip.presentation.type.ShortTextFieldType
 import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyContract.AddStudyReduce
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.casting.pageToInt
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -57,7 +55,6 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateStartPageGuideline)
                     updateState(AddStudyReduce.UpdateEndPageInputState)
                     updateState(AddStudyReduce.UpdateEndPageGuideLine)
-
                 }
 
                 is AddStudyContract.AddStudyEvent.OnChangeStudyContent -> {
@@ -301,18 +298,29 @@ class AddStudyViewModel
 
                 is AddStudyReduce.UpdateStartPageGuideline -> {
                     state.copy(
-                        startPageGuideline = if (state.startPageTextFieldState == BbangZipTextFieldInputState.Alert){
-                            if(state.startPage == "0p") "0p는 입력할 수 없어요"
-                            else "시작 범위 이후로 입력해 주세요"
-                        }else "부터",
+                        startPageGuideline =
+                            if (state.startPageTextFieldState == BbangZipTextFieldInputState.Alert)
+                                {
+                                    if (state.startPage == "0p") {
+                                        "0p는 입력할 수 없어요"
+                                    } else {
+                                        "시작 범위 이후로 입력해 주세요"
+                                    }
+                                } else {
+                                "부터"
+                            },
                     )
                 }
 
                 is AddStudyReduce.UpdateEndPageGuideLine -> {
                     state.copy(
-                        endPageGuideline = if (state.endPageTextFieldState == BbangZipTextFieldInputState.Alert){
-                            if(state.endPage == "0p") "0p는 입력할 수 없어요" else "까지"
-                        }else "까지"
+                        endPageGuideline =
+                            if (state.endPageTextFieldState == BbangZipTextFieldInputState.Alert)
+                                {
+                                    if (state.endPage == "0p") "0p는 입력할 수 없어요" else "까지"
+                                } else {
+                                "까지"
+                            },
                     )
                 }
             }

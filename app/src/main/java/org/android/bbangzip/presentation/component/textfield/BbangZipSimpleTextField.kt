@@ -45,7 +45,6 @@ import org.android.bbangzip.presentation.model.getIconColor
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 import org.android.bbangzip.ui.theme.defaultBbangZipColors
-import timber.log.Timber
 
 @Composable
 fun BbangZipSimpleTextField(
