@@ -242,13 +242,13 @@ fun BottomSheetBalloonContainer(
 ) {
     Box(
         modifier =
-        modifier
-            .applyShadows(BbangZipShadowType.STRONG, shape = RoundedCornerShape(size = 20.dp))
-            .background(
-                color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                shape = RoundedCornerShape(size = 20.dp),
-            )
-            .padding(horizontal = 16.dp, vertical = 8.dp),
+            modifier
+                .applyShadows(BbangZipShadowType.STRONG, shape = RoundedCornerShape(size = 20.dp))
+                .background(
+                    color = BbangZipTheme.colors.staticWhite_FFFFFF,
+                    shape = RoundedCornerShape(size = 20.dp),
+                )
+                .padding(horizontal = 16.dp, vertical = 8.dp),
         contentAlignment = Alignment.Center,
     ) {
         Row(verticalAlignment = Alignment.CenterVertically) {

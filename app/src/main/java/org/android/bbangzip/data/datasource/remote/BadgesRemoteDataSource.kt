@@ -5,9 +5,10 @@ import org.android.bbangzip.data.service.MyPageService
 import org.android.bbangzip.data.util.base.BaseResponse
 import javax.inject.Inject
 
-class BadgesRemoteDataSource @Inject
-constructor(
-    private val myPageService: MyPageService,
-) {
-    suspend fun getBadgeCategoryList(): BaseResponse<ResponseBadgesDto?> = myPageService.getBadgeCategoryList()
-}
+class BadgesRemoteDataSource
+    @Inject
+    constructor(
+        private val myPageService: MyPageService,
+    ) {
+        suspend fun getBadgeCategoryList(): BaseResponse<ResponseBadgesDto?> = myPageService.getBadgeCategoryList()
+    }

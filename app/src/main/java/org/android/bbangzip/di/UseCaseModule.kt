@@ -28,5 +28,4 @@ class UseCaseModule {
     @Singleton
     fun providesBadgeDetailGetUseCase(myPageRepository: MyPageRepository): GetBadgeDetailUseCase =
         GetBadgeDetailUseCase(myPageRepository = myPageRepository)
-
 }

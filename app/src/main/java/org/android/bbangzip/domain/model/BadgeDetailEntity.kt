@@ -6,6 +6,5 @@ data class BadgeDetailEntity(
     val badgeIsLocked: Boolean,
     val badgeName: String,
     val hashTags: List<String>,
-    val reward: Int
+    val reward: Int,
 )
-
