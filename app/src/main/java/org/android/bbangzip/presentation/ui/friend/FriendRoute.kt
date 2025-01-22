@@ -11,7 +11,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun FriendRoute(
-    viewModel: FriendViewModel = hiltViewModel()
+    viewModel: FriendViewModel = hiltViewModel(),
 ) {
     val friendState by viewModel.uiState.collectAsStateWithLifecycle()
     val view = LocalView.current
