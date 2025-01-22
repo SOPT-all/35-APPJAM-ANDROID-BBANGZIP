@@ -9,10 +9,6 @@ import org.android.bbangzip.domain.model.BadgeCardListEntity
 data class ResponseMarkDoneDto(
     @SerialName("badges")
     val badges: List<Badge>?,
-    @SerialName("completeCounts")
-    val completeCounts: Int,
-    @SerialName("todayCounts")
-    val todayCounts: Int,
 ) {
     fun toBadgeCardListEntity() =
         BadgeCardListEntity(

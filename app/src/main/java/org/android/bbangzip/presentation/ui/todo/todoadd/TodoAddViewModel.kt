@@ -10,6 +10,7 @@ import org.android.bbangzip.domain.usecase.GetAddTodoListUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
+import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
@@ -57,19 +58,8 @@ class TodoAddViewModel
 
                 is TodoAddContract.TodoAddEvent.OnFilterBottomSheetItemClicked -> {
                     viewModelScope.launch {
-                        getAddTodoList(
-                            year = 2025,
-                            semester = "1학기",
-                            sortOption = event.selectedFilterItem.id,
-                        )
+                        getFilteredAddToDoInfo(selectedFilterItem = event.selectedFilterItem)
                     }
-                    updateState(TodoAddContract.TodoAddReduce.UpdateFilterType(selectedFilter = event.selectedFilterItem))
-                    updateState(
-                        TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = false,
-                        ),
-                    )
-                    setSideEffect(TodoAddContract.TodoAddSideEffect.ShowTodoAddSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
                 }
 
                 TodoAddContract.TodoAddEvent.OnItemPlusButtonClicked -> {
@@ -149,21 +139,7 @@ class TodoAddViewModel
 
         private suspend fun initDataLoad() {
             getAddTodoList(
-                year = 2025,
-                semester = "1학기",
-                sortOption = currentUiState.selectedFilter.id,
-            )
-        }
-
-        private suspend fun getAddTodoList(
-            year: Int,
-            semester: String,
-            sortOption: String,
-        ) {
-            getAddTodoListUseCase(
-                year = year,
-                semester = semester,
-                sortOption = sortOption,
+                selectedFilterItem = currentUiState.selectedFilter,
             ).onSuccess { data ->
                 Timber.tag("todo").d("server viewmodel")
                 updateState(
@@ -196,6 +172,59 @@ class TodoAddViewModel
                     Timber.tag("todo").d(error)
                 }
         }
+
+        private suspend fun getFilteredAddToDoInfo(
+            selectedFilterItem: ToDoFilterType,
+        ) {
+            getAddTodoList(selectedFilterItem)
+                .onSuccess { data ->
+                    Timber.tag("todo").d("server viewmodel")
+                    Timber.tag("todo").d(selectedFilterItem.id)
+
+                    updateState(
+                        TodoAddContract.TodoAddReduce.UpdateToDoList(
+                            todoList =
+                                data.todoList.map { item ->
+                                    ToDoCardModel(
+                                        pieceId = item.pieceId,
+                                        subjectName = item.subjectName,
+                                        examName = item.examName,
+                                        studyContents = item.studyContents,
+                                        startPage = item.startPage,
+                                        finishPage = item.finishPage,
+                                        deadline = item.deadline,
+                                        remainingDays = item.remainingDays,
+                                        cardState =
+                                            if (currentUiState.selectedItemList.toSet()
+                                                    .contains(item.pieceId)
+                                            ) {
+                                                BbangZipCardState.CHECKED
+                                            } else {
+                                                BbangZipCardState.CHECKABLE
+                                            },
+                                    )
+                                },
+                        ),
+                    )
+                    updateState(TodoAddContract.TodoAddReduce.UpdateFilterType(selectedFilter = selectedFilterItem))
+                    updateState(
+                        TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
+                            todoFilterBottomSheetState = false,
+                        ),
+                    )
+                    setSideEffect(TodoAddContract.TodoAddSideEffect.ShowTodoAddSnackBar("${selectedFilterItem.filter}으로 정렬했어요"))
+                }
+                .onFailure { error ->
+                    Timber.tag("todo").d(error)
+                }
+        }
+
+        private suspend fun getAddTodoList(selectedFilterItem: ToDoFilterType) =
+            getAddTodoListUseCase(
+                year = 2025,
+                semester = "1학기",
+                sortOption = selectedFilterItem.id,
+            )
 
         private suspend fun postAddTodoItemList(
             selectedItemList: List<Int>,

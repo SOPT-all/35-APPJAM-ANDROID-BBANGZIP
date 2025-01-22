@@ -13,6 +13,7 @@ import org.android.bbangzip.domain.usecase.PostDeletedItemListUseCase
 import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
+import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.type.ToDoScreenType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.constant.ToDoConstants
@@ -58,15 +59,10 @@ class TodoViewModel
                 // Filter BottomSheet
                 is TodoContract.TodoEvent.OnFilterBottomSheetItemClicked -> {
                     viewModelScope.launch {
-                        initDataLoad()
+                        getFilteredToDoInfo(
+                            selectedFilterItem = event.selectedFilterItem,
+                        )
                     }
-                    updateState(TodoContract.TodoReduce.UpdateFilterType(selectedFilter = event.selectedFilterItem))
-                    updateState(
-                        TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = false,
-                        ),
-                    )
-                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
                 }
 
                 TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest ->
@@ -108,7 +104,6 @@ class TodoViewModel
                     )
                     updateState(TodoContract.TodoReduce.ResetSelectedItemList)
                     setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("미완료 상태로 되돌려졌어요!"))
-                    // TODO pieceId 사영헤사 서버로 쏘기 미완료 APT
                 }
 
                 TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> {
@@ -357,20 +352,6 @@ class TodoViewModel
                 year = 2025,
                 semester = "1학기",
                 sortOption = currentUiState.selectedFilterItem.id,
-            )
-        }
-
-        private suspend fun getToDoInfo(
-            area: String,
-            year: Int,
-            semester: String,
-            sortOption: String,
-        ) {
-            getTodoInfoUseCase(
-                area = area,
-                year = year,
-                semester = semester,
-                sortOption = sortOption,
             ).onSuccess { data ->
                 Timber.tag("todayOrders").d("server viewmodel")
                 updateState(
@@ -395,11 +376,66 @@ class TodoViewModel
                         screenType = if (data.todoList.isEmpty()) ToDoScreenType.EMPTY else ToDoScreenType.DEFAULT,
                     ),
                 )
+            }.onFailure { error ->
+                Timber.tag("todayOrders").d(error)
             }
-                .onFailure { error ->
-                    Timber.tag("todayOrders").d(error)
-                }
         }
+
+        private suspend fun getFilteredToDoInfo(
+            selectedFilterItem: ToDoFilterType,
+        ) {
+            getToDoInfo(
+                area = ToDoConstants.TODO,
+                year = 2025,
+                semester = "1학기",
+                sortOption = selectedFilterItem.id,
+            ).onSuccess { data ->
+                Timber.tag("todayOrders").d("server viewmodel")
+                updateState(
+                    TodoContract.TodoReduce.UpdateToDoInfo(
+                        todoList =
+                            data.todoList.map { item ->
+                                ToDoCardModel(
+                                    pieceId = item.pieceId,
+                                    subjectName = item.subjectName,
+                                    examName = item.examName,
+                                    studyContents = item.studyContents,
+                                    startPage = item.startPage,
+                                    finishPage = item.finishPage,
+                                    deadline = item.deadline,
+                                    remainingDays = item.remainingDays,
+                                    cardState = if (item.isFinished) BbangZipCardState.COMPLETE else BbangZipCardState.DEFAULT,
+                                )
+                            },
+                        pendingCount = data.pendingCount,
+                        remainingStudyCount = data.remainingStudyCount,
+                        completeCount = data.completeCount,
+                        screenType = if (data.todoList.isEmpty()) ToDoScreenType.EMPTY else ToDoScreenType.DEFAULT,
+                    ),
+                )
+                updateState(TodoContract.TodoReduce.UpdateFilterType(selectedFilter = selectedFilterItem))
+                updateState(
+                    TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
+                        todoFilterBottomSheetState = false,
+                    ),
+                )
+                setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("${selectedFilterItem.filter}으로 정렬했어요"))
+            }.onFailure { error ->
+                Timber.tag("todayOrders").d(error)
+            }
+        }
+
+        private suspend fun getToDoInfo(
+            area: String,
+            year: Int,
+            semester: String,
+            sortOption: String,
+        ) = getTodoInfoUseCase(
+            area = area,
+            year = year,
+            semester = semester,
+            sortOption = sortOption,
+        )
 
         private suspend fun postDeletedItemList(
             selectedItemList: List<Int>,

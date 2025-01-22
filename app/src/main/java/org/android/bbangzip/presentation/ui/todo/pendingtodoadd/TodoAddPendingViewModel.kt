@@ -10,6 +10,7 @@ import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
+import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.constant.ToDoConstants
 import timber.log.Timber
@@ -59,24 +60,10 @@ class TodoAddPendingViewModel
 
                 is TodoAddPendingContract.TodoAddPendingEvent.OnFilterBottomSheetItemClicked -> {
                     viewModelScope.launch {
-                        getToDoInfo(
-                            area = ToDoConstants.PENDING,
-                            year = 2025,
-                            semester = "1학기",
-                            sortOption = event.selectedFilterItem.id,
+                        getFilteredToDoInfo(
+                            selectedFilter = event.selectedFilterItem,
                         )
                     }
-                    updateState(
-                        TodoAddPendingContract.TodoAddPendingReduce.UpdateFilterType(
-                            selectedFilter = event.selectedFilterItem,
-                        ),
-                    )
-                    updateState(
-                        TodoAddPendingContract.TodoAddPendingReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = false,
-                        ),
-                    )
-                    setSideEffect(TodoAddPendingContract.TodoAddPendingSideEffect.ShowTodoAddSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
                 }
 
                 TodoAddPendingContract.TodoAddPendingEvent.OnItemPlusButtonClicked -> {
@@ -169,20 +156,6 @@ class TodoAddPendingViewModel
                 year = 2025,
                 semester = "1학기",
                 sortOption = currentUiState.selectedFilter.id,
-            )
-        }
-
-        private suspend fun getToDoInfo(
-            area: String,
-            year: Int,
-            semester: String,
-            sortOption: String,
-        ) {
-            getTodoInfoUseCase(
-                area = area,
-                year = year,
-                semester = semester,
-                sortOption = sortOption,
             ).onSuccess { data ->
                 Timber.tag("todayOrders").d("${currentUiState.selectedItemList}")
                 updateState(
@@ -207,6 +180,69 @@ class TodoAddPendingViewModel
                 Timber.tag("todayOrders").e(error)
             }
         }
+
+        private suspend fun getFilteredToDoInfo(selectedFilter: ToDoFilterType) {
+            getToDoInfo(
+                area = ToDoConstants.PENDING,
+                year = 2025,
+                semester = "1학기",
+                sortOption = selectedFilter.id,
+            ).onSuccess { data ->
+                Timber.tag("todayOrders").d("${currentUiState.selectedItemList}")
+                updateState(
+                    TodoAddPendingContract.TodoAddPendingReduce.UpdateToDoList(
+                        todoList =
+                            data.todoList.map { item ->
+                                ToDoCardModel(
+                                    pieceId = item.pieceId,
+                                    subjectName = item.subjectName,
+                                    examName = item.examName,
+                                    studyContents = item.studyContents,
+                                    startPage = item.startPage,
+                                    finishPage = item.finishPage,
+                                    deadline = item.deadline,
+                                    remainingDays = item.remainingDays,
+                                    cardState =
+                                        if (currentUiState.selectedItemList.toSet()
+                                                .contains(item.pieceId)
+                                        ) {
+                                            BbangZipCardState.CHECKED
+                                        } else {
+                                            BbangZipCardState.CHECKABLE
+                                        },
+                                )
+                            },
+                    ),
+                )
+                updateState(
+                    TodoAddPendingContract.TodoAddPendingReduce.UpdateFilterType(
+                        selectedFilter = selectedFilter,
+                    ),
+                )
+                updateState(
+                    TodoAddPendingContract.TodoAddPendingReduce.UpdateToDoFilterBottomSheetState(
+                        todoFilterBottomSheetState = false,
+                    ),
+                )
+
+                setSideEffect(TodoAddPendingContract.TodoAddPendingSideEffect.ShowTodoAddSnackBar("${selectedFilter.filter}으로 정렬했어요"))
+            }.onFailure { error ->
+                Timber.tag("todayOrders").e(error)
+            }
+        }
+
+        private suspend fun getToDoInfo(
+            area: String,
+            year: Int,
+            semester: String,
+            sortOption: String,
+        ) =
+            getTodoInfoUseCase(
+                area = area,
+                year = year,
+                semester = semester,
+                sortOption = sortOption,
+            )
 
         private suspend fun postAddTodoItemList(
             selectedItemList: List<Int>,

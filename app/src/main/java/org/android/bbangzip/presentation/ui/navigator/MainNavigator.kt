@@ -11,7 +11,7 @@ import androidx.navigation.navOptions
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
 import org.android.bbangzip.presentation.model.Route
 import org.android.bbangzip.presentation.type.BottomNavigationType
-import org.android.bbangzip.presentation.ui.friend.navigateFriend
+import org.android.bbangzip.presentation.ui.friend.navigation.navigateFriend
 import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
 import org.android.bbangzip.presentation.ui.my.navigateMy
