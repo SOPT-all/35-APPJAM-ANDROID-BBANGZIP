@@ -22,6 +22,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
+import org.android.bbangzip.presentation.component.bottomsheet.BbangZipDatePickerBottomSheet
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.chip.BbangZipChip
 import org.android.bbangzip.presentation.component.textfield.BbangZipSimpleTextField
@@ -41,9 +42,12 @@ fun SplitStudyScreen(
     subjectName: String = "",
     startPage: String = "",
     endPage: String = "",
+    selectedIndex: Int = 0,
+    selectedDate: Date = Date("2025", "1", "21"),
+    datePickerBottomSheetState: Boolean = false,
     startPageList: List<String> = emptyList(),
     endPageList: List<String> = emptyList(),
-    seletedDate: List<Date> = listOf(
+    seletedDateList: List<Date> = listOf(
         Date("2025", "1", "21"),
         Date("2025", "1", "21"),
         Date("2025", "1", "21"),
@@ -53,13 +57,15 @@ fun SplitStudyScreen(
     ),
     onChangeStartPage: (Int, String) -> Unit = {_, _ ->},
     onChangeEndPage: (Int, String) -> Unit = {_, _ ->},
-    onChangeStartPageFocused: (Boolean) -> Unit = {},
-    onChangeEndPageFocused: (Boolean) -> Unit = {},
+    onChangeStartPageFocused: (Int,Boolean) -> Unit = {_, _ ->},
+    onChangeEndPageFocused: (Int,Boolean) -> Unit = {_, _ ->},
+    onChangeSelectedDate: (Date) -> Unit = {},
+    onClickDatePicker: (Int) -> Unit = {},
+    onClickConfirmDateBtn: () -> Unit = {},
+    onCloseBottomSheet: () -> Unit = {},
     onBackBtnClick: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
-
-    Timber.d("pieceNumber : $pieceNumber")
 
     Box(
         modifier = Modifier
@@ -177,7 +183,7 @@ fun SplitStudyScreen(
                             onValueChange = {
                                 onChangeStartPage(index,it)
                             },
-                            onFocusChange = { onChangeStartPageFocused(it) },
+                            onFocusChange = { onChangeStartPageFocused(index, it) },
                             focusManager = focusManager,
                         )
 
@@ -192,7 +198,7 @@ fun SplitStudyScreen(
                             onValueChange = {
                                 onChangeEndPage(index, it)
                             },
-                            onFocusChange = { onChangeEndPageFocused(it) },
+                            onFocusChange = { onChangeEndPageFocused(index, it) },
                             focusManager = focusManager
                         )
                     }
@@ -202,10 +208,12 @@ fun SplitStudyScreen(
                     BbangZipButton(
                         bbangZipButtonType = BbangZipButtonType.Outlined,
                         bbangZipButtonSize = BbangZipButtonSize.Medium,
-                        onClick = {},
+                        onClick = {
+                            onClickDatePicker(index)
+                        },
                         modifier = Modifier.fillMaxWidth(),
                         leadingIcon = R.drawable.ic_page_check_default_24,
-                        label = "${seletedDate[index+1].year}년 ${seletedDate[index+1].month}월 ${seletedDate[index+1].day}일 까지",
+                        label = "${seletedDateList[index+1].year}년 ${seletedDateList[index+1].month}월 ${seletedDateList[index+1].day}일 까지",
                     )
                 }
             }
@@ -226,6 +234,15 @@ fun SplitStudyScreen(
             trailingIcon = R.drawable.ic_plus_thick_24
         )
     }
+
+    BbangZipDatePickerBottomSheet(
+        isBottomSheetVisible = datePickerBottomSheetState,
+        bottomSheetTitle = stringResource(R.string.add_study_date_picker_bottomsheet_title),
+        selectedDate = seletedDateList[selectedIndex+1],
+        onSelectedDateChanged = onChangeSelectedDate,
+        onClickInputButton = onClickConfirmDateBtn,
+        onDismissRequest = onCloseBottomSheet,
+    )
 }
 
 @Preview(showSystemUi = true)

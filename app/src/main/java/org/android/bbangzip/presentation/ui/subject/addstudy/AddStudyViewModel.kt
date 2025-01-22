@@ -236,7 +236,7 @@ class AddStudyViewModel
         }
 
 
-        return result.map{it.toString() + "p"}
+        return result.map{it.toString()}
     }
 
     private fun unitTextToInt(text: String): Int{

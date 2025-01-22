@@ -19,20 +19,36 @@ fun SplitStudyRoute2(
 
     val splitStudyState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    SplitStudyScreen(
-        pieceNumber = splitStudyState.pieceNumber,
-        subjectName = splitStudyState.subjectName,
-        startPage = splitStudyState.startPage,
-        endPage = splitStudyState.endPage,
-        startPageList = splitStudyState.startPageList,
-        endPageList = splitStudyState.endPageList,
-        seletedDate = splitStudyState.dateList,
-        onChangeStartPage = {index, value ->
-            viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPage(index,value))
-        },
-        onChangeEndPage = {index, value ->
-            viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeEndPage(index,value))
-        },
-
-    )
+    if (splitStudyState.isSuccess) {
+        SplitStudyScreen(
+            pieceNumber = splitStudyState.pieceNumber,
+            subjectName = splitStudyState.subjectName,
+            startPage = splitStudyState.startPage,
+            endPage = splitStudyState.endPage,
+            selectedDate = splitStudyState.selectedDate,
+            selectedIndex = splitStudyState.selectedPieceIndex,
+            datePickerBottomSheetState = splitStudyState.datePickerBottomSheetState,
+            startPageList = splitStudyState.startPageList,
+            endPageList = splitStudyState.endPageList,
+            seletedDateList = splitStudyState.dateList,
+            onChangeStartPage = {index, value ->
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPage(index,value))
+            },
+            onChangeEndPage = {index, value ->
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeEndPage(index,value))
+            },
+            onChangeStartPageFocused = {index, value ->
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPageFocused(index, value))
+            },
+            onChangeEndPageFocused = {index, value ->
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeEndPageFocused(index, value))
+            },
+            onClickDatePicker = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickDatePicker(it))
+            },
+            onCloseBottomSheet = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnCloseBottomSheet)
+            }
+        )
+    }
 }

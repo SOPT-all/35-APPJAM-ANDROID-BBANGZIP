@@ -58,7 +58,6 @@ fun BbangZipDatePickerBottomSheet(
             Spacer(modifier = Modifier.height(24.dp))
         },
         interactButton = {
-            // TODO Button 넣기, Button 클릭 시에 onClickInputButton() 전달
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,

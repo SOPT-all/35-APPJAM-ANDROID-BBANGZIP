@@ -10,18 +10,21 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class SplitStudyContract {
     @Parcelize
     data class SplitStudyState(
+        val isSuccess: Boolean = false,
         val subjectName: String = "경제통계학",
         val startPage: String = "",
         val endPage: String = "",
         val pieceNumber: Int = 0,
+        val selectedDate: Date = Date("2025", "1", "21"),
+        val selectedPieceIndex: Int = 0,
         val startPageList: List<String> = List(pieceNumber) { "" },
-        val startPageFocusedList: List<Boolean> = List(pieceNumber) { false },
+        val startPageFocusedStateList: List<Boolean> = List(pieceNumber) { false },
         val startPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
         val endPageList: List<String> = List(pieceNumber) { "" },
         val endPageFocusedStateList: List<Boolean> = List(pieceNumber) { false},
         val endPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
         val dateList: List<Date> = List(pieceNumber) { Date("2025", "1", "21") },
-        val datePickerBottomSheetStateList: List<Boolean> = List(pieceNumber) { false },
+        val datePickerBottomSheetState: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -39,7 +42,7 @@ class SplitStudyContract {
 
         data class OnChangeSelectedDate(val selectedDate: Date) : SplitStudyEvent
 
-        data object OnClickDatePicker : SplitStudyEvent
+        data class OnClickDatePicker(val index: Int) : SplitStudyEvent
 
         data object OnClickBackIcon : SplitStudyEvent
 
@@ -48,6 +51,8 @@ class SplitStudyContract {
         data object OnClickSaveBtn : SplitStudyEvent
 
         data object OnClickConfirmDateBtn : SplitStudyEvent
+
+        data object OnCloseBottomSheet : SplitStudyEvent
     }
 
     sealed interface SplitStudyReduce : BaseContract.Reduce {
@@ -73,11 +78,15 @@ class SplitStudyContract {
 
         data object UpdateButtonEnabled : SplitStudyReduce
 
-        data object UpdateStartPageToString : SplitStudyReduce
+        data class UpdateStartPageToString(val index: Int) : SplitStudyReduce
 
-        data object UpdateEndPageToString : SplitStudyReduce
+        data class UpdateEndPageToString(val index: Int) : SplitStudyReduce
 
         data object UpdatePieceNumber: SplitStudyReduce
+
+        data class UpdateSeletedIndex(val index: Int): SplitStudyReduce
+
+        data object UpdateState: SplitStudyReduce
     }
 
     sealed interface SplitStudySideEffect : BaseContract.SideEffect {
