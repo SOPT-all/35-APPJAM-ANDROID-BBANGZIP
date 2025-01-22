@@ -7,7 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
-import org.android.bbangzip.presentation.indicator.BbangZipLoadingIndicator
+import org.android.bbangzip.presentation.component.indicator.BbangZipLoadingIndicator
 
 @Composable
 fun MyRoute(

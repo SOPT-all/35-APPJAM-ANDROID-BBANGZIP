@@ -1,4 +1,4 @@
-package org.android.bbangzip.presentation.indicator
+package org.android.bbangzip.presentation.component.indicator
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
