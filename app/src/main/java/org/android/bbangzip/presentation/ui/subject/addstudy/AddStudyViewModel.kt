@@ -45,7 +45,6 @@ class AddStudyViewModel
                 updateState(AddStudyReduce.UpdateStartPageToString)
                 updateState(AddStudyReduce.UpdateSplitButtonEnabled)
                 updateState(AddStudyReduce.UpdateButtonEnabled)
-                Timber.d("startPageFocusedState : ${event.startPageFocusedState}")
             }
 
             is AddStudyContract.AddStudyEvent.OnChangeEndPageFocused -> {
@@ -92,7 +91,6 @@ class AddStudyViewModel
                 updateState(AddStudyReduce.UpdateAddStudyViewType)
                 updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
                 updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
-                Timber.d("onClickePieceNUmber : ${currentUiState}")
                 setSideEffect(AddStudyContract.AddStudySideEffect.NavigateSplitStudy(addStudyData =
                     AddStudyData(
                         subjectName = currentUiState.subjectName,
@@ -111,6 +109,24 @@ class AddStudyViewModel
 
             AddStudyContract.AddStudyEvent.OnClickSplitBtn -> {
                 updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
+            }
+
+            is AddStudyContract.AddStudyEvent.OnClickAgainSplitBtn -> {
+                updateState(AddStudyReduce.UpdateAddStudyViewType)
+                updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
+                setSideEffect(AddStudyContract.AddStudySideEffect.NavigateSplitStudy(addStudyData =
+                AddStudyData(
+                    subjectName = currentUiState.subjectName,
+                    pieceNumber = event.pieceNumber,
+                    examDate = currentUiState.examDate,
+                    studyContent = currentUiState.studyContent?:"",
+                    startPage = currentUiState.startPage?:"",
+                    endPage = currentUiState.endPage?:"",
+                    startPageList = divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0,event.pieceNumber),
+                    endPageList = divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1,event.pieceNumber+1),
+                )
+                )
+                )
             }
         }
     }
@@ -254,8 +270,6 @@ class AddStudyViewModel
                 )
             }
             AddStudyReduce.UpdateAddStudyViewType -> {
-                Timber.d("이겨되나?")
-
                 state.copy(
                     addStudyViewType = AddStudyViewType.AGAIN
                 )

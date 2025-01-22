@@ -84,7 +84,7 @@ fun SplitStudyRoute(
             },
             onClickSaveButton = {
                 viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickSaveBtn(it))
-            }
+            },
         )
     }
 }

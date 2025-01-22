@@ -81,7 +81,7 @@ fun AddStudyScreen(
     onClickEnrollBtn: () -> Unit = {},
     onClickCancleIcon: () -> Unit = {},
     onClickConfirmDateBtn: () -> Unit = {},
-    navigateToSplit: () -> Unit = {}
+    onClickAgainSplitBtn: (Int) -> Unit = {}
 ){
     val focusManager = LocalFocusManager.current
 
@@ -194,7 +194,7 @@ fun AddStudyScreen(
                     AgainRangeView(
                         focusManager = focusManager,
                         pieceNumber = pieceNumber,
-                        onClickSplitBtn = onClickSplitBtn,
+                        onClickSplitBtn = onClickAgainSplitBtn,
                         isSplitBtnEnable = isSplitBtnEnable
                     )
                 }
@@ -316,7 +316,7 @@ private fun DefaultRangeView(
 private fun AgainRangeView(
     focusManager: FocusManager,
     pieceNumber: Int,
-    onClickSplitBtn: () -> Unit,
+    onClickSplitBtn: (Int) -> Unit,
     isSplitBtnEnable: Boolean
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -365,7 +365,7 @@ private fun AgainRangeView(
         bbangZipButtonType = BbangZipButtonType.Outlined,
         bbangZipButtonSize = BbangZipButtonSize.Medium,
         onClick = {
-            onClickSplitBtn()
+            onClickSplitBtn(pieceNumber)
         },
         modifier = Modifier.fillMaxWidth(),
         label = "다시 쪼개기",

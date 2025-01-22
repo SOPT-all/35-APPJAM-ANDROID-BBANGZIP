@@ -121,7 +121,6 @@ class SplitStudyViewModel
             }
             is SplitStudyContract.SplitStudyReduce.UpdatePieceNumber -> {state}
             is SplitStudyContract.SplitStudyReduce.InitializeState -> {
-                Timber.d("[InitializeState] : ${reduce.addStudyData}")
                 state.copy(
                     subjectName = reduce.addStudyData.subjectName,
                     startPage = reduce.addStudyData.startPage,

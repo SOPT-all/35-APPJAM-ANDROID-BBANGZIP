@@ -70,6 +70,8 @@ class AddStudyContract{
         data object OnClickEnrollBtn : AddStudyEvent
 
         data object OnClickConfirmDateBtn : AddStudyEvent
+
+        data class OnClickAgainSplitBtn(val pieceNumber: Int) : AddStudyEvent
     }
 
     sealed interface AddStudyReduce : BaseContract.Reduce {

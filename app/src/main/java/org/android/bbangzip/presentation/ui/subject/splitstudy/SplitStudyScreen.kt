@@ -76,7 +76,7 @@ fun SplitStudyScreen(
     onClickConfirmDateBtn: () -> Unit = {},
     onCloseBottomSheet: () -> Unit = {},
     onBackBtnClick: () -> Unit = {},
-    onClickSaveButton: (SplitStudyData) -> Unit = {}
+    onClickSaveButton: (SplitStudyData) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 
