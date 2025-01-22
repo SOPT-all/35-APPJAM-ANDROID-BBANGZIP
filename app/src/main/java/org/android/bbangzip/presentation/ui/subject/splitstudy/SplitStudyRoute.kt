@@ -5,16 +5,37 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.flow.collectLatest
 import org.android.bbangzip.presentation.model.AddStudyData
+import org.android.bbangzip.presentation.model.SplitStudyData
 import timber.log.Timber
 
 @Composable
-fun SplitStudyRoute2(
+fun SplitStudyRoute(
     viewModel: SplitStudyViewModel = hiltViewModel(),
-    addStudyData: AddStudyData
+    addStudyData: AddStudyData,
+    onBackPress: () -> Unit = {},
+    navigateAddStudy: (SplitStudyData) -> Unit = {}
 ){
     LaunchedEffect(Unit){
+        Timber.tag("SplitStudy 진입").d("$addStudyData")
         viewModel.setEvent(SplitStudyContract.SplitStudyEvent.Initialize(addStudyData = addStudyData))
+        Timber.tag("SplitStudy 진입").d("${viewModel.uiState}addStudyData")
+
+    }
+
+    LaunchedEffect(viewModel.uiSideEffect) {
+        viewModel.uiSideEffect.collectLatest { effect ->
+            when (effect) {
+                is SplitStudyContract.SplitStudySideEffect.NavigateAddStudy -> {
+                    navigateAddStudy(effect.splitStudyData)
+                    Timber.d("[NavigateAddStudy] : ${effect.splitStudyData}")
+                }
+                is SplitStudyContract.SplitStudySideEffect.NavigateBack -> {
+                    onBackPress()
+                }
+            }
+        }
     }
 
     val splitStudyState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -23,6 +44,8 @@ fun SplitStudyRoute2(
         SplitStudyScreen(
             pieceNumber = splitStudyState.pieceNumber,
             subjectName = splitStudyState.subjectName,
+            examDate = splitStudyState.examDate,
+            studyContent = splitStudyState.studyContent,
             startPage = splitStudyState.startPage,
             endPage = splitStudyState.endPage,
             selectedDate = splitStudyState.selectedDate,
@@ -32,6 +55,9 @@ fun SplitStudyRoute2(
             endPageList = splitStudyState.endPageList,
             seletedDateList = splitStudyState.dateList,
             isSaveEnable = splitStudyState.isSaveEnable,
+            onBackBtnClick = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickBackIcon)
+            },
             onChangeStartPage = {index, value ->
                 viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPage(index,value))
             },
@@ -55,6 +81,9 @@ fun SplitStudyRoute2(
             },
             onChangeSelectedDate = {
                 viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeSelectedDate(it))
+            },
+            onClickSaveButton = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickSaveBtn(it))
             }
         )
     }

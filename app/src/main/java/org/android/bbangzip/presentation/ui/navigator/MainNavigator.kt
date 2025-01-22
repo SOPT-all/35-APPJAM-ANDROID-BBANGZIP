@@ -8,8 +8,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
 import org.android.bbangzip.presentation.model.Route
+import org.android.bbangzip.presentation.model.SplitStudyData
+import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.friend.navigateFriend
 import org.android.bbangzip.presentation.ui.login.LoginRoute
@@ -20,6 +23,7 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyRoute
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
+import org.android.bbangzip.presentation.ui.subject.splitstudy.SplitStudyRoute
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
 import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.navigateTodoAdd
@@ -31,7 +35,21 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = AddStudyRoute
+    val startDestination = BottomNavigationRoute.Subject
+//            AddStudyRoute(
+//            splitStudyData = SplitStudyData(
+//                subjectName = "빵집",
+//                pieceNumber = 0,
+//                examDate = "시험 일자 입력",
+//                studyContent = "",
+//                startPage = "",
+//                endPage = "",
+//                startPageList = listOf(),
+//                endPageList = listOf(),
+//                deadLineList = listOf(),
+//                addStudyViewType = AddStudyViewType.DEFAULT
+//            )
+
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =

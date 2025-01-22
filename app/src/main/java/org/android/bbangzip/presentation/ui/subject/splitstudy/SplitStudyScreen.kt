@@ -33,9 +33,12 @@ import org.android.bbangzip.presentation.component.chip.BbangZipChip
 import org.android.bbangzip.presentation.component.textfield.BbangZipSimpleTextField
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
 import org.android.bbangzip.presentation.model.Date
+import org.android.bbangzip.presentation.model.SplitStudyData
+import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.BbangZipShadowType
+import org.android.bbangzip.presentation.util.date.dateToString
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -45,9 +48,11 @@ import timber.log.Timber
 @Composable
 fun SplitStudyScreen(
     pieceNumber: Int = 0,
-    subjectName: String = "",
+    subjectName: String,
     startPage: String = "",
     endPage: String = "",
+    examDate: String = "",
+    studyContent: String = "",
     selectedIndex: Int = 0,
     selectedDate: Date = Date("2025", "1", "21"),
     datePickerBottomSheetState: Boolean = false,
@@ -71,6 +76,7 @@ fun SplitStudyScreen(
     onClickConfirmDateBtn: () -> Unit = {},
     onCloseBottomSheet: () -> Unit = {},
     onBackBtnClick: () -> Unit = {},
+    onClickSaveButton: (SplitStudyData) -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -80,6 +86,8 @@ fun SplitStudyScreen(
             scrollState.firstVisibleItemScrollOffset > 0
         }
     }
+
+    Timber.d("examdate : $examDate")
 
     Box(
         modifier = Modifier
@@ -251,6 +259,20 @@ fun SplitStudyScreen(
             bbangZipButtonSize = BbangZipButtonSize.Large,
             bbangZipButtonType = BbangZipButtonType.Solid,
             onClick = {
+                onClickSaveButton(
+                    SplitStudyData(
+                        subjectName = subjectName,
+                        pieceNumber = pieceNumber,
+                        examDate = examDate,
+                        studyContent = studyContent,
+                        startPage = startPage,
+                        endPage = endPage,
+                        startPageList = startPageList,
+                        endPageList = endPageList,
+                        deadLineList = seletedDateList.map{ dateToString(it) },
+                        addStudyViewType = AddStudyViewType.AGAIN
+                    )
+                )
             },
             modifier = Modifier
                 .padding(16.dp)
@@ -277,6 +299,7 @@ fun SplitStudyScreen(
 @Composable
 fun SplitStudyScreenPreview() {
     SplitStudyScreen(
+        subjectName = "빵집"
     )
 }
 

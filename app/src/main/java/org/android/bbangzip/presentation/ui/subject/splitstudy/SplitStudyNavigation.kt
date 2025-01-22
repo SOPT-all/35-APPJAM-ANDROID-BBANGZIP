@@ -9,6 +9,7 @@ import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.android.bbangzip.presentation.model.AddStudyData
+import org.android.bbangzip.presentation.model.SplitStudyData
 import timber.log.Timber
 import kotlin.reflect.typeOf
 
@@ -20,12 +21,17 @@ fun NavController.navigateSplitStudy(
     )
 }
 
-fun NavGraphBuilder.splitStudyNavGraph() {
+fun NavGraphBuilder.splitStudyNavGraph(
+    navigateBack: () -> Unit,
+    navigateAddStudy: (SplitStudyData) -> Unit,
+) {
     composable<SplitStudyRoute>(
         typeMap = mapOf(typeOf<AddStudyData>() to AddStudyDataType),
     ) {
-        SplitStudyRoute2(
-            addStudyData = it.toRoute<SplitStudyRoute>().addStudyData
+        SplitStudyRoute(
+            addStudyData = it.toRoute<SplitStudyRoute>().addStudyData,
+            onBackPress = navigateBack,
+            navigateAddStudy = navigateAddStudy
         )
     }
 }

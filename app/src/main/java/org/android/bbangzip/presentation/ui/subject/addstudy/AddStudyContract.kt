@@ -2,16 +2,17 @@ package org.android.bbangzip.presentation.ui.subject.addstudy
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import kotlinx.serialization.descriptors.PrimitiveKind
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.model.Date
+import org.android.bbangzip.presentation.model.SplitStudyData
+import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.util.base.BaseContract
 
 class AddStudyContract{
     @Parcelize
     data class AddStudyState(
-        val subjectName: String = "빵집",
+        val subjectName: String="",
         val examDate: String = "시험 일자 입력",
         val selectedDate: Date = Date("2025", "1", "21"),
         val studyContent: String? = null,
@@ -20,19 +21,26 @@ class AddStudyContract{
         val startPage: String? = null,
         val startPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
         val startPageFocusedState: Boolean = false,
+        val startPageList: List<String> = emptyList(),
         val endPage: String? = null,
         val endPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
         val endPageFocusedState: Boolean = false,
+        val endPageList: List<String> = emptyList(),
         val buttonEnabled: Boolean = false,
         val buttonSplitEnabled: Boolean = false,
         val datePickerBottomSheetState: Boolean = false,
         val piecePickerBottomSheetState: Boolean = false,
         val pieceNumber: Int = 0,
+        val deadLineList: List<String> = emptyList(),
+        val addStudyViewType: AddStudyViewType = AddStudyViewType.DEFAULT,
+        val isSuccess: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
 
     sealed interface AddStudyEvent : BaseContract.Event {
+        data class Initialize(val splitStudyData: SplitStudyData) : AddStudyEvent
+
         data class OnChangeStudyContent(val studyContent: String) : AddStudyEvent
 
         data class OnChangeStartPage(val startPage: String) : AddStudyEvent
@@ -65,6 +73,8 @@ class AddStudyContract{
     }
 
     sealed interface AddStudyReduce : BaseContract.Reduce {
+        data class Initialize(val splitStudyData: SplitStudyData) : AddStudyReduce
+
         data class UpdateStudyContent(val studyContent: String) : AddStudyReduce
 
         data class UpdateStudyContentFocusedState(val studyContentFocusedState: Boolean) : AddStudyReduce
@@ -100,6 +110,10 @@ class AddStudyContract{
         data object UpdateStartPageToString : AddStudyReduce
 
         data object UpdateEndPageToString : AddStudyReduce
+
+        data object UpdateAddStudyViewType : AddStudyReduce
+
+        data object UpdateIsSuccess: AddStudyReduce
 
         data object ResetStudyContent : AddStudyReduce
     }

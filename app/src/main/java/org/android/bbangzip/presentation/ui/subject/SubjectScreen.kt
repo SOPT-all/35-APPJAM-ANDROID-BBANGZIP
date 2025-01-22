@@ -13,11 +13,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import org.android.bbangzip.presentation.model.SplitStudyData
+import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.ui.theme.defaultBbangZipColors
 
 @Composable
 fun SubjectScreen(
     modifier: Modifier = Modifier,
+    navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     Column(
         modifier =
@@ -26,7 +29,26 @@ fun SubjectScreen(
                 .background(color = defaultBbangZipColors.backgroundNormal_FFFFFF),
     ) {
         Text("subject 탭")
+        Button(
+            onClick = {
+                navigateAddStudy(
+                    SplitStudyData(
+                        subjectName = "빵집",
+                        pieceNumber = 0,
+                        examDate = "시험 일자 입력",
+                        studyContent = "",
+                        startPage = "",
+                        endPage = "",
+                        startPageList = listOf(),
+                        endPageList = listOf(),
+                        deadLineList = listOf(),
+                        addStudyViewType = AddStudyViewType.DEFAULT
+                    )
+                )
+            },
+            ){Text("눌러")}
     }
+
 }
 
 @Preview

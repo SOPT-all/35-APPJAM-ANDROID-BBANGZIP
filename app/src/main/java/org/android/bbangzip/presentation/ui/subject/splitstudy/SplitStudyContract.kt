@@ -5,6 +5,7 @@ import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.model.Date
+import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.util.base.BaseContract
 
 class SplitStudyContract {
@@ -14,6 +15,8 @@ class SplitStudyContract {
         val subjectName: String = "경제통계학",
         val startPage: String = "",
         val endPage: String = "",
+        val examDate: String = "",
+        val studyContent: String = "",
         val pieceNumber: Int = 0,
         val selectedDate: Date = Date("2025", "1", "21"),
         val selectedPieceIndex: Int = 0,
@@ -49,7 +52,7 @@ class SplitStudyContract {
 
         data object OnClickNextBtn : SplitStudyEvent
 
-        data object OnClickSaveBtn : SplitStudyEvent
+        data class OnClickSaveBtn(val splitStudyData: SplitStudyData) : SplitStudyEvent
 
         data object OnClickConfirmDateBtn : SplitStudyEvent
 
@@ -93,6 +96,8 @@ class SplitStudyContract {
     }
 
     sealed interface SplitStudySideEffect : BaseContract.SideEffect {
-        data object NavigateAddStudy : SplitStudySideEffect
+        data object NavigateBack : SplitStudySideEffect
+
+        data class NavigateAddStudy(val splitStudyData: SplitStudyData) : SplitStudySideEffect
     }
 }

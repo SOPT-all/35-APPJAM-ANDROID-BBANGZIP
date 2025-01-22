@@ -21,6 +21,10 @@ fun dateStringToLocalDate(dateString: String): LocalDate {
     return LocalDate.of(year, month, day)
 }
 
+fun dateToString(date: Date): String{
+    return "${date.year}-${date.month}-${date.day}"
+}
+
 fun main(){
     println(divideDatesByN(LocalDate.of(2025,10,10), n = 3))
 }

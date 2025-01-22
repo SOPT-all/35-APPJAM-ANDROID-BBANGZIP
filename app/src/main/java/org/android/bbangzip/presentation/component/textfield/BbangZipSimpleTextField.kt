@@ -54,6 +54,7 @@ fun BbangZipSimpleTextField(
     @StringRes placeholder: Int,
     @StringRes guideline: Int,
     value: String,
+    isEnable: Boolean = true,
     modifier: Modifier = Modifier,
     bbangZipTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onFocusChange: (Boolean) -> Unit = { },
@@ -87,6 +88,7 @@ fun BbangZipSimpleTextField(
         },
         content = {
             BasicTextField(
+                enabled = isEnable,
                 modifier =
                     Modifier
                         .weight(1f)

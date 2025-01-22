@@ -6,8 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import org.android.bbangzip.domain.repository.local.UserRepository
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
+import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.type.ShortTextFieldType
 import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyContract.AddStudyReduce
+import org.android.bbangzip.presentation.ui.subject.splitstudy.SplitStudyContract
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
@@ -21,12 +23,17 @@ class AddStudyViewModel
     ) : BaseViewModel<AddStudyContract.AddStudyEvent, AddStudyContract.AddStudyState, AddStudyReduce, AddStudyContract.AddStudySideEffect>(
     savedStateHandle = savedStateHandle,
     ){
+
     override fun createInitialState(savedState: Parcelable?): AddStudyContract.AddStudyState {
         return savedState as? AddStudyContract.AddStudyState ?: AddStudyContract.AddStudyState()
     }
 
     override fun handleEvent(event: AddStudyContract.AddStudyEvent) {
         when(event){
+            is AddStudyContract.AddStudyEvent.Initialize -> {
+                updateState(AddStudyReduce.Initialize(splitStudyData = event.splitStudyData))
+                updateState(AddStudyReduce.UpdateSplitButtonEnabled)
+            }
             is AddStudyContract.AddStudyEvent.OnChangeEndPage -> {
                 updateState(AddStudyReduce.UpdateEndPage(endPage = event.endPage))
             }
@@ -82,8 +89,10 @@ class AddStudyViewModel
                 updateState(AddStudyReduce.ResetStudyContent)
             }
             is AddStudyContract.AddStudyEvent.OnClickPieceNumber -> {
+                updateState(AddStudyReduce.UpdateAddStudyViewType)
                 updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
                 updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
+                Timber.d("onClickePieceNUmber : ${currentUiState}")
                 setSideEffect(AddStudyContract.AddStudySideEffect.NavigateSplitStudy(addStudyData =
                     AddStudyData(
                         subjectName = currentUiState.subjectName,
@@ -97,7 +106,9 @@ class AddStudyViewModel
                     )
                     )
                 )
+                updateState(AddStudyReduce.UpdateIsSuccess)
             }
+
             AddStudyContract.AddStudyEvent.OnClickSplitBtn -> {
                 updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
             }
@@ -109,6 +120,22 @@ class AddStudyViewModel
         reduce: AddStudyReduce
     ): AddStudyContract.AddStudyState {
         return when(reduce) {
+            is AddStudyReduce.Initialize -> {
+                state.copy(
+                    subjectName = reduce.splitStudyData.subjectName,
+                    pieceNumber = reduce.splitStudyData.pieceNumber,
+                    examDate = reduce.splitStudyData.examDate,
+                    studyContent = reduce.splitStudyData.studyContent,
+                    startPage = reduce.splitStudyData.startPage,
+                    endPage = reduce.splitStudyData.endPage,
+                    startPageList = reduce.splitStudyData.startPageList,
+                    endPageList = reduce.splitStudyData.endPageList,
+                    deadLineList = reduce.splitStudyData.deadLineList,
+                    addStudyViewType = reduce.splitStudyData.addStudyViewType,
+                    isSuccess = true
+                )
+            }
+
             AddStudyReduce.UpdateDatePickerBottomSheetState -> {
                 state.copy(datePickerBottomSheetState = !state.datePickerBottomSheetState)
             }
@@ -167,7 +194,6 @@ class AddStudyViewModel
                 )
             }
             AddStudyReduce.UpdateStudyContentInputState -> {
-                Timber.d("텍스트필드")
                 val checkedText = determineLongTextFieldType(state.studyContent?:"", state.studyContentFocusedState)
                 state.copy(studyContentTextFieldState = checkedText)
             }
@@ -183,7 +209,13 @@ class AddStudyViewModel
                     startPage = if(state.startPage.isNullOrEmpty()) {
                         ""
                     }else {
-                        if (state.startPageFocusedState) state.startPage.filter { it.isDigit() }.toInt().toString() else state.startPage.toInt().toString() + "p"
+                        if (state.startPageFocusedState)
+                            state.startPage.filter { it.isDigit() }.toInt().toString()
+                        else
+                            if(state.startPage.last()=='p')
+                                state.startPage.dropLast(1)
+                            else
+                                state.startPage.toInt().toString() + "p"
                     },
                 )
             }
@@ -193,13 +225,18 @@ class AddStudyViewModel
                     endPage = if(state.endPage.isNullOrEmpty()) {
                         ""
                     }else {
-                        if (state.endPageFocusedState) state.endPage.filter { it.isDigit() }.toInt().toString() else state.endPage.toInt().toString() + "p"
+                        if (state.endPageFocusedState)
+                            state.endPage.filter { it.isDigit() }.toInt().toString()
+                        else
+                            if(state.endPage.last()=='p')
+                                state.endPage.dropLast(1)
+                            else
+                                state.endPage.toInt().toString() + "p"
                     },
                 )
             }
 
             is AddStudyReduce.UpdateSplitButtonEnabled -> {
-                Timber.d("[UpdateSplitButtonEnabled]${state.buttonSplitEnabled}")
                 state.copy(
                     buttonSplitEnabled = !(state.startPage.isNullOrEmpty() || state.endPage.isNullOrEmpty() || unitTextToInt(state.startPage) > unitTextToInt(state.endPage))
                 )
@@ -214,6 +251,19 @@ class AddStudyViewModel
             is AddStudyReduce.ResetStudyContent -> {
                 state.copy(
                     studyContent = ""
+                )
+            }
+            AddStudyReduce.UpdateAddStudyViewType -> {
+                Timber.d("이겨되나?")
+
+                state.copy(
+                    addStudyViewType = AddStudyViewType.AGAIN
+                )
+            }
+
+            AddStudyReduce.UpdateIsSuccess -> {
+                state.copy(
+                    isSuccess = false
                 )
             }
         }
