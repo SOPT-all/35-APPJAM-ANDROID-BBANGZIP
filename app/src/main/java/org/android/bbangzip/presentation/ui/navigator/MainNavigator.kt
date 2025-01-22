@@ -14,6 +14,7 @@ import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.friend.navigateFriend
 import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
+import org.android.bbangzip.presentation.ui.my.bbangzipdetail.navigation.navigateBbangZipDetail
 import org.android.bbangzip.presentation.ui.my.navigation.navigateMy
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
@@ -85,6 +86,10 @@ class MainNavigator(
 
     fun navigateToToDoAddPending() {
         navHostController.navigateTodoAddPending()
+    }
+
+    fun navigateToBbangZipDetail() {
+        navHostController.navigateBbangZipDetail()
     }
 
     private fun popBackStack() {
