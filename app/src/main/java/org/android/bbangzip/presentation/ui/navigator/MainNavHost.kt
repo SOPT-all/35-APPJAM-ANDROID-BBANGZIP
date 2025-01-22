@@ -12,8 +12,6 @@ import androidx.navigation.compose.NavHost
 import org.android.bbangzip.presentation.ui.friend.friendNavGraph
 import org.android.bbangzip.presentation.ui.login.loginNavGraph
 import org.android.bbangzip.presentation.ui.my.myNavGraph
-import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
-import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingEndNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavGraph
@@ -77,7 +75,7 @@ fun MainNavHost(
             friendNavGraph()
 
             myNavGraph(
-                navigateToLogin = { navigator.navigateToLogin() }
+                navigateToLogin = { navigator.navigateToLogin() },
             )
 
             subjectNavGraph()

@@ -14,11 +14,11 @@ fun NavController.navigateMy(navOptions: NavOptions) {
 }
 
 fun NavGraphBuilder.myNavGraph(
-    navigateToLogin: () -> Unit
+    navigateToLogin: () -> Unit,
 ) {
     composable<BottomNavigationRoute.My> {
         MyRoute(
-            navigateToLogin = navigateToLogin
+            navigateToLogin = navigateToLogin,
         )
     }
 }

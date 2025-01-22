@@ -20,7 +20,7 @@ class MyContract {
 
     sealed interface MyReduce : BaseContract.Reduce
 
-    sealed interface MySideEffect : BaseContract.SideEffect{
-        data object NavigateToLogin: MySideEffect
+    sealed interface MySideEffect : BaseContract.SideEffect {
+        data object NavigateToLogin : MySideEffect
     }
 }
