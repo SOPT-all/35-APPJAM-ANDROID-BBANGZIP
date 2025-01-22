@@ -13,8 +13,6 @@ import org.android.bbangzip.presentation.ui.friend.navigation.friendNavGraph
 import org.android.bbangzip.presentation.ui.login.loginNavGraph
 import org.android.bbangzip.presentation.ui.my.myNavGraph
 import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.myBadgeCategoryNavGraph
-import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
-import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingEndNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavGraph

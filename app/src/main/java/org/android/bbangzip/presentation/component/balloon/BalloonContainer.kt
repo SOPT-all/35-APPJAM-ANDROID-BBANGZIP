@@ -11,6 +11,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import org.android.bbangzip.presentation.type.BbangZipShadowType
+import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable

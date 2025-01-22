@@ -11,11 +11,9 @@ import androidx.navigation.navOptions
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
 import org.android.bbangzip.presentation.model.Route
 import org.android.bbangzip.presentation.type.BottomNavigationType
-import org.android.bbangzip.presentation.ui.friend.navigateFriend
 import org.android.bbangzip.presentation.ui.friend.navigation.navigateFriend
 import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
-import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.MyBadgeCategoryRoute
 import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.navigateToMyBadgeCategory
 import org.android.bbangzip.presentation.ui.my.navigateMy
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
@@ -33,7 +31,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = MyBadgeCategoryRoute
+    val startDestination = LoginRoute
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =
