@@ -105,9 +105,12 @@
     <string name="login_ballon_label">5초 만에 빵집 사장님 되기</string>
 
     <!-- friend -->
-    <string name="friend_header_title">이웃 사장님들은/n어떻게 공부하고 있을까요?</string>
+    <string name="friend_header_title">이웃 사장님들은\n어떻게 공부하고 있을까요?</string>
     <string name="friend_type_all">전체</string>
     <string name="friend_type_group">그룹</string>
     <string name="friend_type_pending">신청대기</string>
+    <string name="friend_all_tf_placeholder">이웃 사장님의 이름을 검색해보세요</string>
+    <string name="emtpy_string" />
+    <string name="friend_boss_count">총 %s명의 사장님을 알고있어요</string>
 
 </resources>

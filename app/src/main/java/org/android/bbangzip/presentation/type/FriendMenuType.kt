@@ -4,19 +4,15 @@ import androidx.annotation.StringRes
 import org.android.bbangzip.R
 
 enum class FriendMenuType(
-    @StringRes name: Int,
-    isSelected: Boolean
+    @StringRes val id: Int,
 ) {
-    All(
-        name = R.string.friend_type_all,
-        isSelected = true
+    ALL(
+        id = R.string.friend_type_all
     ),
     GROUP(
-        name = R.string.friend_type_group,
-        isSelected = false
+        id = R.string.friend_type_group
     ),
     PENDING(
-        name = R.string.friend_type_pending,
-        isSelected = false
-    ),
+        id = R.string.friend_type_pending
+    )
 }
