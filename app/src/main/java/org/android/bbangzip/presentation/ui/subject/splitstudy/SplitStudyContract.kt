@@ -14,14 +14,14 @@ class SplitStudyContract {
         val startPage: String = "",
         val endPage: String = "",
         val pieceNumber: Int = 0,
-        val startPageList: List<String> = listOf(),
-        val startPageFocusedList: List<Boolean> = listOf(),
-        val startPageTextFieldStateList: List<BbangZipTextFieldInputState> = listOf(),
-        val endPageList: List<String> = listOf(),
-        val endPageFocusedStateList: List<Boolean> = listOf(),
-        val endPageTextFieldStateList: List<BbangZipTextFieldInputState> = listOf(),
-        val dateList: List<Date> = listOf(),
-        val datePickerBottomSheetStateList: List<Boolean> = listOf(),
+        val startPageList: List<String> = List(pieceNumber) { "" },
+        val startPageFocusedList: List<Boolean> = List(pieceNumber) { false },
+        val startPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
+        val endPageList: List<String> = List(pieceNumber) { "" },
+        val endPageFocusedStateList: List<Boolean> = List(pieceNumber) { false},
+        val endPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
+        val dateList: List<Date> = List(pieceNumber) { Date("2025", "1", "21") },
+        val datePickerBottomSheetStateList: List<Boolean> = List(pieceNumber) { false },
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -29,13 +29,13 @@ class SplitStudyContract {
     sealed interface SplitStudyEvent : BaseContract.Event {
         data class Initialize(val addStudyData: AddStudyData) : SplitStudyEvent
 
-        data class OnChangeStartPage(val startPage: String) : SplitStudyEvent
+        data class OnChangeStartPage(val index: Int, val startPage: String) : SplitStudyEvent
 
-        data class OnChangeEndPage(val endPage: String) : SplitStudyEvent
+        data class OnChangeEndPage(val index: Int, val endPage: String) : SplitStudyEvent
 
-        data class OnChangeStartPageFocused(val startPageFocusedState: Boolean) : SplitStudyEvent
+        data class OnChangeStartPageFocused(val index: Int, val startPageFocusedState: Boolean) : SplitStudyEvent
 
-        data class OnChangeEndPageFocused(val endPageFocusedState: Boolean) : SplitStudyEvent
+        data class OnChangeEndPageFocused(val index: Int, val endPageFocusedState: Boolean) : SplitStudyEvent
 
         data class OnChangeSelectedDate(val selectedDate: Date) : SplitStudyEvent
 
@@ -53,15 +53,15 @@ class SplitStudyContract {
     sealed interface SplitStudyReduce : BaseContract.Reduce {
         data class InitializeState(val addStudyData: AddStudyData) : SplitStudyReduce
 
-        data class UpdateStartPage(val startPage: String) : SplitStudyReduce
+        data class UpdateStartPage(val index: Int, val startPage: String) : SplitStudyReduce
 
-        data class UpdateStartPageFocusedState(val startPageFocusedState: Boolean) : SplitStudyReduce
+        data class UpdateStartPageFocusedState(val index: Int, val startPageFocusedState: Boolean) : SplitStudyReduce
 
         data object UpdateStartPageInputState : SplitStudyReduce
 
-        data class UpdateEndPage(val endPage: String) : SplitStudyReduce
+        data class UpdateEndPage(val index: Int,val endPage: String) : SplitStudyReduce
 
-        data class UpdateEndPageFocusedState(val endPageFocusedState: Boolean) : SplitStudyReduce
+        data class UpdateEndPageFocusedState(val index: Int, val endPageFocusedState: Boolean) : SplitStudyReduce
 
         data object UpdateEndPageInputState : SplitStudyReduce
 

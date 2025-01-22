@@ -84,7 +84,6 @@ class AddStudyViewModel
             is AddStudyContract.AddStudyEvent.OnClickPieceNumber -> {
                 updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
                 updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
-                Timber.d("pieceNumber : ${event.pieceNumber}")
                 setSideEffect(AddStudyContract.AddStudySideEffect.NavigateSplitStudy(addStudyData =
                     AddStudyData(
                         subjectName = currentUiState.subjectName,

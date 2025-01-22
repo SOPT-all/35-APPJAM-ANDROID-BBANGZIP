@@ -13,10 +13,8 @@ fun SplitStudyRoute2(
     viewModel: SplitStudyViewModel = hiltViewModel(),
     addStudyData: AddStudyData
 ){
-    Timber.d("split에 온값 : $addStudyData")
     LaunchedEffect(Unit){
         viewModel.setEvent(SplitStudyContract.SplitStudyEvent.Initialize(addStudyData = addStudyData))
-        Timber.d("split에 온값 : $addStudyData")
     }
 
     val splitStudyState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -28,6 +26,13 @@ fun SplitStudyRoute2(
         endPage = splitStudyState.endPage,
         startPageList = splitStudyState.startPageList,
         endPageList = splitStudyState.endPageList,
-        seletedDate = splitStudyState.dateList
+        seletedDate = splitStudyState.dateList,
+        onChangeStartPage = {index, value ->
+            viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPage(index,value))
+        },
+        onChangeEndPage = {index, value ->
+            viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeEndPage(index,value))
+        },
+
     )
 }

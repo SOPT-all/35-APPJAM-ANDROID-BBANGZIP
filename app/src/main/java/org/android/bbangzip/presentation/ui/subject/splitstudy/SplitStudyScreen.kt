@@ -51,8 +51,8 @@ fun SplitStudyScreen(
         Date("2025", "1", "21"),
         Date("2025", "1", "21")
     ),
-    onChangeStartPage: (String) -> Unit = {},
-    onChangeEndPage: (String) -> Unit = {},
+    onChangeStartPage: (Int, String) -> Unit = {_, _ ->},
+    onChangeEndPage: (Int, String) -> Unit = {_, _ ->},
     onChangeStartPageFocused: (Boolean) -> Unit = {},
     onChangeEndPageFocused: (Boolean) -> Unit = {},
     onBackBtnClick: () -> Unit = {},
@@ -175,7 +175,7 @@ fun SplitStudyScreen(
                             value = startPageList[index],
                             modifier = Modifier.weight(1f),
                             onValueChange = {
-                                onChangeStartPage(it)
+                                onChangeStartPage(index,it)
                             },
                             onFocusChange = { onChangeStartPageFocused(it) },
                             focusManager = focusManager,
@@ -190,7 +190,7 @@ fun SplitStudyScreen(
                             value = endPageList[index],
                             modifier = Modifier.weight(1f),
                             onValueChange = {
-                                onChangeEndPage(it)
+                                onChangeEndPage(index, it)
                             },
                             onFocusChange = { onChangeEndPageFocused(it) },
                             focusManager = focusManager
