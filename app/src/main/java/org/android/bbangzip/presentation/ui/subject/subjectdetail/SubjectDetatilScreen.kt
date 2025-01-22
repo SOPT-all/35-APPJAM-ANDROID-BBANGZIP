@@ -292,7 +292,7 @@ private fun DefaultPieceView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "시험까지 D-${dDay}",
+                text = "시험까지 D-$dDay",
                 style = BbangZipTheme.typography.caption1Medium,
                 color = BbangZipTheme.colors.staticWhite_FFFFFF,
                 modifier =
