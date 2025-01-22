@@ -159,22 +159,21 @@ fun TodoAddPendingScreen(
         ) {
             BbangZipSnackBarHost(snackBarHostState = todoAddSnackBarHostState)
 
-            if(todoAddState.selectedItemList.isNotEmpty()) {
+            if (todoAddState.selectedItemList.isNotEmpty()) {
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
                     onClick = { onItemPlusButtonClicked() },
                     label = stringResource(R.string.todo_add_plus_button_label),
                     modifier =
-                    Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
-                        .padding(bottom = 16.dp),
+                        Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth()
+                            .padding(bottom = 16.dp),
                     isEnable = todoAddState.selectedItemList.isNotEmpty(),
                     trailingIcon = R.drawable.ic_plus_thick_24,
                 )
             }
-
         }
     }
     BbangZipToDoFilterPickerBottomSheet(

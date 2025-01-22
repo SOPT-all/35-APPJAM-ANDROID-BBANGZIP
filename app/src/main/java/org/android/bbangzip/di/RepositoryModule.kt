@@ -4,16 +4,16 @@ import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import org.android.bbangzip.data.repositoryImpl.MyPageRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.PieceRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.local.UserLocalRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.remote.DummyRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.remote.UserRepositoryImpl
 import org.android.bbangzip.domain.repository.local.UserLocalRepository
-import org.android.bbangzip.data.repositoryImpl.MyPageRepositoryImpl
 import org.android.bbangzip.domain.repository.remote.DummyRepository
+import org.android.bbangzip.domain.repository.remote.MyPageRepository
 import org.android.bbangzip.domain.repository.remote.PieceRepository
 import org.android.bbangzip.domain.repository.remote.UserRepository
-import org.android.bbangzip.domain.repository.remote.MyPageRepository
 import javax.inject.Singleton
 
 @Module

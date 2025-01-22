@@ -5,9 +5,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.android.bbangzip.data.service.DummyService
+import org.android.bbangzip.data.service.MyPageService
 import org.android.bbangzip.data.service.PieceService
 import org.android.bbangzip.data.service.UserService
-import org.android.bbangzip.data.service.MyPageService
 import retrofit2.Retrofit
 import retrofit2.create
 import javax.inject.Singleton

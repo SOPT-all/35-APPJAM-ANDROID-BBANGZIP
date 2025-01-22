@@ -11,7 +11,7 @@ import javax.inject.Inject
 class PieceRepositoryImpl
     @Inject
     constructor(
-        private val pieceRemoteDataSource: PieceRemoteDataSource
+        private val pieceRemoteDataSource: PieceRemoteDataSource,
     ) : PieceRepository {
         override suspend fun getTodoInfo(
             area: String,
