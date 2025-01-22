@@ -77,8 +77,6 @@ fun AddStudyScreen(
     onClickPieceNumber: (Int) -> Unit = {},
     onClickBackIcon: () -> Unit = {},
     onClickSplitBtn: () -> Unit = {},
-    onClickNextBtn: () -> Unit = {},
-    onClickEnrollBtn: () -> Unit = {},
     onClickCancleIcon: () -> Unit = {},
     onClickConfirmDateBtn: () -> Unit = {},
     onClickAgainSplitBtn: (Int) -> Unit = {}
