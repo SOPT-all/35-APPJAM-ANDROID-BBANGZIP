@@ -3,12 +3,18 @@ package org.android.bbangzip.domain.repository.local
 import kotlinx.coroutines.flow.Flow
 import org.android.bbangzip.UserPreferences
 
-interface UserRepository {
+interface UserLocalRepository {
     val userPreferenceFlow: Flow<UserPreferences>
 
-    suspend fun setUserData(accessToken: String)
+    suspend fun setAccessToken(accessToken: String)
 
-    suspend fun clearUserData()
+    suspend fun clearAccessToken()
+
+    suspend fun setRefreshToken(refreshToken: String)
+
+    suspend fun clearRefreshToken()
+
+    suspend fun setIsLogin(isLogin: Boolean)
 
     suspend fun setOnboardingInfo(
         userName: String,
@@ -16,6 +22,8 @@ interface UserRepository {
         semester: String,
         subject: String,
     )
+
+    suspend fun setIsOnboardingCompleted(isOnboardingCompleted: Boolean)
 
     suspend fun clearOnboardingInfo()
 }

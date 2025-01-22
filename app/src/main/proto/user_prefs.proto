@@ -5,7 +5,10 @@ option java_multiple_files = true;
 
 message UserPreferences {
     string accessToken = 1;
-    OnboardingInfo onboardingInfo = 2;
+    string refreshToken = 2;
+    bool isLogin = 3;
+    bool isOnboardingCompleted = 4;
+    OnboardingInfo onboardingInfo = 5;
 }
 
 message OnboardingInfo {

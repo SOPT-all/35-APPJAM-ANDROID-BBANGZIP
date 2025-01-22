@@ -28,8 +28,8 @@ fun MainScreen(
 @Composable
 private fun MainScreenContent(
     navigator: MainNavigator,
-    hostState: SnackbarHostState = remember { SnackbarHostState() },
     modifier: Modifier = Modifier,
+    hostState: SnackbarHostState = remember { SnackbarHostState() },
 ) {
     Scaffold(
         modifier =
