@@ -13,6 +13,8 @@ import org.android.bbangzip.domain.usecase.DeleteWithdrawUseCase
 import org.android.bbangzip.domain.usecase.FetchBbangZipUseCase
 import org.android.bbangzip.domain.usecase.FetchDummyUseCase
 import org.android.bbangzip.domain.usecase.GetAddTodoListUseCase
+import org.android.bbangzip.domain.usecase.GetBadgeCategoryListUseCase
+import org.android.bbangzip.domain.usecase.GetBadgeDetailUseCase
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
 import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
@@ -28,6 +30,16 @@ class UseCaseModule {
     @Singleton
     fun providesDummyFetchUseCase(dummyRepository: DummyRepository): FetchDummyUseCase =
         FetchDummyUseCase(dummyRepository = dummyRepository)
+
+    @Provides
+    @Singleton
+    fun providesBadgeCategoryListGetUseCase(myPageRepository: MyPageRepository): GetBadgeCategoryListUseCase =
+        GetBadgeCategoryListUseCase(myPageRepository = myPageRepository)
+
+    @Provides
+    @Singleton
+    fun providesBadgeDetailGetUseCase(myPageRepository: MyPageRepository): GetBadgeDetailUseCase =
+        GetBadgeDetailUseCase(myPageRepository = myPageRepository)
 
     @Provides
     @Singleton

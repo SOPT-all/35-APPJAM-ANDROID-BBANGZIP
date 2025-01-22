@@ -24,6 +24,13 @@ object ServiceModule {
 
     @Provides
     @Singleton
+    fun provideMyPageService(
+        @BbangZip retrofit: Retrofit,
+    ): MyPageService =
+        retrofit.create(MyPageService::class.java)
+
+    @Provides
+    @Singleton
     fun providePieceService(
         @BbangZip retrofit: Retrofit,
     ): PieceService =

@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.my.mybadgecategory.component
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -26,13 +27,14 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import coil3.compose.AsyncImage
 import org.android.bbangzip.R
-import org.android.bbangzip.presentation.component.balloon.TopTailBalloon
 import org.android.bbangzip.presentation.component.bottomsheet.BbangZipBasicModalBottomSheet
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.chip.BbangZipChip
 import org.android.bbangzip.presentation.model.BadgeDetail
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
+import org.android.bbangzip.presentation.type.BbangZipShadowType
+import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -100,7 +102,7 @@ fun BbangZipBadgeDetailBottomSheet(
                 Column(
                     modifier =
                         Modifier
-                            .padding(horizontal = 40.dp)
+                            .padding(horizontal = 32.dp)
                             .fillMaxWidth(),
                 ) {
                     Text(
@@ -121,7 +123,7 @@ fun BbangZipBadgeDetailBottomSheet(
                 Row(
                     modifier =
                         Modifier
-                            .padding(horizontal = 40.dp)
+                            .padding(horizontal = 32.dp)
                             .fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
@@ -171,7 +173,7 @@ fun HashTagText(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "#${hashTags[0]}",
+            text = hashTags[0],
             style = BbangZipTheme.typography.body2Bold,
             color = BbangZipTheme.colors.labelAssistive_282119_28,
         )
@@ -180,7 +182,7 @@ fun HashTagText(
             horizontalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = "#${hashTags[1]}",
+                text = hashTags[1],
                 style = BbangZipTheme.typography.body2Bold,
                 color = BbangZipTheme.colors.labelAssistive_282119_28,
             )
@@ -189,7 +191,7 @@ fun HashTagText(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
-                    text = "#${hashTags[2]}",
+                    text = hashTags[2],
                     style = BbangZipTheme.typography.body2Bold,
                     color = BbangZipTheme.colors.labelAssistive_282119_28,
                 )
@@ -222,11 +224,43 @@ fun BadgeDetailInfo(
 
     Spacer(modifier = Modifier.height(24.dp))
 
-    TopTailBalloon(text = badgeDetail.name, horizontalPadding = 132.dp)
+    BottomSheetBalloonContainer(text = badgeDetail.categoryName)
 
     Spacer(modifier = Modifier.height(32.dp))
 
     HashTagText(badgeDetail.hashTags)
 
     Spacer(modifier = Modifier.height(32.dp))
+}
+
+@Composable
+fun BottomSheetBalloonContainer(
+    text: String,
+    leadingIcon: @Composable () -> Unit = {},
+    trailingIcon: @Composable () -> Unit = {},
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier =
+            modifier
+                .applyShadows(BbangZipShadowType.STRONG, shape = RoundedCornerShape(size = 20.dp))
+                .background(
+                    color = BbangZipTheme.colors.staticWhite_FFFFFF,
+                    shape = RoundedCornerShape(size = 20.dp),
+                )
+                .padding(horizontal = 16.dp, vertical = 8.dp),
+        contentAlignment = Alignment.Center,
+    ) {
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            leadingIcon()
+
+            Text(
+                text = text,
+                style = BbangZipTheme.typography.body1Bold,
+                color = BbangZipTheme.colors.labelNormal_282119,
+            )
+
+            trailingIcon()
+        }
+    }
 }

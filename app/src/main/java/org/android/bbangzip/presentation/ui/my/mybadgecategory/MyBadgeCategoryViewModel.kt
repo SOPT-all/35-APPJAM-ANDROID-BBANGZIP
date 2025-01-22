@@ -2,14 +2,23 @@ package org.android.bbangzip.presentation.ui.my.mybadgecategory
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import org.android.bbangzip.domain.usecase.GetBadgeCategoryListUseCase
+import org.android.bbangzip.domain.usecase.GetBadgeDetailUseCase
+import org.android.bbangzip.presentation.model.BadgeCategory
+import org.android.bbangzip.presentation.model.BadgeDetail
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class MyBadgeCategoryViewModel
     @Inject
     constructor(
+        private val getBadgeCategoryListUseCase: GetBadgeCategoryListUseCase,
+        private val getBadgeDetailUseCase: GetBadgeDetailUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<MyBadgeCategoryContract.MyBadgeCategoryEvent, MyBadgeCategoryContract.MyBadgeCategoryState, MyBadgeCategoryContract.MyBadgeCategoryReduce, MyBadgeCategoryContract.MyBadgeCategorySideEffect>(
             savedStateHandle = savedStateHandle,
@@ -30,7 +39,7 @@ class MyBadgeCategoryViewModel
                     setSideEffect(MyBadgeCategoryContract.MyBadgeCategorySideEffect.NavigateToBack)
 
                 is MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClicked -> {
-                    // 서버에서 get하거 bottomsheet 띄우기
+                    viewModelScope.launch { getBadgeDetail(event.badgeName) }
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
                             badgeDetailBottomSheetState = true,
@@ -44,6 +53,7 @@ class MyBadgeCategoryViewModel
                             badgeDetailBottomSheetState = false,
                         ),
                     )
+
                 MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissRequest ->
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
@@ -76,6 +86,67 @@ class MyBadgeCategoryViewModel
             }
         }
 
-        private fun initData() {
+        private suspend fun initData() {
+            getBadgeCategoryList()
+        }
+
+        private suspend fun getBadgeCategoryList() {
+            getBadgeCategoryListUseCase()
+                .onSuccess { data ->
+                    val badgeLists =
+                        data.badgeList.map { badge ->
+                            BadgeCategory(
+                                name = badge.badgeName,
+                                categoryName = badge.badgeCategory,
+                                isLocked = badge.badgeIsLocked,
+                                imageUrl = badge.badgeImage,
+                            )
+                        }
+                    val badgeCategory = badgeLists[0].categoryName
+                    val badgeCategoryList1 =
+                        badgeLists.filter { badge ->
+                            badge.categoryName != badgeCategory
+                        }
+                    val badgeCategoryList2 =
+                        badgeLists.filter { badge ->
+                            badge.categoryName == badgeCategory
+                        }
+
+                    updateState(
+                        MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeCategoryList(
+                            badgeCategoryList1 = badgeCategoryList1,
+                            badgeCategoryList2 = badgeCategoryList2,
+                        ),
+                    )
+                }.onFailure { error ->
+                    Timber.tag("badges").e(error)
+                }
+        }
+
+        private suspend fun getBadgeDetail(badgeName: String) {
+            getBadgeDetailUseCase(badgeName)
+                .onSuccess { data ->
+                    updateState(
+                        MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetail(
+                            badgeDetail =
+                                BadgeDetail(
+                                    categoryName = data.badgeName,
+                                    imageUrl = data.badgeImage,
+                                    hashTags = data.hashTags,
+                                    achievementCondition = data.achievementCondition,
+                                    reward = data.reward,
+                                    isLocked = data.badgeIsLocked,
+                                ),
+                        ),
+                    )
+                    updateState(
+                        MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
+                            badgeDetailBottomSheetState = true,
+                        ),
+                    )
+                }
+                .onFailure { error ->
+                    Timber.tag("badges").e(error)
+                }
         }
     }
