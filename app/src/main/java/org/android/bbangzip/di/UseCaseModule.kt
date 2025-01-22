@@ -5,12 +5,15 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.android.bbangzip.domain.repository.remote.DummyRepository
+import org.android.bbangzip.domain.repository.remote.MyPageRepository
 import org.android.bbangzip.domain.repository.remote.PieceRepository
 import org.android.bbangzip.domain.repository.remote.UserRepository
 import org.android.bbangzip.domain.usecase.DeleteLogoutUseCase
 import org.android.bbangzip.domain.usecase.DeleteWithdrawUseCase
 import org.android.bbangzip.domain.usecase.FetchDummyUseCase
 import org.android.bbangzip.domain.usecase.GetAddTodoListUseCase
+import org.android.bbangzip.domain.usecase.GetBadgeCategoryListUseCase
+import org.android.bbangzip.domain.usecase.GetBadgeDetailUseCase
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
 import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
@@ -26,6 +29,16 @@ class UseCaseModule {
     @Singleton
     fun providesDummyFetchUseCase(dummyRepository: DummyRepository): FetchDummyUseCase =
         FetchDummyUseCase(dummyRepository = dummyRepository)
+
+    @Provides
+    @Singleton
+    fun providesBadgeCategoryListGetUseCase(myPageRepository: MyPageRepository): GetBadgeCategoryListUseCase =
+        GetBadgeCategoryListUseCase(myPageRepository = myPageRepository)
+
+    @Provides
+    @Singleton
+    fun providesBadgeDetailGetUseCase(myPageRepository: MyPageRepository): GetBadgeDetailUseCase =
+        GetBadgeDetailUseCase(myPageRepository = myPageRepository)
 
     @Provides
     @Singleton

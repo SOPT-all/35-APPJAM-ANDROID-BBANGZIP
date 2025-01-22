@@ -130,7 +130,7 @@ fun TodoScreen(
                             Modifier
                                 .padding(start = 24.dp)
                                 .fillMaxWidth()
-                                .height(56.dp),
+                                .height(58.dp),
                         contentAlignment = Alignment.CenterStart,
                     ) {
                         Text(
@@ -227,7 +227,7 @@ fun TodoScreen(
                 }
             }
         }
-        if (todoState.screenType == ToDoScreenType.DELETE) {
+        if (todoState.screenType == ToDoScreenType.DELETE && todoState.selectedItemList.isNotEmpty()) {
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
@@ -240,7 +240,7 @@ fun TodoScreen(
                         .align(Alignment.BottomCenter)
                         .padding(bottom = 16.dp),
                 isEnable = todoState.selectedItemList.isNotEmpty(),
-                trailingIcon = R.drawable.ic_plus_thick_24,
+                trailingIcon = R.drawable.ic_trash_default_24,
             )
         }
 
@@ -379,7 +379,7 @@ fun StudyCountText(
             modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
-                .height(56.dp),
+                .height(58.dp),
         contentAlignment = Alignment.CenterStart,
     ) {
         Column(
