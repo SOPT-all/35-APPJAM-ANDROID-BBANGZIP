@@ -3,11 +3,13 @@ package org.android.bbangzip.presentation.ui.my.bbangzipdetail
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.android.bbangzip.domain.usecase.FetchBbangZipUseCase
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import javax.inject.Inject
 
 @HiltViewModel
 class BbangZipDetailViewModel @Inject constructor(
+    private val fetchBbangZipUseCase: FetchBbangZipUseCase,
     savedStateHandle: SavedStateHandle
 ) : BaseViewModel<BbangZipDetailContract.BbangZipDetailEvent, BbangZipDetailContract.BbangZipDetailState, BbangZipDetailContract.BbangZipDetailReduce, BbangZipDetailContract.BbangZipDetailSideEffect>(
     savedStateHandle = savedStateHandle
