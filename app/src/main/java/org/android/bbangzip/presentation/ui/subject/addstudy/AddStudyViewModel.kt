@@ -219,7 +219,7 @@ class AddStudyViewModel
         }
     }
 
-    private fun divideRangeIntoInts(start: Int, end: Int, n: Int): List<Int> {
+    private fun divideRangeIntoInts(start: Int, end: Int, n: Int): List<String> {
         require(n > 0) { "n must be greater than 0" }
         require(start <= end) { "Start must be less than or equal to end" }
 
@@ -235,7 +235,8 @@ class AddStudyViewModel
             result[result.size - 1] = end
         }
 
-        return result
+
+        return result.map{it.toString() + "p"}
     }
 
     private fun unitTextToInt(text: String): Int{
