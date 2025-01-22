@@ -2,16 +2,31 @@ package org.android.bbangzip.presentation.ui.todo
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
+import org.android.bbangzip.data.dto.request.RequestPieceIdDto
+import org.android.bbangzip.domain.usecase.GetToInfoUseCase
+import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
+import org.android.bbangzip.domain.usecase.PostDeletedItemListUseCase
+import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
+import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.ToDoScreenType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import org.android.bbangzip.presentation.util.constant.ToDoConstants
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class TodoViewModel
     @Inject
     constructor(
+        private val getTodoInfoUseCase: GetToInfoUseCase,
+        private val postDeletedItemListUseCase: PostDeletedItemListUseCase,
+        private val postCompleteCardIdUseCase: PostCompleteCardIdUseCase,
+        private val postUnCompleteCardIdUseCase: PostUnCompleteCardIdUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<TodoContract.TodoEvent, TodoContract.TodoState, TodoContract.TodoReduce, TodoContract.TodoSideEffect>(
             savedStateHandle = savedStateHandle,
@@ -34,6 +49,7 @@ class TodoViewModel
                             remainingStudyCount = event.remainingStudyCount,
                             completeCount = event.completeCount,
                             todoList = event.todoList,
+                            screenType = event.screenType,
                         ),
                     )
 
@@ -41,6 +57,9 @@ class TodoViewModel
 
                 // Filter BottomSheet
                 is TodoContract.TodoEvent.OnFilterBottomSheetItemClicked -> {
+                    viewModelScope.launch {
+                        initDataLoad()
+                    }
                     updateState(TodoContract.TodoReduce.UpdateFilterType(selectedFilter = event.selectedFilterItem))
                     updateState(
                         TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
@@ -48,7 +67,6 @@ class TodoViewModel
                         ),
                     )
                     setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("${event.selectedFilterItem.filter}으로 정렬했어요"))
-                    // TODO index를 이용해 서버로 FetchInfo 보내주기 다시 정렬하기 ㅋㅋ
                 }
 
                 TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest ->
@@ -68,6 +86,9 @@ class TodoViewModel
 
                 // revertComplete BottomSheet
                 is TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveButtonClicked -> {
+                    viewModelScope.launch {
+                        postUnCompleteCardId(event.pieceId)
+                    }
                     updateState(
                         TodoContract.TodoReduce.UpdateCardState(
                             pieceId = event.pieceId,
@@ -151,7 +172,10 @@ class TodoViewModel
                                 remainingStudyCount = currentUiState.remainingStudyCount - 1,
                             ),
                         )
-                        TodoContract.TodoSideEffect.ShowSnackBar("공부완료 ! 오늘의 빵굽기 성공!")
+                        viewModelScope.launch {
+                            postCompleteCardId(pieceId = event.pieceId)
+                        }
+                        setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("공부완료 ! 오늘의 빵굽기 성공!"))
                     } else {
                         updateState(
                             TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
@@ -160,7 +184,6 @@ class TodoViewModel
                         )
                         updateState(TodoContract.TodoReduce.UpdateSelectedItemList(pieceId = event.pieceId))
                     }
-                    // TODO 서버로 pieceId 이용해서 완료 API 쏘기
                 }
 
                 TodoContract.TodoEvent.OnDeleteIconClicked -> {
@@ -174,14 +197,22 @@ class TodoViewModel
                 }
 
                 TodoContract.TodoEvent.OnItemDeleteButtonClicked -> {
-                    // TODO setlectedItemlist 사용해서 서버로 삭제한 card API 전송
+                    viewModelScope.launch {
+                        postDeletedItemList(selectedItemList = currentUiState.selectedItemList)
+                    }
                     updateState(
                         TodoContract.TodoReduce.UpdateToDoCount(
                             completeCount = currentUiState.completeCount,
                             remainingStudyCount = currentUiState.remainingStudyCount - currentUiState.selectedItemList.size,
                         ),
                     )
-                    if (currentUiState.remainingStudyCount != 0) {
+                    updateState(
+                        TodoContract.TodoReduce.UpdatePendingToDoCount(
+                            pendingCount = currentUiState.pendingCount + currentUiState.selectedItemList.size,
+                        ),
+                    )
+
+                    if (currentUiState.completeCount > 0 || currentUiState.remainingStudyCount - currentUiState.selectedItemList.size != 0) {
                         updateState(TodoContract.TodoReduce.DeleteToDoListItems)
                         updateState(
                             TodoContract.TodoReduce.UpdateToDoListCardState(
@@ -193,6 +224,7 @@ class TodoViewModel
                     } else {
                         updateState(TodoContract.TodoReduce.UpdateScreenType(screenType = ToDoScreenType.EMPTY))
                     }
+
                     updateState(TodoContract.TodoReduce.ResetSelectedItemList)
                     setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("오늘 할 공부를 삭제했어요"))
                 }
@@ -232,6 +264,7 @@ class TodoViewModel
                         completeCount = reduce.completeCount,
                         remainingStudyCount = reduce.remainingStudyCount,
                         todoList = reduce.todoList,
+                        screenType = reduce.screenType,
                     )
 
                 // List
@@ -318,6 +351,91 @@ class TodoViewModel
             }
         }
 
-        private fun initDataLoad() {
+        private suspend fun initDataLoad() {
+            getToDoInfo(
+                area = ToDoConstants.TODO,
+                year = 2025,
+                semester = "1학기",
+                sortOption = currentUiState.selectedFilterItem.id,
+            )
+        }
+
+        private suspend fun getToDoInfo(
+            area: String,
+            year: Int,
+            semester: String,
+            sortOption: String,
+        ) {
+            getTodoInfoUseCase(
+                area = area,
+                year = year,
+                semester = semester,
+                sortOption = sortOption,
+            ).onSuccess { data ->
+                Timber.tag("todayOrders").d("server viewmodel")
+                updateState(
+                    TodoContract.TodoReduce.UpdateToDoInfo(
+                        todoList =
+                            data.todoList.map { item ->
+                                ToDoCardModel(
+                                    pieceId = item.pieceId,
+                                    subjectName = item.subjectName,
+                                    examName = item.examName,
+                                    studyContents = item.studyContents,
+                                    startPage = item.startPage,
+                                    finishPage = item.finishPage,
+                                    deadline = item.deadline,
+                                    remainingDays = item.remainingDays,
+                                    cardState = if (item.isFinished) BbangZipCardState.COMPLETE else BbangZipCardState.DEFAULT,
+                                )
+                            },
+                        pendingCount = data.pendingCount,
+                        remainingStudyCount = data.remainingStudyCount,
+                        completeCount = data.completeCount,
+                        screenType = if (data.todoList.isEmpty()) ToDoScreenType.EMPTY else ToDoScreenType.DEFAULT,
+                    ),
+                )
+            }
+                .onFailure { error ->
+                    Timber.tag("todayOrders").d(error)
+                }
+        }
+
+        private suspend fun postDeletedItemList(
+            selectedItemList: List<Int>,
+        ) {
+            postDeletedItemListUseCase(
+                requestPieceIdDto = RequestPieceIdDto(pieceIds = selectedItemList),
+            ).onSuccess {
+                Timber.tag("hide").e("삭제 성공!")
+            }.onFailure {
+                Timber.tag("hide").e("삭제 성공!")
+            }
+        }
+
+        private suspend fun postCompleteCardId(
+            pieceId: Int,
+        ) {
+            postCompleteCardIdUseCase(
+                pieceId = pieceId,
+                requestMarkDoneDto = RequestMarkDoneDto(isFinished = true),
+            ).onSuccess {
+                Timber.tag("markDone").e("완료 성공!")
+            }.onFailure { error ->
+                Timber.tag("markDone").e(error)
+            }
+        }
+
+        private suspend fun postUnCompleteCardId(
+            pieceId: Int,
+        ) {
+            postUnCompleteCardIdUseCase(
+                pieceId = pieceId,
+                requestMarkDoneDto = RequestMarkDoneDto(isFinished = false),
+            ).onSuccess {
+                Timber.tag("markDone").e("완료 성공!")
+            }.onFailure { error ->
+                Timber.tag("markDone").e(error)
+            }
         }
     }

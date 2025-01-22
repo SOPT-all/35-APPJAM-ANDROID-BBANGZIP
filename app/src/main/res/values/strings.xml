@@ -17,7 +17,7 @@
     <string name="card_friend_kebab_button_description">더보기 버튼입니다.</string>
     <string name="card_friend_boss_text">사장님</string>
     <string name="card_d_minus_day_text">D-%s</string>
-    <string name="card_deadline_text">%s까지</string>
+    <string name="card_deadline_text">%s 까지</string>
     <string name="card_start_end_day_text">%sp - %sp</string>
     <string name="card_subject_exam_name_text">%s / %s</string>
     <string name="card_d_minus">D+</string>
@@ -103,4 +103,7 @@
     <string name="todo_add_title2">오늘부터 하나씩!\n공부할 내용을 선택해 보세요</string>
     <string name="todo_add_count">개 / 총 %s개</string>
     <string name="todo_add_plus_button_label">오늘 할 공부 추가하기</string>
+
+    //badge
+    <string name="badge_get_bottom_sheet_title">배지를 획득했어요!</string>
 </resources>
