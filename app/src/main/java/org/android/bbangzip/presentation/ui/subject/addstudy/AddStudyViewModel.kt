@@ -28,6 +28,7 @@ class AddStudyViewModel
                 is AddStudyContract.AddStudyEvent.Initialize -> {
                     updateState(AddStudyReduce.Initialize(splitStudyData = event.splitStudyData))
                     updateState(AddStudyReduce.UpdateSplitButtonEnabled)
+                    updateState(AddStudyReduce.UpdateButtonEnabled)
                 }
                 is AddStudyContract.AddStudyEvent.OnChangeEndPage -> {
                     updateState(AddStudyReduce.UpdateEndPage(endPage = event.endPage))
