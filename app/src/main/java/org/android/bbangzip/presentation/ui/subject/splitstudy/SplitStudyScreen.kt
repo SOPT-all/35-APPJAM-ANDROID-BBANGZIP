@@ -216,7 +216,7 @@ fun SplitStudyScreen(
                         BbangZipSimpleTextField(
                             leadingIcon = R.drawable.ic_page_check_default_24,
                             placeholder = R.string.add_study_start_page_placeholder,
-                            guideline = R.string.add_study_start_page_guideline,
+                            guideline = stringResource(R.string.add_study_start_page_guideline),
                             value = startPageList[index],
                             modifier = Modifier.weight(1f),
                             onValueChange = {
@@ -231,7 +231,7 @@ fun SplitStudyScreen(
                         BbangZipSimpleTextField(
                             leadingIcon = R.drawable.ic_page_check_default_24,
                             placeholder = R.string.add_study_end_page_placeholder,
-                            guideline = R.string.add_study_end_page_guideline,
+                            guideline = stringResource(R.string.add_study_end_page_guideline),
                             value = endPageList[index],
                             modifier = Modifier.weight(1f),
                             onValueChange = {

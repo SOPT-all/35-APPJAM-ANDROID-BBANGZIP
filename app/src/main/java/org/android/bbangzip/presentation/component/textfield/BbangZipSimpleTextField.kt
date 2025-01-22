@@ -51,7 +51,7 @@ import timber.log.Timber
 fun BbangZipSimpleTextField(
     @DrawableRes leadingIcon: Int,
     @StringRes placeholder: Int,
-    @StringRes guideline: Int,
+    guideline: String,
     value: String,
     isEnable: Boolean = true,
     modifier: Modifier = Modifier,
@@ -96,7 +96,6 @@ fun BbangZipSimpleTextField(
                         .onFocusChanged { focusState ->
                             isFocused = focusState.isFocused
                             onFocusChange(focusState.isFocused)
-                            Timber.d("[TextField] onFocusChange -> $isFocused")
                         }
                         .onKeyEvent { keyEvent ->
                             if (keyEvent.key == Key.Enter && keyEvent.type == KeyEventType.KeyUp) {
@@ -136,7 +135,7 @@ fun BbangZipSimpleTextField(
         },
         guideline = {
             Text(
-                text = stringResource(id = guideline),
+                text = guideline,
                 modifier =
                     Modifier
                         .padding(start = 8.dp, top = 4.dp),
@@ -173,7 +172,7 @@ fun BbangZipSimpleTextFieldPreview() {
         BbangZipSimpleTextField(
             leadingIcon = R.drawable.ic_page_check_default_24,
             placeholder = R.string.app_name,
-            guideline = R.string.app_name,
+            guideline = "빵집",
             value = text,
             bbangZipTextFieldInputState = validationState,
             onFocusChange = {

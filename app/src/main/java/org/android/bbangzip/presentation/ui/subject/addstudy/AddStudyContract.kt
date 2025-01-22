@@ -21,6 +21,8 @@ class AddStudyContract {
         val startPage: String? = null,
         val startPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
         val startPageFocusedState: Boolean = false,
+        val startPageGuideline: String = "부터",
+        val endPageGuideline: String = "까지",
         val startPageList: List<String> = emptyList(),
         val endPage: String? = null,
         val endPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
@@ -116,6 +118,10 @@ class AddStudyContract {
         data object UpdateAddStudyViewType : AddStudyReduce
 
         data object UpdateIsSuccess : AddStudyReduce
+
+        data object UpdateStartPageGuideline : AddStudyReduce
+
+        data object UpdateEndPageGuideLine : AddStudyReduce
 
         data object ResetStudyContent : AddStudyReduce
     }

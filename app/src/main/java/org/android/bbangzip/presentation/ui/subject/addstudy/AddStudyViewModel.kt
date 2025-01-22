@@ -9,6 +9,7 @@ import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.type.ShortTextFieldType
 import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyContract.AddStudyReduce
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import org.android.bbangzip.presentation.util.casting.pageToInt
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -41,6 +42,10 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateStartPageToString)
                     updateState(AddStudyReduce.UpdateSplitButtonEnabled)
                     updateState(AddStudyReduce.UpdateButtonEnabled)
+                    updateState(AddStudyReduce.UpdateStartPageInputState)
+                    updateState(AddStudyReduce.UpdateStartPageGuideline)
+                    updateState(AddStudyReduce.UpdateEndPageInputState)
+                    updateState(AddStudyReduce.UpdateEndPageGuideLine)
                 }
 
                 is AddStudyContract.AddStudyEvent.OnChangeEndPageFocused -> {
@@ -48,6 +53,11 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateEndPageToString)
                     updateState(AddStudyReduce.UpdateSplitButtonEnabled)
                     updateState(AddStudyReduce.UpdateButtonEnabled)
+                    updateState(AddStudyReduce.UpdateStartPageInputState)
+                    updateState(AddStudyReduce.UpdateStartPageGuideline)
+                    updateState(AddStudyReduce.UpdateEndPageInputState)
+                    updateState(AddStudyReduce.UpdateEndPageGuideLine)
+
                 }
 
                 is AddStudyContract.AddStudyEvent.OnChangeStudyContent -> {
@@ -192,16 +202,20 @@ class AddStudyViewModel
                         endPageFocusedState = reduce.endPageFocusedState,
                     )
                 }
+                AddStudyReduce.UpdateStartPageInputState -> {
+                    state.copy(
+                        startPageTextFieldState = determineStartTextFieldType(state.startPage ?: "", state.endPage ?: "", state.startPageFocusedState),
+                    )
+                }
                 AddStudyReduce.UpdateEndPageInputState -> {
-                    state
+                    state.copy(
+                        endPageTextFieldState = determineEndTextFieldType(state.endPage ?: "", state.startPage ?: "", state.endPageFocusedState),
+                    )
                 }
                 is AddStudyReduce.UpdateStartPageFocusedState -> {
                     state.copy(
                         startPageFocusedState = reduce.startPageFocusedState,
                     )
-                }
-                AddStudyReduce.UpdateStartPageInputState -> {
-                    state
                 }
                 is AddStudyReduce.UpdateStudyContentFocusedState -> {
                     state.copy(
@@ -285,6 +299,23 @@ class AddStudyViewModel
                         isSuccess = false,
                     )
                 }
+
+                is AddStudyReduce.UpdateStartPageGuideline -> {
+                    state.copy(
+                        startPageGuideline = if (state.startPageTextFieldState == BbangZipTextFieldInputState.Alert){
+                            if(state.startPage == "0p") "0p는 입력할 수 없어요"
+                            else "시작 범위 이후로 입력해 주세요"
+                        }else "부터",
+                    )
+                }
+
+                is AddStudyReduce.UpdateEndPageGuideLine -> {
+                    state.copy(
+                        endPageGuideline = if (state.endPageTextFieldState == BbangZipTextFieldInputState.Alert){
+                            if(state.endPage == "0p") "0p는 입력할 수 없어요" else "까지"
+                        }else "까지"
+                    )
+                }
             }
         }
 
@@ -303,7 +334,6 @@ class AddStudyViewModel
                 result.add(start + i * step)
             }
 
-            // 마지막 값을 강제로 `end`로 설정 (정수 나눗셈 오차 보정)
             if (result.last() != end) {
                 result[result.size - 1] = end
             }
@@ -328,16 +358,30 @@ class AddStudyViewModel
             }
         }
 
-        private fun determineShortTextFieldType(
-            text: String,
+        private fun determineStartTextFieldType(
+            start: String,
+            end: String,
             isFocused: Boolean,
-            shortTextFieldType: ShortTextFieldType,
         ): BbangZipTextFieldInputState {
             return when {
-                text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
-                text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
-                text.contains(Regex("[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]")) -> BbangZipTextFieldInputState.Alert
-                text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
+                start.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
+                start.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
+                start == "0p" || (end.isNotEmpty() && pageToInt(start) > pageToInt(end)) -> BbangZipTextFieldInputState.Alert
+                start.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
+                else -> BbangZipTextFieldInputState.Field
+            }
+        }
+
+        private fun determineEndTextFieldType(
+            end: String,
+            start: String,
+            isFocused: Boolean,
+        ): BbangZipTextFieldInputState {
+            return when {
+                end.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
+                end.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
+                end == "0p" -> BbangZipTextFieldInputState.Alert
+                end.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
                 else -> BbangZipTextFieldInputState.Field
             }
         }

@@ -41,6 +41,7 @@ import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BbangZipTheme
+import timber.log.Timber
 
 @Composable
 fun AddStudyScreen(
@@ -50,13 +51,17 @@ fun AddStudyScreen(
     examDate: String = "",
     studyContent: String = "",
     startPage: String = "",
+    startGuideline: String = "",
     endPage: String = "",
+    endGuideline: String = "",
     selectedDate: Date,
     datePickerBottomSheetState: Boolean = false,
     piecePickerBottomSheetState: Boolean = false,
     isButtonEnable: Boolean = false,
     isSplitBtnEnable: Boolean = false,
     studyContentTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
+    startPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
+    endPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     addStudyViewType: AddStudyViewType = AddStudyViewType.DEFAULT,
     onChangeStudyContent: (String) -> Unit = {},
     onChangeStartPage: (String) -> Unit = {},
@@ -181,6 +186,10 @@ fun AddStudyScreen(
                         onChangeEndPageFocused = onChangeEndPageFocused,
                         onClickSplitBtn = onClickSplitBtn,
                         isSplitBtnEnable = isSplitBtnEnable,
+                        startPageTextFieldState = startPageTextFieldState,
+                        endPageTextFieldState = endPageTextFieldState,
+                        startGuideline = startGuideline,
+                        endGuideline = endGuideline,
                     )
                 }
 
@@ -233,6 +242,7 @@ fun AddStudyScreen(
                 )
             },
             onSelectedItemChanged = onClickPieceNumber,
+            onDismissRequest = onClickSplitBtn
         )
     }
 }
@@ -243,6 +253,10 @@ private fun DefaultRangeView(
     onChangeStartPage: (String) -> Unit,
     onChangeStartPageFocused: (Boolean) -> Unit,
     focusManager: FocusManager,
+    startPageTextFieldState: BbangZipTextFieldInputState,
+    startGuideline: String,
+    endPageTextFieldState: BbangZipTextFieldInputState,
+    endGuideline: String,
     endPage: String,
     onChangeEndPage: (String) -> Unit,
     onChangeEndPageFocused: (Boolean) -> Unit,
@@ -264,8 +278,9 @@ private fun DefaultRangeView(
             BbangZipSimpleTextField(
                 leadingIcon = R.drawable.ic_page_check_default_24,
                 placeholder = R.string.add_study_start_page_placeholder,
-                guideline = R.string.add_study_start_page_guideline,
+                guideline = startGuideline,
                 value = startPage,
+                bbangZipTextFieldInputState = startPageTextFieldState,
                 modifier = Modifier.weight(1f),
                 onValueChange = {
                     onChangeStartPage(it)
@@ -275,12 +290,13 @@ private fun DefaultRangeView(
             )
 
             Spacer(modifier = Modifier.width(16.dp))
-
+            Timber.tag("error").d("endPage : $endPageTextFieldState")
             BbangZipSimpleTextField(
                 leadingIcon = R.drawable.ic_page_check_default_24,
                 placeholder = R.string.add_study_end_page_placeholder,
-                guideline = R.string.add_study_end_page_guideline,
+                guideline = endGuideline,
                 value = endPage,
+                bbangZipTextFieldInputState = endPageTextFieldState,
                 modifier = Modifier.weight(1f),
                 onValueChange = {
                     onChangeEndPage(it)
@@ -327,7 +343,7 @@ private fun AgainRangeView(
             BbangZipSimpleTextField(
                 leadingIcon = R.drawable.ic_page_check_default_24,
                 placeholder = R.string.add_study_start_page_placeholder,
-                guideline = R.string.add_study_start_page_guideline,
+                guideline = stringResource(R.string.add_study_start_page_guideline),
                 value = "1조각",
                 modifier = Modifier.weight(1f),
                 onValueChange = {
@@ -341,7 +357,7 @@ private fun AgainRangeView(
             BbangZipSimpleTextField(
                 leadingIcon = R.drawable.ic_page_check_default_24,
                 placeholder = R.string.add_study_end_page_placeholder,
-                guideline = R.string.add_study_end_page_guideline,
+                guideline = stringResource(R.string.add_study_end_page_guideline),
                 value = "${pieceNumber}조각",
                 modifier = Modifier.weight(1f),
                 onValueChange = {

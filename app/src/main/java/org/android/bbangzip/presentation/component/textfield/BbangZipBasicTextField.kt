@@ -107,7 +107,6 @@ fun BbangZipBasicTextField(
                         .onFocusChanged { focusState ->
                             isFocused = focusState.isFocused
                             onFocusChange(focusState.isFocused)
-                            Timber.d("[TextField] onFocusChange -> $isFocused")
                         }
                         .onKeyEvent { keyEvent ->
                             if (keyEvent.key == Key.Enter && keyEvent.type == KeyEventType.KeyUp) {
