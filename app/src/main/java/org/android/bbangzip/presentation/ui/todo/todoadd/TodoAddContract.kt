@@ -149,6 +149,10 @@ class TodoAddContract {
     sealed interface TodoAddReduce : BaseContract.Reduce {
         data object ResetSelectedItemList : TodoAddReduce
 
+        data class UpdateToDoList(
+            val todoList: List<ToDoCardModel>,
+        ) : TodoAddReduce
+
         data class UpdateSelectedItemList(
             val pieceId: Int,
         ) : TodoAddReduce

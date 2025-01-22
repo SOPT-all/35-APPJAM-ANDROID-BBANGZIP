@@ -7,7 +7,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 import org.android.bbangzip.UserPreferences
-import org.android.bbangzip.domain.repository.local.UserRepository
+import org.android.bbangzip.domain.repository.local.UserLocalRepository
 import org.android.bbangzip.domain.usecase.FetchDummyUseCase
 import org.android.bbangzip.presentation.model.Dummy
 import org.android.bbangzip.presentation.util.base.BaseViewModel
@@ -17,21 +17,21 @@ import javax.inject.Inject
 class DummyViewModel
     @Inject
     constructor(
-        private val userRepository: UserRepository,
+        private val userLocalRepository: UserLocalRepository,
         private val fetchDummyUseCase: FetchDummyUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<DummyContract.DummyEvent, DummyContract.DummyState, DummyContract.DummyReduce, DummyContract.DummySideEffect>(
             savedStateHandle = savedStateHandle,
         ) {
-        val userPreferencesFlow: Flow<UserPreferences> = userRepository.userPreferenceFlow
+        val userPreferencesFlow: Flow<UserPreferences> = userLocalRepository.userPreferenceFlow
 
         fun setUserData(accessToken: String) {
-            viewModelScope.launch { userRepository.setUserData(accessToken) }
+            viewModelScope.launch { userLocalRepository.setAccessToken(accessToken) }
         }
 
         fun clearAccessToken() {
             viewModelScope.launch {
-                userRepository.clearUserData()
+                userLocalRepository.clearAccessToken()
             }
         }
 
@@ -75,8 +75,8 @@ class DummyViewModel
                     updateState(
                         DummyContract.DummyReduce.UpdateDummy(
                             Dummy(
-                                dummyA = data.dummyName,
-                                dummyB = data.dummyName + "이런 식으로 넣어요",
+                                dummyA = "data.dummyName",
+                                dummyB = "data.dummyName" + "이런 식으로 넣어요",
                             ),
                         ),
                     )
@@ -90,8 +90,8 @@ class DummyViewModel
                 updateState(
                     DummyContract.DummyReduce.UpdateDummy(
                         Dummy(
-                            dummyA = data.dummyName,
-                            dummyB = data.dummyName + "이런 식으로 넣어요",
+                            dummyA = "data!!dummyName,",
+                            dummyB = data!!.dummyName + "이런 식으로 넣어요",
                         ),
                     ),
                 )

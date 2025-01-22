@@ -11,8 +11,10 @@ import androidx.navigation.navOptions
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
 import org.android.bbangzip.presentation.model.Route
 import org.android.bbangzip.presentation.type.BottomNavigationType
-import org.android.bbangzip.presentation.ui.friend.navigateFriend
+import org.android.bbangzip.presentation.ui.friend.navigation.navigateFriend
+import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
+import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.navigateToMyBadgeCategory
 import org.android.bbangzip.presentation.ui.my.navigateMy
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
@@ -29,20 +31,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = BottomNavigationRoute.Subject
-//            AddStudyRoute(
-//            splitStudyData = SplitStudyData(
-//                subjectName = "빵집",
-//                pieceNumber = 0,
-//                examDate = "시험 일자 입력",
-//                studyContent = "",
-//                startPage = "",
-//                endPage = "",
-//                startPageList = listOf(),
-//                endPageList = listOf(),
-//                deadLineList = listOf(),
-//                addStudyViewType = AddStudyViewType.DEFAULT
-//            )
+    val startDestination = LoginRoute
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =
@@ -81,6 +70,10 @@ class MainNavigator(
 
     fun navigateToOnboardingStart() {
         navHostController.navigateOnboardingStart()
+    }
+
+    fun navigateToMyBadgeCategory() {
+        navHostController.navigateToMyBadgeCategory()
     }
 
     fun navigateToOnboarding() {

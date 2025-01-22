@@ -1,4 +1,4 @@
-package org.android.bbangzip.data.repositoryImpl
+package org.android.bbangzip.data.repositoryImpl.remote
 
 import org.android.bbangzip.data.datasource.remote.DummyRemoteDataSource
 import org.android.bbangzip.domain.model.DummyEntity
@@ -12,6 +12,6 @@ class DummyRepositoryImpl
     ) : DummyRepository {
         override suspend fun fetchDummy(): Result<DummyEntity> =
             runCatching {
-                dummyRemoteDataSource.getDummyData().data.toDummyEntity()
+                dummyRemoteDataSource.getDummyData().data!!.toDummyEntity()
             }
     }

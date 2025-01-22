@@ -33,6 +33,8 @@ android {
 
         buildConfigField("String", "BASE_URL", properties["base.url"].toString())
         buildConfigField("String", "KAKAO_NATIVE_APP_KEY", properties["kakao.native.app.key"].toString())
+
+        manifestPlaceholders["KAKAO_NATIVE_APP_KEY_MANIFEST"] = properties["kakao.native.app.key.manifest"] as String
     }
 
     buildTypes {
@@ -100,6 +102,9 @@ dependencies {
     implementation(libs.androidx.datastore)
     implementation(libs.protobuf.javalite)
     implementation(libs.protobuf.kotlin.lite)
+
+    // Kakao
+    implementation("com.kakao.sdk:v2-user:2.10.0")
 }
 
 protobuf {

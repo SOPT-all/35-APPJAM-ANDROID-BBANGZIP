@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -129,7 +130,7 @@ fun TodoScreen(
                             Modifier
                                 .padding(start = 24.dp)
                                 .fillMaxWidth()
-                                .height(56.dp),
+                                .height(58.dp),
                         contentAlignment = Alignment.CenterStart,
                     ) {
                         Text(
@@ -226,7 +227,7 @@ fun TodoScreen(
                 }
             }
         }
-        if (todoState.screenType == ToDoScreenType.DELETE) {
+        if (todoState.screenType == ToDoScreenType.DELETE && todoState.selectedItemList.isNotEmpty()) {
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
@@ -239,7 +240,7 @@ fun TodoScreen(
                         .align(Alignment.BottomCenter)
                         .padding(bottom = 16.dp),
                 isEnable = todoState.selectedItemList.isNotEmpty(),
-                trailingIcon = R.drawable.ic_plus_thick_24,
+                trailingIcon = R.drawable.ic_trash_default_24,
             )
         }
 
@@ -356,6 +357,7 @@ fun DateMessageCard(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_announcement_default_24),
                     contentDescription = null,
                     tint = BbangZipTheme.colors.labelNormal_282119,
+                    modifier = Modifier.size(16.dp),
                 )
 
                 Spacer(modifier = Modifier.width(6.dp))
@@ -377,7 +379,7 @@ fun StudyCountText(
             modifier
                 .padding(horizontal = 16.dp)
                 .fillMaxWidth()
-                .height(56.dp),
+                .height(58.dp),
         contentAlignment = Alignment.CenterStart,
     ) {
         Column(
