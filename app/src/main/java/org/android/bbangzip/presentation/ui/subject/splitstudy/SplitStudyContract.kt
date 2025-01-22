@@ -25,6 +25,7 @@ class SplitStudyContract {
         val endPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
         val dateList: List<Date> = List(pieceNumber) { Date("2025", "1", "21") },
         val datePickerBottomSheetState: Boolean = false,
+        val isSaveEnable: Boolean = true,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -85,6 +86,8 @@ class SplitStudyContract {
         data object UpdatePieceNumber: SplitStudyReduce
 
         data class UpdateSeletedIndex(val index: Int): SplitStudyReduce
+
+        data object UpdateSelectedDateList: SplitStudyReduce
 
         data object UpdateState: SplitStudyReduce
     }

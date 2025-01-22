@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject.splitstudy
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -11,10 +12,14 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalFocusManager
@@ -36,6 +41,7 @@ import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BbangZipTheme
 import timber.log.Timber
 
+@OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SplitStudyScreen(
     pieceNumber: Int = 0,
@@ -45,6 +51,7 @@ fun SplitStudyScreen(
     selectedIndex: Int = 0,
     selectedDate: Date = Date("2025", "1", "21"),
     datePickerBottomSheetState: Boolean = false,
+    isSaveEnable: Boolean = true,
     startPageList: List<String> = emptyList(),
     endPageList: List<String> = emptyList(),
     seletedDateList: List<Date> = listOf(
@@ -67,27 +74,40 @@ fun SplitStudyScreen(
 ) {
     val focusManager = LocalFocusManager.current
 
+    val scrollState = rememberLazyListState()
+    val isShadowed by remember {
+        derivedStateOf {
+            scrollState.firstVisibleItemScrollOffset > 0
+        }
+    }
+
     Box(
         modifier = Modifier
             .fillMaxSize()
             .addFocusCleaner(focusManager)
             .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF)
     ) {
-        BbangZipBaseTopBar(
-            leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            title = subjectName,
-            onLeadingIconClick = { onBackBtnClick() },
-        )
+
 
         LazyColumn(
             modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 80.dp)
-                .padding(horizontal = 16.dp),
+                .fillMaxSize(),
+            state = scrollState
         ) {
+            stickyHeader {
+                BbangZipBaseTopBar(
+                    isShadowed = isShadowed,
+                    leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
+                    title = subjectName,
+                    onLeadingIconClick = { onBackBtnClick() },
+                )
+            }
             item {
+                Spacer(modifier= Modifier.height(24.dp))
+
                 Box(
                     modifier = Modifier
+                        .padding(horizontal = 16.dp)
                         .fillMaxWidth()
                         .applyShadows(
                             shadowType = BbangZipShadowType.EMPHASIZE,
@@ -152,7 +172,9 @@ fun SplitStudyScreen(
                 Spacer(modifier = Modifier.height(32.dp))
 
                 HorizontalDivider(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth()
                 )
             }
 
@@ -160,7 +182,11 @@ fun SplitStudyScreen(
                 count =  pieceNumber
             ){ index ->
 
-                Column {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth()
+                ) {
                     Spacer(modifier = Modifier.height(32.dp))
 
                     Text(
@@ -224,14 +250,16 @@ fun SplitStudyScreen(
         BbangZipButton(
             bbangZipButtonSize = BbangZipButtonSize.Large,
             bbangZipButtonType = BbangZipButtonType.Solid,
-            onClick = {},
+            onClick = {
+            },
             modifier = Modifier
                 .padding(16.dp)
                 .fillMaxWidth()
                 .align(Alignment.BottomCenter)
             ,
             label = stringResource(R.string.btn_save_label),
-            trailingIcon = R.drawable.ic_plus_thick_24
+            trailingIcon = R.drawable.ic_plus_thick_24,
+            isEnable = isSaveEnable
         )
     }
 

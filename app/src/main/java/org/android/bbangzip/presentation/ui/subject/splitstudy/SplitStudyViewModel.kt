@@ -27,7 +27,11 @@ class SplitStudyViewModel
         reduce: SplitStudyContract.SplitStudyReduce
     ): SplitStudyContract.SplitStudyState {
         return when(reduce){
-            is SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled -> {state}
+            SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled ->{
+                state.copy(
+                    isSaveEnable = state.startPageList.all { it != "" } && state.endPageList.all { it != "" }
+                )
+            }
             is SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState -> {
                 state.copy(
                     datePickerBottomSheetState = !state.datePickerBottomSheetState
@@ -133,7 +137,15 @@ class SplitStudyViewModel
                     isSuccess = true
                 )
             }
-        }
+
+            is SplitStudyContract.SplitStudyReduce.UpdateSelectedDateList -> {
+                state.copy(
+                    dateList = state.dateList.mapIndexed { index, date ->
+                        if(index == currentUiState.selectedPieceIndex+1) currentUiState.selectedDate else date
+                    }
+                )
+            }
+       }
     }
 
     override fun handleEvent(event: SplitStudyContract.SplitStudyEvent) {
@@ -144,6 +156,8 @@ class SplitStudyViewModel
             is SplitStudyContract.SplitStudyEvent.OnChangeEndPageFocused -> {
                 updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageFocusedState(index = event.index, endPageFocusedState = event.endPageFocusedState))
                 updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageToString(index = event.index))
+                updateState(SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled)
+                Timber.d("[OnChangeEndPageFocused] : ${currentUiState.isSaveEnable}, ${currentUiState.endPageList}")
             }
             is SplitStudyContract.SplitStudyEvent.OnChangeSelectedDate -> {
                 updateState(SplitStudyContract.SplitStudyReduce.UpdateSelectedDate(date = event.selectedDate))
@@ -154,13 +168,18 @@ class SplitStudyViewModel
             is SplitStudyContract.SplitStudyEvent.OnChangeStartPageFocused -> {
                 updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPageFocusedState(index = event.index, startPageFocusedState = event.startPageFocusedState))
                 updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPageToString(index = event.index))
+                updateState(SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled)
             }
             is SplitStudyContract.SplitStudyEvent.Initialize -> {
                 updateState(SplitStudyContract.SplitStudyReduce.InitializeState(addStudyData = event.addStudyData))
                 updateState(SplitStudyContract.SplitStudyReduce.UpdateState)
             }
             SplitStudyContract.SplitStudyEvent.OnClickBackIcon -> {}
-            SplitStudyContract.SplitStudyEvent.OnClickConfirmDateBtn -> {}
+
+            is SplitStudyContract.SplitStudyEvent.OnClickConfirmDateBtn -> {
+                updateState(SplitStudyContract.SplitStudyReduce.UpdateSelectedDateList)
+                updateState(SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState)
+            }
             is SplitStudyContract.SplitStudyEvent.OnClickDatePicker -> {
                 updateState(SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState)
                 updateState(SplitStudyContract.SplitStudyReduce.UpdateSeletedIndex(event.index))
@@ -168,7 +187,6 @@ class SplitStudyViewModel
             }
             SplitStudyContract.SplitStudyEvent.OnClickNextBtn -> {}
             SplitStudyContract.SplitStudyEvent.OnClickSaveBtn -> {}
-
             SplitStudyContract.SplitStudyEvent.OnCloseBottomSheet -> {
                 updateState(SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState)
             }

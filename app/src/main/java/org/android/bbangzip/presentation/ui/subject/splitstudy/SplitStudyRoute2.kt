@@ -31,6 +31,7 @@ fun SplitStudyRoute2(
             startPageList = splitStudyState.startPageList,
             endPageList = splitStudyState.endPageList,
             seletedDateList = splitStudyState.dateList,
+            isSaveEnable = splitStudyState.isSaveEnable,
             onChangeStartPage = {index, value ->
                 viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPage(index,value))
             },
@@ -48,6 +49,12 @@ fun SplitStudyRoute2(
             },
             onCloseBottomSheet = {
                 viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnCloseBottomSheet)
+            },
+            onClickConfirmDateBtn = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickConfirmDateBtn)
+            },
+            onChangeSelectedDate = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeSelectedDate(it))
             }
         )
     }
