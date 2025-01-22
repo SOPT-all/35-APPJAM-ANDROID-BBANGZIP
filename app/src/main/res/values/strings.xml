@@ -17,7 +17,7 @@
     <string name="card_friend_kebab_button_description">더보기 버튼입니다.</string>
     <string name="card_friend_boss_text">사장님</string>
     <string name="card_d_minus_day_text">D-%s</string>
-    <string name="card_deadline_text">%s까지</string>
+    <string name="card_deadline_text">%s 까지</string>
     <string name="card_start_end_day_text">%sp - %sp</string>
     <string name="card_subject_exam_name_text">%s / %s</string>
     <string name="card_d_minus">D+</string>
@@ -113,4 +113,6 @@
     <string name="emtpy_string" />
     <string name="friend_boss_count">총 %s명의 사장님을 알고있어요</string>
 
+    //badge
+    <string name="badge_get_bottom_sheet_title">배지를 획득했어요!</string>
 </resources>

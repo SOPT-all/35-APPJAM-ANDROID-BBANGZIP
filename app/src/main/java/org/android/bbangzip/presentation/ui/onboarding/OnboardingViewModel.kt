@@ -4,8 +4,13 @@ import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.firstOrNull
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import org.android.bbangzip.domain.repository.local.UserRepository
+import kotlinx.coroutines.runBlocking
+import org.android.bbangzip.domain.model.OnboardingEntity
+import org.android.bbangzip.domain.repository.local.UserLocalRepository
+import org.android.bbangzip.domain.usecase.PostOnboardingUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.SemesterType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
@@ -16,7 +21,8 @@ import javax.inject.Inject
 class OnboardingViewModel
     @Inject
     constructor(
-        private val userRepository: UserRepository,
+        private val userLocalRepository: UserLocalRepository,
+        private val postOnboardingUseCase: PostOnboardingUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<OnboardingContract.OnboardingEvent, OnboardingContract.OnboardingState, OnboardingContract.OnboardingReduce, OnboardingContract.OnboardingSideEffect>(
             savedStateHandle = savedStateHandle,
@@ -27,7 +33,7 @@ class OnboardingViewModel
             semester: String,
             subject: String,
         ) {
-            viewModelScope.launch { userRepository.setOnboardingInfo(userName, year, subject, semester) }
+            viewModelScope.launch { userLocalRepository.setOnboardingInfo(userName, year, semester, subject) }
         }
 
         override fun createInitialState(savedState: Parcelable?): OnboardingContract.OnboardingState {
@@ -144,14 +150,23 @@ class OnboardingViewModel
                         1 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
                         2 -> {
                             updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
-                            setUserOnboardingInfo(currentUiState.userName ?: "", currentUiState.semester.year.toInt(), currentUiState.semester.semester.text, currentUiState.subjectName ?: "")
+                            Timber.d("[온보딩] -> ${currentUiState.userName}, ${currentUiState.semester}, ${currentUiState.subjectName}")
+                            setUserOnboardingInfo(
+                                userName = currentUiState.userName ?: "",
+                                year = currentUiState.semester.year.toInt(),
+                                semester = currentUiState.semester.semester.text,
+                                subject = currentUiState.subjectName ?: "",
+                            )
                             setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboardingEnd)
                         }
                     }
                 }
 
-                is OnboardingContract.OnboardingEvent.OnClickFinishBtn ->
-                    setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToSubject)
+                is OnboardingContract.OnboardingEvent.OnClickFinishBtn -> {
+                    val onboardingInfo = runBlocking { userLocalRepository.userPreferenceFlow.map { it.onboardingInfo }.firstOrNull() }
+                    Timber.d("[온보딩] -> $onboardingInfo")
+                    postOnboardingInfo(onboardingInfo = onboardingInfo)
+                }
             }
         }
 
@@ -224,6 +239,33 @@ class OnboardingViewModel
                 text.contains(Regex("[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]")) -> BbangZipTextFieldInputState.Alert
                 text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
                 else -> BbangZipTextFieldInputState.Field
+            }
+        }
+
+        private fun postOnboardingInfo(onboardingInfo: org.android.bbangzip.OnboardingInfo?) {
+            viewModelScope.launch {
+                Timber.d("[온보딩] 온보딩 POST -> ${onboardingInfo?.userName}, ${onboardingInfo?.year}, ${onboardingInfo?.semester}, ${onboardingInfo?.subjectName} ")
+                postOnboardingUseCase.invoke(
+                    OnboardingEntity(
+                        nickname = onboardingInfo?.userName ?: "",
+                        year = onboardingInfo?.year ?: 0,
+                        semester = onboardingInfo?.semester ?: "",
+                        subjectName = onboardingInfo?.subjectName ?: "",
+                    ),
+                ).onSuccess {
+                    saveIsOnboardingCompleted(isOnboardingCompleted = true)
+                    setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToSubject)
+                }.onFailure {
+                    Timber.d("[온보딩] 서버통신 실패 -> $error")
+                }
+            }
+        }
+
+        private fun saveIsOnboardingCompleted(
+            isOnboardingCompleted: Boolean,
+        ) {
+            viewModelScope.launch {
+                userLocalRepository.setIsOnboardingCompleted(isOnboardingCompleted)
             }
         }
     }

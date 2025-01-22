@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
@@ -356,6 +357,7 @@ fun DateMessageCard(
                     imageVector = ImageVector.vectorResource(id = R.drawable.ic_announcement_default_24),
                     contentDescription = null,
                     tint = BbangZipTheme.colors.labelNormal_282119,
+                    modifier = Modifier.size(16.dp),
                 )
 
                 Spacer(modifier = Modifier.width(6.dp))
