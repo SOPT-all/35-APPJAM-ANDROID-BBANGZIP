@@ -5,6 +5,7 @@ import org.android.bbangzip.OnboardingInfo
 import org.android.bbangzip.UserPreferences
 import org.android.bbangzip.data.datasource.local.UserLocalDataSource
 import org.android.bbangzip.domain.repository.local.UserLocalRepository
+import timber.log.Timber
 import javax.inject.Inject
 
 class UserLocalRepositoryImpl
@@ -25,11 +26,13 @@ constructor(
 
     override suspend fun clearAccessToken() {
         userDataSource.updateUserPreferences { userData ->
-            userData
+            val cleared = userData
                 .toBuilder()
                 .clearAccessToken()
-                .clearOnboardingInfo()
                 .build()
+            Timber.d("[데이터스토어] -> $cleared")
+
+            cleared
         }
     }
 
