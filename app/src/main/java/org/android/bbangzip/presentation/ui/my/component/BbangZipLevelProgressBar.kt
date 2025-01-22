@@ -47,7 +47,7 @@ fun BbangZipLevelProgressBar(
             Row {
                 BbangZipChip(
                     backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                    text = stringResource(R.string.progressbar_chip_level, level.toString()),
+                    text = stringResource(R.string.progressbar_chip_level, (level + 1).toString()),
                 )
 
                 Spacer(modifier = Modifier.padding(8.dp))

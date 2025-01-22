@@ -16,6 +16,7 @@ fun BbangZipDetailRoute(
     viewModel: BbangZipDetailViewModel = hiltViewModel()
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val pagerState = rememberPagerState(pageCount = { state.bbangZipList.size })
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
@@ -28,7 +29,7 @@ fun BbangZipDetailRoute(
     BbangZipDetailScreen(
         modifier = modifier,
         state = state,
-        pagerState = rememberPagerState(pageCount = { state.bbangZipList.size }),
+        pagerState = pagerState,
         popBackStack = popBackStack
     )
 }

@@ -19,6 +19,10 @@ fun MyRoute(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
 
+    LaunchedEffect(Unit) {
+        viewModel.setEvent(MyContract.MyEvent.Initialize)
+    }
+
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {

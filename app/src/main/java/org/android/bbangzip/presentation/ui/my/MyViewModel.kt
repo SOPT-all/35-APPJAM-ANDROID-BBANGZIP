@@ -36,7 +36,10 @@ class MyViewModel @Inject constructor(
 
     override fun handleEvent(event: MyContract.MyEvent) {
         when (event) {
-            is MyContract.MyEvent.Initialize -> launch { initDataLoad() }
+            is MyContract.MyEvent.Initialize -> launch {
+                Timber.tag("[마이페이지] -> ").d("initialize 작동")
+                initDataLoad()
+            }
             is MyContract.MyEvent.OnClickBbangZip -> setSideEffect(MyContract.MySideEffect.NavigateToBbangZipDetail)
             is MyContract.MyEvent.OnClickLogoutBtn -> {
                 updateState(MyContract.MyReduce.UpdateLogoutBottomSheetState)
@@ -83,26 +86,44 @@ class MyViewModel @Inject constructor(
     }
 
     private suspend fun initDataLoad() {
-        fetchMyData()
-    }
-
-    private suspend fun fetchMyData() {
         fetchBbangZipUseCase()
             .onSuccess { data ->
                 updateState(
                     MyContract.MyReduce.UpdateMyBbangZip(
                         myBbangZip = MyBbangZip(
-                            bbangZipName = data.levelDetails[data.level - 1].levelName,
+                            bbangZipName = data.levelDetails[data.level-1].levelName,
                             bbangZipLevel = data.level,
                             reward = data.reward,
                             maxReward = data.maxReward,
-                            bbangZipImgUrl = data.levelDetails[data.level - 1].levelImage
+                            bbangZipImgUrl = data.levelDetails[data.level-1].levelImage
                         )
                     )
                 )
             }.onFailure {
                 Timber.d("[마이페이지] fetch 실패 -> $error")
             }
+        //fetchMyData()
+    }
+
+    private fun fetchMyData() {
+        viewModelScope.launch {
+            fetchBbangZipUseCase()
+                .onSuccess { data ->
+                    updateState(
+                        MyContract.MyReduce.UpdateMyBbangZip(
+                            myBbangZip = MyBbangZip(
+                                bbangZipName = data.levelDetails[data.level-1].levelName,
+                                bbangZipLevel = data.level,
+                                reward = data.reward,
+                                maxReward = data.maxReward,
+                                bbangZipImgUrl = data.levelDetails[data.level-1].levelImage
+                            )
+                        )
+                    )
+                }.onFailure {
+                    Timber.d("[마이페이지] fetch 실패 -> $error")
+                }
+        }
     }
 
     private fun logout() {
