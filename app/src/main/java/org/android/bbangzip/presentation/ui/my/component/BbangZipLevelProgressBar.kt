@@ -25,18 +25,17 @@ import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.chip.BbangZipChip
 import org.android.bbangzip.presentation.component.progressbar.BbangZipBasicProgressBar
-import org.android.bbangzip.presentation.type.BbangZipLevelType
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun BbangZipLevelProgressBar(
     level: Int,
+    bbangZipName: String,
     currentPoint: Int,
+    maxPoint: Int,
     modifier: Modifier = Modifier,
 ) {
-    val levelType = BbangZipLevelType.entries[level - 1]
-
     Column(
         modifier = modifier,
     ) {
@@ -54,7 +53,7 @@ fun BbangZipLevelProgressBar(
                 Spacer(modifier = Modifier.padding(8.dp))
 
                 Text(
-                    text = levelType.bbangZipName,
+                    text = bbangZipName,
                     style = BbangZipTheme.typography.body1Bold,
                     color = BbangZipTheme.colors.labelNormal_282119,
                 )
@@ -62,14 +61,14 @@ fun BbangZipLevelProgressBar(
 
             BbangZipPoint(
                 currentPoint = currentPoint.toString(),
-                totalPoint = levelType.bbangZipLevelPoint.toString(),
+                totalPoint = maxPoint.toString(),
             )
         }
 
         Spacer(Modifier.height(4.dp))
 
         BbangZipBasicProgressBar(
-            progress = currentPoint.toFloat() / levelType.bbangZipLevelPoint.toFloat(),
+            progress = currentPoint.toFloat() / maxPoint.toFloat(),
         )
     }
 }
@@ -120,7 +119,9 @@ fun BbangZipLevelProgressBarPreview() {
         ) {
             BbangZipLevelProgressBar(
                 level = 1,
+                bbangZipName = "제과제빵집",
                 currentPoint = 50,
+                maxPoint = 300,
             )
         }
     }

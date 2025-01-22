@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
+import org.android.bbangzip.presentation.indicator.BbangZipLoadingIndicator
 
 @Composable
 fun MyRoute(
@@ -16,6 +17,7 @@ fun MyRoute(
     viewModel: MyViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
@@ -26,15 +28,22 @@ fun MyRoute(
         }
     }
 
-    MyScreen(
-        padding = padding,
-        state = state,
-        onClickBbangZip = { viewModel.setEvent(MyContract.MyEvent.OnClickBbangZip) },
-        onClickLogoutBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutBtn) },
-        onClickWithdrawBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawBtn) },
-        onClickLogoutConfirmBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutConfirmBtn) },
-        onClickWithdrawConfirmBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawConfirmBtn) },
-        onClickLogoutCancelBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutCancelBtn) },
-        onClickWithdrawCancelBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawCancelBtn) },
-    )
+    when (success) {
+        true ->
+            MyScreen(
+                padding = padding,
+                state = state,
+                onClickBbangZip = { viewModel.setEvent(MyContract.MyEvent.OnClickBbangZip) },
+                onClickLogoutBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutBtn) },
+                onClickWithdrawBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawBtn) },
+                onClickLogoutConfirmBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutConfirmBtn) },
+                onClickWithdrawConfirmBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawConfirmBtn) },
+                onClickLogoutCancelBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutCancelBtn) },
+                onClickWithdrawCancelBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawCancelBtn) },
+            )
+
+        else -> {
+            BbangZipLoadingIndicator()
+        }
+    }
 }

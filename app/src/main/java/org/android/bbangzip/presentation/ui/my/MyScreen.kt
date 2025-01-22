@@ -40,11 +40,9 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.bottomsheet.BbangZipTwoButtonBottomSheet
 import org.android.bbangzip.presentation.type.BbangZipShadowType
 import org.android.bbangzip.presentation.ui.my.component.BbangZipLevelProgressBar
-import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BbangZipTheme
-import timber.log.Timber
 
 @Composable
 fun MyScreen(
@@ -76,7 +74,9 @@ fun MyScreen(
                         .noRippleClickable { onClickBbangZip() },
                     level = state.myBbangZip?.bbangZipLevel ?: 1,
                     currentPoint = state.myBbangZip?.reward ?: 0,
-                    bbangZipImgUrl = state.myBbangZip?.bbangZipImgUrl ?: "https://cdn-icons-png.flaticon.com/512/3348/3348027.png"
+                    maxPoint = state.myBbangZip?.maxReward ?: 0,
+                    bbangZipImgUrl = state.myBbangZip?.bbangZipImgUrl ?: "https://cdn-icons-png.flaticon.com/512/3348/3348027.png",
+                    bbangZipName = state.myBbangZip?.bbangZipName ?: ""
                 )
 
                 MyBadgeInfo(
@@ -178,9 +178,11 @@ fun MyScreen(
 
 @Composable
 private fun MainBbangZip(
+    bbangZipName: String,
     bbangZipImgUrl: String,
     level: Int,
     currentPoint: Int,
+    maxPoint: Int,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -204,8 +206,10 @@ private fun MainBbangZip(
                 .align(Alignment.CenterHorizontally)
                 .padding(horizontal = 40.dp)
                 .padding(bottom = 50.dp),
-            level = level,
-            currentPoint = currentPoint
+            level = level - 1,
+            currentPoint = currentPoint,
+            maxPoint = maxPoint,
+            bbangZipName = bbangZipName
         )
     }
 }
