@@ -23,5 +23,7 @@ interface UserLocalRepository {
         subject: String,
     )
 
+    suspend fun setIsOnboardingCompleted(isOnboardingCompleted: Boolean)
+
     suspend fun clearOnboardingInfo()
 }

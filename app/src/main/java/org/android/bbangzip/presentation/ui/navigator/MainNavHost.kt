@@ -51,11 +51,11 @@ fun MainNavHost(
             )
 
             onboardingStartNavGraph(
-                navigateToOnboarding = { navigator.navHostController.navigateOnboarding() },
+                navigateToOnboarding = { navigator.navigateToOnboarding() },
             )
 
             onboardingNavGraph(
-                navigateToOnboardingEnd = { navigator.navHostController.navigateOnboardingEnd() },
+                navigateToOnboardingEnd = { navigator.navigateToOnboardingEnd() },
             )
 
             onboardingEndNavGraph(
@@ -76,7 +76,9 @@ fun MainNavHost(
 
             friendNavGraph()
 
-            myNavGraph()
+            myNavGraph(
+                navigateToLogin = { navigator.navigateToLogin() }
+            )
 
             subjectNavGraph()
 

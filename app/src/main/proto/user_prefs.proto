@@ -7,7 +7,8 @@ message UserPreferences {
     string accessToken = 1;
     string refreshToken = 2;
     bool isLogin = 3;
-    OnboardingInfo onboardingInfo = 4;
+    bool isOnboardingCompleted = 4;
+    OnboardingInfo onboardingInfo = 5;
 }
 
 message OnboardingInfo {

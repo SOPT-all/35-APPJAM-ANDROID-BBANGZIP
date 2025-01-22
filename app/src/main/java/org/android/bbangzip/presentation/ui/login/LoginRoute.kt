@@ -10,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.android.bbangzip.UserPreferences
+import timber.log.Timber
 
 @Composable
 fun LoginRoute(
@@ -24,9 +25,12 @@ fun LoginRoute(
 
     LaunchedEffect(userPreferences) {
         if (userPreferences.isLogin) {
-            if (state.isOnboardingCompleted) {
-                navigateToOnboarding()
+            Timber.d("[로그인] isLogin true")
+            if (userPreferences.isOnboardingCompleted) {
+                Timber.d("[로그인] isLogin true, onboarding true")
+                navigateToSubject()
             } else {
+                Timber.d("[로그인] isLogin true, onboarding false")
                 navigateToOnboarding()
             }
         }

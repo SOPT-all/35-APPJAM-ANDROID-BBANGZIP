@@ -54,6 +54,7 @@ class MyViewModel
             viewModelScope.launch {
                 deleteLogoutUseCase.invoke().onSuccess {
                     clearDataStore()
+                    setSideEffect(MyContract.MySideEffect.NavigateToLogin)
                 }.onFailure {
                     Timber.d("[마이페이지] 서버 -> 로그아웃 실패 $error")
                 }
@@ -66,6 +67,7 @@ class MyViewModel
                     kakaoAuthService.withdrawKakao()
                     clearDataStore()
                     Timber.d("[마이페이지] 서버 -> 회원탈퇴 성공 $error")
+                    setSideEffect(MyContract.MySideEffect.NavigateToLogin)
                 }.onFailure {
                     Timber.d("[마이페이지] 서버 -> 회원탈퇴 실패 $error")
                 }

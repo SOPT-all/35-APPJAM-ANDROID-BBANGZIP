@@ -72,11 +72,13 @@ class LoginViewModel
                                 ),
                             ),
                         )
+
                         saveUserInfoInLocal(
                             accessToken = BEARER + userEntity.accessToken,
                             refreshToken = BEARER + userEntity.refreshToken,
                             isLogin = true,
                         )
+
                         if (userEntity.isOnboardingComplete) {
                             setSideEffect(LoginContract.LoginSideEffect.NavigateToSubject)
                         } else {
@@ -89,15 +91,18 @@ class LoginViewModel
             }
         }
 
-        private suspend fun saveUserInfoInLocal(
+        private fun saveUserInfoInLocal(
             accessToken: String,
             refreshToken: String,
             isLogin: Boolean,
         ) {
-            with(userLocalRepository) {
-                setAccessToken(accessToken = accessToken)
-                setRefreshToken(refreshToken = refreshToken)
-                setIsLogin(isLogin = isLogin)
+            Timber.d("[로그인] 데이터스토어에 저장할래~ -> $isLogin")
+            viewModelScope.launch {
+                with(userLocalRepository) {
+                    setAccessToken(accessToken = accessToken)
+                    setRefreshToken(refreshToken = refreshToken)
+                    setIsLogin(isLogin = isLogin)
+                }
             }
         }
 
