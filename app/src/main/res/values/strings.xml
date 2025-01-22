@@ -105,9 +105,9 @@
     <string name="todo_add_plus_button_label">오늘 할 공부 추가하기</string>
 
     <!-- badge -->
-    <string name="badge_category_title">%s 사장님\n열심히 모은 배지에요</string>
+    <string name="badge_category_title">%s 사장님이\n열심히 모은 배지에요</string>
     <string name="badge_detail_achievement">달성 조건</string>
     <string name="badge_detail_reward">리워드</string>
-    <string name="badge_category_top_bar_title">뱃지 도감</string>
+    <string name="badge_category_top_bar_title">배지 도감</string>
     <string name="badge_bottom_sheet_reward">%sP</string>
 </resources>

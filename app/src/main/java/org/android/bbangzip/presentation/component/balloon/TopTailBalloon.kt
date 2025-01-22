@@ -36,7 +36,6 @@ fun TopTailBalloon(
             modifier
                 .fillMaxWidth()
                 .padding(horizontal = horizontalPadding)
-                .applyShadows(BbangZipShadowType.STRONG, shape = RoundedCornerShape(size = 20.dp)),
     ) {
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_balloon_tail_up_8),

@@ -40,6 +40,11 @@ constructor(
 
             is MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClicked -> {
                 viewModelScope.launch { getBadgeDetail(event.badgeName) }
+                updateState(
+                    MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
+                        badgeDetailBottomSheetState = true,
+                    ),
+                )
             }
 
             MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissButtonClicked ->

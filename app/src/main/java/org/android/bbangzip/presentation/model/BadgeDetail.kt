@@ -10,5 +10,5 @@ data class BadgeDetail(
     val hashTags: List<String> = listOf("안녕", "안녕"),
     val achievementCondition: String = "안녕",
     val reward: Int = 50,
-    val isLocked: Boolean = true,
+    val isLocked: Boolean = false,
 ) : Parcelable
