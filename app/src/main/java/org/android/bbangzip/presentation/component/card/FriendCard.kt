@@ -6,7 +6,6 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -23,23 +22,21 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.model.card.FriendCardModel
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.presentation.util.modifier.applyShadows
-import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun FriendCard(
-    state: BbangZipCardState,
     data: FriendCardModel,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     onActionIconClick: () -> Unit = {},
 ) {
+    val state = data.state
     val radius = state.getRadius()
     Box(
         modifier =
@@ -97,45 +94,6 @@ fun FriendCard(
                 contentDescription = stringResource(R.string.card_friend_kebab_button_description),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
                 modifier = Modifier.clickable { onActionIconClick() },
-            )
-        }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun FriendCardPreview() {
-    BBANGZIPTheme {
-        Column(modifier = Modifier.padding(16.dp)) {
-            FriendCard(
-                state = BbangZipCardState.DEFAULT,
-                data =
-                    FriendCardModel(
-                        friendId = 1,
-                        friendName = "김철수",
-                        imageUrl = "https://via.placeholder.com/150",
-                    ),
-                modifier = Modifier.padding(bottom = 8.dp),
-            )
-            FriendCard(
-                state = BbangZipCardState.CHECKABLE,
-                data =
-                    FriendCardModel(
-                        friendId = 2,
-                        friendName = "이영희",
-                        imageUrl = "https://via.placeholder.com/150",
-                    ),
-                modifier = Modifier.padding(bottom = 8.dp),
-            )
-            FriendCard(
-                state = BbangZipCardState.CHECKED,
-                data =
-                    FriendCardModel(
-                        friendId = 3,
-                        friendName = "박영수",
-                        imageUrl = "https://via.placeholder.com/150",
-                    ),
-                modifier = Modifier.padding(bottom = 8.dp),
             )
         }
     }

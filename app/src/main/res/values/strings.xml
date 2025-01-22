@@ -17,7 +17,7 @@
     <string name="card_friend_kebab_button_description">더보기 버튼입니다.</string>
     <string name="card_friend_boss_text">사장님</string>
     <string name="card_d_minus_day_text">D-%s</string>
-    <string name="card_deadline_text">%s까지</string>
+    <string name="card_deadline_text">%s 까지</string>
     <string name="card_start_end_day_text">%sp - %sp</string>
     <string name="card_subject_exam_name_text">%s / %s</string>
     <string name="card_d_minus">D+</string>
@@ -92,10 +92,6 @@
     <string name="todo_complete_remaining_nothing_text">사장님 퇴근 준비 완료</string>
     <string name="todo_delete_screen_text">삭제할 오늘의 공부를 \n선택해 주세요</string>
     <string name="todo_delete_screen_delete_button_text">%s개 삭제하기</string>
-
-    <!-- login -->
-    <string name="login_title">제 과제 빵점 사장님은\n이번 학기 백점!</string>
-    <string name="login_ballon_label">5초 만에 빵집 사장님 되기</string>
     <string name="todo_revert_bottomsheet_approve_text">되돌리기</string>
     <string name="todo_pending_add_title1">이제는 미룰 수 없다!</string>
     <string name="todo_pending_add_title2">아직 늦지 않았어요!\n밀린 공부를 시작해봐요</string>
@@ -110,4 +106,20 @@
     <string name="badge_detail_reward">리워드</string>
     <string name="badge_category_top_bar_title">뱃지 도감</string>
     <string name="badge_bottom_sheet_reward">%sP</string>
+
+    <!-- login -->
+    <string name="login_title">제 과제 빵점 사장님은\n이번 학기 백점!</string>
+    <string name="login_ballon_label">5초 만에 빵집 사장님 되기</string>
+
+    <!-- friend -->
+    <string name="friend_header_title">이웃 사장님들은\n어떻게 공부하고 있을까요?</string>
+    <string name="friend_type_all">전체</string>
+    <string name="friend_type_group">그룹</string>
+    <string name="friend_type_pending">신청대기</string>
+    <string name="friend_all_tf_placeholder">이웃 사장님의 이름을 검색해보세요</string>
+    <string name="emtpy_string" />
+    <string name="friend_boss_count">총 %s명의 사장님을 알고있어요</string>
+
+    //badge
+    <string name="badge_get_bottom_sheet_title">배지를 획득했어요!</string>
 </resources>

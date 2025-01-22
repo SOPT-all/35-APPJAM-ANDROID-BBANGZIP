@@ -9,7 +9,7 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import org.android.bbangzip.presentation.ui.friend.friendNavGraph
+import org.android.bbangzip.presentation.ui.friend.navigation.friendNavGraph
 import org.android.bbangzip.presentation.ui.login.loginNavGraph
 import org.android.bbangzip.presentation.ui.my.myNavGraph
 import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.myBadgeCategoryNavGraph
@@ -52,11 +52,11 @@ fun MainNavHost(
             )
 
             onboardingStartNavGraph(
-                navigateToOnboarding = { navigator.navHostController.navigateOnboarding() },
+                navigateToOnboarding = { navigator.navigateToOnboarding() },
             )
 
             onboardingNavGraph(
-                navigateToOnboardingEnd = { navigator.navHostController.navigateOnboardingEnd() },
+                navigateToOnboardingEnd = { navigator.navigateToOnboardingEnd() },
             )
 
             onboardingEndNavGraph(
@@ -77,7 +77,9 @@ fun MainNavHost(
 
             friendNavGraph()
 
-            myNavGraph()
+            myNavGraph(
+                navigateToLogin = { navigator.navigateToLogin() },
+            )
 
             myBadgeCategoryNavGraph(
                 navigateToBack = { navigator.navigateToMyBadgeCategory() },

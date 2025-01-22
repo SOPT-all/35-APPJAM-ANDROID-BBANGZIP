@@ -23,6 +23,7 @@ fun BalloonContainer(
     Box(
         modifier =
             modifier
+                .applyShadows(BbangZipShadowType.EMPHASIZE, shape = RoundedCornerShape(size = 20.dp))
                 .fillMaxWidth()
                 .background(
                     color = BbangZipTheme.colors.staticWhite_FFFFFF,
