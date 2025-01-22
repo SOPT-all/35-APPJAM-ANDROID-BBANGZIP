@@ -173,7 +173,7 @@ fun HashTagText(
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
         Text(
-            text = "#${hashTags[0]}",
+            text = hashTags[0],
             style = BbangZipTheme.typography.body2Bold,
             color = BbangZipTheme.colors.labelAssistive_282119_28,
         )
@@ -182,7 +182,7 @@ fun HashTagText(
             horizontalArrangement = Arrangement.Center,
         ) {
             Text(
-                text = "#${hashTags[1]}",
+                text = hashTags[1],
                 style = BbangZipTheme.typography.body2Bold,
                 color = BbangZipTheme.colors.labelAssistive_282119_28,
             )
@@ -191,7 +191,7 @@ fun HashTagText(
                 Spacer(modifier = Modifier.width(8.dp))
 
                 Text(
-                    text = "#${hashTags[2]}",
+                    text = hashTags[2],
                     style = BbangZipTheme.typography.body2Bold,
                     color = BbangZipTheme.colors.labelAssistive_282119_28,
                 )

@@ -175,7 +175,7 @@ fun BadgeCategoryGridList(
                             .clickable { onBadgeCardClicked(badgeCategoryList[index].name) },
                     contentAlignment = Alignment.Center,
                 ) {
-                    if (!badgeCategoryList[index].isLocked) {
+                    if (badgeCategoryList[index].isLocked) {
                         LockedBadgeImage(
                             imgUrl = badgeCategoryList[index].imageUrl,
                         )
