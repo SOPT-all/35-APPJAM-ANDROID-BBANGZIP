@@ -83,17 +83,17 @@ fun MainNavHost(
             myNavGraph()
 
             subjectNavGraph(
-                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) }
+                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
             )
 
             addStudyNavGraph(
                 padding = padding,
-                navigateSplitStudy = {navigator.navHostController.navigateSplitStudy(it)}
+                navigateSplitStudy = { navigator.navHostController.navigateSplitStudy(it) },
             )
 
             splitStudyNavGraph(
-                navigateBack = {navigator.navHostController.popBackStack()}
-                ,navigateAddStudy = {navigator.navHostController.navigateAddStudy(it)}
+                navigateBack = { navigator.navHostController.popBackStack() },
+                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
             )
 
             todoNavGraph(

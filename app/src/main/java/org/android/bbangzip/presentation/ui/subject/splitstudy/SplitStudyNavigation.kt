@@ -17,7 +17,7 @@ fun NavController.navigateSplitStudy(
     addStudyData: AddStudyData,
 ) {
     navigate(
-        route = SplitStudyRoute(addStudyData= addStudyData),
+        route = SplitStudyRoute(addStudyData = addStudyData),
     )
 }
 
@@ -31,7 +31,7 @@ fun NavGraphBuilder.splitStudyNavGraph(
         SplitStudyRoute(
             addStudyData = it.toRoute<SplitStudyRoute>().addStudyData,
             onBackPress = navigateBack,
-            navigateAddStudy = navigateAddStudy
+            navigateAddStudy = navigateAddStudy,
         )
     }
 }
@@ -39,24 +39,32 @@ fun NavGraphBuilder.splitStudyNavGraph(
 @Serializable
 data class SplitStudyRoute(val addStudyData: AddStudyData)
 
-val AddStudyDataType = object : NavType<AddStudyData>(isNullableAllowed = false) {
-    override fun get(bundle: Bundle, key: String): AddStudyData? {
-        Timber.d("[쪼개기] get -> $key")
-        return bundle.getString(key)?.let { Json.decodeFromString(it) }
-    }
+val AddStudyDataType =
+    object : NavType<AddStudyData>(isNullableAllowed = false) {
+        override fun get(
+            bundle: Bundle,
+            key: String,
+        ): AddStudyData? {
+            Timber.d("[쪼개기] get -> $key")
+            return bundle.getString(key)?.let { Json.decodeFromString(it) }
+        }
 
-    override fun parseValue(value: String): AddStudyData {
-        Timber.d("[쪼개기] parse -> $value")
-        return Json.decodeFromString(value)
-    }
+        override fun parseValue(value: String): AddStudyData {
+            Timber.d("[쪼개기] parse -> $value")
+            return Json.decodeFromString(value)
+        }
 
-    override fun put(bundle: Bundle, key: String, value: AddStudyData) {
-        Timber.d("[쪼개기] put -> $value")
-        bundle.putString(key, Json.encodeToString(AddStudyData.serializer(), value))
-    }
+        override fun put(
+            bundle: Bundle,
+            key: String,
+            value: AddStudyData,
+        ) {
+            Timber.d("[쪼개기] put -> $value")
+            bundle.putString(key, Json.encodeToString(AddStudyData.serializer(), value))
+        }
 
-    override fun serializeAsValue(value: AddStudyData): String {
-        Timber.d("[쪼개기] serialize ->  $value")
-        return Json.encodeToString(AddStudyData.serializer(), value)
+        override fun serializeAsValue(value: AddStudyData): String {
+            Timber.d("[쪼개기] serialize ->  $value")
+            return Json.encodeToString(AddStudyData.serializer(), value)
+        }
     }
-}

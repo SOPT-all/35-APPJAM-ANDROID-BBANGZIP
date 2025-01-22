@@ -52,7 +52,7 @@ fun BbangZipDatePickerBottomSheet(
 
             BbangZipDatePicker(
                 onConfirm = onSelectedDateChanged,
-                currentDate = selectedDate
+                currentDate = selectedDate,
             )
 
             Spacer(modifier = Modifier.height(24.dp))
@@ -63,7 +63,7 @@ fun BbangZipDatePickerBottomSheet(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 onClick = onClickInputButton,
                 label = "시험 일자 입력하기",
-                isEnable = true
+                isEnable = true,
             )
             Spacer(modifier = Modifier.height(16.dp))
         },
@@ -79,6 +79,6 @@ private fun BbangZipDatePickerBottomSheetPreview() {
         isBottomSheetVisible = isBottomSheetVisible,
         bottomSheetTitle = "언제까지 공부할까요?",
         onDismissRequest = { isBottomSheetVisible = !isBottomSheetVisible },
-        selectedDate = Date("2025", "1", "21")
+        selectedDate = Date("2025", "1", "21"),
     )
 }

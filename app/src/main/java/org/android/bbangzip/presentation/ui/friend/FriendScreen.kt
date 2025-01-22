@@ -1,7 +1,6 @@
 package org.android.bbangzip.presentation.ui.friend
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -13,7 +12,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.tooling.preview.Preview
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.textfield.BbangZipBasicTextField
-import org.android.bbangzip.presentation.component.textfield.BbangZipSimpleTextField
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
@@ -88,6 +86,5 @@ fun FriendScreen(
 @Composable
 private fun FriendScreenPreview() {
     BBANGZIPTheme {
-
     }
 }

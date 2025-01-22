@@ -9,10 +9,10 @@ import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.util.base.BaseContract
 
-class AddStudyContract{
+class AddStudyContract {
     @Parcelize
     data class AddStudyState(
-        val subjectName: String="",
+        val subjectName: String = "",
         val examDate: String = "시험 일자 입력",
         val selectedDate: Date = Date("2025", "1", "21"),
         val studyContent: String? = null,
@@ -115,7 +115,7 @@ class AddStudyContract{
 
         data object UpdateAddStudyViewType : AddStudyReduce
 
-        data object UpdateIsSuccess: AddStudyReduce
+        data object UpdateIsSuccess : AddStudyReduce
 
         data object ResetStudyContent : AddStudyReduce
     }

@@ -16,9 +16,9 @@ fun AddStudyRoute(
     padding: PaddingValues,
     splitStudyData: SplitStudyData,
     viewModel: AddStudyViewModel = hiltViewModel(),
-    navigateSplitStudy: (AddStudyData) -> Unit = {}
-){
-    LaunchedEffect(Unit){
+    navigateSplitStudy: (AddStudyData) -> Unit = {},
+) {
+    LaunchedEffect(Unit) {
         Timber.tag("AddStudy 로 진입").d("$splitStudyData")
         viewModel.setEvent(AddStudyContract.AddStudyEvent.Initialize(splitStudyData = splitStudyData))
     }
@@ -37,7 +37,6 @@ fun AddStudyRoute(
 
     val addStudyState by viewModel.uiState.collectAsStateWithLifecycle()
 
-
     if (addStudyState.isSuccess) {
         Timber.d("$addStudyState")
         AddStudyScreen(
@@ -45,9 +44,9 @@ fun AddStudyRoute(
             pieceNumber = addStudyState.pieceNumber,
             subjectTitle = addStudyState.subjectName,
             examDate = addStudyState.examDate,
-            studyContent = addStudyState.studyContent?: "",
-            startPage = addStudyState.startPage?: "",
-            endPage = addStudyState.endPage?: "",
+            studyContent = addStudyState.studyContent ?: "",
+            startPage = addStudyState.startPage ?: "",
+            endPage = addStudyState.endPage ?: "",
             addStudyViewType = addStudyState.addStudyViewType,
             selectedDate = addStudyState.selectedDate,
             datePickerBottomSheetState = addStudyState.datePickerBottomSheetState,
@@ -55,13 +54,13 @@ fun AddStudyRoute(
             studyContentTextFieldState = addStudyState.studyContentTextFieldState,
             isSplitBtnEnable = addStudyState.buttonSplitEnabled,
             isButtonEnable = addStudyState.buttonEnabled,
-            onChangeSelectedDate = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeSelectedDate(it))},
+            onChangeSelectedDate = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeSelectedDate(it)) },
             onChangeStudyContent = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeStudyContent(it)) },
-            onChangeStudyContentFocused = {viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeStudyContentFocused(it))},
+            onChangeStudyContentFocused = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeStudyContentFocused(it)) },
             onChangeStartPage = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeStartPage(it)) },
-            onChangeStartPageFocused = {viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeStartPageFocused(it))},
+            onChangeStartPageFocused = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeStartPageFocused(it)) },
             onChangeEndPage = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeEndPage(it)) },
-            onChangeEndPageFocused = {viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeEndPageFocused(it))},
+            onChangeEndPageFocused = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeEndPageFocused(it)) },
             onClickSplitBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickSplitBtn) },
             onClickDatePicker = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickDatePicker) },
             onClickPieceNumber = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickPieceNumber(it)) },

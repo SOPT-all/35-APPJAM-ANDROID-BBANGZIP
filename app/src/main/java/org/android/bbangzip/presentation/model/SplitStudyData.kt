@@ -17,5 +17,5 @@ data class SplitStudyData(
     val startPageList: List<String>,
     val endPageList: List<String>,
     val deadLineList: List<String>,
-    val addStudyViewType: AddStudyViewType
+    val addStudyViewType: AddStudyViewType,
 ) : Parcelable

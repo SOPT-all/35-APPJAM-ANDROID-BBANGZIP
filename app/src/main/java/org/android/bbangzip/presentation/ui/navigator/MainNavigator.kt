@@ -8,22 +8,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
-import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
 import org.android.bbangzip.presentation.model.Route
-import org.android.bbangzip.presentation.model.SplitStudyData
-import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.friend.navigateFriend
-import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
 import org.android.bbangzip.presentation.ui.my.navigateMy
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
-import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyRoute
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
-import org.android.bbangzip.presentation.ui.subject.splitstudy.SplitStudyRoute
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
 import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.navigateTodoAdd
@@ -49,7 +43,6 @@ class MainNavigator(
 //                deadLineList = listOf(),
 //                addStudyViewType = AddStudyViewType.DEFAULT
 //            )
-
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =

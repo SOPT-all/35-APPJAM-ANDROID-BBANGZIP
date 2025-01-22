@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.ui.subject.addstudy
 
-import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,18 +16,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalFocusManager
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -48,7 +41,6 @@ import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BbangZipTheme
-import timber.log.Timber
 
 @Composable
 fun AddStudyScreen(
@@ -79,60 +71,64 @@ fun AddStudyScreen(
     onClickSplitBtn: () -> Unit = {},
     onClickCancleIcon: () -> Unit = {},
     onClickConfirmDateBtn: () -> Unit = {},
-    onClickAgainSplitBtn: (Int) -> Unit = {}
-){
+    onClickAgainSplitBtn: (Int) -> Unit = {},
+) {
     val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .addFocusCleaner(focusManager)
-            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF)
-    ){
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .addFocusCleaner(focusManager)
+                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
+    ) {
         BbangZipBaseTopBar(
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            title = subjectTitle
+            title = subjectTitle,
         )
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp)
-        ){
-            Column(modifier = Modifier.fillMaxWidth()){
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+        ) {
+            Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = "시험 일자",
                     style = BbangZipTheme.typography.body1Bold,
-                    color = BbangZipTheme.colors.labelNormal_282119
+                    color = BbangZipTheme.colors.labelNormal_282119,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Box(
-                    modifier = Modifier
-                        .applyFilterOnClick(
-                            radius = 20.dp,
-                            isDisabled = false
-                        ) {
-                            onClickDatePicker()
-                        }
-                        .fillMaxWidth()
-                        .background(
-                            color = BbangZipTheme.colors.fillNormal_68645E_08,
-                            shape = RoundedCornerShape(20.dp)
-                        )
-                        .padding(start = 16.dp)
-                        .padding(vertical = 18.dp)
-                ){
+                    modifier =
+                        Modifier
+                            .applyFilterOnClick(
+                                radius = 20.dp,
+                                isDisabled = false,
+                            ) {
+                                onClickDatePicker()
+                            }
+                            .fillMaxWidth()
+                            .background(
+                                color = BbangZipTheme.colors.fillNormal_68645E_08,
+                                shape = RoundedCornerShape(20.dp),
+                            )
+                            .padding(start = 16.dp)
+                            .padding(vertical = 18.dp),
+                ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
-                    ){
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
                         Icon(
                             imageVector = ImageVector.vectorResource(id = R.drawable.ic_calendar_default_24),
                             contentDescription = null,
-                            tint = if(examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
-                            modifier = Modifier
-                                .padding(2.dp)
-                                .size(16.dp)
+                            tint = if (examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
+                            modifier =
+                                Modifier
+                                    .padding(2.dp)
+                                    .size(16.dp),
                         )
 
                         Spacer(modifier = Modifier.width(8.dp))
@@ -140,7 +136,7 @@ fun AddStudyScreen(
                         Text(
                             text = examDate,
                             style = BbangZipTheme.typography.label1Medium,
-                            color = if(examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119
+                            color = if (examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
                         )
                     }
                 }
@@ -148,11 +144,11 @@ fun AddStudyScreen(
 
             Spacer(modifier = Modifier.height(50.dp))
 
-            Column(modifier = Modifier.fillMaxWidth()){
+            Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
                     text = "학습 내용",
                     style = BbangZipTheme.typography.body1Bold,
-                    color = BbangZipTheme.colors.labelNormal_282119
+                    color = BbangZipTheme.colors.labelNormal_282119,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -165,15 +161,15 @@ fun AddStudyScreen(
                     onValueChange = { onChangeStudyContent(it) },
                     onFocusChange = { onChangeStudyContentFocused(it) },
                     maxCharacter = 20,
-                    onDeleteButtonClick = { onClickCancleIcon()},
+                    onDeleteButtonClick = { onClickCancleIcon() },
                     focusManager = focusManager,
-                    bbangZipTextFieldInputState = studyContentTextFieldState
+                    bbangZipTextFieldInputState = studyContentTextFieldState,
                 )
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            when(addStudyViewType){
+            when (addStudyViewType) {
                 AddStudyViewType.DEFAULT -> {
                     DefaultRangeView(
                         startPage = startPage,
@@ -184,7 +180,7 @@ fun AddStudyScreen(
                         onChangeEndPage = onChangeEndPage,
                         onChangeEndPageFocused = onChangeEndPageFocused,
                         onClickSplitBtn = onClickSplitBtn,
-                        isSplitBtnEnable = isSplitBtnEnable
+                        isSplitBtnEnable = isSplitBtnEnable,
                     )
                 }
 
@@ -193,7 +189,7 @@ fun AddStudyScreen(
                         focusManager = focusManager,
                         pieceNumber = pieceNumber,
                         onClickSplitBtn = onClickAgainSplitBtn,
-                        isSplitBtnEnable = isSplitBtnEnable
+                        isSplitBtnEnable = isSplitBtnEnable,
                     )
                 }
             }
@@ -203,11 +199,10 @@ fun AddStudyScreen(
             Text(
                 text = "[Tip] 입력하신 학습 범위를 자동으로 분배하여\n꾸준히 공부할 수 있도록 학습 계획을 세워드려요!",
                 style = BbangZipTheme.typography.caption2Bold,
-                color = BbangZipTheme.colors.labelAssistive_282119_28
+                color = BbangZipTheme.colors.labelAssistive_282119_28,
             )
 
             Spacer(modifier = Modifier.weight(1f))
-
 
             BbangZipButton(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
@@ -216,7 +211,7 @@ fun AddStudyScreen(
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_enroll_study_label),
                 trailingIcon = R.drawable.ic_plus_thick_24,
-                isEnable = isSplitBtnEnable
+                isEnable = isSplitBtnEnable,
             )
         }
 
@@ -231,13 +226,13 @@ fun AddStudyScreen(
 
         BbangZipListPickerBottomSheet(
             isBottomSheetVisible = piecePickerBottomSheetState,
-            itemList = listOf("1조각", "2조각", "3조각", "4조각", "5조각","6조각"),
+            itemList = listOf("1조각", "2조각", "3조각", "4조각", "5조각", "6조각"),
             title = {
                 Text(
-                    text = "몇 조각으로 쪼개서 공부할까요?"
+                    text = "몇 조각으로 쪼개서 공부할까요?",
                 )
-                    },
-            onSelectedItemChanged = onClickPieceNumber
+            },
+            onSelectedItemChanged = onClickPieceNumber,
         )
     }
 }
@@ -252,19 +247,19 @@ private fun DefaultRangeView(
     onChangeEndPage: (String) -> Unit,
     onChangeEndPageFocused: (Boolean) -> Unit,
     onClickSplitBtn: () -> Unit,
-    isSplitBtnEnable: Boolean
+    isSplitBtnEnable: Boolean,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = "학습 범위 ",
             style = BbangZipTheme.typography.body1Bold,
-            color = BbangZipTheme.colors.labelNormal_282119
+            color = BbangZipTheme.colors.labelNormal_282119,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             BbangZipSimpleTextField(
                 leadingIcon = R.drawable.ic_page_check_default_24,
@@ -291,7 +286,7 @@ private fun DefaultRangeView(
                     onChangeEndPage(it)
                 },
                 onFocusChange = { onChangeEndPageFocused(it) },
-                focusManager = focusManager
+                focusManager = focusManager,
             )
         }
     }
@@ -306,7 +301,7 @@ private fun DefaultRangeView(
         },
         modifier = Modifier.fillMaxWidth(),
         label = stringResource(R.string.btn_slice_study_label),
-        isEnable = isSplitBtnEnable
+        isEnable = isSplitBtnEnable,
     )
 }
 
@@ -315,19 +310,19 @@ private fun AgainRangeView(
     focusManager: FocusManager,
     pieceNumber: Int,
     onClickSplitBtn: (Int) -> Unit,
-    isSplitBtnEnable: Boolean
+    isSplitBtnEnable: Boolean,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
             text = "학습 범위 ",
             style = BbangZipTheme.typography.body1Bold,
-            color = BbangZipTheme.colors.labelNormal_282119
+            color = BbangZipTheme.colors.labelNormal_282119,
         )
 
         Spacer(modifier = Modifier.height(16.dp))
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         ) {
             BbangZipSimpleTextField(
                 leadingIcon = R.drawable.ic_page_check_default_24,
@@ -337,7 +332,7 @@ private fun AgainRangeView(
                 modifier = Modifier.weight(1f),
                 onValueChange = {
                 },
-                onFocusChange = {  },
+                onFocusChange = { },
                 focusManager = focusManager,
             )
 
@@ -351,8 +346,8 @@ private fun AgainRangeView(
                 modifier = Modifier.weight(1f),
                 onValueChange = {
                 },
-                onFocusChange = {  },
-                focusManager = focusManager
+                onFocusChange = { },
+                focusManager = focusManager,
             )
         }
     }
@@ -367,16 +362,16 @@ private fun AgainRangeView(
         },
         modifier = Modifier.fillMaxWidth(),
         label = "다시 쪼개기",
-        isEnable = isSplitBtnEnable
+        isEnable = isSplitBtnEnable,
     )
 }
 
 @Preview(showSystemUi = true)
 @Composable
-fun AddStudyScreenPreview(){
+fun AddStudyScreenPreview() {
     AddStudyScreen(
         padding = PaddingValues(),
         selectedDate = Date("2025", "1", "21"),
-        pieceNumber = 3
+        pieceNumber = 3,
     )
 }

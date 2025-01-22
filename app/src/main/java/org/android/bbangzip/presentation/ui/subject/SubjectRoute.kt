@@ -8,6 +8,6 @@ fun SubjectRoute(
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     SubjectScreen(
-        navigateAddStudy = navigateAddStudy
+        navigateAddStudy = navigateAddStudy,
     )
 }

@@ -59,18 +59,19 @@ fun SplitStudyScreen(
     isSaveEnable: Boolean = true,
     startPageList: List<String> = emptyList(),
     endPageList: List<String> = emptyList(),
-    seletedDateList: List<Date> = listOf(
-        Date("2025", "1", "21"),
-        Date("2025", "1", "21"),
-        Date("2025", "1", "21"),
-        Date("2025", "1", "21"),
-        Date("2025", "1", "21"),
-        Date("2025", "1", "21")
-    ),
-    onChangeStartPage: (Int, String) -> Unit = {_, _ ->},
-    onChangeEndPage: (Int, String) -> Unit = {_, _ ->},
-    onChangeStartPageFocused: (Int,Boolean) -> Unit = {_, _ ->},
-    onChangeEndPageFocused: (Int,Boolean) -> Unit = {_, _ ->},
+    seletedDateList: List<Date> =
+        listOf(
+            Date("2025", "1", "21"),
+            Date("2025", "1", "21"),
+            Date("2025", "1", "21"),
+            Date("2025", "1", "21"),
+            Date("2025", "1", "21"),
+            Date("2025", "1", "21"),
+        ),
+    onChangeStartPage: (Int, String) -> Unit = { _, _ -> },
+    onChangeEndPage: (Int, String) -> Unit = { _, _ -> },
+    onChangeStartPageFocused: (Int, Boolean) -> Unit = { _, _ -> },
+    onChangeEndPageFocused: (Int, Boolean) -> Unit = { _, _ -> },
     onChangeSelectedDate: (Date) -> Unit = {},
     onClickDatePicker: (Int) -> Unit = {},
     onClickConfirmDateBtn: () -> Unit = {},
@@ -90,17 +91,17 @@ fun SplitStudyScreen(
     Timber.d("examdate : $examDate")
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .addFocusCleaner(focusManager)
-            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .addFocusCleaner(focusManager)
+                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
-
-
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize(),
-            state = scrollState
+            modifier =
+                Modifier
+                    .fillMaxSize(),
+            state = scrollState,
         ) {
             stickyHeader {
                 BbangZipBaseTopBar(
@@ -111,38 +112,40 @@ fun SplitStudyScreen(
                 )
             }
             item {
-                Spacer(modifier= Modifier.height(24.dp))
+                Spacer(modifier = Modifier.height(24.dp))
 
                 Box(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
-                        .applyShadows(
-                            shadowType = BbangZipShadowType.EMPHASIZE,
-                            shape = RoundedCornerShape(24.dp)
-                        )
-                ){
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth()
+                            .applyShadows(
+                                shadowType = BbangZipShadowType.EMPHASIZE,
+                                shape = RoundedCornerShape(24.dp),
+                            ),
+                ) {
                     Box(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .background(
-                                color = BbangZipTheme.colors.backgroundAlternative_F5F5F5,
-                                shape = RoundedCornerShape(24.dp)
-                            )
-                            .padding(16.dp)
-                    ){
-                        Column(){
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .background(
+                                    color = BbangZipTheme.colors.backgroundAlternative_F5F5F5,
+                                    shape = RoundedCornerShape(24.dp),
+                                )
+                                .padding(16.dp),
+                    ) {
+                        Column {
                             Text(
                                 text = "학습 내용",
                                 style = BbangZipTheme.typography.headline2Bold,
-                                color = BbangZipTheme.colors.labelNormal_282119
+                                color = BbangZipTheme.colors.labelNormal_282119,
                             )
 
                             Spacer(modifier = Modifier.height(8.dp))
 
                             Row(
-                                modifier = Modifier.fillMaxWidth()
-                            ){
+                                modifier = Modifier.fillMaxWidth(),
+                            ) {
                                 BbangZipChip(
                                     backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
                                     text = startPage,
@@ -153,7 +156,7 @@ fun SplitStudyScreen(
                                 Text(
                                     text = "까지",
                                     style = BbangZipTheme.typography.label1Bold,
-                                    color = BbangZipTheme.colors.labelAlternative_282119_61
+                                    color = BbangZipTheme.colors.labelAlternative_282119_61,
                                 )
 
                                 Spacer(modifier = Modifier.width(8.dp))
@@ -168,7 +171,7 @@ fun SplitStudyScreen(
                                 Text(
                                     text = "까지",
                                     style = BbangZipTheme.typography.label1Bold,
-                                    color = BbangZipTheme.colors.labelAlternative_282119_61
+                                    color = BbangZipTheme.colors.labelAlternative_282119_61,
                                 )
                             }
                         }
@@ -176,37 +179,39 @@ fun SplitStudyScreen(
                 }
             }
 
-            item{
+            item {
                 Spacer(modifier = Modifier.height(32.dp))
 
                 HorizontalDivider(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth(),
                 )
             }
 
             items(
-                count =  pieceNumber
-            ){ index ->
+                count = pieceNumber,
+            ) { index ->
 
                 Column(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
+                    modifier =
+                        Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth(),
                 ) {
                     Spacer(modifier = Modifier.height(32.dp))
 
                     Text(
                         text = "${index + 1}조각",
                         style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119
+                        color = BbangZipTheme.colors.labelNormal_282119,
                     )
 
                     Spacer(modifier = Modifier.height(16.dp))
 
                     Row(
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         BbangZipSimpleTextField(
                             leadingIcon = R.drawable.ic_page_check_default_24,
@@ -215,7 +220,7 @@ fun SplitStudyScreen(
                             value = startPageList[index],
                             modifier = Modifier.weight(1f),
                             onValueChange = {
-                                onChangeStartPage(index,it)
+                                onChangeStartPage(index, it)
                             },
                             onFocusChange = { onChangeStartPageFocused(index, it) },
                             focusManager = focusManager,
@@ -233,7 +238,7 @@ fun SplitStudyScreen(
                                 onChangeEndPage(index, it)
                             },
                             onFocusChange = { onChangeEndPageFocused(index, it) },
-                            focusManager = focusManager
+                            focusManager = focusManager,
                         )
                     }
 
@@ -247,7 +252,7 @@ fun SplitStudyScreen(
                         },
                         modifier = Modifier.fillMaxWidth(),
                         leadingIcon = R.drawable.ic_page_check_default_24,
-                        label = "${seletedDateList[index+1].year}년 ${seletedDateList[index+1].month}월 ${seletedDateList[index+1].day}일 까지",
+                        label = "${seletedDateList[index + 1].year}년 ${seletedDateList[index + 1].month}월 ${seletedDateList[index + 1].day}일 까지",
                     )
                 }
             }
@@ -269,26 +274,26 @@ fun SplitStudyScreen(
                         endPage = endPage,
                         startPageList = startPageList,
                         endPageList = endPageList,
-                        deadLineList = seletedDateList.map{ dateToString(it) },
-                        addStudyViewType = AddStudyViewType.AGAIN
-                    )
+                        deadLineList = seletedDateList.map { dateToString(it) },
+                        addStudyViewType = AddStudyViewType.AGAIN,
+                    ),
                 )
             },
-            modifier = Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-            ,
+            modifier =
+                Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
             label = stringResource(R.string.btn_save_label),
             trailingIcon = R.drawable.ic_plus_thick_24,
-            isEnable = isSaveEnable
+            isEnable = isSaveEnable,
         )
     }
 
     BbangZipDatePickerBottomSheet(
         isBottomSheetVisible = datePickerBottomSheetState,
         bottomSheetTitle = stringResource(R.string.add_study_date_picker_bottomsheet_title),
-        selectedDate = seletedDateList[selectedIndex+1],
+        selectedDate = seletedDateList[selectedIndex + 1],
         onSelectedDateChanged = onChangeSelectedDate,
         onClickInputButton = onClickConfirmDateBtn,
         onDismissRequest = onCloseBottomSheet,
@@ -299,7 +304,6 @@ fun SplitStudyScreen(
 @Composable
 fun SplitStudyScreenPreview() {
     SplitStudyScreen(
-        subjectName = "빵집"
+        subjectName = "빵집",
     )
 }
-

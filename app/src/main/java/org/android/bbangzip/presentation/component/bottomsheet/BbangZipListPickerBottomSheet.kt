@@ -21,7 +21,6 @@ import androidx.compose.ui.unit.dp
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
-import timber.log.Timber
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -55,8 +54,8 @@ fun BbangZipListPickerBottomSheet(
                                 .fillMaxWidth()
                                 .applyFilterOnClick(
                                     radius = 16.dp,
-                                    isDisabled = false
-                                ) { onSelectedItemChanged((index+1))}
+                                    isDisabled = false,
+                                ) { onSelectedItemChanged((index + 1)) }
                                 .padding(vertical = 8.dp),
                         textAlign = TextAlign.Center,
                         style = BbangZipTheme.typography.body1Bold,

@@ -42,13 +42,12 @@ fun SubjectScreen(
                         startPageList = listOf(),
                         endPageList = listOf(),
                         deadLineList = listOf(),
-                        addStudyViewType = AddStudyViewType.DEFAULT
-                    )
+                        addStudyViewType = AddStudyViewType.DEFAULT,
+                    ),
                 )
             },
-            ){Text("눌러")}
+        ) { Text("눌러") }
     }
-
 }
 
 @Preview

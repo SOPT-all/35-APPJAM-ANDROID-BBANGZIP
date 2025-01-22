@@ -15,13 +15,12 @@ fun SplitStudyRoute(
     viewModel: SplitStudyViewModel = hiltViewModel(),
     addStudyData: AddStudyData,
     onBackPress: () -> Unit = {},
-    navigateAddStudy: (SplitStudyData) -> Unit = {}
-){
-    LaunchedEffect(Unit){
+    navigateAddStudy: (SplitStudyData) -> Unit = {},
+) {
+    LaunchedEffect(Unit) {
         Timber.tag("SplitStudy 진입").d("$addStudyData")
         viewModel.setEvent(SplitStudyContract.SplitStudyEvent.Initialize(addStudyData = addStudyData))
         Timber.tag("SplitStudy 진입").d("${viewModel.uiState}addStudyData")
-
     }
 
     LaunchedEffect(viewModel.uiSideEffect) {
@@ -58,16 +57,16 @@ fun SplitStudyRoute(
             onBackBtnClick = {
                 viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickBackIcon)
             },
-            onChangeStartPage = {index, value ->
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPage(index,value))
+            onChangeStartPage = { index, value ->
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPage(index, value))
             },
-            onChangeEndPage = {index, value ->
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeEndPage(index,value))
+            onChangeEndPage = { index, value ->
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeEndPage(index, value))
             },
-            onChangeStartPageFocused = {index, value ->
+            onChangeStartPageFocused = { index, value ->
                 viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPageFocused(index, value))
             },
-            onChangeEndPageFocused = {index, value ->
+            onChangeEndPageFocused = { index, value ->
                 viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeEndPageFocused(index, value))
             },
             onClickDatePicker = {

@@ -24,7 +24,7 @@ class SplitStudyContract {
         val startPageFocusedStateList: List<Boolean> = List(pieceNumber) { false },
         val startPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
         val endPageList: List<String> = List(pieceNumber) { "" },
-        val endPageFocusedStateList: List<Boolean> = List(pieceNumber) { false},
+        val endPageFocusedStateList: List<Boolean> = List(pieceNumber) { false },
         val endPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
         val dateList: List<Date> = List(pieceNumber) { Date("2025", "1", "21") },
         val datePickerBottomSheetState: Boolean = false,
@@ -68,7 +68,7 @@ class SplitStudyContract {
 
         data object UpdateStartPageInputState : SplitStudyReduce
 
-        data class UpdateEndPage(val index: Int,val endPage: String) : SplitStudyReduce
+        data class UpdateEndPage(val index: Int, val endPage: String) : SplitStudyReduce
 
         data class UpdateEndPageFocusedState(val index: Int, val endPageFocusedState: Boolean) : SplitStudyReduce
 
@@ -86,13 +86,13 @@ class SplitStudyContract {
 
         data class UpdateEndPageToString(val index: Int) : SplitStudyReduce
 
-        data object UpdatePieceNumber: SplitStudyReduce
+        data object UpdatePieceNumber : SplitStudyReduce
 
-        data class UpdateSeletedIndex(val index: Int): SplitStudyReduce
+        data class UpdateSeletedIndex(val index: Int) : SplitStudyReduce
 
-        data object UpdateSelectedDateList: SplitStudyReduce
+        data object UpdateSelectedDateList : SplitStudyReduce
 
-        data object UpdateState: SplitStudyReduce
+        data object UpdateState : SplitStudyReduce
     }
 
     sealed interface SplitStudySideEffect : BaseContract.SideEffect {

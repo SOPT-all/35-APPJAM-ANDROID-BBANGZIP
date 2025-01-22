@@ -29,7 +29,6 @@ import androidx.compose.ui.input.key.KeyEventType
 import androidx.compose.ui.input.key.key
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -97,7 +96,8 @@ fun BbangZipSimpleTextField(
                         .onFocusChanged { focusState ->
                             isFocused = focusState.isFocused
                             onFocusChange(focusState.isFocused)
-                            Timber.d("[TextField] onFocusChange -> $isFocused") }
+                            Timber.d("[TextField] onFocusChange -> $isFocused")
+                        }
                         .onKeyEvent { keyEvent ->
                             if (keyEvent.key == Key.Enter && keyEvent.type == KeyEventType.KeyUp) {
                                 focusManager.clearFocus(force = true)
@@ -106,18 +106,18 @@ fun BbangZipSimpleTextField(
                             } else {
                                 false
                             }
-                        }
-                ,
+                        },
                 value = value,
                 onValueChange = { input ->
                     val filteredInput = input.filter { it.isDigit() }
                     if (filteredInput.length <= 3) onValueChange(filteredInput)
-                                },
+                },
                 keyboardActions = keyboardActions,
-                keyboardOptions = keyboardOptions.copy(
-                    imeAction = ImeAction.Done,
-                    keyboardType = KeyboardType.Number
-                ),
+                keyboardOptions =
+                    keyboardOptions.copy(
+                        imeAction = ImeAction.Done,
+                        keyboardType = KeyboardType.Number,
+                    ),
                 cursorBrush = SolidColor(BbangZipTheme.colors.labelNormal_282119),
                 singleLine = true,
                 textStyle = BbangZipTheme.typography.label1Medium,
@@ -183,7 +183,7 @@ fun BbangZipSimpleTextFieldPreview() {
                 text = newValue
                 validateText(text = newValue)
             },
-            focusManager = LocalFocusManager.current
+            focusManager = LocalFocusManager.current,
         )
     }
 }
