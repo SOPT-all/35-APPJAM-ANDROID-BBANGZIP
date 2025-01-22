@@ -100,6 +100,13 @@
     <string name="todo_add_count">개 / 총 %s개</string>
     <string name="todo_add_plus_button_label">오늘 할 공부 추가하기</string>
 
+    <!-- badge -->
+    <string name="badge_category_title">%s 사장님\n열심히 모은 배지에요</string>
+    <string name="badge_detail_achievement">달성 조건</string>
+    <string name="badge_detail_reward">리워드</string>
+    <string name="badge_category_top_bar_title">뱃지 도감</string>
+    <string name="badge_bottom_sheet_reward">%sP</string>
+
     <!-- login -->
     <string name="login_title">제 과제 빵점 사장님은\n이번 학기 백점!</string>
     <string name="login_ballon_label">5초 만에 빵집 사장님 되기</string>
