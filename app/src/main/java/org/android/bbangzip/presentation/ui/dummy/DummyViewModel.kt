@@ -75,8 +75,8 @@ class DummyViewModel
                     updateState(
                         DummyContract.DummyReduce.UpdateDummy(
                             Dummy(
-                                dummyA = data.dummyName,
-                                dummyB = data.dummyName + "이런 식으로 넣어요",
+                                dummyA = "data.dummyName",
+                                dummyB = "data.dummyName" + "이런 식으로 넣어요",
                             ),
                         ),
                     )
@@ -90,8 +90,8 @@ class DummyViewModel
                 updateState(
                     DummyContract.DummyReduce.UpdateDummy(
                         Dummy(
-                            dummyA = data.dummyName,
-                            dummyB = data.dummyName + "이런 식으로 넣어요",
+                            dummyA = "data!!dummyName,",
+                            dummyB = data!!.dummyName + "이런 식으로 넣어요",
                         ),
                     ),
                 )

@@ -157,6 +157,10 @@ class TodoAddPendingContract {
             val todoFilterBottomSheetState: Boolean,
         ) : TodoAddPendingReduce
 
+        data class UpdateToDoList(
+            val todoList: List<ToDoCardModel>,
+        ) : TodoAddPendingReduce
+
         data class UpdateFilterType(
             val selectedFilter: ToDoFilterType,
         ) : TodoAddPendingReduce
