@@ -41,8 +41,6 @@ fun LoginScreen(
     pagerState: PagerState,
     onClickKakaoLoginBtn: () -> Unit = {},
 ) {
-    val context = LocalContext.current
-
     Box(
         modifier =
             Modifier

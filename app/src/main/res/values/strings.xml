@@ -114,6 +114,7 @@
     <string name="my_service_terms">서비스 이용약관</string>
     <string name="my_logout">로그아웃</string>
     <string name="my_withdraw">계정 탈퇴</string>
+    <string name="my_bbangzip">내 제과제빵점</string>
 
     <!-- component- bottom sheet -->
     <string name="logout_title">로그아웃 하시겠어요?</string>
