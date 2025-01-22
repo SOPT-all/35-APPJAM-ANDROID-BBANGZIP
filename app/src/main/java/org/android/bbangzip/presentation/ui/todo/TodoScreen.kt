@@ -227,7 +227,7 @@ fun TodoScreen(
                 }
             }
         }
-        if (todoState.screenType == ToDoScreenType.DELETE) {
+        if (todoState.screenType == ToDoScreenType.DELETE && todoState.selectedItemList.isNotEmpty()) {
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,

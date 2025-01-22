@@ -8,7 +8,7 @@ import org.android.bbangzip.domain.model.BadgeCategoryListEntity
 @Serializable
 data class ResponseBadgesDto(
     @SerialName("badgeList")
-    val badgeList: List<Badge>,
+    val badgeList: List<BadgeDetail>,
 ) {
     fun toBadgeCategoryList(): BadgeCategoryListEntity =
         badgeList.map { data ->
@@ -19,7 +19,7 @@ data class ResponseBadgesDto(
 }
 
 @Serializable
-data class Badge(
+data class BadgeDetail(
     @SerialName("badgeCategory")
     val badgeCategory: String,
     @SerialName("badgeImage")
