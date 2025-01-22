@@ -1,11 +1,6 @@
 package org.android.bbangzip.data.repositoryImpl
 
-import org.android.bbangzip.data.datasource.remote.AssignToTodayRemoteDataSource
-import org.android.bbangzip.data.datasource.remote.HideRemoteDataSource
-import org.android.bbangzip.data.datasource.remote.MarkDoneRemoteDataStore
-import org.android.bbangzip.data.datasource.remote.MarkUnDoneRemoteDataStore
-import org.android.bbangzip.data.datasource.remote.TodayOrdersRemoteDataSource
-import org.android.bbangzip.data.datasource.remote.TodoRemoteDataSource
+import org.android.bbangzip.data.datasource.remote.PieceRemoteDataSource
 import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
 import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.model.BadgeCardListEntity
@@ -16,12 +11,7 @@ import javax.inject.Inject
 class PieceRepositoryImpl
     @Inject
     constructor(
-        private val todayOrdersRemoteDateSource: TodayOrdersRemoteDataSource,
-        private val todoRemoteDataSource: TodoRemoteDataSource,
-        private val hideRemoteDataSource: HideRemoteDataSource,
-        private val assignToTodayRemoteDataSource: AssignToTodayRemoteDataSource,
-        private val markDoneRemoteDataStore: MarkDoneRemoteDataStore,
-        private val markUnDoneRemoteDataStore: MarkUnDoneRemoteDataStore,
+        private val pieceRemoteDataSource: PieceRemoteDataSource
     ) : PieceRepository {
         override suspend fun getTodoInfo(
             area: String,
@@ -31,7 +21,7 @@ class PieceRepositoryImpl
         ): Result<ToDoInfoEntity> =
             runCatching {
                 val response =
-                    todayOrdersRemoteDateSource.getTodoInfo(
+                    pieceRemoteDataSource.getTodoInfo(
                         area = area,
                         year = year,
                         semester = semester,
@@ -50,7 +40,7 @@ class PieceRepositoryImpl
         ): Result<ToDoInfoEntity> =
             runCatching {
                 val response =
-                    todoRemoteDataSource.getAddTodolist(
+                    pieceRemoteDataSource.getAddTodolist(
                         year = year,
                         semester = semester,
                         sortOption = sortOption,
@@ -64,7 +54,7 @@ class PieceRepositoryImpl
         override suspend fun postDeletedItemList(requestPieceIdDto: RequestPieceIdDto): Result<Unit> =
             runCatching {
                 val response =
-                    hideRemoteDataSource.postDeletedItemList(
+                    pieceRemoteDataSource.postDeletedItemList(
                         requestPieceIdDto = requestPieceIdDto,
                     )
                 response
@@ -73,7 +63,7 @@ class PieceRepositoryImpl
         override suspend fun postAddTodoItemList(requestPieceIdDto: RequestPieceIdDto): Result<Unit> =
             runCatching {
                 val response =
-                    assignToTodayRemoteDataSource.postDeletedItemList(
+                    pieceRemoteDataSource.postAddTodoItemList(
                         requestPieceIdDto = requestPieceIdDto,
                     )
                 response
@@ -85,7 +75,7 @@ class PieceRepositoryImpl
         ): Result<BadgeCardListEntity> =
             runCatching {
                 val response =
-                    markDoneRemoteDataStore.postCompleteCardId(
+                    pieceRemoteDataSource.postCompleteCardId(
                         pieceId = pieceId,
                         requestMarkDoneDto = requestMarkDoneDto,
                     )
@@ -99,7 +89,7 @@ class PieceRepositoryImpl
         ): Result<Unit> =
             runCatching {
                 val response =
-                    markUnDoneRemoteDataStore.postUnCompleteCardId(
+                    pieceRemoteDataSource.postUnCompleteCardId(
                         pieceId = pieceId,
                         requestMarkDoneDto = requestMarkDoneDto,
                     )
