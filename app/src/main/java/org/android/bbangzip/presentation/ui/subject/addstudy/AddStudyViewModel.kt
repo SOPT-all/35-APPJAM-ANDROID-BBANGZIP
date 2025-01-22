@@ -22,7 +22,6 @@ class AddStudyViewModel
     ) : BaseViewModel<AddStudyContract.AddStudyEvent, AddStudyContract.AddStudyState, AddStudyReduce, AddStudyContract.AddStudySideEffect>(
             savedStateHandle = savedStateHandle,
         ) {
-
         override fun createInitialState(savedState: Parcelable?): AddStudyContract.AddStudyState {
             return savedState as? AddStudyContract.AddStudyState ?: AddStudyContract.AddStudyState()
         }
