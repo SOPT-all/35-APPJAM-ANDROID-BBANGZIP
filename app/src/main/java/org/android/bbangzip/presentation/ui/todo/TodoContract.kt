@@ -124,7 +124,7 @@ class TodoContract {
                     cardState = BbangZipCardState.COMPLETE,
                 ),
             ),
-        val pendingCount: Int = 10,
+        val pendingCount: Int = 1,
         val remainingStudyCount: Int = 5,
         val completeCount: Int = 5,
         val todoFilterBottomSheetState: Boolean = false,

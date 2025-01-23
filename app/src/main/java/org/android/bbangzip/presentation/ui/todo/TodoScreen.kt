@@ -93,7 +93,7 @@ fun TodoScreen(
                 item {
                     Column(modifier = modifier.padding(horizontal = 16.dp)) {
                         Image(
-                            painter = painterResource (id = R.drawable.img_empty_view),
+                            painter = painterResource(id = R.drawable.img_empty_view),
                             contentDescription = null,
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -284,80 +284,102 @@ fun DateMessageCard(
             .fillMaxWidth(),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            Column(
+            Box(
                 Modifier
                     .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
                     .fillMaxWidth()
                     .height(LocalConfiguration.current.screenHeightDp.dp * (172f / 764f))
-                    .padding(start = 24.dp),
             ) {
-                Spacer(modifier = Modifier.height(44.dp))
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(start = 8.dp),
-                ) {
-                    Text(
-                        text = todayDate[0].toInt().toString(),
-                        style = BbangZipTheme.typography.title3Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
+                if (pendingCount == 0) {
+                    Image(
+                        painter = painterResource(R.drawable.img_pending_study_zero),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .aspectRatio(360f / 172f)
                     )
-
-                    Text(
-                        text = stringResource(R.string.todo_month_text),
-                        style = BbangZipTheme.typography.headline1Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61,
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Text(
-                        text = todayDate[1].toInt().toString(),
-                        style = BbangZipTheme.typography.title3Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
-                    )
-
-                    Text(
-                        text = stringResource(R.string.todo_day_text),
-                        style = BbangZipTheme.typography.headline1Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61,
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Text(
-                        text = todayDate[2],
-                        style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
+                }else{
+                    Image(
+                        painter = painterResource(R.drawable.img_no_peding_study),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .aspectRatio(360f / 172f)
                     )
                 }
+                Column(
+                    modifier = Modifier.padding(start = 24.dp),
+                    ) {
+                    Spacer(modifier = Modifier.height(44.dp))
 
-                Spacer(modifier = modifier.height(8.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        if(pendingCount != 0) Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = todayDate[0].toInt().toString(),
+                            style = BbangZipTheme.typography.title3Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119,
+                        )
 
-                if (pendingCount == 0) {
-                    Text(
-                        text = stringResource(R.string.todo_pending_count_text),
-                        style = BbangZipTheme.typography.headline1Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61,
-                    )
+                        Text(
+                            text = stringResource(R.string.todo_month_text),
+                            style = BbangZipTheme.typography.headline1Bold,
+                            color = BbangZipTheme.colors.labelAlternative_282119_61,
+                        )
 
-                    Spacer(modifier = Modifier.height(62.dp))
-                } else {
-                    BbangZipButton(
-                        bbangZipButtonType = BbangZipButtonType.Outlined,
-                        bbangZipButtonSize = BbangZipButtonSize.Medium,
-                        onClick = { onAddPendingStudyButtonClicked() },
-                        label = String.format(stringResource(R.string.btn_todo_overdue_label), pendingCount),
-                        trailingIcon = R.drawable.ic_chevronright_thick_small_24,
-                        modifier = Modifier.wrapContentSize(),
-                    )
+                        Spacer(modifier = Modifier.width(8.dp))
 
-                    Spacer(modifier = Modifier.height(48.dp))
+                        Text(
+                            text = todayDate[1].toInt().toString(),
+                            style = BbangZipTheme.typography.title3Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119,
+                        )
+
+                        Text(
+                            text = stringResource(R.string.todo_day_text),
+                            style = BbangZipTheme.typography.headline1Bold,
+                            color = BbangZipTheme.colors.labelAlternative_282119_61,
+                        )
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        Text(
+                            text = todayDate[2],
+                            style = BbangZipTheme.typography.body1Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119,
+                        )
+                    }
+
+                    Spacer(modifier = modifier.height(8.dp))
+
+                    if (pendingCount == 0) {
+                        Text(
+                            text = stringResource(R.string.todo_pending_count_text),
+                            style = BbangZipTheme.typography.headline1Bold,
+                            color = BbangZipTheme.colors.labelAlternative_282119_61,
+                        )
+
+                        Spacer(modifier = Modifier.height(62.dp))
+                    } else {
+                        BbangZipButton(
+                            bbangZipButtonType = BbangZipButtonType.Outlined,
+                            bbangZipButtonSize = BbangZipButtonSize.Medium,
+                            onClick = { onAddPendingStudyButtonClicked() },
+                            label = String.format(stringResource(R.string.btn_todo_overdue_label), pendingCount),
+                            trailingIcon = R.drawable.ic_chevronright_thick_small_24,
+                            modifier = Modifier.wrapContentSize(),
+                        )
+
+                        Spacer(modifier = Modifier.height(48.dp))
+                    }
                 }
             }
 
             Spacer(modifier = Modifier.height(24.dp))
         }
+
+
 
         TopTailBalloon(
             text = stringResource(R.string.todo_top_tail_balloon_text),
@@ -749,7 +771,7 @@ fun TodoScreenMockPreview() {
             ),
             TodoContract.TodoState(
                 todoList = mockToDoList,
-                pendingCount = 0,
+                pendingCount = 2,
                 remainingStudyCount = 2,
                 completeCount = 2,
                 screenType = ToDoScreenType.EMPTY,
