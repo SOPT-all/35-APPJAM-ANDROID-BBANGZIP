@@ -89,6 +89,7 @@ fun MainNavHost(
 
             subjectNavGraph(
                 navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
+                padding = padding,
             )
 
             addStudyNavGraph(
