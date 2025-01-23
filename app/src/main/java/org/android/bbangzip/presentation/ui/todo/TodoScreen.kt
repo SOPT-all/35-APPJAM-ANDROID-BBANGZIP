@@ -298,7 +298,7 @@ fun DateMessageCard(
                             .fillMaxSize()
                             .aspectRatio(360f / 172f)
                     )
-                }else{
+                } else {
                     Image(
                         painter = painterResource(R.drawable.img_no_peding_study),
                         contentDescription = null,
@@ -309,13 +309,13 @@ fun DateMessageCard(
                 }
                 Column(
                     modifier = Modifier.padding(start = 24.dp),
-                    ) {
+                ) {
                     Spacer(modifier = Modifier.height(44.dp))
 
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
-                        if(pendingCount != 0) Spacer(modifier = Modifier.width(8.dp))
+                        if (pendingCount != 0) Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = todayDate[0].toInt().toString(),
                             style = BbangZipTheme.typography.title3Bold,
@@ -490,22 +490,6 @@ fun DeleteAndFilterIcons(
     }
 }
 
-@Composable
-fun EmptyView(
-    modifier: Modifier = Modifier,
-) {
-    Box(
-        modifier =
-        modifier
-            .fillMaxWidth()
-            .height(328.dp)
-            .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(text = "Empty View")
-    }
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BbangZipToDoFilterPickerBottomSheet(
@@ -536,6 +520,7 @@ fun BbangZipToDoFilterPickerBottomSheet(
                         modifier =
                         Modifier
                             .fillMaxWidth()
+
                             .applyFilterOnClick { onSelectedItemChanged(item) }
                             .background(
                                 color = if (item != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
