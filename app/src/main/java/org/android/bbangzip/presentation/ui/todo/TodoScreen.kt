@@ -290,11 +290,11 @@ fun DateMessageCard(
                 Modifier
                     .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
                     .fillMaxWidth()
-                    .height(LocalConfiguration.current.screenHeightDp.dp * (172f / 764f))
+                    .height(LocalConfiguration.current.screenHeightDp.dp * (172f / 800f))
             ) {
                 if (pendingCount == 0) {
                     Image(
-                        painter = painterResource(R.drawable.img_pending_study_zero),
+                        painter = painterResource(R.drawable.img_pending_study_zero_header),
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxSize()
