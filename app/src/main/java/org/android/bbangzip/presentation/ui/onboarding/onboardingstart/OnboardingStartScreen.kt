@@ -39,7 +39,7 @@ fun OnboardingStartScreen(
             modifier =
             Modifier
                 .fillMaxWidth()
-                .padding(top = (LocalConfiguration.current.screenHeightDp * 0.184).dp),
+                .padding(top = (LocalConfiguration.current.screenHeightDp * 0.15).dp),
             style = BbangZipTheme.typography.title2Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
         )
