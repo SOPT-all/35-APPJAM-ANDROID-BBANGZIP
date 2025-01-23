@@ -44,6 +44,10 @@ class SubjectViewModel
                 is SubjectContract.SubjectEvent.OnClickCancleIcon -> {
                     updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
                 }
+
+                is SubjectContract.SubjectEvent.OnClickStudyCard -> {
+                    setSideEffect(SubjectContract.SubjectSideEffect.NavigateToSubjectDetail(event.subjectId))
+                }
             }
         }
 

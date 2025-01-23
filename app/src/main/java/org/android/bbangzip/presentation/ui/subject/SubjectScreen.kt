@@ -51,6 +51,7 @@ fun SubjectScreen(
     onClickTrashBtn: () -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
     onClickDeleteModeCard: (Int) -> Unit = {},
+    onClickStudyCard: (Int) -> Unit = {},
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
@@ -61,28 +62,28 @@ fun SubjectScreen(
     Box {
         LazyColumn(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+            Modifier
+                .fillMaxSize()
+                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
         ) {
             item {
                 Box(
                     modifier =
-                        modifier
-                            .fillMaxWidth()
-                            .height(backgroundHeight.dp)
-                            .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
+                    modifier
+                        .fillMaxWidth()
+                        .height(backgroundHeight.dp)
+                        .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
                 ) {
                     Row(
                         modifier =
-                            modifier
-                                .padding(start = 4.dp, top = 18.dp)
-                                .applyFilterOnClick(
-                                    radius = 16.dp,
-                                    isDisabled = false,
-                                    onClick = { },
-                                )
-                                .padding(vertical = 8.dp, horizontal = 20.dp),
+                        modifier
+                            .padding(start = 4.dp, top = 18.dp)
+                            .applyFilterOnClick(
+                                radius = 16.dp,
+                                isDisabled = false,
+                                onClick = { },
+                            )
+                            .padding(vertical = 8.dp, horizontal = 20.dp),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
@@ -97,8 +98,8 @@ fun SubjectScreen(
                             imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevrondown_small_24),
                             contentDescription = null,
                             modifier =
-                                Modifier
-                                    .size(size = 20.dp),
+                            Modifier
+                                .size(size = 20.dp),
                         )
                     }
                 }
@@ -117,6 +118,7 @@ fun SubjectScreen(
                             modifier = modifier,
                             subjects = subjects,
                             onTrashIconClick = onClickTrashBtn,
+                            onClickStudyCard = onClickStudyCard,
                         )
 
                     CardViewType.DELETE ->
@@ -135,9 +137,9 @@ fun SubjectScreen(
         if (cardViewType == CardViewType.DELETE) {
             Box(
                 modifier =
-                    Modifier
-                        .align(alignment = Alignment.BottomCenter)
-                        .padding(bottom = 80.dp, start = 16.dp, end = 16.dp),
+                Modifier
+                    .align(alignment = Alignment.BottomCenter)
+                    .padding(bottom = 80.dp, start = 16.dp, end = 16.dp),
             ) {
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
@@ -158,6 +160,7 @@ private fun DefaultCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     onTrashIconClick: () -> Unit = {},
+    onClickStudyCard: (Int) -> Unit = {}
 ) {
     Column {
         Row(
@@ -176,14 +179,14 @@ private fun DefaultCardView(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_trash_default_24),
                 contentDescription = null,
                 modifier =
-                    modifier
-                        .applyFilterOnClick(
-                            radius = 20.dp,
-                            isDisabled = false,
-                        ) {
-                            onTrashIconClick()
-                        }
-                        .padding(8.dp),
+                modifier
+                    .applyFilterOnClick(
+                        radius = 20.dp,
+                        isDisabled = false,
+                    ) {
+                        onTrashIconClick()
+                    }
+                    .padding(8.dp),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
@@ -195,33 +198,37 @@ private fun DefaultCardView(
                 if (i == (subjects.size + 1) / 2 - 1) {
                     Row(
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                ),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                            ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         SubjectCard(
                             data = subjects.last(),
+                            onClick = { onClickStudyCard(it) },
                         )
                         AddSubjectCard()
                     }
                 } else {
                     Row(
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = 16.dp,
-                                ),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                bottom = 16.dp,
+                            ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         for (j in i * 2 until (i + 1) * 2) {
-                            SubjectCard(data = subjects[j])
+                            SubjectCard(
+                                data = subjects[j],
+                                onClick = { onClickStudyCard(it) },
+                            )
                         }
                     }
                 }
@@ -231,12 +238,12 @@ private fun DefaultCardView(
                 if (i == (subjects.size + 1) / 2) {
                     Row(
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                ),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                            ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         AddSubjectCard()
@@ -244,17 +251,20 @@ private fun DefaultCardView(
                 } else {
                     Row(
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = 16.dp,
-                                ),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                bottom = 16.dp,
+                            ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         for (j in i * 2 until (i + 1) * 2) {
-                            SubjectCard(data = subjects[j])
+                            SubjectCard(
+                                data = subjects[j],
+                                onClick = { onClickStudyCard(it) },
+                            )
                         }
                     }
                 }
@@ -290,14 +300,14 @@ private fun DeleteCardView(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_x_small_24),
                     contentDescription = null,
                     modifier =
-                        modifier
-                            .applyFilterOnClick(
-                                radius = 20.dp,
-                                isDisabled = false,
-                            ) {
-                                onCancleClick()
-                            }
-                            .padding(8.dp),
+                    modifier
+                        .applyFilterOnClick(
+                            radius = 20.dp,
+                            isDisabled = false,
+                        ) {
+                            onCancleClick()
+                        }
+                        .padding(8.dp),
                     tint = BbangZipTheme.colors.labelAlternative_282119_61,
                 )
             }
@@ -309,12 +319,12 @@ private fun DeleteCardView(
                     if (i == (subjects.size + 1) / 2 - 1) {
                         Row(
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = 16.dp,
-                                        end = 16.dp,
-                                    ),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                ),
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
                             SubjectCard(
@@ -327,13 +337,13 @@ private fun DeleteCardView(
                     } else {
                         Row(
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = 16.dp,
-                                        end = 16.dp,
-                                        bottom = 16.dp,
-                                    ),
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(
+                                    start = 16.dp,
+                                    end = 16.dp,
+                                    bottom = 16.dp,
+                                ),
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
                             for (j in i * 2 until (i + 1) * 2) {
@@ -351,13 +361,13 @@ private fun DeleteCardView(
                 for (i in 0 until subjects.size / 2 + 1) {
                     Row(
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = 16.dp,
-                                ),
+                        Modifier
+                            .fillMaxWidth()
+                            .padding(
+                                start = 16.dp,
+                                end = 16.dp,
+                                bottom = 16.dp,
+                            ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         for (j in i * 2 until (i + 1) * 2) {
@@ -387,10 +397,10 @@ private fun EmptySubjectCardView(
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
         Box(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(328.dp)
-                    .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
+            Modifier
+                .fillMaxWidth()
+                .height(328.dp)
+                .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
             contentAlignment = Alignment.Center,
         ) {
             Text(text = stringResource(R.string.empty_view_text))
@@ -415,48 +425,48 @@ private fun SubjectScreenPreview() {
     BBANGZIPTheme {
         SubjectScreen(
             subjects =
-                immutableListOf(
-                    SubjectCardModel(
-                        subjectName = "경제통계학",
-                        examName = "",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 2,
-                        examRemainingDays = 1,
-                    ),
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 3,
-                        examRemainingDays = 1,
-                    ),
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 4,
-                        examRemainingDays = 1,
-                    ),
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 5,
-                        examRemainingDays = 1,
-                    ),
+            immutableListOf(
+                SubjectCardModel(
+                    subjectName = "경제통계학",
+                    examName = "",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
                 ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 2,
+                    examRemainingDays = 1,
+                ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 3,
+                    examRemainingDays = 1,
+                ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 4,
+                    examRemainingDays = 1,
+                ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 5,
+                    examRemainingDays = 1,
+                ),
+            ),
             cardViewType = CardViewType.DEFAULT,
             deletedSet = setOf(),
             padding = PaddingValues(64.dp),
