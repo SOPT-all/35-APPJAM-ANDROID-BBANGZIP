@@ -106,7 +106,7 @@ private fun BbangZipPager(
                                 .build(),
                         contentDescription = null,
                         modifier = Modifier.align(Alignment.CenterHorizontally),
-                        colorFilter = ColorFilter.tint(color = BbangZipTheme.colors.staticBlack_000000),
+                        colorFilter = ColorFilter.tint(color = BbangZipTheme.colors.myBbangZip_9E6B45),
                     )
                 } else {
                     AsyncImage(
