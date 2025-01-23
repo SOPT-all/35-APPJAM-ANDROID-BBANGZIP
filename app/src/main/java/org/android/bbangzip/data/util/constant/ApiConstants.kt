@@ -14,4 +14,7 @@ object ApiConstants {
     const val WITHDRAW = "withdraw"
     const val SIGN_UP = "signup"
     const val CODE = "code"
+
+    // My
+    const val MY_PAGE = "mypage"
 }

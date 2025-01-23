@@ -16,11 +16,11 @@ fun NavController.navigateToMyBadgeCategory() {
 }
 
 fun NavGraphBuilder.myBadgeCategoryNavGraph(
-    navigateToBack: () -> Unit,
+    popBackStack: () -> Unit,
 ) {
     composable<MyBadgeCategoryRoute> {
         MyBadgeCategoryRoute(
-            navigateToBack = navigateToBack,
+            popBackStack = popBackStack,
         )
     }
 }

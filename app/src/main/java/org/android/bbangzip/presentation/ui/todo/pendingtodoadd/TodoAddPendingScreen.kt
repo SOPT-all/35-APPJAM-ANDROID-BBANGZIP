@@ -38,7 +38,7 @@ import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.ToDoFilterType
-import org.android.bbangzip.presentation.ui.todo.BbangZipToDoFilterPickerBottomSheet
+import org.android.bbangzip.presentation.ui.todo.component.ToDoFilterPickerBottomSheet
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -176,7 +176,7 @@ fun TodoAddPendingScreen(
             }
         }
     }
-    BbangZipToDoFilterPickerBottomSheet(
+    ToDoFilterPickerBottomSheet(
         isBottomSheetVisible = todoAddState.todoFilterBottomSheetState,
         selectedItem = todoAddState.selectedFilter,
         onSelectedItemChanged = onFilterBottomSheetItemClicked,

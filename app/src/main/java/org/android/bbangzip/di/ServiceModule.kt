@@ -9,7 +9,6 @@ import org.android.bbangzip.data.service.MyPageService
 import org.android.bbangzip.data.service.PieceService
 import org.android.bbangzip.data.service.UserService
 import retrofit2.Retrofit
-import retrofit2.create
 import javax.inject.Singleton
 
 @Module
