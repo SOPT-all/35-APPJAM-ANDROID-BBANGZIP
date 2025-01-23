@@ -275,7 +275,7 @@ private fun MyBadgeInfo(
         }
 
         Column(
-            modifier = Modifier.applyFilterOnClick { onClickBadgeCount() },
+            modifier = Modifier.noRippleClickable { onClickBadgeCount() },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

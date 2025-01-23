@@ -63,7 +63,7 @@ fun BbangZipTwoButtonBottomSheet(
 
             BbangZipButton(
                 modifier = Modifier.fillMaxWidth(),
-                bbangZipButtonType = BbangZipButtonType.Solid,
+                bbangZipButtonType = BbangZipButtonType.Outlined,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 onClick = { onClickCancelButton() },
                 label = cancelButtonText,
