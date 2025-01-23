@@ -22,15 +22,10 @@ import org.android.bbangzip.presentation.ui.my.navigation.navigateMy
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
-import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyRoute
 import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
-import org.android.bbangzip.presentation.ui.subject.addsubject.AddSubjectRoute
-import org.android.bbangzip.presentation.ui.subject.addsubject.navigateAddSubject
-import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.ModifyMotivationMessageRoute
-import org.android.bbangzip.presentation.ui.subject.modify.subjectname.ModifySubjectNameRoute
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
-import org.android.bbangzip.presentation.ui.subject.subjectdetail.navigateSubjectDetail
+import org.android.bbangzip.presentation.ui.subject.subjectdetail.navigateToSubjectDetail
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
 import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.navigateTodoAdd
@@ -42,7 +37,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = ModifyMotivationMessageRoute
+    val startDestination = LoginRoute
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =
@@ -83,10 +78,6 @@ class MainNavigator(
         navHostController.navigateSubject()
     }
 
-    fun navigateToSubjectDetail(){
-        navHostController.navigateSubjectDetail()
-    }
-
     fun navigateToAddStudy(splitStudyData: SplitStudyData){
         navHostController.navigateAddStudy(splitStudyData = splitStudyData)
     }
@@ -97,6 +88,11 @@ class MainNavigator(
 
     fun navigateToOnboardingStart() {
         navHostController.navigateOnboardingStart()
+    }
+
+    fun navigateToSubjectDetail(subjectId: Int) {
+        Timber.tag("navaigateSubject").d("subjectId")
+        navHostController.navigateToSubjectDetail(subjectId)
     }
 
     fun navigateToMyBadgeCategory() {

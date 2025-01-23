@@ -28,10 +28,11 @@ fun ModifyMotivationMessageScreen(
     motivationMessage: String = "",
     isButtonEnable: Boolean = false,
     isTextFieldFocused: Boolean = false,
+    subjectId: Int,
     textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onMotivationMessageChanged: (String) -> Unit = {},
     onTextFieldFocusChanged : (Boolean) -> Unit = {},
-    onModifyBtnClicked: () -> Unit = {},
+    onModifyBtnClicked: (Int) -> Unit = {},
     onDeleteBtnClicked: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
@@ -81,7 +82,7 @@ fun ModifyMotivationMessageScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    onModifyBtnClicked()
+                    onModifyBtnClicked(subjectId)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),
@@ -94,7 +95,7 @@ fun ModifyMotivationMessageScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ModifyMotivationMessageScreenPreview() {
-    ModifyMotivationMessageScreen("Preview",
-        false,
+    ModifyMotivationMessageScreen(
+        subjectId = 0
     )
 }

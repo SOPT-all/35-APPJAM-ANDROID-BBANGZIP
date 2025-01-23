@@ -30,8 +30,8 @@ constructor(
             ModifySubjectNameContract.ModifySubjectNameEvent.OnClickBackBtn -> {
 
             }
-            ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn -> {
-                setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail)
+            is ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn -> {
+                setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail(subjectId = event.subjectId))
             }
             is ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField -> {
                 updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))

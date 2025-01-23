@@ -97,6 +97,7 @@ fun MainNavHost(
 
             subjectNavGraph(
                 navigateAddStudy = { navigator.navigateToAddStudy(it) },
+                navigateToSubjectDetail = { id -> navigator.navigateToSubjectDetail(id) },
                 padding = padding,
             )
 
@@ -106,11 +107,11 @@ fun MainNavHost(
             )
 
             modifySubjectNameNavGraph(
-                navigateToSubjectDetail = { navigator.navigateToSubjectDetail() }
+                navigateToSubjectDetail = { navigator.navigateToSubjectDetail(it) }
             )
 
             modifyMotivationMessageNavGraph(
-                navigateToSubjectDetail = { navigator.navigateToSubjectDetail() },
+                navigateToSubjectDetail = { navigator.navigateToSubjectDetail(it) },
                 snackbarHostState = snackBarHostState
             )
 
@@ -131,6 +132,9 @@ fun MainNavHost(
             )
             subjectDetailNavGraph(
                 padding = padding,
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToModifyMotivation = { },
+                navigateToModifySubjectName = { },
             )
 
             todoNavGraph(

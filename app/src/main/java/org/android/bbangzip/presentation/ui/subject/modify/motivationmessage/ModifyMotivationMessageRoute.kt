@@ -14,7 +14,7 @@ import org.android.bbangzip.presentation.ui.subject.splitstudy.SplitStudyContrac
 @Composable
 fun ModifyMotivationMessageRoute(
     viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
-    navigateToSubjectDetail: () -> Unit,
+    navigateToSubjectDetail: (Int) -> Unit,
     snackbarHostState: SnackbarHostState
 ){
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -23,7 +23,7 @@ fun ModifyMotivationMessageRoute(
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
                 is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail -> {
-                    navigateToSubjectDetail()
+                    navigateToSubjectDetail(effect.subjectId)
                 }
                 is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar -> {
                     val job =
@@ -43,9 +43,10 @@ fun ModifyMotivationMessageRoute(
         isButtonEnable = modifyMotivationMessageState.isButtonEnable,
         isTextFieldFocused = modifyMotivationMessageState.isTextFieldFocused,
         textFieldInputState = modifyMotivationMessageState.motivationMessageTextFieldState,
+        subjectId = modifyMotivationMessageState.subjectId,
         onMotivationMessageChanged = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnChangeMotivationMessage(it))},
         onTextFieldFocusChanged = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField(it))},
-        onModifyBtnClicked = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn)},
+        onModifyBtnClicked = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn(it))},
         onDeleteBtnClicked = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn)}
     )
 }

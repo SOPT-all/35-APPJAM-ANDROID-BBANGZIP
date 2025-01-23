@@ -11,6 +11,7 @@ class ModifySubjectNameContract {
         val subjectName: String = "",
         val isTextFieldFocused: Boolean = false,
         val isButtonEnable: Boolean = false,
+        val subjectId: Int = 0,
         val subjectNameTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
@@ -23,7 +24,7 @@ class ModifySubjectNameContract {
 
         data object OnClickBackBtn : ModifySubjectNameEvent
 
-        data object OnClickModifyBtn : ModifySubjectNameEvent
+        data class OnClickModifyBtn(val subjectId: Int) : ModifySubjectNameEvent
 
         data object OnClickDeleteBtn : ModifySubjectNameEvent
 
@@ -42,6 +43,6 @@ class ModifySubjectNameContract {
     }
 
     sealed interface ModifySubjectNameSideEffect : BaseContract.SideEffect {
-        data object NavigationSubjectDetail : ModifySubjectNameSideEffect
+        data class NavigationSubjectDetail(val subjectId: Int) : ModifySubjectNameSideEffect
     }
 }

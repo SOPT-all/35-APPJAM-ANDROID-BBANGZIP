@@ -27,11 +27,12 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun ModifySubjectNameScreen(
     subjectName: String = "",
     isButtonEnable: Boolean = false,
+    subjectId: Int,
     isTextFieldFocused: Boolean = false,
     textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onSubjectNameChanged: (String) -> Unit = {},
     onTextFieldFocusChanged : (Boolean) -> Unit = {},
-    onModifyBtnClicked: () -> Unit = {},
+    onModifyBtnClicked: (Int) -> Unit = {},
     onDeleteBtnClicked: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
@@ -79,7 +80,7 @@ fun ModifySubjectNameScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    onModifyBtnClicked()
+                    onModifyBtnClicked(subjectId)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),
@@ -92,7 +93,5 @@ fun ModifySubjectNameScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ModifySubjectNameScreenPreview() {
-    ModifySubjectNameScreen("Preview",
-        false,
-    )
+    ModifySubjectNameScreen(subjectId = 0)
 }

@@ -11,15 +11,15 @@ import org.android.bbangzip.presentation.ui.ModifySubjectName.modify.ModifySubje
 @Composable
 fun ModifySubjectNameRoute(
     viewModel: ModifySubjectNameViewModel = hiltViewModel(),
-    navigateToSubjectDetail: () -> Unit,
+    navigateToSubjectDetail: (Int) -> Unit,
 ){
     val modifySubjectNameState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit){
         viewModel.uiSideEffect.collectLatest{ effect ->
             when(effect){
-                ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail -> {
-                    navigateToSubjectDetail()
+                is ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail -> {
+                    navigateToSubjectDetail(effect.subjectId)
                 }
             }
         }
@@ -30,9 +30,10 @@ fun ModifySubjectNameRoute(
         isButtonEnable = modifySubjectNameState.isButtonEnable,
         isTextFieldFocused = modifySubjectNameState.isTextFieldFocused,
         textFieldInputState = modifySubjectNameState.subjectNameTextFieldState,
+        subjectId = modifySubjectNameState.subjectId,
         onSubjectNameChanged = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnChangeSubjectName(it))},
         onTextFieldFocusChanged = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField(it))},
-        onModifyBtnClicked = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn)},
+        onModifyBtnClicked = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn(it))},
         onDeleteBtnClicked = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickDeleteBtn)}
     )
 }
