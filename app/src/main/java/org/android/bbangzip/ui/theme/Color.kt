@@ -58,4 +58,5 @@ val Orange20 = Color(0xFF660000)
 val Orange10 = Color(0xFF4C0000)
 
 // Brown
+val Brown20 = Color(0xFF9E6B45)
 val Brown10 = Color(0xFF886759)
