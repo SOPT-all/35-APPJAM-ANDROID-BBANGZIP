@@ -21,6 +21,7 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.subjectdetail.SubjectDetailRoute
+import org.android.bbangzip.presentation.ui.subject.subjectdetail.navigateToSubjectDetail
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
 import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.navigateTodoAdd
@@ -32,7 +33,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = SubjectDetailRoute
+    val startDestination = BottomNavigationRoute.Subject
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =
@@ -71,6 +72,11 @@ class MainNavigator(
 
     fun navigateToOnboardingStart() {
         navHostController.navigateOnboardingStart()
+    }
+
+    fun navigateToSubjectDetail(subjectId: Int) {
+        Timber.tag("navaigateSubject").d("subjectId")
+        navHostController.navigateToSubjectDetail(subjectId)
     }
 
     fun navigateToMyBadgeCategory() {

@@ -39,10 +39,10 @@ fun MainNavHost(
 ) {
     Box(
         modifier =
-            modifier
-                .padding(top = padding.calculateTopPadding())
-                .fillMaxSize()
-                .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
+        modifier
+            .padding(top = padding.calculateTopPadding())
+            .fillMaxSize()
+            .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         NavHost(
             navController = navigator.navHostController,
@@ -98,6 +98,7 @@ fun MainNavHost(
 
             subjectNavGraph(
                 navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
+                navigateToSubjectDetail = { id -> navigator.navigateToSubjectDetail(id) },
                 padding = padding,
             )
 
@@ -119,6 +120,9 @@ fun MainNavHost(
             )
             subjectDetailNavGraph(
                 padding = padding,
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToModifyMotivation = { },
+                navigateToModifySubjectName = { },
             )
 
             todoNavGraph(

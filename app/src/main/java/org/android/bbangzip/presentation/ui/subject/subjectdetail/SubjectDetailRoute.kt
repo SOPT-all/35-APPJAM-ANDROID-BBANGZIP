@@ -9,6 +9,10 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 @Composable
 fun SubjectDetailRoute(
     padding: PaddingValues,
+    subjectId: Int,
+    navigateToBack:()-> Unit,
+    navigateToModifyMotivation:() -> Unit,
+    navigateToModifySubjectName:(String)-> Unit,
     viewModel: SubjectDetailViewModel = hiltViewModel(),
 ) {
     val subjectDetailState by viewModel.uiState.collectAsStateWithLifecycle()
