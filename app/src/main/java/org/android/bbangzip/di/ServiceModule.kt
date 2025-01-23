@@ -5,6 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.android.bbangzip.data.service.DummyService
+import org.android.bbangzip.data.service.ExamService
 import org.android.bbangzip.data.service.MyPageService
 import org.android.bbangzip.data.service.PieceService
 import org.android.bbangzip.data.service.UserService
@@ -41,4 +42,11 @@ object ServiceModule {
         @BbangZip retrofit: Retrofit,
     ): UserService =
         retrofit.create(UserService::class.java)
+
+    @Provides
+    @Singleton
+    fun provideExamService(
+        @BbangZip retrofit: Retrofit,
+    ): ExamService =
+        retrofit.create(ExamService::class.java)
 }

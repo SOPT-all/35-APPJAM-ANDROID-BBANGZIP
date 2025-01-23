@@ -3,6 +3,7 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
+import org.android.bbangzip.presentation.model.SubjectDetailInfo
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.PieceViewType
 import org.android.bbangzip.presentation.util.base.BaseContract
@@ -16,7 +17,11 @@ class SubjectDetailContract {
         val pieceViewType: PieceViewType = PieceViewType.DEFAULT,
         val selectedItemSet: Set<Int> = setOf(),
         val revertCompleteBottomSheetState: Boolean = false,
+        val examDate: String = "",
+        val examDday : Int = 0,
+        val motivationMessage : String = "",
         val selectedItemId: Int = -1,
+        val subjectId : Int = 0,
         val todoList: List<ToDoCardModel> =
             listOf(
                 ToDoCardModel(
@@ -165,6 +170,8 @@ class SubjectDetailContract {
     }
 
     sealed interface SubjectDetailReduce : BaseContract.Reduce {
+        data class UpdateSubjectDetail(val subjectDetailInfo: SubjectDetailInfo) : SubjectDetailReduce
+
         data object UpdateToDeleteMode : SubjectDetailReduce
 
         data object UpdateToDefaultMode : SubjectDetailReduce
@@ -178,6 +185,8 @@ class SubjectDetailContract {
         data object UpdateCompleteCardState : SubjectDetailReduce
 
         data class DeleteSelectedItemSet(val pieceId: Int) : SubjectDetailReduce
+
+        data class UpdateSubjectId (val subjectId: Int) : SubjectDetailReduce
 
         data object UpdateRevertCompleteBottomSheetState : SubjectDetailReduce
 

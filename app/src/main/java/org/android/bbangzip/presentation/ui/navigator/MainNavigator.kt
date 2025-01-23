@@ -12,14 +12,15 @@ import org.android.bbangzip.presentation.model.BottomNavigationRoute
 import org.android.bbangzip.presentation.model.Route
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.friend.navigation.navigateFriend
-import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
+import org.android.bbangzip.presentation.ui.my.bbangzipdetail.navigation.navigateBbangZipDetail
 import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.navigateToMyBadgeCategory
 import org.android.bbangzip.presentation.ui.my.navigation.navigateMy
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
+import org.android.bbangzip.presentation.ui.subject.subjectdetail.SubjectDetailRoute
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
 import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.navigateTodoAdd
@@ -31,7 +32,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = LoginRoute
+    val startDestination = SubjectDetailRoute
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =

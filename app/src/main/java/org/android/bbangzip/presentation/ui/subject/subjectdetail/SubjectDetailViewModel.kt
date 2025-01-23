@@ -6,9 +6,12 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
+import org.android.bbangzip.domain.usecase.GetSubjectDetailUseCase
 import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
 import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
+import org.android.bbangzip.presentation.model.SubjectDetailInfo
+import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.PieceViewType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import timber.log.Timber
@@ -20,6 +23,7 @@ class SubjectDetailViewModel
 constructor(
     private val postCompleteCardIdUseCase: PostCompleteCardIdUseCase,
     private val postUnCompleteCardIdUseCase: PostUnCompleteCardIdUseCase,
+    private val getSubjectDetailUseCase: GetSubjectDetailUseCase,
     savedStateHandle: SavedStateHandle,
 ) : BaseViewModel<SubjectDetailContract.SubjectDetailEvent, SubjectDetailContract.SubjectDetailState, SubjectDetailContract.SubjectDetailReduce, SubjectDetailContract.SubjectDetailSideEffect>(
     savedStateHandle = savedStateHandle,
@@ -34,7 +38,7 @@ constructor(
 
     override fun handleEvent(event: SubjectDetailContract.SubjectDetailEvent) {
         when (event) {
-            is SubjectDetailContract.SubjectDetailEvent.Initialize -> {}
+            is SubjectDetailContract.SubjectDetailEvent.Initialize -> launch { initData() }
 
             is SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked -> {
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDeleteMode)
@@ -189,7 +193,63 @@ constructor(
                 )
             }
 
+            is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectDetail -> {
+                state.copy(
+                    examDate = reduce.subjectDetailInfo.examDate,
+                    examDday = reduce.subjectDetailInfo.examDday,
+                    motivationMessage = reduce.subjectDetailInfo.motivationMessage,
+                    todoList = reduce.subjectDetailInfo.todoList,
+                )
+            }
+
+            is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectId -> {
+                state.copy(
+                    subjectId = reduce.subjectId,
+                )
+            }
+
             else -> state
+        }
+    }
+
+    private suspend fun initData(){
+        getSubjectDetail(
+            subjectId = 4,
+            examName = "mid",
+        )
+    }
+
+    private suspend fun getSubjectDetail(
+        subjectId: Int,
+        examName: String,
+    ) {
+        getSubjectDetailUseCase(
+            subjectId = subjectId,
+            examName = examName,
+        ).onSuccess { subjectDetailInfoEntity ->
+            updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectDetail(
+                subjectDetailInfo = SubjectDetailInfo(
+                    examDate = subjectDetailInfoEntity.examDate,
+                    examDday = subjectDetailInfoEntity.examDday,
+                    motivationMessage = subjectDetailInfoEntity.motivationMessage,
+                    todoList = subjectDetailInfoEntity.todoList.map { data ->
+                        ToDoCardModel(
+                            pieceId = data.pieceId,
+                            subjectName = data.subjectName,
+                            examName = data.examName,
+                            studyContents = data.studyContents,
+                            startPage = data.startPage,
+                            finishPage = data.finishPage,
+                            deadline = data.deadline,
+                            remainingDays = data.remainingDays,
+                            cardState = if (data.isFinished) BbangZipCardState.COMPLETE else BbangZipCardState.DEFAULT,
+                        )
+                    }
+
+                )
+            ))
+        }.onFailure { error ->
+            Timber.tag("getSubjectDetail").e(error)
         }
     }
 
