@@ -28,35 +28,38 @@ fun SplashScreen() {
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.splashBackground_FFF9EF.toArgb()
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(BbangZipTheme.colors.splashBackground_FFF9EF),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .background(BbangZipTheme.colors.splashBackground_FFF9EF),
         horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.SpaceBetween
+        verticalArrangement = Arrangement.SpaceBetween,
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .weight(1f),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .weight(1f),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Image(
                 painter = painterResource(R.drawable.img_bbangzip_logo),
-                contentDescription = null
+                contentDescription = null,
             )
         }
 
         Row(
             horizontalArrangement = Arrangement.Center,
             verticalAlignment = Alignment.CenterVertically,
-            modifier = Modifier
-                .fillMaxWidth()
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_bbangzip_circle_t_12),
                 contentDescription = null,
-                tint = BbangZipTheme.colors.splashLogo_886759
+                tint = BbangZipTheme.colors.splashLogo_886759,
             )
 
             Gap(3)
@@ -64,7 +67,7 @@ fun SplashScreen() {
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_bbangzip_logo_name),
                 contentDescription = null,
-                tint = BbangZipTheme.colors.splashLogo_886759
+                tint = BbangZipTheme.colors.splashLogo_886759,
             )
         }
 

@@ -9,8 +9,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
-import org.android.bbangzip.UserPreferences
-import timber.log.Timber
 
 @Composable
 fun LoginRoute(

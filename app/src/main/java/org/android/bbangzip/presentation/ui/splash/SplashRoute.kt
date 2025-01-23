@@ -10,7 +10,7 @@ fun SplashRoute(
     navigateToLogin: () -> Unit,
     navigateToOnboardingStart: () -> Unit,
     navigateToSubject: () -> Unit,
-    viewModel: SplashViewModel = hiltViewModel()
+    viewModel: SplashViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->

@@ -7,27 +7,21 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import kotlinx.coroutines.delay
 import org.android.bbangzip.presentation.ui.friend.navigation.friendNavGraph
 import org.android.bbangzip.presentation.ui.login.loginNavGraph
 import org.android.bbangzip.presentation.ui.my.bbangzipdetail.navigation.bbangZipDetailNavGraph
 import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.myBadgeCategoryNavGraph
 import org.android.bbangzip.presentation.ui.my.navigation.myNavGraph
-import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingEndNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
 import org.android.bbangzip.presentation.ui.splash.navigation.splashNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
-import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
 import org.android.bbangzip.presentation.ui.subject.splitstudy.splitStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
@@ -58,7 +52,7 @@ fun MainNavHost(
             splashNavGraph(
                 navigateToLogin = { navigator.navigateToLogin() },
                 navigateToOnboardingStart = { navigator.navigateToOnboardingStart() },
-                navigateToSubject = { navigator.navigateToSubject() }
+                navigateToSubject = { navigator.navigateToSubject() },
             )
 
             loginNavGraph(

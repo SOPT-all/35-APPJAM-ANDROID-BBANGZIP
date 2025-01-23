@@ -7,7 +7,7 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class SplashContract {
     @Parcelize
     data class SplashState(
-        val loading: Boolean = false
+        val loading: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }

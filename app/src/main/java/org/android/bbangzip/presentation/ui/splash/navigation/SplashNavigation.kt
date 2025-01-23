@@ -8,7 +8,7 @@ import org.android.bbangzip.presentation.ui.splash.SplashRoute
 
 fun NavController.navigateSplash() {
     navigate(
-        route = SplashRoute
+        route = SplashRoute,
     )
 }
 
@@ -21,7 +21,7 @@ fun NavGraphBuilder.splashNavGraph(
         SplashRoute(
             navigateToLogin = navigateToLogin,
             navigateToOnboardingStart = navigateToOnboardingStart,
-            navigateToSubject = navigateToSubject
+            navigateToSubject = navigateToSubject,
         )
     }
 }
