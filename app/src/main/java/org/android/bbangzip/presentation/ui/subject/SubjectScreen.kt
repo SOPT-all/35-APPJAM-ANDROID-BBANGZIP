@@ -460,7 +460,7 @@ private fun SubjectScreenPreview() {
             cardViewType = CardViewType.DEFAULT,
             deletedSet = setOf(),
             padding = PaddingValues(64.dp),
-            navigateAddStudy = {}
+            navigateAddStudy = {},
         )
     }
 }

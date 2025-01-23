@@ -15,12 +15,12 @@ fun NavController.navigateSubject() {
 
 fun NavGraphBuilder.subjectNavGraph(
     navigateAddStudy: (SplitStudyData) -> Unit,
-    padding: PaddingValues
+    padding: PaddingValues,
 ) {
     composable<BottomNavigationRoute.Subject> {
         SubjectRoute(
             navigateAddStudy = navigateAddStudy,
-            padding = padding
+            padding = padding,
         )
     }
 }
