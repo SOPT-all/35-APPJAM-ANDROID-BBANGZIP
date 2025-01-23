@@ -4,6 +4,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
+import org.android.bbangzip.presentation.model.SplitStudyData
 
 fun NavController.navigateSubject() {
     navigate(
@@ -11,8 +12,12 @@ fun NavController.navigateSubject() {
     )
 }
 
-fun NavGraphBuilder.subjectNavGraph() {
+fun NavGraphBuilder.subjectNavGraph(
+    navigateAddStudy: (SplitStudyData) -> Unit,
+) {
     composable<BottomNavigationRoute.Subject> {
-        SubjectRoute()
+        SubjectRoute(
+            navigateAddStudy = navigateAddStudy,
+        )
     }
 }

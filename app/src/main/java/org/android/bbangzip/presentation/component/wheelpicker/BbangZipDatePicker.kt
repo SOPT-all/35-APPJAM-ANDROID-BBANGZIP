@@ -28,11 +28,11 @@ fun BbangZipDatePicker(
         modifier = Modifier.fillMaxWidth(),
     ) {
         val years = DateConstants.YEARS_LIST
-        val yearPickerState by remember { mutableStateOf("") }
+        var yearPickerState by remember { mutableStateOf(currentDate.year) }
         val startYear = currentDate.year.toInt() - DateConstants.YEAR_OF_TODAY
 
         val months = DateConstants.MONTHS_LIST
-        val monthsPickerState by remember { mutableStateOf("") }
+        var monthsPickerState by remember { mutableStateOf(currentDate.month) }
         val startMonth = currentDate.month.toInt() - 1
 
         val days =
@@ -41,7 +41,7 @@ fun BbangZipDatePicker(
                 val month = monthsPickerState.filter { it.isDigit() }.toIntOrNull() ?: 1
                 (1..getDaysInMonth(year, month)).map { it.toString() + "일" }
             }
-        val daysPickerState by remember { mutableStateOf("") }
+        var daysPickerState by remember { mutableStateOf(currentDate.day) }
         val startDay = currentDate.day.toInt() - 1
 
         LaunchedEffect(yearPickerState, monthsPickerState, daysPickerState) {
@@ -60,18 +60,21 @@ fun BbangZipDatePicker(
         // 3개 picker에 weight 부여해서 대충 피그마와 비슷하게 동적으로 되게 구현해봤는데 어떤가요..
         BbangZipPicker(
             items = years,
+            onItemChanged = { yearPickerState = it },
             modifier = Modifier.weight(5f),
             startIndex = startYear,
         )
 
         BbangZipPicker(
             items = months,
+            onItemChanged = { monthsPickerState = it },
             modifier = Modifier.weight(3f),
             startIndex = startMonth,
         )
 
         BbangZipPicker(
             items = days,
+            onItemChanged = { daysPickerState = it },
             modifier = Modifier.weight(3f),
             startIndex = startDay,
         )
