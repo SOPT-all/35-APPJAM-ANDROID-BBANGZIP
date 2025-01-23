@@ -50,7 +50,7 @@ class SubjectViewModel
                 }
 
                 is SubjectContract.SubjectEvent.OnClickStudyCard -> {
-                    setSideEffect(SubjectContract.SubjectSideEffect.NavigateToSubjectDetail(event.subjectId))
+                    setSideEffect(SubjectContract.SubjectSideEffect.NavigateToSubjectDetail(event.subjectId, event.subjectName))
                 }
             }
         }

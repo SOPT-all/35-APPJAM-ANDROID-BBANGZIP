@@ -32,7 +32,7 @@ fun ModifySubjectNameScreen(
     textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onSubjectNameChanged: (String) -> Unit = {},
     onTextFieldFocusChanged : (Boolean) -> Unit = {},
-    onModifyBtnClicked: (Int) -> Unit = {},
+    onModifyBtnClicked: (Int, String) -> Unit = {_, _ ->},
     onDeleteBtnClicked: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
@@ -80,7 +80,7 @@ fun ModifySubjectNameScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    onModifyBtnClicked(subjectId)
+                    onModifyBtnClicked(subjectId, subjectName)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),

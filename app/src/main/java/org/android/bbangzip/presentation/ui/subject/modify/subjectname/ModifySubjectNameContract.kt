@@ -24,7 +24,7 @@ class ModifySubjectNameContract {
 
         data object OnClickBackBtn : ModifySubjectNameEvent
 
-        data class OnClickModifyBtn(val subjectId: Int) : ModifySubjectNameEvent
+        data class OnClickModifyBtn(val subjectId: Int, val subjectName: String) : ModifySubjectNameEvent
 
         data object OnClickDeleteBtn : ModifySubjectNameEvent
 
@@ -43,6 +43,8 @@ class ModifySubjectNameContract {
     }
 
     sealed interface ModifySubjectNameSideEffect : BaseContract.SideEffect {
-        data class NavigationSubjectDetail(val subjectId: Int) : ModifySubjectNameSideEffect
+        data class NavigationSubjectDetail(
+            val subjectId: Int,
+            val subjectName: String) : ModifySubjectNameSideEffect
     }
 }

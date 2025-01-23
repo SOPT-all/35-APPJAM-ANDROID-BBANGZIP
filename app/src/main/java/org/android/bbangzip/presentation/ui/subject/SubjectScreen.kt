@@ -50,8 +50,8 @@ fun SubjectScreen(
     deletedSet: Set<Int>,
     onClickTrashBtn: () -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
-    onClickDeleteModeCard: (Int) -> Unit = {},
-    onClickStudyCard: (Int) -> Unit = {},
+    onClickDeleteModeCard: (Int, String) -> Unit = {_,_ ->},
+    onClickStudyCard: (Int, String) -> Unit = {_,_ ->},
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
@@ -105,8 +105,6 @@ fun SubjectScreen(
                 }
             }
 
-            // 아이콘에 padding을 8dp 씩 주면서 갭의 수치가 피그마와 다를 수 있습니다!
-            // 위아래 8씩 빼주었다고 보면 됩니다.
             item {
                 Gap(height = 40)
             }
@@ -160,7 +158,7 @@ private fun DefaultCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     onTrashIconClick: () -> Unit = {},
-    onClickStudyCard: (Int) -> Unit = {},
+    onClickStudyCard: (Int, String) -> Unit = {_,_ ->},
 ) {
     Column {
         Row(
@@ -208,7 +206,7 @@ private fun DefaultCardView(
                     ) {
                         SubjectCard(
                             data = subjects.last(),
-                            onClick = { onClickStudyCard(it) },
+                            onClick = onClickStudyCard,
                         )
                         AddSubjectCard()
                     }
@@ -227,7 +225,7 @@ private fun DefaultCardView(
                         for (j in i * 2 until (i + 1) * 2) {
                             SubjectCard(
                                 data = subjects[j],
-                                onClick = { onClickStudyCard(it) },
+                                onClick = onClickStudyCard,
                             )
                         }
                     }
@@ -263,7 +261,7 @@ private fun DefaultCardView(
                         for (j in i * 2 until (i + 1) * 2) {
                             SubjectCard(
                                 data = subjects[j],
-                                onClick = { onClickStudyCard(it) },
+                                onClick = {subjectId, subjectName -> onClickStudyCard(subjectId, subjectName) },
                             )
                         }
                     }
@@ -279,7 +277,7 @@ private fun DeleteCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     bottomPadding: Dp,
-    onDeleteModeCardClick: (Int) -> Unit = {},
+    onDeleteModeCardClick: (Int, String) -> Unit = {_, _ ->},
     onCancleClick: () -> Unit = {},
 ) {
     Box {
@@ -329,8 +327,8 @@ private fun DeleteCardView(
                         ) {
                             SubjectCard(
                                 data = subjects.last(),
-                                onClick = { index ->
-                                    onDeleteModeCardClick(index)
+                                onClick = { index, subjectName ->
+                                    onDeleteModeCardClick(index, subjectName)
                                 },
                             )
                         }
@@ -349,8 +347,8 @@ private fun DeleteCardView(
                             for (j in i * 2 until (i + 1) * 2) {
                                 SubjectCard(
                                     data = subjects[j],
-                                    onClick = { index ->
-                                        onDeleteModeCardClick(index)
+                                    onClick = { index, subjectName ->
+                                        onDeleteModeCardClick(index, subjectName)
                                     },
                                 )
                             }
@@ -373,8 +371,8 @@ private fun DeleteCardView(
                         for (j in i * 2 until (i + 1) * 2) {
                             SubjectCard(
                                 data = subjects[j],
-                                onClick = { index ->
-                                    onDeleteModeCardClick(index)
+                                onClick = {index, subjectName ->
+                                    onDeleteModeCardClick(index, subjectName)
                                 },
                             )
                         }

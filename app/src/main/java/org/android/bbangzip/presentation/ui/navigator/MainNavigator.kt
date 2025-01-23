@@ -23,6 +23,8 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
+import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.navigateToModifyMotivationMessage
+import org.android.bbangzip.presentation.ui.subject.modify.subjectname.navigateToModifySubjectName
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
 import org.android.bbangzip.presentation.ui.subject.subjectdetail.navigateToSubjectDetail
@@ -90,9 +92,19 @@ class MainNavigator(
         navHostController.navigateOnboardingStart()
     }
 
-    fun navigateToSubjectDetail(subjectId: Int) {
+    fun navigateToSubjectDetail(
+        subjectId: Int,
+        subjectName: String) {
         Timber.tag("navaigateSubject").d("subjectId")
-        navHostController.navigateToSubjectDetail(subjectId)
+        navHostController.navigateToSubjectDetail(subjectId, subjectName)
+    }
+
+    fun navigateToModifyMotivationMessage(subjectId: Int, subjectName: String) {
+        navHostController.navigateToModifyMotivationMessage(subjectId, subjectName)
+    }
+
+    fun navigateToModifySubjectName(subjectId: Int, subjectName: String) {
+        navHostController.navigateToModifySubjectName(subjectId, subjectName)
     }
 
     fun navigateToMyBadgeCategory() {

@@ -14,7 +14,7 @@ import org.android.bbangzip.presentation.ui.subject.splitstudy.SplitStudyContrac
 @Composable
 fun ModifyMotivationMessageRoute(
     viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
-    navigateToSubjectDetail: (Int) -> Unit,
+    navigateToSubjectDetail: (Int, String) -> Unit,
     snackbarHostState: SnackbarHostState
 ){
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -23,7 +23,7 @@ fun ModifyMotivationMessageRoute(
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
                 is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail -> {
-                    navigateToSubjectDetail(effect.subjectId)
+                    navigateToSubjectDetail(effect.subjectId, effect.subjectName)
                 }
                 is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar -> {
                     val job =
@@ -44,9 +44,10 @@ fun ModifyMotivationMessageRoute(
         isTextFieldFocused = modifyMotivationMessageState.isTextFieldFocused,
         textFieldInputState = modifyMotivationMessageState.motivationMessageTextFieldState,
         subjectId = modifyMotivationMessageState.subjectId,
+        subjectName = modifyMotivationMessageState.subjectName,
         onMotivationMessageChanged = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnChangeMotivationMessage(it))},
         onTextFieldFocusChanged = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField(it))},
-        onModifyBtnClicked = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn(it))},
+        onModifyBtnClicked = {id, name ->viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn(id, name))},
         onDeleteBtnClicked = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn)}
     )
 }

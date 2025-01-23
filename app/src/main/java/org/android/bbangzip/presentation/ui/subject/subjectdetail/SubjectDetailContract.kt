@@ -22,6 +22,7 @@ class SubjectDetailContract {
         val motivationMessage: String = "",
         val selectedItemId: Int = -1,
         val subjectId: Int = 0,
+        val subjectName: String = "",
         val todoList: List<ToDoCardModel> =
             listOf(
                 ToDoCardModel(
@@ -140,7 +141,9 @@ class SubjectDetailContract {
     }
 
     sealed interface SubjectDetailEvent : BaseContract.Event {
-        data class Initialize(val subjectId: Int) : SubjectDetailEvent
+        data class Initialize(
+            val subjectId: Int,
+            val subjectName: String) : SubjectDetailEvent
 
         data object OnPlusIconClicked : SubjectDetailEvent
 
@@ -155,6 +158,16 @@ class SubjectDetailContract {
         data object OnRevertCompleteBottomSheetDismissButtonClicked : SubjectDetailEvent
 
         data object OnRevertCompleteBottomSheetDissmissRequest : SubjectDetailEvent
+
+        data class OnClickEnrollMotivateMessage(
+            val subjectId: Int,
+            val subjectName: String
+        ) : SubjectDetailEvent
+
+        data class OnClickModifySubjectName(
+            val subjectId: Int,
+            val subjectName: String
+        ) : SubjectDetailEvent
 
         data class OnDeleteModeCardClicked(
             val pieceId: Int,
@@ -186,7 +199,10 @@ class SubjectDetailContract {
 
         data class DeleteSelectedItemSet(val pieceId: Int) : SubjectDetailReduce
 
-        data class UpdateSubjectId(val subjectId: Int) : SubjectDetailReduce
+        data class UpdateSubjectData(
+            val subjectId: Int,
+            val subjectName: String
+        ) : SubjectDetailReduce
 
         data object UpdateRevertCompleteBottomSheetState : SubjectDetailReduce
 
@@ -197,6 +213,10 @@ class SubjectDetailContract {
         data object NavigateToAddSubject : SubjectDetailSideEffect
 
         data object NavigateToAddStudy : SubjectDetailSideEffect
+
+        data class NavigateToModifyMotivation(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
+
+        data class NavigateToModifySubjectName(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
 
         data object ShowDeleteSuccessSnackBar : SubjectDetailSideEffect
     }

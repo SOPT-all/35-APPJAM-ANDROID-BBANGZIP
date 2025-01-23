@@ -6,15 +6,17 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
 
-fun NavController.navigateModifyMotivationMessage(
+fun NavController.navigateToModifyMotivationMessage(
+    subjectId: Int,
+    subjectName: String,
 ) {
     navigate(
-        route = ModifyMotivationMessageRoute,
+        route = ModifyMotivationMessageRoute(subjectId, subjectName),
     )
 }
 
 fun NavGraphBuilder.modifyMotivationMessageNavGraph(
-    navigateToSubjectDetail: (Int) -> Unit,
+    navigateToSubjectDetail: (Int, String) -> Unit,
     snackbarHostState: SnackbarHostState,
 ) {
     composable<ModifyMotivationMessageRoute> {
@@ -26,4 +28,4 @@ fun NavGraphBuilder.modifyMotivationMessageNavGraph(
 }
 
 @Serializable
-object ModifyMotivationMessageRoute
+data class ModifyMotivationMessageRoute(val subjectId: Int, val subjectName: String)

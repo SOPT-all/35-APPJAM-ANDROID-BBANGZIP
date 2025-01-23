@@ -31,7 +31,7 @@ constructor(
 
             }
             is ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn -> {
-                setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail(subjectId = event.subjectId))
+                setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail(subjectId = event.subjectId, subjectName = event.subjectName))
             }
             is ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField -> {
                 updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))

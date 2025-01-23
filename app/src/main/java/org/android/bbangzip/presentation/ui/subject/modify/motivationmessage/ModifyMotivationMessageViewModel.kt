@@ -30,7 +30,7 @@ constructor(
 
             }
             is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn -> {
-                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail(subjectId = event.subjectId))
+                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail(subjectId = event.subjectId, subjectName = event.subjectName))
                 setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar("각오 한 마디 작성 완료!"))
             }
             is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField -> {

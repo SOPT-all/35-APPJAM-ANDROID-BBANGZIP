@@ -67,6 +67,8 @@ fun SubjectDetailScreen(
     deletedSet: Set<Int>,
     revertCompleteBottomSheetState: Boolean,
     selectedItemId: Int,
+    subjectId: Int,
+    subjectName: String,
     onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
     onRevertCompleteBottomSheetApproveButtonClicked: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
@@ -74,6 +76,8 @@ fun SubjectDetailScreen(
     onCloseIconClicked: () -> Unit = {},
     onDeleteModeCardClicked: (Int) -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
+    onClickEnrollMotivationMessage: (Int, String) -> Unit = {_,_ ->},
+    onClickModifySubjectName: (Int, String) -> Unit = {_,_ ->},
     onDefaultCardClicked: (Int) -> Unit = {},
     onCompleteCardClicked: (Int) -> Unit = {},
 ) {
@@ -225,7 +229,9 @@ fun SubjectDetailScreen(
                                     .applyFilterOnClick(
                                         radius = 16.dp,
                                         isDisabled = false,
-                                    ) { }
+                                    ) {
+                                        onClickEnrollMotivationMessage(subjectId, subjectName)
+                                    }
                                     .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
                         )
                         Spacer(Modifier.weight(1f))
@@ -239,7 +245,7 @@ fun SubjectDetailScreen(
                                     .applyFilterOnClick(
                                         radius = 16.dp,
                                         isDisabled = false,
-                                    ) { }
+                                    ) { onClickModifySubjectName(subjectId, subjectName) }
                                     .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
                         )
                     }
@@ -696,5 +702,7 @@ private fun SubjectDetailScreenPreview() {
         emptySet(),
         false,
         selectedItemId = 0,
+        subjectId = 0,
+        subjectName = ""
     )
 }

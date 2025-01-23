@@ -7,22 +7,27 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
 
-fun NavController.navigateToSubjectDetail(subjectId: Int) {
+fun NavController.navigateToSubjectDetail(
+    subjectId: Int,
+    subjectName: String) {
     navigate(
-        route = SubjectDetailRoute(subjectId = subjectId),
+        route = SubjectDetailRoute(
+            subjectId = subjectId,
+            subjectName = subjectName),
     )
 }
 
 fun NavGraphBuilder.subjectDetailNavGraph(
     padding: PaddingValues,
     navigateToBack: () -> Unit = {},
-    navigateToModifyMotivation: () -> Unit = {},
-    navigateToModifySubjectName: (String) -> Unit = {},
+    navigateToModifyMotivation: (Int, String) -> Unit = {_,_ ->},
+    navigateToModifySubjectName: (Int,String) -> Unit = {_, _ ->},
 ) {
     composable<SubjectDetailRoute> { backStackEntry ->
         SubjectDetailRoute(
             padding = padding,
             subjectId = backStackEntry.toRoute<SubjectDetailRoute>().subjectId,
+            subjectName = backStackEntry.toRoute<SubjectDetailRoute>().subjectName,
             navigateToBack = navigateToBack,
             navigateToModifyMotivation = navigateToModifyMotivation,
             navigateToModifySubjectName = navigateToModifySubjectName,
@@ -31,4 +36,7 @@ fun NavGraphBuilder.subjectDetailNavGraph(
 }
 
 @Serializable
-data class SubjectDetailRoute(val subjectId: Int)
+data class SubjectDetailRoute(
+    val subjectId: Int,
+    val subjectName: String,
+    )

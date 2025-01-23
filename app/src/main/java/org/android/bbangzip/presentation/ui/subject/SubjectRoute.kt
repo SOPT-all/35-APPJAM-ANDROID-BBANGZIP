@@ -25,7 +25,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun SubjectRoute(
     padding: PaddingValues,
     navigateAddStudy: (SplitStudyData) -> Unit,
-    navigateToSubjectDetail: (Int) -> Unit = {},
+    navigateToSubjectDetail: (Int, String) -> Unit = {_, _ ->},
     viewModel: SubjectViewModel = hiltViewModel(),
 ) {
     val subjectState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -41,7 +41,7 @@ fun SubjectRoute(
             when (effect) {
                 SubjectContract.SubjectSideEffect.NavigateToAddStudy -> {}
                 SubjectContract.SubjectSideEffect.NavigateToAddSubject -> {}
-                is SubjectContract.SubjectSideEffect.NavigateToSubjectDetail -> navigateToSubjectDetail(effect.subjectId)
+                is SubjectContract.SubjectSideEffect.NavigateToSubjectDetail -> navigateToSubjectDetail(effect.subjectId, effect.subjectName)
                 SubjectContract.SubjectSideEffect.ShowDeleteSuccessSnackBar -> TODO()
             }
         }
@@ -55,9 +55,9 @@ fun SubjectRoute(
         true ->
             SubjectScreen(
                 padding = padding,
-                onClickDeleteModeCard = { id -> viewModel.setEvent(SubjectContract.SubjectEvent.OnClickDeleteModeCard(id)) },
+                onClickDeleteModeCard = { id, name -> viewModel.setEvent(SubjectContract.SubjectEvent.OnClickDeleteModeCard(id)) },
                 onClickTrashBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickTrashIcon) },
-                onClickStudyCard = { id -> viewModel.setEvent(SubjectContract.SubjectEvent.OnClickStudyCard(id)) },
+                onClickStudyCard = { id, name -> viewModel.setEvent(SubjectContract.SubjectEvent.OnClickStudyCard(id, name)) },
                 onClickCancleBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickCancleIcon) },
                 subjects = subjectState.subjectList,
                 cardViewType = subjectState.cardViewType,

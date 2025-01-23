@@ -11,7 +11,9 @@ import org.android.bbangzip.presentation.ui.ModifySubjectName.modify.ModifySubje
 @Composable
 fun ModifySubjectNameRoute(
     viewModel: ModifySubjectNameViewModel = hiltViewModel(),
-    navigateToSubjectDetail: (Int) -> Unit,
+    subjectId: Int,
+    subjectName: String,
+    navigateToSubjectDetail: (Int, String) -> Unit,
 ){
     val modifySubjectNameState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -19,7 +21,7 @@ fun ModifySubjectNameRoute(
         viewModel.uiSideEffect.collectLatest{ effect ->
             when(effect){
                 is ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail -> {
-                    navigateToSubjectDetail(effect.subjectId)
+                    navigateToSubjectDetail(effect.subjectId, effect.subjectName)
                 }
             }
         }
@@ -33,7 +35,7 @@ fun ModifySubjectNameRoute(
         subjectId = modifySubjectNameState.subjectId,
         onSubjectNameChanged = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnChangeSubjectName(it))},
         onTextFieldFocusChanged = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField(it))},
-        onModifyBtnClicked = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn(it))},
+        onModifyBtnClicked = {id, name ->viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn(id, name))},
         onDeleteBtnClicked = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickDeleteBtn)}
     )
 }
