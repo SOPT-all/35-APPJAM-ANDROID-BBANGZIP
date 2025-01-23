@@ -2,6 +2,7 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -16,6 +17,9 @@ fun SubjectDetailRoute(
     viewModel: SubjectDetailViewModel = hiltViewModel(),
 ) {
     val subjectDetailState by viewModel.uiState.collectAsStateWithLifecycle()
+    LaunchedEffect (Unit) {
+        viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.Initialize(subjectId))
+    }
 
     SubjectDetailScreen(
         padding = padding,

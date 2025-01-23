@@ -9,49 +9,7 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class SubjectContract {
     @Parcelize
     data class SubjectState(
-        val subjectList: List<SubjectCardModel> =
-            listOf(
-                SubjectCardModel(
-                    subjectName = "경제통계학",
-                    examName = "",
-                    pendingCount = 0,
-                    inProgressCount = 6,
-                    subjectId = 1,
-                    examRemainingDays = 1,
-                ),
-                SubjectCardModel(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0,
-                    inProgressCount = 6,
-                    subjectId = 2,
-                    examRemainingDays = 1,
-                ),
-                SubjectCardModel(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0,
-                    inProgressCount = 6,
-                    subjectId = 3,
-                    examRemainingDays = 1,
-                ),
-                SubjectCardModel(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0,
-                    inProgressCount = 6,
-                    subjectId = 4,
-                    examRemainingDays = 1,
-                ),
-                SubjectCardModel(
-                    subjectName = "[경영] 경제통계학",
-                    examName = "중간고사",
-                    pendingCount = 0,
-                    inProgressCount = 6,
-                    subjectId = 5,
-                    examRemainingDays = 1,
-                ),
-            ),
+        val subjectList: List<SubjectCardModel> = listOf(),
         val subjectSetToDelete: Set<Int> = setOf(),
         val cardViewType: CardViewType = CardViewType.DEFAULT,
     ) : BaseContract.State, Parcelable {
@@ -78,6 +36,8 @@ class SubjectContract {
         data object UpdateToDefaultMode : SubjectReduce
 
         data class UpdateSubjectCard(val subjectId: Int) : SubjectReduce
+
+        data class UpdateSubjectCardList(val subjectList: List<SubjectCardModel>) : SubjectReduce
 
         data class UpdateDeletedSet(val subjectId: Int) : SubjectReduce
     }

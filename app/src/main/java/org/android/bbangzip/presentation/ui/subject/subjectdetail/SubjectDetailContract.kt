@@ -140,7 +140,7 @@ class SubjectDetailContract {
     }
 
     sealed interface SubjectDetailEvent : BaseContract.Event {
-        data object Initialize : SubjectDetailEvent
+        data class Initialize(val subjectId:Int) : SubjectDetailEvent
 
         data object OnPlusIconClicked : SubjectDetailEvent
 

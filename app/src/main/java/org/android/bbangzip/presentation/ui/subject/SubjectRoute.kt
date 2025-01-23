@@ -14,9 +14,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.android.bbangzip.presentation.model.SplitStudyData
+import org.android.bbangzip.presentation.ui.todo.TodoContract
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -44,6 +47,11 @@ fun SubjectRoute(
             }
         }
     }
+
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        viewModel.setEvent(SubjectContract.SubjectEvent.Initialize)
+    }
+
     when (success) {
         true ->
             SubjectScreen(

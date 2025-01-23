@@ -32,13 +32,12 @@ constructor(
         return savedState as? SubjectDetailContract.SubjectDetailState ?: SubjectDetailContract.SubjectDetailState()
     }
 
-    init {
-        setEvent(SubjectDetailContract.SubjectDetailEvent.Initialize)
-    }
-
     override fun handleEvent(event: SubjectDetailContract.SubjectDetailEvent) {
         when (event) {
-            is SubjectDetailContract.SubjectDetailEvent.Initialize -> launch { initData() }
+            is SubjectDetailContract.SubjectDetailEvent.Initialize -> launch {
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectId(event.subjectId))
+                initData(event.subjectId)
+            }
 
             is SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked -> {
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDeleteMode)
@@ -56,7 +55,7 @@ constructor(
             }
 
             is SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked -> {
-                viewModelScope.launch{
+                viewModelScope.launch {
                     postCompleteCardId(event.pieceId)
                 }
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDefaultCardState(event.pieceId))
@@ -212,10 +211,10 @@ constructor(
         }
     }
 
-    private suspend fun initData(){
+    private suspend fun initData(subjectId: Int) {
         getSubjectDetail(
-            subjectId = 4,
-            examName = "mid",
+            subjectId = subjectId,
+            examName = "fin",
         )
     }
 
