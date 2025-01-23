@@ -103,6 +103,7 @@ fun MainNavHost(
 
             addStudyNavGraph(
                 padding = padding,
+                popBackStack = { navigator.popBackStackIfNotSubject() },
                 navigateSplitStudy = { navigator.navHostController.navigateSplitStudy(it) },
             )
 

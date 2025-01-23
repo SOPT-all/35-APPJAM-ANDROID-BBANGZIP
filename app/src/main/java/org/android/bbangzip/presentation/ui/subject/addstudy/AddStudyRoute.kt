@@ -15,6 +15,7 @@ fun AddStudyRoute(
     padding: PaddingValues,
     splitStudyData: SplitStudyData,
     viewModel: AddStudyViewModel = hiltViewModel(),
+    popBackStack: () -> Unit = {},
     navigateSplitStudy: (AddStudyData) -> Unit = {},
 ) {
     LaunchedEffect(Unit) {
@@ -27,6 +28,7 @@ fun AddStudyRoute(
                 is AddStudyContract.AddStudySideEffect.NavigateSplitStudy -> {
                     navigateSplitStudy(it.addStudyData)
                 }
+                is AddStudyContract.AddStudySideEffect.PopBackStack -> popBackStack()
             }
         }
     }
@@ -66,6 +68,7 @@ fun AddStudyRoute(
             onClickCancleIcon = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickCancleIcon) },
             onClickConfirmDateBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickConfirmDateBtn) },
             onClickAgainSplitBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAgainSplitBtn(it)) },
+            onClickAddStudyBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAddStudyBtn) }
         )
     }
 }
