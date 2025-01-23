@@ -42,7 +42,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = AddSubjectRoute
+    val startDestination = ModifyMotivationMessageRoute
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =

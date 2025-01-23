@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject.modify.motivationmessage
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -13,11 +14,13 @@ fun NavController.navigateModifyMotivationMessage(
 }
 
 fun NavGraphBuilder.modifyMotivationMessageNavGraph(
-    navigateToSubjectDetail: () -> Unit
+    navigateToSubjectDetail: () -> Unit,
+    snackbarHostState: SnackbarHostState,
 ) {
-    composable<ModifyMotivationMessageRoute>() {
+    composable<ModifyMotivationMessageRoute> {
         ModifyMotivationMessageRoute(
-            navigateToSubjectDetail = navigateToSubjectDetail
+            navigateToSubjectDetail = navigateToSubjectDetail,
+            snackbarHostState = snackbarHostState,
         )
     }
 }

@@ -31,6 +31,7 @@ constructor(
             }
             ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn -> {
                 setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail)
+                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar("각오 한 마디 작성 완료!"))
             }
             is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField -> {
                 updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))

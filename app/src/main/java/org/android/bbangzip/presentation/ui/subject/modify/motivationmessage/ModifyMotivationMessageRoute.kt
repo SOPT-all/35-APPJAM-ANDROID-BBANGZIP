@@ -1,17 +1,21 @@
 package org.android.bbangzip.presentation.ui.subject.modify.motivationmessage
 
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.android.bbangzip.presentation.ui.subject.splitstudy.SplitStudyContract
 
 @Composable
 fun ModifyMotivationMessageRoute(
     viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
     navigateToSubjectDetail: () -> Unit,
+    snackbarHostState: SnackbarHostState
 ){
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -20,6 +24,15 @@ fun ModifyMotivationMessageRoute(
             when (effect) {
                 is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail -> {
                     navigateToSubjectDetail()
+                }
+                is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar -> {
+                    val job =
+                        launch {
+                            snackbarHostState.currentSnackbarData?.dismiss()
+                            snackbarHostState.showSnackbar(effect.message)
+                        }
+                    delay(2000)
+                    job.cancel()
                 }
             }
         }
