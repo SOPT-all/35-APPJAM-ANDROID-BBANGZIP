@@ -194,32 +194,11 @@ class TodoViewModel
                 TodoContract.TodoEvent.OnItemDeleteButtonClicked -> {
                     viewModelScope.launch {
                         postDeletedItemList(selectedItemList = currentUiState.selectedItemList)
+                        initDataLoad()
                     }
-                    updateState(
-                        TodoContract.TodoReduce.UpdateToDoCount(
-                            completeCount = currentUiState.completeCount,
-                            remainingStudyCount = currentUiState.remainingStudyCount - currentUiState.selectedItemList.size,
-                        ),
-                    )
-                    updateState(
-                        TodoContract.TodoReduce.UpdatePendingToDoCount(
-                            pendingCount = currentUiState.pendingCount + currentUiState.selectedItemList.size,
-                        ),
-                    )
-
-                    if (currentUiState.completeCount > 0 || currentUiState.remainingStudyCount - currentUiState.selectedItemList.size != 0) {
-                        updateState(TodoContract.TodoReduce.DeleteToDoListItems)
-                        updateState(
-                            TodoContract.TodoReduce.UpdateToDoListCardState(
-                                previousCardState = BbangZipCardState.CHECKABLE,
-                                nextCardState = BbangZipCardState.DEFAULT,
-                            ),
-                        )
-                        updateState(TodoContract.TodoReduce.UpdateScreenType(screenType = ToDoScreenType.DEFAULT))
-                    } else {
+                    if (currentUiState.completeCount == 0 || currentUiState.remainingStudyCount - currentUiState.selectedItemList.size != 0) {
                         updateState(TodoContract.TodoReduce.UpdateScreenType(screenType = ToDoScreenType.EMPTY))
                     }
-
                     updateState(TodoContract.TodoReduce.ResetSelectedItemList)
                     setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("오늘 할 공부를 삭제했어요"))
                 }

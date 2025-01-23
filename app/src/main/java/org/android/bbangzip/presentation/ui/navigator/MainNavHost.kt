@@ -103,6 +103,7 @@ fun MainNavHost(
 
             subjectNavGraph(
                 navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
+                navigateToSubjectDetail = { id -> navigator.navigateToSubjectDetail(id) },
                 padding = padding,
             )
 
@@ -124,6 +125,9 @@ fun MainNavHost(
             )
             subjectDetailNavGraph(
                 padding = padding,
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToModifyMotivation = { },
+                navigateToModifySubjectName = { },
             )
 
             todoNavGraph(

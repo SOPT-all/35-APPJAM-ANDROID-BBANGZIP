@@ -3,15 +3,19 @@ package org.android.bbangzip.presentation.ui.subject
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.android.bbangzip.domain.usecase.GetSubjectInfoUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
+import org.android.bbangzip.presentation.model.card.SubjectCardModel
 import org.android.bbangzip.presentation.type.CardViewType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class SubjectViewModel
     @Inject
     constructor(
+        private val getSubjectInfoUseCase: GetSubjectInfoUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<SubjectContract.SubjectEvent, SubjectContract.SubjectState, SubjectContract.SubjectReduce, SubjectContract.SubjectSideEffect>(
             savedStateHandle = savedStateHandle,
@@ -26,7 +30,7 @@ class SubjectViewModel
 
         override fun handleEvent(event: SubjectContract.SubjectEvent) {
             when (event) {
-                is SubjectContract.SubjectEvent.Initialize -> {}
+                is SubjectContract.SubjectEvent.Initialize -> launch { getSubjectInfo() }
 
                 is SubjectContract.SubjectEvent.OnClickDeleteButton -> {
                     updateState(SubjectContract.SubjectReduce.UpdateDeletedSet(event.subjectId))
@@ -43,6 +47,10 @@ class SubjectViewModel
 
                 is SubjectContract.SubjectEvent.OnClickCancleIcon -> {
                     updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
+                }
+
+                is SubjectContract.SubjectEvent.OnClickStudyCard -> {
+                    setSideEffect(SubjectContract.SubjectSideEffect.NavigateToSubjectDetail(event.subjectId))
                 }
             }
         }
@@ -109,6 +117,45 @@ class SubjectViewModel
                             },
                     )
                 }
+
+                is SubjectContract.SubjectReduce.UpdateSubjectCardList -> {
+                    Timber.tag("이승범").d("뭐가 문제야%s", reduce.subjectList.toString())
+                    state.copy(
+                        subjectList = reduce.subjectList,
+                    )
+                }
             }
+        }
+
+        private suspend fun getSubjectInfo() {
+            getSubjectInfoUseCase()
+                .onSuccess { data ->
+                    Timber.tag("이승범").d(data.toString())
+                    val subjectCardList =
+                        data.subjectList.map {
+                            if (it.studyList.isEmpty()) {
+                                return@map SubjectCardModel(
+                                    subjectName = it.subjectName,
+                                    examName = "",
+                                    pendingCount = 0,
+                                    inProgressCount = 0,
+                                    subjectId = it.subjectId,
+                                    examRemainingDays = 0,
+                                )
+                            } else {
+                                SubjectCardModel(
+                                    subjectName = it.subjectName,
+                                    examName = it.studyList[0]?.examName ?: "",
+                                    pendingCount = it.studyList[0]?.pendingCount ?: 0,
+                                    inProgressCount = it.studyList[0]?.remainingCount ?: 0,
+                                    subjectId = it.subjectId,
+                                    examRemainingDays = it.studyList[0]?.examDday ?: 0,
+                                )
+                            }
+                        }
+                    updateState(SubjectContract.SubjectReduce.UpdateSubjectCardList(subjectList = subjectCardList))
+                }.onFailure { error ->
+                    Timber.tag("SubjectInfo").d(error)
+                }
         }
     }
