@@ -102,28 +102,6 @@ class MyViewModel @Inject constructor(
             }.onFailure {
                 Timber.d("[마이페이지] fetch 실패 -> $error")
             }
-        //fetchMyData()
-    }
-
-    private fun fetchMyData() {
-        viewModelScope.launch {
-            fetchBbangZipUseCase()
-                .onSuccess { data ->
-                    updateState(
-                        MyContract.MyReduce.UpdateMyBbangZip(
-                            myBbangZip = MyBbangZip(
-                                bbangZipName = data.levelDetails[data.level-1].levelName,
-                                bbangZipLevel = data.level,
-                                reward = data.reward,
-                                maxReward = data.maxReward,
-                                bbangZipImgUrl = data.levelDetails[data.level-1].levelImage
-                            )
-                        )
-                    )
-                }.onFailure {
-                    Timber.d("[마이페이지] fetch 실패 -> $error")
-                }
-        }
     }
 
     private fun logout() {

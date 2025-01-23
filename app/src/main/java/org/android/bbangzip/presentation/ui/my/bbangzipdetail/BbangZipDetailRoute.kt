@@ -8,6 +8,7 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
+import org.android.bbangzip.presentation.component.indicator.BbangZipLoadingIndicator
 
 @Composable
 fun BbangZipDetailRoute(
@@ -17,6 +18,7 @@ fun BbangZipDetailRoute(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { state.bbangZipList.size })
+    val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
@@ -26,10 +28,15 @@ fun BbangZipDetailRoute(
         }
     }
 
-    BbangZipDetailScreen(
-        modifier = modifier,
-        state = state,
-        pagerState = pagerState,
-        popBackStack = popBackStack
-    )
+    when (success) {
+        true ->
+            BbangZipDetailScreen(
+                modifier = modifier,
+                state = state,
+                pagerState = pagerState,
+                popBackStack = popBackStack
+            )
+
+        else -> BbangZipLoadingIndicator()
+    }
 }

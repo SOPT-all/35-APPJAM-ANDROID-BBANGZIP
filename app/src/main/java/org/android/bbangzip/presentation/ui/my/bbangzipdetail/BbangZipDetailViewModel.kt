@@ -2,9 +2,7 @@ package org.android.bbangzip.presentation.ui.my.bbangzipdetail
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.launch
 import org.android.bbangzip.domain.usecase.FetchBbangZipUseCase
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import timber.log.Timber
@@ -21,6 +19,10 @@ class BbangZipDetailViewModel @Inject constructor(
         return savedState as? BbangZipDetailContract.BbangZipDetailState ?: BbangZipDetailContract.BbangZipDetailState()
     }
 
+    init {
+        setEvent(BbangZipDetailContract.BbangZipDetailEvent.Initialize)
+    }
+
     override fun handleEvent(event: BbangZipDetailContract.BbangZipDetailEvent) {
         when (event) {
             is BbangZipDetailContract.BbangZipDetailEvent.Initialize -> launch { initDataLoad() }
@@ -29,25 +31,22 @@ class BbangZipDetailViewModel @Inject constructor(
     }
 
     override fun reduceState(state: BbangZipDetailContract.BbangZipDetailState, reduce: BbangZipDetailContract.BbangZipDetailReduce): BbangZipDetailContract.BbangZipDetailState {
-        TODO("Not yet implemented")
-    }
-
-    private fun initDataLoad() {
-        fetchMyData()
-    }
-
-    private fun fetchMyData() {
-        viewModelScope.launch {
-            fetchBbangZipUseCase()
-                .onSuccess { data ->
-                    updateState(
-                        BbangZipDetailContract.BbangZipDetailReduce.UpdateMyBbangZipList(
-                            bbangZipList = data.levelDetails.map { it.toBbangZip() }
-                        )
-                    )
-                }.onFailure {
-                    Timber.d("[마이페이지] fetch 실패 -> $error")
-                }
+        return when (reduce) {
+            is BbangZipDetailContract.BbangZipDetailReduce.UpdateMyBbangZipList -> state.copy(bbangZipList = reduce.bbangZipList)
         }
+    }
+
+    private suspend fun initDataLoad() {
+        fetchBbangZipUseCase()
+            .onSuccess { data ->
+                Timber.tag("[마이페이지] fetch 성공 ->").d("${data}")
+                updateState(
+                    BbangZipDetailContract.BbangZipDetailReduce.UpdateMyBbangZipList(
+                        bbangZipList = data.levelDetails.map { it.toBbangZip() }
+                    )
+                )
+            }.onFailure {
+                Timber.d("[마이페이지] fetch 실패 -> $error")
+            }
     }
 }
