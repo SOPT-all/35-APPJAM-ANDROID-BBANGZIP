@@ -50,6 +50,9 @@ data class BbangZipColors(
     val kakaoContainer_FEE500: Color,
     val kakaoSymbol_000000: Color,
     val kakaoLabel_000000_85: Color,
+    // Splash
+    val splashBackground_FFF9EF: Color,
+    val splashLogo_886759: Color
 )
 
 val defaultBbangZipColors =
@@ -98,6 +101,9 @@ val defaultBbangZipColors =
         kakaoContainer_FEE500 = Yellow55,
         kakaoSymbol_000000 = Common0,
         kakaoLabel_000000_85 = Common0.copy(alpha = 0.85f),
+        // Splash
+        splashBackground_FFF9EF = Yellow99,
+        splashLogo_886759 = Brown10
     )
 
 val LocalBbangZipColors = staticCompositionLocalOf { defaultBbangZipColors }
