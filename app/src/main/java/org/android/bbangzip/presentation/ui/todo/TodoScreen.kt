@@ -1,12 +1,16 @@
 package org.android.bbangzip.presentation.ui.todo
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,8 +31,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
@@ -41,7 +48,9 @@ import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.type.ToDoScreenType
+import org.android.bbangzip.presentation.ui.subject.subjectdetail.RevertCompleteBottomSheet
 import org.android.bbangzip.presentation.ui.todo.component.ToDoFilterPickerBottomSheet
+import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -66,10 +75,10 @@ fun TodoScreen(
 ) {
     Box(
         modifier =
-            modifier
-                .fillMaxSize()
-                .padding(bottom = bottomPadding.calculateBottomPadding())
-                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+        modifier
+            .fillMaxSize()
+            .padding(bottom = bottomPadding.calculateBottomPadding())
+            .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
     ) {
         LazyColumn {
             item {
@@ -364,13 +373,12 @@ fun DateMessageCard(
                             modifier = Modifier.wrapContentSize(),
                         )
 
-                    Spacer(modifier = Modifier.height(48.dp))
+                        Spacer(modifier = Modifier.height(48.dp))
+                    }
                 }
             }
-
             Spacer(modifier = Modifier.height(24.dp))
         }
-
         TopTailBalloon(
             text = stringResource(R.string.todo_top_tail_balloon_text),
             leadingIcon = {
@@ -441,18 +449,18 @@ fun DeleteAndFilterIcons(
 ) {
     Row(
         modifier =
-            modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
+        modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
         Box(
             modifier =
-                Modifier
-                    .clip(CircleShape)
-                    .clickable { onDeleteIconClicked() },
+            Modifier
+                .clip(CircleShape)
+                .clickable { onDeleteIconClicked() },
             contentAlignment = Alignment.Center,
         ) {
             Icon(
@@ -465,9 +473,9 @@ fun DeleteAndFilterIcons(
 
         Box(
             modifier =
-                Modifier
-                    .clip(CircleShape)
-                    .clickable { onFilterIconClicked() },
+            Modifier
+                .clip(CircleShape)
+                .clickable { onFilterIconClicked() },
             contentAlignment = Alignment.Center,
         ) {
             Icon(
@@ -759,3 +767,4 @@ fun TodoScreenMockPreview() {
         bottomPadding = PaddingValues(),
     )
 }
+

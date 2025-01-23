@@ -1,6 +1,7 @@
 package org.android.bbangzip.presentation.ui.my.mybadgecategory
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,9 +59,9 @@ fun MyBadgeCategoryScreen(
     }
     LazyColumn(
         modifier =
-            modifier
-                .fillMaxWidth()
-                .background(BbangZipTheme.colors.staticWhite_FFFFFF),
+        modifier
+            .fillMaxWidth()
+            .background(BbangZipTheme.colors.staticWhite_FFFFFF),
         state = scrollState,
     ) {
         stickyHeader {
@@ -73,23 +75,36 @@ fun MyBadgeCategoryScreen(
         }
 
         item {
-            Column(
+            Box(
                 modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .background(
-                            color = BbangZipTheme.colors.backgroundAccent_FFDAA0,
-                            shape = RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp),
-                        ),
+                Modifier
+                    .fillMaxWidth()
+                    .background(
+                        color = BbangZipTheme.colors.backgroundAccent_FFDAA0,
+                        shape = RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp),
+                    )
             ) {
-                Text(
-                    text = stringResource(R.string.badge_category_title, "밍밍"),
-                    style = BbangZipTheme.typography.heading2Bold,
-                    color = BbangZipTheme.colors.labelNormal_282119,
+                Image(
+                    painter = painterResource(R.drawable.img_mypage_header),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .aspectRatio(360f / 161f)
+                )
+                Column(
                     modifier =
+                    Modifier
+                        .fillMaxWidth(),
+                ) {
+                    Text(
+                        text = stringResource(R.string.badge_category_title, "밍밍"),
+                        style = BbangZipTheme.typography.heading2Bold,
+                        color = BbangZipTheme.colors.labelNormal_282119,
+                        modifier =
                         Modifier
                             .padding(start = 24.dp, top = 28.dp, bottom = 48.dp),
-                )
+                    )
+                }
             }
 
             Spacer(Modifier.height(48.dp))
@@ -157,10 +172,10 @@ fun BadgeCategoryGridList(
 
     Column(
         modifier =
-            modifier
-                .padding(horizontal = 20.dp)
-                .fillMaxWidth()
-                .background(BbangZipTheme.colors.staticWhite_FFFFFF),
+        modifier
+            .padding(horizontal = 20.dp)
+            .fillMaxWidth()
+            .background(BbangZipTheme.colors.staticWhite_FFFFFF),
     ) {
         Text(
             text = badgeCategoryTitle,
@@ -180,10 +195,10 @@ fun BadgeCategoryGridList(
 
         LazyVerticalGrid(
             modifier =
-                Modifier
-                    .padding(horizontal = 16.dp)
-                    .fillMaxSize()
-                    .heightIn(max = (badgeHeight * (badgeCategoryList.size - 1 / 3 + 1) + 20 * (badgeCategoryList.size / 3)).dp),
+            Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxSize()
+                .heightIn(max = (badgeHeight * (badgeCategoryList.size - 1 / 3 + 1) + 20 * (badgeCategoryList.size / 3)).dp),
             columns = GridCells.Fixed(3),
             horizontalArrangement = Arrangement.spacedBy(32.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp),
@@ -191,10 +206,10 @@ fun BadgeCategoryGridList(
             items(badgeCategoryList.size) { index ->
                 Box(
                     modifier =
-                        Modifier
-                            .aspectRatio(1f)
-                            .clip(RoundedCornerShape(24.dp))
-                            .clickable { onBadgeCardClicked(badgeCategoryList[index].name) },
+                    Modifier
+                        .aspectRatio(1f)
+                        .clip(RoundedCornerShape(24.dp))
+                        .clickable { onBadgeCardClicked(badgeCategoryList[index].name) },
                     contentAlignment = Alignment.Center,
                 ) {
                     if (badgeCategoryList[index].isLocked) {
@@ -206,9 +221,9 @@ fun BadgeCategoryGridList(
                             model = badgeCategoryList[index].imageUrl,
                             contentDescription = null,
                             modifier =
-                                Modifier
-                                    .fillMaxSize()
-                                    .clip(RoundedCornerShape(24.dp)),
+                            Modifier
+                                .fillMaxSize()
+                                .clip(RoundedCornerShape(24.dp)),
                         )
                     }
                 }
