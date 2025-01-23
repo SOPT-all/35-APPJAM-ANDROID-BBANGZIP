@@ -20,22 +20,7 @@ fun LoginRoute(
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { state.onBoardingList.size })
-    val userPreferences by viewModel.userPreferencesFlow.collectAsStateWithLifecycle(initialValue = UserPreferences.getDefaultInstance())
     val context = LocalContext.current
-
-    LaunchedEffect(userPreferences.isOnboardingCompleted) {
-        Timber.d("[로그인] 로그인 여부 ${userPreferences.isLogin}, 온보딩 여부 ${userPreferences.isOnboardingCompleted}, 액세스 토큰 ${userPreferences.accessToken}")
-        if (userPreferences.isLogin) {
-            Timber.d("[로그인] isLogin true")
-            if (userPreferences.isOnboardingCompleted) {
-                Timber.d("[로그인] isLogin true, onboarding true")
-                navigateToSubject()
-            } else {
-                Timber.d("[로그인] isLogin true, onboarding false")
-                navigateToOnboarding()
-            }
-        }
-    }
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->

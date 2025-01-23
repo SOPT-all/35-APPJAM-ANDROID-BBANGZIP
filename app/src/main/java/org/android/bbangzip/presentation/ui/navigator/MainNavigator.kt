@@ -20,6 +20,8 @@ import org.android.bbangzip.presentation.ui.my.navigation.navigateMy
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
+import org.android.bbangzip.presentation.ui.splash.navigation.SplashRoute
+import org.android.bbangzip.presentation.ui.splash.navigation.navigateSplash
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
@@ -32,7 +34,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = LoginRoute
+    val startDestination = SplashRoute
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =
@@ -63,6 +65,14 @@ class MainNavigator(
 
             Timber.d("[navigation] currentBackStack -> ${navHostController.currentBackStack.value}")
         }
+    }
+
+    fun navigateToSplash() {
+        navHostController.navigateSplash()
+    }
+
+    fun navigateToSubject() {
+        navHostController.navigateSubject()
     }
 
     fun navigateToLogin() {

@@ -7,8 +7,14 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
+import kotlinx.coroutines.delay
 import org.android.bbangzip.presentation.ui.friend.navigation.friendNavGraph
 import org.android.bbangzip.presentation.ui.login.loginNavGraph
 import org.android.bbangzip.presentation.ui.my.bbangzipdetail.navigation.bbangZipDetailNavGraph
@@ -18,6 +24,7 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingEndNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
+import org.android.bbangzip.presentation.ui.splash.navigation.splashNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
@@ -48,11 +55,15 @@ fun MainNavHost(
             navController = navigator.navHostController,
             startDestination = navigator.startDestination,
         ) {
+            splashNavGraph(
+                navigateToLogin = { navigator.navigateToLogin() },
+                navigateToOnboardingStart = { navigator.navigateToOnboardingStart() },
+                navigateToSubject = { navigator.navigateToSubject() }
+            )
+
             loginNavGraph(
-                navigateToSubject = { navigator.navHostController.navigateSubject() },
-                navigateToOnboarding = {
-                    navigator.navHostController.navigateOnboardingStart()
-                },
+                navigateToSubject = { navigator.navigateToSubject() },
+                navigateToOnboarding = { navigator.navigateToOnboardingStart() },
             )
 
             onboardingStartNavGraph(
@@ -64,7 +75,7 @@ fun MainNavHost(
             )
 
             onboardingEndNavGraph(
-                navigateToSubject = { navigator.navHostController.navigateSubject() },
+                navigateToSubject = { navigator.navigateToSubject() },
             )
 
             todoAddNavGraph(

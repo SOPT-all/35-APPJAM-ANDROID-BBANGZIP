@@ -17,6 +17,7 @@ import org.android.bbangzip.ui.theme.BBANGZIPTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -24,7 +25,6 @@ class MainActivity : ComponentActivity() {
             splashScreenView.remove()
         }
 
-        enableEdgeToEdge()
         setContent {
             val navigator: MainNavigator = rememberMainNavigator()
             var showSplash by remember { mutableStateOf(true) }
