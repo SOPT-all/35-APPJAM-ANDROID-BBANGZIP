@@ -107,10 +107,32 @@ fun MyBadgeCategoryScreen(
 
         item {
             BadgeCategoryGridList(
-                badgeCategoryList = badgeCategoryState.badgeCategoryList2,
+                badgeCategoryList = badgeCategoryState.badgeCategoryList2.reversed(),
                 categoryDescription = "지금 바로 시작하면 미룬이 탈출 가능!",
                 onBadgeCardClicked = onBadgeCardClicked,
             )
+
+            Spacer(Modifier.height(64.dp))
+        }
+
+        item {
+            BadgeCategoryGridList(
+                badgeCategoryList = badgeCategoryState.badgeCategoryList3,
+                categoryDescription = "지금부터 시작해도 반은 한거에요!",
+                onBadgeCardClicked = onBadgeCardClicked,
+            )
+
+            Spacer(Modifier.height(64.dp))
+        }
+
+        item {
+            BadgeCategoryGridList(
+                badgeCategoryList = badgeCategoryState.badgeCategoryList4,
+                categoryDescription = "빵 한쪽도 나눠 먹는 사이!",
+                onBadgeCardClicked = onBadgeCardClicked,
+            )
+
+            Spacer(Modifier.height(16.dp))
         }
     }
 

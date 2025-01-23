@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject
 
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
@@ -14,10 +15,14 @@ fun NavController.navigateSubject() {
 
 fun NavGraphBuilder.subjectNavGraph(
     navigateAddStudy: (SplitStudyData) -> Unit,
+    navigateToSubjectDetail: (Int) -> Unit,
+    padding: PaddingValues,
 ) {
     composable<BottomNavigationRoute.Subject> {
         SubjectRoute(
             navigateAddStudy = navigateAddStudy,
+            navigateToSubjectDetail = navigateToSubjectDetail,
+            padding = padding,
         )
     }
 }

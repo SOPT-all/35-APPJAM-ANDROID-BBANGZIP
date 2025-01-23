@@ -72,6 +72,8 @@ class MyBadgeCategoryViewModel
                     state.copy(
                         badgeCategoryList1 = reduce.badgeCategoryList1,
                         badgeCategoryList2 = reduce.badgeCategoryList2,
+                        badgeCategoryList3 = reduce.badgeCategoryList3,
+                        badgeCategoryList4 = reduce.badgeCategoryList4,
                     )
 
                 is MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetail ->
@@ -102,20 +104,29 @@ class MyBadgeCategoryViewModel
                                 imageUrl = badge.badgeImage,
                             )
                         }
-                    val badgeCategory = badgeLists[0].categoryName
                     val badgeCategoryList1 =
                         badgeLists.filter { badge ->
-                            badge.categoryName != badgeCategory
+                            badge.categoryName == "시작이 빵이다"
                         }
                     val badgeCategoryList2 =
                         badgeLists.filter { badge ->
-                            badge.categoryName == badgeCategory
+                            badge.categoryName == "미룬이 탈출"
+                        }
+                    val badgeCategoryList3 =
+                        badgeLists.filter { badge ->
+                            badge.categoryName == "미룬이 겨우 탈출"
+                        }
+                    val badgeCategoryList4 =
+                        badgeLists.filter { badge ->
+                            badge.categoryName == "인싸 사장님"
                         }
 
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeCategoryList(
                             badgeCategoryList1 = badgeCategoryList1,
                             badgeCategoryList2 = badgeCategoryList2,
+                            badgeCategoryList3 = badgeCategoryList3,
+                            badgeCategoryList4 = badgeCategoryList4,
                         ),
                     )
                 }.onFailure { error ->

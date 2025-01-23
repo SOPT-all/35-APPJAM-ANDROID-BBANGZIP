@@ -11,8 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import org.android.bbangzip.presentation.ui.friend.navigation.friendNavGraph
 import org.android.bbangzip.presentation.ui.login.loginNavGraph
-import org.android.bbangzip.presentation.ui.my.myNavGraph
+import org.android.bbangzip.presentation.ui.my.bbangzipdetail.navigation.bbangZipDetailNavGraph
 import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.myBadgeCategoryNavGraph
+import org.android.bbangzip.presentation.ui.my.navigation.myNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingEndNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavGraph
@@ -23,6 +24,7 @@ import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
 import org.android.bbangzip.presentation.ui.subject.splitstudy.splitStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
+import org.android.bbangzip.presentation.ui.subject.subjectdetail.subjectDetailNavGraph
 import org.android.bbangzip.presentation.ui.todo.navigation.todoNavGraph
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.todoAddPendingNavGraph
 import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.todoAddNavGraph
@@ -80,15 +82,24 @@ fun MainNavHost(
             friendNavGraph()
 
             myNavGraph(
+                padding = padding,
+                navigateToBbangZipDetail = { navigator.navigateToBbangZipDetail() },
                 navigateToLogin = { navigator.navigateToLogin() },
+                navigateToBadgeDetail = { navigator.navigateToMyBadgeCategory() },
+            )
+
+            bbangZipDetailNavGraph(
+                popBackStack = { navigator.popBackStackIfNotSubject() },
             )
 
             myBadgeCategoryNavGraph(
-                navigateToBack = { navigator.navigateToMyBadgeCategory() },
+                popBackStack = { navigator.popBackStackIfNotSubject() },
             )
 
             subjectNavGraph(
                 navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
+                navigateToSubjectDetail = { id -> navigator.navigateToSubjectDetail(id) },
+                padding = padding,
             )
 
             addStudyNavGraph(
@@ -99,6 +110,19 @@ fun MainNavHost(
             splitStudyNavGraph(
                 navigateBack = { navigator.navHostController.popBackStack() },
                 navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
+            )
+
+            todoNavGraph(
+                snackBarHostState = snackBarHostState,
+                bottomPadding = padding,
+                navigateToAddToDo = { navigator.navigateToToDoAdd() },
+                navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
+            )
+            subjectDetailNavGraph(
+                padding = padding,
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToModifyMotivation = { },
+                navigateToModifySubjectName = { },
             )
 
             todoNavGraph(

@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.component.bottomsheet
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -18,6 +17,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -56,11 +56,8 @@ fun BbangZipListDefaultPickerBottomSheet(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .applyFilterOnClick { onSelectedItemChanged(index) }
-                                .background(
-                                    color = if (index != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
-                                    shape = RoundedCornerShape(16.dp),
-                                )
+                                .clip(shape = RoundedCornerShape(16.dp))
+                                .applyFilterOnClick(baseColor = if (index != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16, radius = 16.dp) { onSelectedItemChanged(index) }
                                 .padding(vertical = 8.dp),
                         textAlign = TextAlign.Center,
                         style = BbangZipTheme.typography.body1Bold,

@@ -45,6 +45,7 @@
     <string name="btn_add_label">추가하기</string>
     <string name="btn_add_todo_label">오늘 할 공부 추가하기</string>
     <string name="btn_add_subject_first_label">과목 먼저 추가하기</string>
+    <string name="btn_add_subject_label">과목 추가하기</string>
     <string name="btn_rollback_label">되돌리기</string>
     <string name="btn_close_label">닫기</string>
     <string name="btn_logout_label">로그아웃 하기</string>
@@ -92,6 +93,11 @@
     <string name="todo_complete_remaining_nothing_text">사장님 퇴근 준비 완료</string>
     <string name="todo_delete_screen_text">삭제할 오늘의 공부를 \n선택해 주세요</string>
     <string name="todo_delete_screen_delete_button_text">%s개 삭제하기</string>
+
+    <!-- empty view -->
+    <string name="empty_view_text">Empty View</string>
+
+    <!-- login -->
     <string name="todo_revert_bottomsheet_approve_text">되돌리기</string>
     <string name="todo_pending_add_title1">이제는 미룰 수 없다!</string>
     <string name="todo_pending_add_title2">아직 늦지 않았어요!\n밀린 공부를 시작해봐요</string>
@@ -120,8 +126,8 @@
     <string name="emtpy_string" />
     <string name="friend_boss_count">총 %s명의 사장님을 알고있어요</string>
 
-    //badge
-    <string name="badge_get_bottom_sheet_title">배지를 획득했어요!</string>
+    <!-- badge -->
+    <string name="badge_get_bottom_sheet_title">%s개의 배지를 획득했어요!</string>
     <string name="add_study_study_content_placeholder">예) 교재 이름 PPT 1과</string>
     <string name="add_study_study_content_guideline">교재 이름은 20글자 이내로 입력해 주세요</string>
     <string name="add_study_start_page_placeholder">시작 페이지</string>
@@ -129,4 +135,26 @@
     <string name="add_study_end_page_placeholder">종료 페이지</string>
     <string name="add_study_end_page_guideline">까지</string>
     <string name="add_study_date_picker_bottomsheet_title">시험이 언제인가요?</string>
+    <string name="delete_subject_title">삭제할 과목을 선택해 주세요</string>
+    <string name="add_subject_title">어떤 과목을 공부해 볼까요?</string>
+
+    <!-- my -->
+    <string name="my_badge_setting">배지 설정하기</string>
+    <string name="my_badge_book">배지 도감</string>
+    <string name="my_badge_book_count">개</string>
+    <string name="my_profile_setting">프로필 설정</string>
+    <string name="my_notice">공지사항</string>
+    <string name="my_personal_terms">개인정보 처리방침</string>
+    <string name="my_service_terms">서비스 이용약관</string>
+    <string name="my_logout">로그아웃</string>
+    <string name="my_withdraw">계정 탈퇴</string>
+    <string name="my_bbangzip">내 제과제빵점</string>
+    <string name="my_bbangzip_lock">열심히 포인트를 모아서\n멋진 빵집을 차려봐요!</string>
+
+    <!-- component- bottom sheet -->
+    <string name="logout_title">로그아웃 하시겠어요?</string>
+    <string name="logout_confirm">로그아웃 하기</string>
+    <string name="cancel">취소</string>
+    <string name="withdraw_title">정말 탈퇴하시겠어요?</string>
+    <string name="withdraw_confirm">탈퇴하기</string>
 </resources>
