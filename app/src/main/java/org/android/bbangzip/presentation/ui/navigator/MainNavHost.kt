@@ -17,7 +17,11 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingEndNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
+import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
+import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
+import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
+import org.android.bbangzip.presentation.ui.subject.splitstudy.splitStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
 import org.android.bbangzip.presentation.ui.todo.navigation.todoNavGraph
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.todoAddPendingNavGraph
@@ -83,7 +87,19 @@ fun MainNavHost(
                 navigateToBack = { navigator.navigateToMyBadgeCategory() },
             )
 
-            subjectNavGraph()
+            subjectNavGraph(
+                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
+            )
+
+            addStudyNavGraph(
+                padding = padding,
+                navigateSplitStudy = { navigator.navHostController.navigateSplitStudy(it) },
+            )
+
+            splitStudyNavGraph(
+                navigateBack = { navigator.navHostController.popBackStack() },
+                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
+            )
 
             todoNavGraph(
                 snackBarHostState = snackBarHostState,
