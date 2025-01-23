@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -99,12 +100,12 @@ fun BbangZipBaseTopBar(
                         contentDescription = null,
                         modifier =
                             Modifier
-                                .padding(8.dp)
                                 .applyFilterOnClick(
                                     radius = 20.dp,
                                     isDisabled = false,
                                     onClick = { onTrailingIconClick() },
-                                ),
+                                )
+                                .padding(8.dp),
                         tint = BbangZipTheme.colors.labelAlternative_282119_61,
                     )
                 }
@@ -120,24 +121,20 @@ fun BbangZipMenuTopBarPreview() {
         modifier = Modifier.fillMaxSize(),
     ) {
         BbangZipBaseTopBar(
-            isShadowed = true,
             title = "경제통계학",
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
         )
 
         BbangZipBaseTopBar(
-            isShadowed = true,
             title = "",
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
         )
 
         BbangZipBaseTopBar(
-            isShadowed = true,
             title = "",
         )
 
         BbangZipBaseTopBar(
-            isShadowed = true,
             title = "경제통계학",
             backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
