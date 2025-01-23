@@ -73,11 +73,12 @@ class KakaoAuthService
             }
         }
 
-        fun withdrawKakao() {
+        fun withdrawKakao(withdrawListener: () -> Unit) {
             UserApiClient.instance.unlink { error ->
                 if (error != null) {
                     Timber.tag(TAG).e(error, "[카카오 로그인] -> 카카오 회원 탈퇴 실패 : ${error.message}")
                 } else {
+                    withdrawListener()
                     Timber.tag(TAG).i("[카카오 로그인] -> 카카오 회원 탈퇴 성공. ")
                 }
             }
