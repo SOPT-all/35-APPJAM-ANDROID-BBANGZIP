@@ -37,7 +37,7 @@ fun ToDoCard(
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
 ) {
-    val state = data.state
+    val state = data.cardState
     val radius = state.getRadius()
     val infoOpacity = state.getInfoOpacity()
     Box(
@@ -205,7 +205,7 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = 1,
                         remainingDays = 1,
-                        state = BbangZipCardState.DEFAULT,
+                        cardState = BbangZipCardState.DEFAULT,
                     ),
                 modifier =
                     Modifier
@@ -222,7 +222,7 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = 1,
                         remainingDays = 1,
-                        state = BbangZipCardState.CHECKED,
+                        cardState = BbangZipCardState.CHECKED,
                     ),
                 modifier =
                     Modifier
@@ -239,7 +239,7 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = 1,
                         remainingDays = 1,
-                        state = BbangZipCardState.CHECKABLE,
+                        cardState = BbangZipCardState.CHECKABLE,
                     ),
                 modifier =
                     Modifier
@@ -256,7 +256,7 @@ fun ToDoCardPreview() {
                         deadline = "2025년 4월 25일",
                         pieceId = 1,
                         remainingDays = 1,
-                        state = BbangZipCardState.COMPLETE,
+                        cardState = BbangZipCardState.COMPLETE,
                     ),
                 modifier =
                     Modifier

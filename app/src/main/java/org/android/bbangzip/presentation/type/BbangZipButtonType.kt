@@ -24,7 +24,7 @@ sealed class BbangZipButtonType(
     )
 
     data object Outlined : BbangZipButtonType(
-        enableBackgroundColor = defaultBbangZipColors.staticWhite_FFFFFF,
+        enableBackgroundColor = Color.Transparent,
         enableContentColor = defaultBbangZipColors.primaryNormal_282119,
         enableBorderColor = defaultBbangZipColors.lineStrong_68645E_52,
         disableBackgroundColor = Color.Unspecified,

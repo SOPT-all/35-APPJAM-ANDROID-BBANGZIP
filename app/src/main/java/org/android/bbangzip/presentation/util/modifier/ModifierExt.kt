@@ -50,6 +50,7 @@ fun Modifier.noRippleClickable(
         role = role,
     )
 
+@Composable
 fun Modifier.applyFilterOnClick(
     baseColor: Color = Color.Transparent,
     radius: Dp = 0.dp,
@@ -72,7 +73,7 @@ fun Modifier.applyFilterOnClick(
             .background(if (isPressed && !isDisabled) finalFilteredColor else baseColor, shape = RoundedCornerShape(size = radius))
             .clickable(
                 interactionSource = interactionSource,
-                indication = if (!isDisabled) rippleIndication else null,
+                indication = if (!isDisabled)rippleIndication else null,
                 onClick = { onClick() },
             )
     }

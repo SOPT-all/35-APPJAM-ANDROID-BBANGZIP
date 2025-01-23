@@ -79,7 +79,7 @@ class SubjectDetailViewModel
                     state.copy(
                         todoList =
                             state.todoList.map {
-                                if (it.state == BbangZipCardState.COMPLETE) it else it.copy(state = BbangZipCardState.CHECKABLE)
+                                if (it.cardState == BbangZipCardState.COMPLETE) it else it.copy(cardState = BbangZipCardState.CHECKABLE)
                             },
                         pieceViewType = PieceViewType.DELETE,
                     )
@@ -89,7 +89,7 @@ class SubjectDetailViewModel
                     state.copy(
                         todoList =
                             state.todoList.map {
-                                if (it.state == BbangZipCardState.COMPLETE) it else it.copy(state = BbangZipCardState.DEFAULT)
+                                if (it.cardState == BbangZipCardState.COMPLETE) it else it.copy(cardState = BbangZipCardState.DEFAULT)
                             },
                         pieceViewType = PieceViewType.DEFAULT,
                         selectedItemSet = setOf(),
@@ -104,7 +104,7 @@ class SubjectDetailViewModel
                             run {
                                 val targetPiece = state.todoList.find { it.pieceId == reduce.pieceId }
 
-                                when (targetPiece?.state) {
+                                when (targetPiece?.cardState) {
                                     BbangZipCardState.CHECKED -> {
                                         state.selectedItemSet.plus(targetPiece.pieceId)
                                     }
@@ -125,10 +125,10 @@ class SubjectDetailViewModel
                     state.copy(
                         todoList =
                             state.todoList.map { item ->
-                                if (item.state == BbangZipCardState.CHECKABLE && item.pieceId == reduce.pieceId) {
-                                    item.copy(state = BbangZipCardState.CHECKED)
-                                } else if (item.state == BbangZipCardState.CHECKED && item.pieceId == reduce.pieceId) {
-                                    item.copy(state = BbangZipCardState.CHECKABLE)
+                                if (item.cardState == BbangZipCardState.CHECKABLE && item.pieceId == reduce.pieceId) {
+                                    item.copy(cardState = BbangZipCardState.CHECKED)
+                                } else if (item.cardState == BbangZipCardState.CHECKED && item.pieceId == reduce.pieceId) {
+                                    item.copy(cardState = BbangZipCardState.CHECKABLE)
                                 } else {
                                     item
                                 }
@@ -140,8 +140,8 @@ class SubjectDetailViewModel
                     state.copy(
                         todoList =
                             state.todoList.map { item ->
-                                if (item.state == BbangZipCardState.DEFAULT && item.pieceId == reduce.pieceId) {
-                                    item.copy(state = BbangZipCardState.COMPLETE)
+                                if (item.cardState == BbangZipCardState.DEFAULT && item.pieceId == reduce.pieceId) {
+                                    item.copy(cardState = BbangZipCardState.COMPLETE)
                                 } else {
                                     item
                                 }
@@ -166,7 +166,7 @@ class SubjectDetailViewModel
                         todoList =
                             state.todoList.map { item ->
                                 if (item.pieceId == state.selectedItemId) {
-                                    item.copy(state = BbangZipCardState.DEFAULT)
+                                    item.copy(cardState = BbangZipCardState.DEFAULT)
                                 } else {
                                     item
                                 }

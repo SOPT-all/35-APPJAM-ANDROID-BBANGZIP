@@ -11,12 +11,18 @@ import androidx.navigation.navOptions
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
 import org.android.bbangzip.presentation.model.Route
 import org.android.bbangzip.presentation.type.BottomNavigationType
-import org.android.bbangzip.presentation.ui.friend.navigateFriend
+import org.android.bbangzip.presentation.ui.friend.navigation.navigateFriend
+import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
+import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.navigateToMyBadgeCategory
 import org.android.bbangzip.presentation.ui.my.navigateMy
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
+import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
-import org.android.bbangzip.presentation.ui.subject.subjectdetail.SubjectDetailRoute
-import org.android.bbangzip.presentation.ui.todo.navigateTodo
+import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
+import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
+import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.navigateTodoAdd
 import timber.log.Timber
 
 class MainNavigator(
@@ -25,7 +31,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = SubjectDetailRoute
+    val startDestination = LoginRoute
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =
@@ -60,6 +66,30 @@ class MainNavigator(
 
     fun navigateToLogin() {
         navHostController.navigateLogin()
+    }
+
+    fun navigateToOnboardingStart() {
+        navHostController.navigateOnboardingStart()
+    }
+
+    fun navigateToMyBadgeCategory() {
+        navHostController.navigateToMyBadgeCategory()
+    }
+
+    fun navigateToOnboarding() {
+        navHostController.navigateOnboarding()
+    }
+
+    fun navigateToOnboardingEnd() {
+        navHostController.navigateOnboardingEnd()
+    }
+
+    fun navigateToToDoAdd() {
+        navHostController.navigateTodoAdd()
+    }
+
+    fun navigateToToDoAddPending() {
+        navHostController.navigateTodoAddPending()
     }
 
     private fun popBackStack() {

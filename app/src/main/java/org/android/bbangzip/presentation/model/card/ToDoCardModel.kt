@@ -7,12 +7,12 @@ import org.android.bbangzip.presentation.component.card.BbangZipCardState
 @Parcelize
 data class ToDoCardModel(
     val pieceId: Int,
-    val subjectName: String = "",
-    val examName: String = "",
+    val subjectName: String,
+    val examName: String,
     val studyContents: String,
     val startPage: Int,
     val finishPage: Int,
     val deadline: String,
     val remainingDays: Int,
-    val state: BbangZipCardState = BbangZipCardState.DEFAULT,
+    val cardState: BbangZipCardState,
 ) : Parcelable

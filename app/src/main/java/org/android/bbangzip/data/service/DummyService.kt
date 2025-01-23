@@ -8,5 +8,5 @@ import retrofit2.http.GET
 
 interface DummyService {
     @GET("$VERSION/$DUMMY")
-    suspend fun getDummy(): BaseResponse<ResponseDummyDto>
+    suspend fun getDummy(): BaseResponse<ResponseDummyDto?>
 }

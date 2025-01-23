@@ -30,8 +30,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import okhttp3.internal.toImmutableList
 import org.android.bbangzip.R
+import org.android.bbangzip.presentation.type.BbangZipShadowType
 import org.android.bbangzip.presentation.type.BottomNavigationType
-import org.android.bbangzip.presentation.util.modifier.dropShadow
+import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -52,12 +53,12 @@ fun BottomNavigationBar(
         Box(
             modifier =
                 modifier
-                    .fillMaxWidth()
-                    .background(color = Color.Transparent)
-                    .dropShadow(
-                        offsetY = (-4).dp,
+                    .applyShadows(
+                        shadowType = BbangZipShadowType.EMPHASIZE_INVERSE,
                         shape = RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp),
-                    ),
+                    )
+                    .fillMaxWidth()
+                    .background(color = Color.Transparent),
         ) {
             Row(
                 modifier =
