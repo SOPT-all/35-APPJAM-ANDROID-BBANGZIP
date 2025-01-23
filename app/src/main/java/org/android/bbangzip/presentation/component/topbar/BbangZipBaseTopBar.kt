@@ -36,8 +36,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun BbangZipBaseTopBar(
     modifier: Modifier = Modifier,
-//    isShadowed: Boolean = false,
-    scrollState: LazyListState = rememberLazyListState(),
+    isShadowed: Boolean = false,
     backGroundColor: Color = BbangZipTheme.colors.staticWhite_FFFFFF,
     title: String = "",
     titleColor: Color = BbangZipTheme.colors.labelNormal_282119,
@@ -46,7 +45,6 @@ fun BbangZipBaseTopBar(
     onTrailingIconClick: () -> Unit = {},
     onLeadingIconClick: () -> Unit = {},
 ) {
-    val isShadowed by remember { derivedStateOf { scrollState.firstVisibleItemScrollOffset > 0 } }
     Box(
         modifier =
             modifier

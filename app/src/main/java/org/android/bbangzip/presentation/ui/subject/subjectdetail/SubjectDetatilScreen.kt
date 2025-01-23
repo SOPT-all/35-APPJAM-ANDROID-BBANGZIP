@@ -24,6 +24,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -80,14 +81,19 @@ fun SubjectDetailScreen(
     val screenHeightDp = configuration.screenHeightDp
     val backgroundHeight = (screenHeightDp * 0.32).toInt()
 
+    val scrollState = rememberLazyListState()
+    val isShadowed by remember {
+        derivedStateOf {
+            scrollState.firstVisibleItemScrollOffset > 0
+        }
+    }
+
     val tabs = listOf("중간고사", "기말고사")
     var selectedIndex by remember { mutableIntStateOf(0) }
     var isMenuOpen by remember { mutableStateOf(false) }
     var motivationMessage by remember { mutableStateOf("사장님의 각오 한마디를 작성해보세요") }
     var dDay by remember { mutableIntStateOf(14) }
     var examDay by remember { mutableStateOf("2025년 11월 25일") }
-
-    val listState = rememberLazyListState()
 
     Timber.d("${deletedSet.size}")
     Box(
@@ -98,7 +104,7 @@ fun SubjectDetailScreen(
                 Modifier
                     .fillMaxSize()
                     .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
-            state = listState,
+            state = scrollState,
         ) {
             item {
                 Box(
@@ -181,7 +187,7 @@ fun SubjectDetailScreen(
         }
         Column {
             BbangZipBaseTopBar(
-                scrollState = listState,
+                isShadowed = isShadowed,
                 backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 trailingIcon = R.drawable.ic_menu_kebab_default_24,
@@ -362,7 +368,7 @@ private fun DefaultPieceView(
                 data = item,
                 onClick = {
                     onDefaultCardClicked(item.pieceId)
-                    if (item.state == BbangZipCardState.COMPLETE) onCompleteCardClicked(item.pieceId)
+                    if (item.cardState == BbangZipCardState.COMPLETE) onCompleteCardClicked(item.pieceId)
                 },
             )
 
