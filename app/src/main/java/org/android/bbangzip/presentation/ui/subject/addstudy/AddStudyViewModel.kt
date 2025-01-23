@@ -300,14 +300,13 @@ class AddStudyViewModel
                 is AddStudyReduce.UpdateStartPageGuideline -> {
                     state.copy(
                         startPageGuideline =
-                            if (state.startPageTextFieldState == BbangZipTextFieldInputState.Alert)
-                                {
-                                    if (state.startPage == "0p") {
-                                        "0p는 입력할 수 없어요"
-                                    } else {
-                                        "시작 범위 이후로 입력해 주세요"
-                                    }
+                            if (state.startPageTextFieldState == BbangZipTextFieldInputState.Alert) {
+                                if (state.startPage == "0p") {
+                                    "0p는 입력할 수 없어요"
                                 } else {
+                                    "시작 범위 이후로 입력해 주세요"
+                                }
+                            } else {
                                 "부터"
                             },
                     )
@@ -316,10 +315,9 @@ class AddStudyViewModel
                 is AddStudyReduce.UpdateEndPageGuideLine -> {
                     state.copy(
                         endPageGuideline =
-                            if (state.endPageTextFieldState == BbangZipTextFieldInputState.Alert)
-                                {
-                                    if (state.endPage == "0p") "0p는 입력할 수 없어요" else "까지"
-                                } else {
+                            if (state.endPageTextFieldState == BbangZipTextFieldInputState.Alert) {
+                                if (state.endPage == "0p") "0p는 입력할 수 없어요" else "까지"
+                            } else {
                                 "까지"
                             },
                     )

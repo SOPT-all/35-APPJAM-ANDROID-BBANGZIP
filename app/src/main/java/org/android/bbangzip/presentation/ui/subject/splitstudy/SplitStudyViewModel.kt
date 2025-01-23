@@ -9,7 +9,6 @@ import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.casting.pageToInt
 import org.android.bbangzip.presentation.util.date.dateStringToLocalDate
 import org.android.bbangzip.presentation.util.date.divideDatesByN
-import org.android.bbangzip.presentation.util.date.hyponStringDateToDate
 import org.android.bbangzip.presentation.util.date.localDateToDate
 import timber.log.Timber
 import javax.inject.Inject
@@ -33,11 +32,11 @@ class SplitStudyViewModel
             return when (reduce) {
                 SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled -> {
                     state.copy(
-                        isSaveEnable = state.startPageList.all { it != "" }
-                                && state.endPageList.all { it != "" }
-                                && state.startPageTextFieldStateList.all { it != BbangZipTextFieldInputState.Alert }
-                                && state.endPageTextFieldStateList.all {it != BbangZipTextFieldInputState.Alert}
-                        ,
+                        isSaveEnable =
+                            state.startPageList.all { it != "" } &&
+                                state.endPageList.all { it != "" } &&
+                                state.startPageTextFieldStateList.all { it != BbangZipTextFieldInputState.Alert } &&
+                                state.endPageTextFieldStateList.all { it != BbangZipTextFieldInputState.Alert },
                     )
                 }
                 is SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState -> {
@@ -151,7 +150,7 @@ class SplitStudyViewModel
                         startPageList = reduce.addStudyData.startPageList,
                         endPageList = reduce.addStudyData.endPageList,
                         dateList =
-                            divideDatesByN( dateStringToLocalDate( reduce.addStudyData.examDate), reduce.addStudyData.pieceNumber).map{ localDateToDate(it) },
+                            divideDatesByN(dateStringToLocalDate(reduce.addStudyData.examDate), reduce.addStudyData.pieceNumber).map { localDateToDate(it) },
                         startPageFocusedStateList = List(reduce.addStudyData.pieceNumber) { false },
                         endPageFocusedStateList = List(reduce.addStudyData.pieceNumber) { false },
                         startPageGuidelineList = List(reduce.addStudyData.pieceNumber) { "부터" },
@@ -183,40 +182,58 @@ class SplitStudyViewModel
 
                 is SplitStudyContract.SplitStudyReduce.UpdateStartPageTextFieldState -> {
                     state.copy(
-                        startPageTextFieldStateList = state.startPageTextFieldStateList.mapIndexed { index, value ->
-                            if (index == reduce.index) determineStartTextFieldType(start = state.startPageList[index], end = state.endPageList[index], min = pageToInt(state.startPage), isFocused = state.startPageFocusedStateList[index]) else value
-                        }
+                        startPageTextFieldStateList =
+                            state.startPageTextFieldStateList.mapIndexed { index, value ->
+                                if (index == reduce.index) determineStartTextFieldType(start = state.startPageList[index], end = state.endPageList[index], min = pageToInt(state.startPage), isFocused = state.startPageFocusedStateList[index]) else value
+                            },
                     )
                 }
                 is SplitStudyContract.SplitStudyReduce.UpdateEndPageTextFieldState -> {
                     state.copy(
-                        endPageTextFieldStateList = state.endPageTextFieldStateList.mapIndexed { index, value ->
-                            if (index == reduce.index) determineEndTextFieldType(start = state.startPageList[index], end = state.endPageList[index], max = pageToInt(state.endPage), isFocused = state.endPageFocusedStateList[index]) else value
-                        }
+                        endPageTextFieldStateList =
+                            state.endPageTextFieldStateList.mapIndexed { index, value ->
+                                if (index == reduce.index) determineEndTextFieldType(start = state.startPageList[index], end = state.endPageList[index], max = pageToInt(state.endPage), isFocused = state.endPageFocusedStateList[index]) else value
+                            },
                     )
                 }
                 is SplitStudyContract.SplitStudyReduce.UpdateEndPageGuideline -> {
                     state.copy(
-                        endPageGuidelineList = state.endPageGuidelineList.mapIndexed { index, value ->
-                            if(index == reduce.index && state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert){
-                                if(state.startPageList[index] == "0p") "0p는 입력할 수 없어요"
-                                else "종료 범위 이전으로 입력해 주세요"
-                            }else if (state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert){
-                                value
-                            } else "까지"
-                        }
+                        endPageGuidelineList =
+                            state.endPageGuidelineList.mapIndexed { index, value ->
+                                if (index == reduce.index && state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert)
+                                    {
+                                        if (state.startPageList[index] == "0p") {
+                                            "0p는 입력할 수 없어요"
+                                        } else {
+                                            "종료 범위 이전으로 입력해 주세요"
+                                        }
+                                    } else if (state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert)
+                                    {
+                                        value
+                                    } else {
+                                    "까지"
+                                }
+                            },
                     )
                 }
                 is SplitStudyContract.SplitStudyReduce.UpdateStartPageGuideline -> {
                     state.copy(
-                        startPageGuidelineList = state.startPageGuidelineList.mapIndexed { index, value ->
-                            if(index == reduce.index && state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert){
-                                if(state.startPageList[index] == "0p") "0p는 입력할 수 없어요"
-                                else "시작 범위 이후로 입력해 주세요"
-                            }else if (state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert){
-                                value
-                            } else "부터"
-                        }
+                        startPageGuidelineList =
+                            state.startPageGuidelineList.mapIndexed { index, value ->
+                                if (index == reduce.index && state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert)
+                                    {
+                                        if (state.startPageList[index] == "0p") {
+                                            "0p는 입력할 수 없어요"
+                                        } else {
+                                            "시작 범위 이후로 입력해 주세요"
+                                        }
+                                    } else if (state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert)
+                                    {
+                                        value
+                                    } else {
+                                    "부터"
+                                }
+                            },
                     )
                 }
 
@@ -298,8 +315,6 @@ class SplitStudyViewModel
                 SplitStudyContract.SplitStudyEvent.OnCloseBottomSheet -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState)
                 }
-
-
             }
         }
     }

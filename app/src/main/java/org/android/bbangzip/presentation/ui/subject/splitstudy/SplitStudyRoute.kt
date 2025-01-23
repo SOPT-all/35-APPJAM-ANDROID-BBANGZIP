@@ -8,7 +8,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.SplitStudyData
-import timber.log.Timber
 
 @Composable
 fun SplitStudyRoute(
