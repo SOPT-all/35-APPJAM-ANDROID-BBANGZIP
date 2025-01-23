@@ -102,6 +102,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_profile_setting),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -114,6 +115,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_notice),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -122,6 +124,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_personal_terms),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -130,6 +133,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_service_terms),
+                modifier = Modifier.padding(horizontal = 16.dp)
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -142,6 +146,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_logout),
+                modifier = Modifier.padding(horizontal = 16.dp),
                 onClickMenu = { onClickLogoutBtn() },
             )
 
@@ -151,6 +156,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_withdraw),
+                modifier = Modifier.padding(horizontal = 16.dp),
                 onClickMenu = { onClickWithdrawBtn() },
             )
         }
@@ -322,10 +328,8 @@ private fun MyMenuTitle(
         modifier =
             modifier
                 .fillMaxWidth()
-                .clickable { onClickMenu() }
-                // .applyFilterOnClick { onClickMenu() }
-                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF, shape = RoundedCornerShape(24.dp))
-                .padding(vertical = 16.dp, horizontal = 24.dp),
+                .applyFilterOnClick(radius = 24.dp, baseColor = BbangZipTheme.colors.staticWhite_FFFFFF) { onClickMenu() }
+                .padding(vertical = 16.dp, horizontal = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically,
     ) {
