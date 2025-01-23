@@ -45,6 +45,7 @@
     <string name="btn_add_label">추가하기</string>
     <string name="btn_add_todo_label">오늘 할 공부 추가하기</string>
     <string name="btn_add_subject_first_label">과목 먼저 추가하기</string>
+    <string name="btn_add_subject_label">과목 추가하기</string>
     <string name="btn_rollback_label">되돌리기</string>
     <string name="btn_close_label">닫기</string>
     <string name="btn_logout_label">로그아웃 하기</string>
@@ -92,6 +93,11 @@
     <string name="todo_complete_remaining_nothing_text">사장님 퇴근 준비 완료</string>
     <string name="todo_delete_screen_text">삭제할 오늘의 공부를 \n선택해 주세요</string>
     <string name="todo_delete_screen_delete_button_text">%s개 삭제하기</string>
+
+    <!-- empty view -->
+    <string name="empty_view_text">Empty View</string>
+
+    <!-- login -->
     <string name="todo_revert_bottomsheet_approve_text">되돌리기</string>
     <string name="todo_pending_add_title1">이제는 미룰 수 없다!</string>
     <string name="todo_pending_add_title2">아직 늦지 않았어요!\n밀린 공부를 시작해봐요</string>
@@ -122,6 +128,15 @@
 
     <!-- badge -->
     <string name="badge_get_bottom_sheet_title">%s개의 배지를 획득했어요!</string>
+    <string name="add_study_study_content_placeholder">예) 교재 이름 PPT 1과</string>
+    <string name="add_study_study_content_guideline">교재 이름은 20글자 이내로 입력해 주세요</string>
+    <string name="add_study_start_page_placeholder">시작 페이지</string>
+    <string name="add_study_start_page_guideline">부터</string>
+    <string name="add_study_end_page_placeholder">종료 페이지</string>
+    <string name="add_study_end_page_guideline">까지</string>
+    <string name="add_study_date_picker_bottomsheet_title">시험이 언제인가요?</string>
+    <string name="delete_subject_title">삭제할 과목을 선택해 주세요</string>
+    <string name="add_subject_title">어떤 과목을 공부해 볼까요?</string>
 
     <!-- my -->
     <string name="my_badge_setting">배지 설정하기</string>
