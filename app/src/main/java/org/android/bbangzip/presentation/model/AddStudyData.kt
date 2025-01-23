@@ -15,5 +15,4 @@ data class AddStudyData(
     val endPage: String,
     val startPageList: List<String>,
     val endPageList: List<String>,
-    val deadLineList: List<String>
 ) : Parcelable

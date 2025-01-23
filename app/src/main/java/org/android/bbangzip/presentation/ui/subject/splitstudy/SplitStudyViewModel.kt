@@ -141,8 +141,6 @@ class SplitStudyViewModel
                 }
 
                 is SplitStudyContract.SplitStudyReduce.InitializeState -> {
-                    Timber.tag("[과목 관리]").d(reduce.addStudyData.deadLineList.toString())
-
                     state.copy(
                         subjectName = reduce.addStudyData.subjectName,
                         startPage = reduce.addStudyData.startPage,
@@ -153,7 +151,7 @@ class SplitStudyViewModel
                         startPageList = reduce.addStudyData.startPageList,
                         endPageList = reduce.addStudyData.endPageList,
                         dateList =
-                            reduce.addStudyData.deadLineList.map { hyponStringDateToDate(it) },
+                            divideDatesByN( dateStringToLocalDate( reduce.addStudyData.examDate), reduce.addStudyData.pieceNumber).map{ localDateToDate(it) },
                         startPageFocusedStateList = List(reduce.addStudyData.pieceNumber) { false },
                         endPageFocusedStateList = List(reduce.addStudyData.pieceNumber) { false },
                         startPageGuidelineList = List(reduce.addStudyData.pieceNumber) { "부터" },
