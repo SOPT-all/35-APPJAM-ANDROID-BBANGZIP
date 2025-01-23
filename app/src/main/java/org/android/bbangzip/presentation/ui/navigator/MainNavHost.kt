@@ -19,6 +19,7 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavG
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
+import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.modifyMotivationMessageNavGraph
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.modifySubjectNameNavGraph
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
@@ -99,6 +100,8 @@ fun MainNavHost(
             )
 
             modifySubjectNameNavGraph()
+
+            modifyMotivationMessageNavGraph()
 
             splitStudyNavGraph(
                 navigateBack = { navigator.navHostController.popBackStack() },

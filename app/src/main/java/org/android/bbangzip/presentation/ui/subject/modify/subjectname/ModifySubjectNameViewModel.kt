@@ -41,6 +41,7 @@ constructor(
             ModifySubjectNameContract.ModifySubjectNameEvent.OnClickDeleteBtn -> {
                 updateState(ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectNamge)
                 updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
+                updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
             }
         }
     }
