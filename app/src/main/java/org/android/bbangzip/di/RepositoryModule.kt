@@ -50,5 +50,4 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindsSubjectRepository(repositoryImpl: SubjectRepositoryImpl): SubjectRepository
-
 }

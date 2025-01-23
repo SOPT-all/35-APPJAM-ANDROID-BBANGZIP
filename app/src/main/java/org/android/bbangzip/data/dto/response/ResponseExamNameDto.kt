@@ -1,6 +1,5 @@
 package org.android.bbangzip.data.dto.response
 
-
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import org.android.bbangzip.domain.model.SubjectDetailInfoEntity
@@ -15,14 +14,15 @@ data class ResponseExamNameDto(
     @SerialName("motivationMessage")
     val motivationMessage: String,
     @SerialName("studyList")
-    val studyList: List<StudyInfo>
-){
-    fun toSubjectDetailInfoEntity() = SubjectDetailInfoEntity(
-        examDate = examDate,
-        examDday = examDday,
-        motivationMessage = motivationMessage,
-        todoList = studyList.map { it.toToDoCardEntity() }
-    )
+    val studyList: List<StudyInfo>,
+) {
+    fun toSubjectDetailInfoEntity() =
+        SubjectDetailInfoEntity(
+            examDate = examDate,
+            examDday = examDday,
+            motivationMessage = motivationMessage,
+            todoList = studyList.map { it.toToDoCardEntity() },
+        )
 }
 
 @Serializable
@@ -40,15 +40,16 @@ data class StudyInfo(
     @SerialName("startPage")
     val startPage: Int,
     @SerialName("studyContents")
-    val studyContents: String
-){
-    fun toToDoCardEntity() = ToDoCardEntity(
-        deadline = deadline,
-        finishPage = finishPage,
-        pieceId = pieceId,
-        remainingDays = remainingDays,
-        startPage = startPage,
-        studyContents = studyContents,
-        isFinished = isFinished
-    )
+    val studyContents: String,
+) {
+    fun toToDoCardEntity() =
+        ToDoCardEntity(
+            deadline = deadline,
+            finishPage = finishPage,
+            pieceId = pieceId,
+            remainingDays = remainingDays,
+            startPage = startPage,
+            studyContents = studyContents,
+            isFinished = isFinished,
+        )
 }

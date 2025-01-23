@@ -19,7 +19,6 @@ import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.android.bbangzip.presentation.model.SplitStudyData
-import org.android.bbangzip.presentation.ui.todo.TodoContract
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -69,9 +68,9 @@ fun SubjectRoute(
         false ->
             Box(
                 modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+                    Modifier
+                        .fillMaxSize()
+                        .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
                 contentAlignment = Alignment.Center,
             ) {
                 CircularProgressIndicator(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)

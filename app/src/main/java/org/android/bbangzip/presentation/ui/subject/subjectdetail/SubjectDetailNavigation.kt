@@ -15,9 +15,9 @@ fun NavController.navigateToSubjectDetail(subjectId: Int) {
 
 fun NavGraphBuilder.subjectDetailNavGraph(
     padding: PaddingValues,
-    navigateToBack:()->Unit={},
-    navigateToModifyMotivation : () -> Unit= {},
-    navigateToModifySubjectName: (String)->Unit = {},
+    navigateToBack: () -> Unit = {},
+    navigateToModifyMotivation: () -> Unit = {},
+    navigateToModifySubjectName: (String) -> Unit = {},
 ) {
     composable<SubjectDetailRoute> { backStackEntry ->
         SubjectDetailRoute(
@@ -26,10 +26,9 @@ fun NavGraphBuilder.subjectDetailNavGraph(
             navigateToBack = navigateToBack,
             navigateToModifyMotivation = navigateToModifyMotivation,
             navigateToModifySubjectName = navigateToModifySubjectName,
-
         )
     }
 }
 
 @Serializable
-data class SubjectDetailRoute(val subjectId:Int)
+data class SubjectDetailRoute(val subjectId: Int)

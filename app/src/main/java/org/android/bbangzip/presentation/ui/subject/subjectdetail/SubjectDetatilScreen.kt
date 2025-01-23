@@ -637,7 +637,7 @@ private fun EmptySubjectCardView(
 fun RevertCompleteBottomSheet(
     isBottomSheetVisible: Boolean,
     bottomSheetTitle: String,
-    selectedCompleteItemId : Int,
+    selectedCompleteItemId: Int,
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit = {},
     onClickInteractButton: (Int) -> Unit = {},

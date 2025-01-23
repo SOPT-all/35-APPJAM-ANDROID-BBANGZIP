@@ -11,13 +11,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 fun SubjectDetailRoute(
     padding: PaddingValues,
     subjectId: Int,
-    navigateToBack:()-> Unit,
-    navigateToModifyMotivation:() -> Unit,
-    navigateToModifySubjectName:(String)-> Unit,
+    navigateToBack: () -> Unit,
+    navigateToModifyMotivation: () -> Unit,
+    navigateToModifySubjectName: (String) -> Unit,
     viewModel: SubjectDetailViewModel = hiltViewModel(),
 ) {
     val subjectDetailState by viewModel.uiState.collectAsStateWithLifecycle()
-    LaunchedEffect (Unit) {
+    LaunchedEffect(Unit) {
         viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.Initialize(subjectId))
     }
 
@@ -34,7 +34,7 @@ fun SubjectDetailRoute(
         onDefaultCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked(id)) },
         onCompleteCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked(id)) },
         onRevertCompleteBottomSheetDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest) },
-        onRevertCompleteBottomSheetApproveButtonClicked = {pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
+        onRevertCompleteBottomSheetApproveButtonClicked = { pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
         onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },
     )
 }

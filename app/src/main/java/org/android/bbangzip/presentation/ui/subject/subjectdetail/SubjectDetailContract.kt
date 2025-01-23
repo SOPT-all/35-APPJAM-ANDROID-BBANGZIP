@@ -18,10 +18,10 @@ class SubjectDetailContract {
         val selectedItemSet: Set<Int> = setOf(),
         val revertCompleteBottomSheetState: Boolean = false,
         val examDate: String = "",
-        val examDday : Int = 0,
-        val motivationMessage : String = "",
+        val examDday: Int = 0,
+        val motivationMessage: String = "",
         val selectedItemId: Int = -1,
-        val subjectId : Int = 0,
+        val subjectId: Int = 0,
         val todoList: List<ToDoCardModel> =
             listOf(
                 ToDoCardModel(
@@ -140,7 +140,7 @@ class SubjectDetailContract {
     }
 
     sealed interface SubjectDetailEvent : BaseContract.Event {
-        data class Initialize(val subjectId:Int) : SubjectDetailEvent
+        data class Initialize(val subjectId: Int) : SubjectDetailEvent
 
         data object OnPlusIconClicked : SubjectDetailEvent
 
@@ -186,7 +186,7 @@ class SubjectDetailContract {
 
         data class DeleteSelectedItemSet(val pieceId: Int) : SubjectDetailReduce
 
-        data class UpdateSubjectId (val subjectId: Int) : SubjectDetailReduce
+        data class UpdateSubjectId(val subjectId: Int) : SubjectDetailReduce
 
         data object UpdateRevertCompleteBottomSheetState : SubjectDetailReduce
 

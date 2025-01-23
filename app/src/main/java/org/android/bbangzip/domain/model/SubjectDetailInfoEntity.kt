@@ -4,5 +4,5 @@ data class SubjectDetailInfoEntity(
     val examDate: String,
     val examDday: Int,
     val motivationMessage: String,
-    val todoList: List<ToDoCardEntity>
+    val todoList: List<ToDoCardEntity>,
 )

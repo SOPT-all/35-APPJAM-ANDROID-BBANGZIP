@@ -6,5 +6,5 @@ interface ExamRepository {
     suspend fun getSubjectDetail(
         subjectId: Int,
         examName: String,
-    ) : Result<SubjectDetailInfoEntity>
+    ): Result<SubjectDetailInfoEntity>
 }

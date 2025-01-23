@@ -9,5 +9,5 @@ data class SubjectDetailInfo(
     val examDate: String,
     val examDday: Int,
     val motivationMessage: String,
-    val todoList: List<ToDoCardModel>
-): Parcelable
+    val todoList: List<ToDoCardModel>,
+) : Parcelable
