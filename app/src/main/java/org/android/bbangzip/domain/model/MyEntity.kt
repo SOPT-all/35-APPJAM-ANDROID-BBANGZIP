@@ -5,5 +5,5 @@ data class MyEntity(
     val badgeCounts: Int,
     val reward: Int,
     val maxReward: Int,
-    val levelDetails: List<BbangZipEntity>
+    val levelDetails: List<BbangZipEntity>,
 )

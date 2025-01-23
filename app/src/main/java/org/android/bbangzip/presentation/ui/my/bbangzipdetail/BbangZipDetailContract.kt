@@ -14,12 +14,13 @@ class BbangZipDetailContract {
     }
 
     sealed interface BbangZipDetailEvent : BaseContract.Event {
-        data object Initialize: BbangZipDetailEvent
+        data object Initialize : BbangZipDetailEvent
+
         data object OnClickBackBtn : BbangZipDetailEvent
     }
 
     sealed interface BbangZipDetailReduce : BaseContract.Reduce {
-        data class UpdateMyBbangZipList(val bbangZipList: List<BbangZip>): BbangZipDetailReduce
+        data class UpdateMyBbangZipList(val bbangZipList: List<BbangZip>) : BbangZipDetailReduce
     }
 
     sealed interface BbangZipDetailSideEffect : BaseContract.SideEffect {

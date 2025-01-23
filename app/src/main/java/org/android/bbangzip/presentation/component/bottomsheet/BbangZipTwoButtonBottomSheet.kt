@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,7 +55,7 @@ fun BbangZipTwoButtonBottomSheet(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 onClick = { onClickInteractButton() },
-                label = interactButtonText
+                label = interactButtonText,
             )
         },
         cancelButton = {
@@ -67,7 +66,7 @@ fun BbangZipTwoButtonBottomSheet(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 onClick = { onClickCancelButton() },
-                label = cancelButtonText
+                label = cancelButtonText,
             )
         },
     )

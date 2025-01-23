@@ -8,16 +8,16 @@ import org.android.bbangzip.presentation.ui.my.bbangzipdetail.BbangZipDetailRout
 
 fun NavController.navigateBbangZipDetail() {
     navigate(
-        route = BbangZipDetailRoute
+        route = BbangZipDetailRoute,
     )
 }
 
 fun NavGraphBuilder.bbangZipDetailNavGraph(
-    popBackStack: () -> Unit
+    popBackStack: () -> Unit,
 ) {
     composable<BbangZipDetailRoute> {
         BbangZipDetailRoute(
-            popBackStack = popBackStack
+            popBackStack = popBackStack,
         )
     }
 }

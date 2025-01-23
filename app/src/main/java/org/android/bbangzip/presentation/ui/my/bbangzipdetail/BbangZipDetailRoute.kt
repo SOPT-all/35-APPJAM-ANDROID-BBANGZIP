@@ -14,7 +14,7 @@ import org.android.bbangzip.presentation.component.indicator.BbangZipLoadingIndi
 fun BbangZipDetailRoute(
     popBackStack: () -> Unit,
     modifier: Modifier = Modifier,
-    viewModel: BbangZipDetailViewModel = hiltViewModel()
+    viewModel: BbangZipDetailViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { state.bbangZipList.size })
@@ -34,7 +34,7 @@ fun BbangZipDetailRoute(
                 modifier = modifier,
                 state = state,
                 pagerState = pagerState,
-                popBackStack = popBackStack
+                popBackStack = popBackStack,
             )
 
         else -> BbangZipLoadingIndicator()

@@ -7,5 +7,5 @@ import kotlinx.parcelize.Parcelize
 data class Badge(
     val badgeName: String,
     val badgeImg: String,
-    val hashTags: List<String>
+    val hashTags: List<String>,
 ) : Parcelable

@@ -18,13 +18,13 @@ fun NavController.navigateMy(navOptions: NavOptions) {
 fun NavGraphBuilder.myNavGraph(
     padding: PaddingValues,
     navigateToLogin: () -> Unit,
-    navigateToBbangZipDetail: () -> Unit
+    navigateToBbangZipDetail: () -> Unit,
 ) {
     composable<BottomNavigationRoute.My> {
         MyRoute(
             padding = padding,
             navigateToLogin = navigateToLogin,
-            navigateToBbangZipDetail = navigateToBbangZipDetail
+            navigateToBbangZipDetail = navigateToBbangZipDetail,
         )
     }
 }

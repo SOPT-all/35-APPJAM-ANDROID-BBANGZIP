@@ -60,29 +60,33 @@ fun MyScreen(
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundAccent_FFDAA0.toArgb()
 
     LazyColumn(
-        modifier = modifier
-            .fillMaxSize(),
+        modifier =
+            modifier
+                .fillMaxSize(),
     ) {
         item {
             Box(
                 contentAlignment = Alignment.TopCenter,
-                modifier = Modifier
-                    .height(height = (LocalConfiguration.current.screenHeightDp * 0.635).dp)
+                modifier =
+                    Modifier
+                        .height(height = (LocalConfiguration.current.screenHeightDp * 0.635).dp),
             ) {
                 MainBbangZip(
-                    modifier = Modifier
-                        .noRippleClickable { onClickBbangZip() },
+                    modifier =
+                        Modifier
+                            .noRippleClickable { onClickBbangZip() },
                     level = state.myBbangZip?.bbangZipLevel ?: 1,
                     currentPoint = state.myBbangZip?.reward ?: 0,
                     maxPoint = state.myBbangZip?.maxReward ?: 0,
                     bbangZipImgUrl = state.myBbangZip?.bbangZipImgUrl ?: "https://cdn-icons-png.flaticon.com/512/3348/3348027.png",
-                    bbangZipName = state.myBbangZip?.bbangZipName ?: ""
+                    bbangZipName = state.myBbangZip?.bbangZipName ?: "",
                 )
 
                 MyBadgeInfo(
-                    modifier = Modifier
-                        .align(Alignment.BottomCenter)
-                        .padding(horizontal = 16.dp),
+                    modifier =
+                        Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(horizontal = 16.dp),
                     currentBadge = state.currentBadge.toString(),
                 )
             }
@@ -94,7 +98,7 @@ fun MyScreen(
 
         item {
             MyMenuTitle(
-                text = stringResource(R.string.my_profile_setting)
+                text = stringResource(R.string.my_profile_setting),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -106,7 +110,7 @@ fun MyScreen(
 
         item {
             MyMenuTitle(
-                text = stringResource(R.string.my_notice)
+                text = stringResource(R.string.my_notice),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -114,7 +118,7 @@ fun MyScreen(
 
         item {
             MyMenuTitle(
-                text = stringResource(R.string.my_personal_terms)
+                text = stringResource(R.string.my_personal_terms),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -122,7 +126,7 @@ fun MyScreen(
 
         item {
             MyMenuTitle(
-                text = stringResource(R.string.my_service_terms)
+                text = stringResource(R.string.my_service_terms),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -135,7 +139,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_logout),
-                onClickMenu = { onClickLogoutBtn() }
+                onClickMenu = { onClickLogoutBtn() },
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -144,7 +148,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_withdraw),
-                onClickMenu = { onClickWithdrawBtn() }
+                onClickMenu = { onClickWithdrawBtn() },
             )
         }
 
@@ -161,7 +165,7 @@ fun MyScreen(
         interactButtonText = stringResource(R.string.logout_confirm),
         cancelButtonText = stringResource(R.string.cancel),
         onClickInteractButton = { onClickLogoutConfirmBtn() },
-        onClickCancelButton = { onClickLogoutCancelBtn() }
+        onClickCancelButton = { onClickLogoutCancelBtn() },
     )
 
     BbangZipTwoButtonBottomSheet(
@@ -171,9 +175,8 @@ fun MyScreen(
         interactButtonText = stringResource(R.string.withdraw_confirm),
         cancelButtonText = stringResource(R.string.cancel),
         onClickInteractButton = { onClickWithdrawConfirmBtn() },
-        onClickCancelButton = { onClickWithdrawCancelBtn() }
+        onClickCancelButton = { onClickWithdrawCancelBtn() },
     )
-
 }
 
 @Composable
@@ -183,33 +186,36 @@ private fun MainBbangZip(
     level: Int,
     currentPoint: Int,
     maxPoint: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Column(
-        modifier = modifier
-            .clip(shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
-            .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)
-            .height(height = (LocalConfiguration.current.screenHeightDp * 0.482).dp),
-        verticalArrangement = Arrangement.SpaceBetween
+        modifier =
+            modifier
+                .clip(shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp))
+                .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)
+                .height(height = (LocalConfiguration.current.screenHeightDp * 0.482).dp),
+        verticalArrangement = Arrangement.SpaceBetween,
     ) {
         AsyncImage(
-            model = ImageRequest.Builder(context = LocalContext.current)
-                .data(data = bbangZipImgUrl)
-                .crossfade(enable = true)
-                .build(),
+            model =
+                ImageRequest.Builder(context = LocalContext.current)
+                    .data(data = bbangZipImgUrl)
+                    .crossfade(enable = true)
+                    .build(),
             contentDescription = null,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
+            modifier = Modifier.align(Alignment.CenterHorizontally),
         )
 
         BbangZipLevelProgressBar(
-            modifier = Modifier
-                .align(Alignment.CenterHorizontally)
-                .padding(horizontal = 40.dp)
-                .padding(bottom = 50.dp),
+            modifier =
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(horizontal = 40.dp)
+                    .padding(bottom = 50.dp),
             level = level - 1,
             currentPoint = currentPoint,
             maxPoint = maxPoint,
-            bbangZipName = bbangZipName
+            bbangZipName = bbangZipName,
         )
     }
 }
@@ -217,33 +223,35 @@ private fun MainBbangZip(
 @Composable
 private fun MyBadgeInfo(
     currentBadge: String,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .applyShadows(shape = RoundedCornerShape(40.dp), shadowType = BbangZipShadowType.STRONG)
-            .clip(shape = RoundedCornerShape(40.dp))
-            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .applyShadows(shape = RoundedCornerShape(40.dp), shadowType = BbangZipShadowType.STRONG)
+                .clip(shape = RoundedCornerShape(40.dp))
+                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
         horizontalArrangement = Arrangement.SpaceAround,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Column(
             modifier = Modifier.padding(vertical = 24.dp),
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Box(
-                modifier = Modifier
-                    .border(width = 2.dp, shape = RoundedCornerShape(24.dp), color = BbangZipTheme.colors.lineNormal_68645E_22)
-                    .padding(24.dp),
-                contentAlignment = Alignment.Center
+                modifier =
+                    Modifier
+                        .border(width = 2.dp, shape = RoundedCornerShape(24.dp), color = BbangZipTheme.colors.lineNormal_68645E_22)
+                        .padding(24.dp),
+                contentAlignment = Alignment.Center,
             ) {
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_plus_default_24),
                     contentDescription = null,
                     modifier = Modifier.size(33.dp),
-                    tint = BbangZipTheme.colors.lineNormal_68645E_22
+                    tint = BbangZipTheme.colors.lineNormal_68645E_22,
                 )
             }
 
@@ -258,17 +266,17 @@ private fun MyBadgeInfo(
 
         Column(
             verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Spacer(modifier = Modifier.height(21.dp))
 
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.CenterVertically,
             ) {
                 Text(
                     text = currentBadge,
                     style = BbangZipTheme.typography.title2Bold,
-                    color = BbangZipTheme.colors.labelNormal_282119
+                    color = BbangZipTheme.colors.labelNormal_282119,
                 )
 
                 Spacer(modifier = Modifier.width(1.dp))
@@ -276,7 +284,7 @@ private fun MyBadgeInfo(
                 Text(
                     text = stringResource(R.string.my_badge_book_count),
                     style = BbangZipTheme.typography.body1Medium,
-                    color = BbangZipTheme.colors.labelNormal_282119
+                    color = BbangZipTheme.colors.labelNormal_282119,
                 )
 
                 Spacer(modifier = Modifier.width(2.dp))
@@ -284,7 +292,7 @@ private fun MyBadgeInfo(
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_chevronright_tight_thick_small_24),
                     contentDescription = null,
-                    tint = BbangZipTheme.colors.labelAlternative_282119_61
+                    tint = BbangZipTheme.colors.labelAlternative_282119_61,
                 )
             }
 
@@ -293,7 +301,7 @@ private fun MyBadgeInfo(
             Text(
                 text = stringResource(R.string.my_badge_book),
                 style = BbangZipTheme.typography.caption2Medium,
-                color = BbangZipTheme.colors.labelAssistive_282119_28
+                color = BbangZipTheme.colors.labelAssistive_282119_28,
             )
         }
     }
@@ -303,17 +311,18 @@ private fun MyBadgeInfo(
 private fun MyMenuTitle(
     text: String,
     modifier: Modifier = Modifier,
-    onClickMenu: () -> Unit = {}
+    onClickMenu: () -> Unit = {},
 ) {
     Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .clickable { onClickMenu() }
-            //.applyFilterOnClick { onClickMenu() }
-            .background(color = BbangZipTheme.colors.staticWhite_FFFFFF, shape = RoundedCornerShape(24.dp))
-            .padding(vertical = 16.dp, horizontal = 24.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .clickable { onClickMenu() }
+                // .applyFilterOnClick { onClickMenu() }
+                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF, shape = RoundedCornerShape(24.dp))
+                .padding(vertical = 16.dp, horizontal = 24.dp),
         horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
             text = text,
@@ -324,20 +333,21 @@ private fun MyMenuTitle(
         Icon(
             imageVector = ImageVector.vectorResource(R.drawable.ic_chevronright_thick_small_24),
             contentDescription = null,
-            tint = BbangZipTheme.colors.labelNormal_282119
+            tint = BbangZipTheme.colors.labelNormal_282119,
         )
     }
 }
 
 @Composable
 private fun MyHorizontalDivider(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     HorizontalDivider(
-        modifier = modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+        modifier =
+            modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
         thickness = 1.dp,
-        color = BbangZipTheme.colors.lineNormal_68645E_22
+        color = BbangZipTheme.colors.lineNormal_68645E_22,
     )
 }

@@ -83,7 +83,7 @@ fun MainNavHost(
             )
 
             bbangZipDetailNavGraph(
-                popBackStack = { navigator.popBackStackIfNotSubject() }
+                popBackStack = { navigator.popBackStackIfNotSubject() },
             )
 
             myBadgeCategoryNavGraph(

@@ -9,5 +9,5 @@ data class BbangZip(
     val name: String,
     val description: String,
     val imageUrl: String,
-    val isLocked: Boolean
-): Parcelable
+    val isLocked: Boolean,
+) : Parcelable

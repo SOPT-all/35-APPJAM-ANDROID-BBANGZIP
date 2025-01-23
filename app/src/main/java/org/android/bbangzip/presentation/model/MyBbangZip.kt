@@ -9,5 +9,5 @@ data class MyBbangZip(
     val bbangZipLevel: Int? = null,
     val reward: Int? = null,
     val maxReward: Int? = null,
-    val bbangZipImgUrl: String? = null
+    val bbangZipImgUrl: String? = null,
 ) : Parcelable

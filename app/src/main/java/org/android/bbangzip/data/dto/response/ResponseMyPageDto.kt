@@ -16,7 +16,7 @@ data class ResponseMyPageDto(
     @SerialName("maxReward")
     val maxReward: Int,
     @SerialName("levelDetails")
-    val levelDetails: List<BbangZipLevel>
+    val levelDetails: List<BbangZipLevel>,
 ) {
     @Serializable
     data class BbangZipLevel(
@@ -29,22 +29,24 @@ data class ResponseMyPageDto(
         @SerialName("levelImage")
         val levelImage: String,
         @SerialName("levelIsLocked")
-        val levelIsLocked: Boolean
+        val levelIsLocked: Boolean,
     ) {
-        fun toMyEntity() = BbangZipEntity(
-            level = level,
-            levelName = levelName,
-            levelDescription = levelDescription,
-            levelImage = levelImage,
-            levelIsLocked = levelIsLocked
-        )
+        fun toMyEntity() =
+            BbangZipEntity(
+                level = level,
+                levelName = levelName,
+                levelDescription = levelDescription,
+                levelImage = levelImage,
+                levelIsLocked = levelIsLocked,
+            )
     }
 
-    fun toMyPageEntity() = MyEntity(
-        level = level,
-        badgeCounts = badgeCounts,
-        reward = reward,
-        maxReward = maxReward,
-        levelDetails = levelDetails.map { it.toMyEntity() }
-    )
+    fun toMyPageEntity() =
+        MyEntity(
+            level = level,
+            badgeCounts = badgeCounts,
+            reward = reward,
+            maxReward = maxReward,
+            levelDetails = levelDetails.map { it.toMyEntity() },
+        )
 }

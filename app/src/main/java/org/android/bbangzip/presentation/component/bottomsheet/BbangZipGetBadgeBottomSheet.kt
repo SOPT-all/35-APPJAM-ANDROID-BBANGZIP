@@ -69,17 +69,17 @@ fun BbangZipGetBadgeBottomSheet(
                     text = stringResource(R.string.badge_get_bottom_sheet_title, badgeList.size),
                     style = BbangZipTheme.typography.heading2Bold,
                     color = BbangZipTheme.colors.labelNormal_282119,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
 
                 Spacer(modifier = Modifier.height(32.dp))
 
                 Box(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 ) {
                     BadgeDetailContent(
                         pagerState = pagerState,
-                        badgeList = badgeList
+                        badgeList = badgeList,
                     )
 
                     if (badgeList.size != 1 && pagerState.currentPage != 0) {
@@ -87,16 +87,17 @@ fun BbangZipGetBadgeBottomSheet(
                             imageVector = ImageVector.vectorResource(R.drawable.ic_chevronleft_thick_small_24),
                             contentDescription = null,
                             tint = BbangZipTheme.colors.labelAssistive_282119_28,
-                            modifier = Modifier
-                                .align(Alignment.CenterStart)
-                                .padding(8.dp)
-                                .applyFilterOnClick {
-                                    if (pagerState.currentPage > 0) {
-                                        coroutineScope.launch {
-                                            pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                            modifier =
+                                Modifier
+                                    .align(Alignment.CenterStart)
+                                    .padding(8.dp)
+                                    .applyFilterOnClick {
+                                        if (pagerState.currentPage > 0) {
+                                            coroutineScope.launch {
+                                                pagerState.animateScrollToPage(pagerState.currentPage - 1)
+                                            }
                                         }
-                                    }
-                                }
+                                    },
                         )
                     }
 
@@ -105,16 +106,17 @@ fun BbangZipGetBadgeBottomSheet(
                             imageVector = ImageVector.vectorResource(R.drawable.ic_chevronright_thick_small_24),
                             contentDescription = null,
                             tint = BbangZipTheme.colors.labelAssistive_282119_28,
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .padding(8.dp)
-                                .applyFilterOnClick {
-                                    if (pagerState.currentPage < pagerState.pageCount - 1) {
-                                        coroutineScope.launch {
-                                            pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                            modifier =
+                                Modifier
+                                    .align(Alignment.CenterEnd)
+                                    .padding(8.dp)
+                                    .applyFilterOnClick {
+                                        if (pagerState.currentPage < pagerState.pageCount - 1) {
+                                            coroutineScope.launch {
+                                                pagerState.animateScrollToPage(pagerState.currentPage + 1)
+                                            }
                                         }
-                                    }
-                                }
+                                    },
                         )
                     }
                 }
@@ -134,7 +136,7 @@ fun BbangZipGetBadgeBottomSheet(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 onClick = { onClickCancelButton() },
-                label = stringResource(R.string.btn_close_label)
+                label = stringResource(R.string.btn_close_label),
             )
         },
     )
@@ -143,7 +145,7 @@ fun BbangZipGetBadgeBottomSheet(
 @Composable
 private fun BadgeHashTag(
     hashTag: List<String>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (hashTag.size == 2) {
         hashTag.onEachIndexed { index, s ->
@@ -152,7 +154,7 @@ private fun BadgeHashTag(
                 style = BbangZipTheme.typography.label1Small,
                 color = BbangZipTheme.colors.labelAlternative_282119_61,
                 textAlign = TextAlign.Center,
-                modifier = Modifier.padding(top = 1.dp)
+                modifier = Modifier.padding(top = 1.dp),
             )
         }
     } else {
@@ -160,7 +162,7 @@ private fun BadgeHashTag(
             text = hashTag[0],
             style = BbangZipTheme.typography.label1Small,
             color = BbangZipTheme.colors.labelAlternative_282119_61,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
 
         Spacer(modifier = Modifier.height(1.dp))
@@ -169,14 +171,14 @@ private fun BadgeHashTag(
             text = hashTag[1] + " " + hashTag[2],
             style = BbangZipTheme.typography.label1Small,
             color = BbangZipTheme.colors.labelAlternative_282119_61,
-            textAlign = TextAlign.Center
+            textAlign = TextAlign.Center,
         )
     }
 }
 
 @Composable
 private fun BbangZipPagerIndicator(
-    pagerState: PagerState
+    pagerState: PagerState,
 ) {
     Row(
         Modifier
@@ -201,22 +203,24 @@ private fun BbangZipPagerIndicator(
 private fun BadgeDetailContent(
     pagerState: PagerState,
     badgeList: List<Badge>,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     if (badgeList.size == 1) {
         Column(
-            modifier = modifier
-                .fillMaxWidth(),
+            modifier =
+                modifier
+                    .fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Top
+            verticalArrangement = Arrangement.Top,
         ) {
             AsyncImage(
-                model = ImageRequest.Builder(LocalContext.current)
-                    .data(data = badgeList[0].badgeImg)
-                    .crossfade(enable = true)
-                    .build(),
+                model =
+                    ImageRequest.Builder(LocalContext.current)
+                        .data(data = badgeList[0].badgeImg)
+                        .crossfade(enable = true)
+                        .build(),
                 contentDescription = null,
-                modifier = Modifier.align(Alignment.CenterHorizontally)
+                modifier = Modifier.align(Alignment.CenterHorizontally),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -225,7 +229,7 @@ private fun BadgeDetailContent(
                 text = badgeList[0].badgeName,
                 style = BbangZipTheme.typography.headline1Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
             )
 
             Spacer(modifier = Modifier.height(25.dp))
@@ -235,22 +239,25 @@ private fun BadgeDetailContent(
     } else {
         HorizontalPager(
             state = pagerState,
-            modifier = Modifier
-                .fillMaxWidth(),
+            modifier =
+                Modifier
+                    .fillMaxWidth(),
         ) { page ->
             Column(
-                modifier = Modifier
-                    .fillMaxWidth(),
+                modifier =
+                    Modifier
+                        .fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.Top
+                verticalArrangement = Arrangement.Top,
             ) {
                 AsyncImage(
-                    model = ImageRequest.Builder(LocalContext.current)
-                        .data(data = badgeList[page].badgeImg)
-                        .crossfade(enable = true)
-                        .build(),
+                    model =
+                        ImageRequest.Builder(LocalContext.current)
+                            .data(data = badgeList[page].badgeImg)
+                            .crossfade(enable = true)
+                            .build(),
                     contentDescription = null,
-                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                    modifier = Modifier.align(Alignment.CenterHorizontally),
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -259,7 +266,7 @@ private fun BadgeDetailContent(
                     text = badgeList[page].badgeName,
                     style = BbangZipTheme.typography.headline1Bold,
                     color = BbangZipTheme.colors.labelNormal_282119,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
 
                 Spacer(modifier = Modifier.height(25.dp))
@@ -278,23 +285,24 @@ private fun BbangZipGetBadgeBottomSheetPreview() {
     BbangZipGetBadgeBottomSheet(
         isBottomSheetVisible = isBottomSheetVisible,
         onDismissRequest = { isBottomSheetVisible = !isBottomSheetVisible },
-        badgeList = listOf(
-            Badge(
-                badgeName = "시작이 빵이다",
-                badgeImg = "https://cdn-icons-png.flaticon.com/512/5899/5899666.png",
-                hashTags = listOf("#해시태그 첫번째", "#해시태그 두번째", "#해시태그 세번째")
+        badgeList =
+            listOf(
+                Badge(
+                    badgeName = "시작이 빵이다",
+                    badgeImg = "https://cdn-icons-png.flaticon.com/512/5899/5899666.png",
+                    hashTags = listOf("#해시태그 첫번째", "#해시태그 두번째", "#해시태그 세번째"),
+                ),
+                Badge(
+                    badgeName = "시작이 빵이다2",
+                    badgeImg = "https://cdn-icons-png.flaticon.com/512/5899/5899666.png",
+                    hashTags = listOf("#해시태그 첫번째", "#해시태그 두번째", "#해시태그 세번째"),
+                ),
+                Badge(
+                    badgeName = "시작이 빵이다3",
+                    badgeImg = "https://cdn-icons-png.flaticon.com/512/5899/5899666.png",
+                    hashTags = listOf("#해시태그 첫번째", "#해시태그 두번째", "#해시태그 세번째"),
+                ),
             ),
-            Badge(
-                badgeName = "시작이 빵이다2",
-                badgeImg = "https://cdn-icons-png.flaticon.com/512/5899/5899666.png",
-                hashTags = listOf("#해시태그 첫번째", "#해시태그 두번째", "#해시태그 세번째")
-            ),
-            Badge(
-                badgeName = "시작이 빵이다3",
-                badgeImg = "https://cdn-icons-png.flaticon.com/512/5899/5899666.png",
-                hashTags = listOf("#해시태그 첫번째", "#해시태그 두번째", "#해시태그 세번째")
-            )
-        ),
-        onClickCancelButton = { isBottomSheetVisible = !isBottomSheetVisible }
+        onClickCancelButton = { isBottomSheetVisible = !isBottomSheetVisible },
     )
 }

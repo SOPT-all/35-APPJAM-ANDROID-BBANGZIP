@@ -11,8 +11,8 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun BbangZipLoadingIndicator(
-    modifier : Modifier = Modifier
-){
+    modifier: Modifier = Modifier,
+) {
     Box(
         modifier =
             modifier
