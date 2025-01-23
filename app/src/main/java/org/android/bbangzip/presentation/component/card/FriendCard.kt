@@ -12,14 +12,17 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
@@ -67,10 +70,14 @@ fun FriendCard(
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
-                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_user_one_default_24),
+                    painter = painterResource(id = data.imgSrc),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.size(48.dp),
+                    modifier = Modifier.size(48.dp).clip(CircleShape).border(
+                        width = 1.dp,
+                        color = BbangZipTheme.colors.lineNormal_68645E_22,
+                        shape = CircleShape,
+                    ),
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))
