@@ -121,7 +121,7 @@
     <string name="friend_boss_count">총 %s명의 사장님을 알고있어요</string>
 
     <!-- badge -->
-    <string name="badge_get_bottom_sheet_title">배지를 획득했어요!</string>
+    <string name="badge_get_bottom_sheet_title">%s개의 배지를 획득했어요!</string>
 
     <!-- my -->
     <string name="my_badge_setting">배지 설정하기</string>
