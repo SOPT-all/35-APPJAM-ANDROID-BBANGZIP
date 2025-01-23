@@ -200,17 +200,15 @@ class SplitStudyViewModel
                     state.copy(
                         endPageGuidelineList =
                             state.endPageGuidelineList.mapIndexed { index, value ->
-                                if (index == reduce.index && state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert)
-                                    {
-                                        if (state.startPageList[index] == "0p") {
-                                            "0p는 입력할 수 없어요"
-                                        } else {
-                                            "종료 범위 이전으로 입력해 주세요"
-                                        }
-                                    } else if (state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert)
-                                    {
-                                        value
+                                if (index == reduce.index && state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert) {
+                                    if (state.startPageList[index] == "0p") {
+                                        "0p는 입력할 수 없어요"
                                     } else {
+                                        "종료 범위 이전으로 입력해 주세요"
+                                    }
+                                } else if (state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert) {
+                                    value
+                                } else {
                                     "까지"
                                 }
                             },
@@ -220,17 +218,15 @@ class SplitStudyViewModel
                     state.copy(
                         startPageGuidelineList =
                             state.startPageGuidelineList.mapIndexed { index, value ->
-                                if (index == reduce.index && state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert)
-                                    {
-                                        if (state.startPageList[index] == "0p") {
-                                            "0p는 입력할 수 없어요"
-                                        } else {
-                                            "시작 범위 이후로 입력해 주세요"
-                                        }
-                                    } else if (state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert)
-                                    {
-                                        value
+                                if (index == reduce.index && state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert) {
+                                    if (state.startPageList[index] == "0p") {
+                                        "0p는 입력할 수 없어요"
                                     } else {
+                                        "시작 범위 이후로 입력해 주세요"
+                                    }
+                                } else if (state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert) {
+                                    value
+                                } else {
                                     "부터"
                                 }
                             },
