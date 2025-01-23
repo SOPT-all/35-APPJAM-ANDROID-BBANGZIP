@@ -48,6 +48,7 @@ fun SubjectDetailRoute(
 
     SubjectDetailScreen(
         padding = padding,
+        isMenuOpen = subjectDetailState.isMenuOpen,
         todoList = subjectDetailState.todoList,
         pieceViewType = subjectDetailState.pieceViewType,
         deletedSet = subjectDetailState.selectedItemSet,
@@ -55,6 +56,9 @@ fun SubjectDetailRoute(
         selectedItemId = subjectDetailState.selectedItemId,
         subjectId = subjectDetailState.subjectId,
         subjectName = subjectDetailState.subjectName,
+        motivationMessage = subjectDetailState.motivationMessage,
+        examDDay = subjectDetailState.examDday,
+        examDate = subjectDetailState.examDate,
         onCloseIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked) },
         onTrashIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked) },
         onDeleteModeCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked(id)) },
@@ -62,6 +66,7 @@ fun SubjectDetailRoute(
         onCompleteCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked(id)) },
         onClickEnrollMotivationMessage = { id, name ->viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage(id, name)) },
         onClickModifySubjectName = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName(id, name)) },
+        onClickKebabMenu = {viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu)},
         onRevertCompleteBottomSheetDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest) },
         onRevertCompleteBottomSheetApproveButtonClicked = { pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
         onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },

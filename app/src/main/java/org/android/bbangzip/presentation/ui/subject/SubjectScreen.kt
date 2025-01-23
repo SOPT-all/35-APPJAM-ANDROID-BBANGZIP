@@ -52,6 +52,7 @@ fun SubjectScreen(
     onClickCancleBtn: () -> Unit = {},
     onClickDeleteModeCard: (Int, String) -> Unit = {_,_ ->},
     onClickStudyCard: (Int, String) -> Unit = {_,_ ->},
+    onClickAddSubject: () -> Unit = {},
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
@@ -87,7 +88,7 @@ fun SubjectScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = "2025년 2학기",
+                            text = "2025년 1학기",
                             style = BbangZipTheme.typography.body1Bold,
                             color = BbangZipTheme.colors.labelNormal_282119,
                         )
@@ -117,6 +118,7 @@ fun SubjectScreen(
                             subjects = subjects,
                             onTrashIconClick = onClickTrashBtn,
                             onClickStudyCard = onClickStudyCard,
+                            onClickAddSubject = onClickAddSubject
                         )
 
                     CardViewType.DELETE ->
@@ -159,6 +161,7 @@ private fun DefaultCardView(
     subjects: List<SubjectCardModel>,
     onTrashIconClick: () -> Unit = {},
     onClickStudyCard: (Int, String) -> Unit = {_,_ ->},
+    onClickAddSubject: () -> Unit = {},
 ) {
     Column {
         Row(
@@ -208,7 +211,9 @@ private fun DefaultCardView(
                             data = subjects.last(),
                             onClick = onClickStudyCard,
                         )
-                        AddSubjectCard()
+                        AddSubjectCard(
+                            onClick = onClickAddSubject,
+                        )
                     }
                 } else {
                     Row(
@@ -244,7 +249,9 @@ private fun DefaultCardView(
                                 ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        AddSubjectCard()
+                        AddSubjectCard(
+                            onClick = onClickAddSubject,
+                        )
                     }
                 } else {
                     Row(

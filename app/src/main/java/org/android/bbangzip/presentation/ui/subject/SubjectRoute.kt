@@ -26,6 +26,7 @@ fun SubjectRoute(
     padding: PaddingValues,
     navigateAddStudy: (SplitStudyData) -> Unit,
     navigateToSubjectDetail: (Int, String) -> Unit = {_, _ ->},
+    navigateToAddSubject: () -> Unit = {},
     viewModel: SubjectViewModel = hiltViewModel(),
 ) {
     val subjectState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -40,7 +41,9 @@ fun SubjectRoute(
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
                 SubjectContract.SubjectSideEffect.NavigateToAddStudy -> {}
-                SubjectContract.SubjectSideEffect.NavigateToAddSubject -> {}
+                SubjectContract.SubjectSideEffect.NavigateToAddSubject -> {
+                    navigateToAddSubject()
+                }
                 is SubjectContract.SubjectSideEffect.NavigateToSubjectDetail -> navigateToSubjectDetail(effect.subjectId, effect.subjectName)
                 SubjectContract.SubjectSideEffect.ShowDeleteSuccessSnackBar -> TODO()
             }
@@ -59,6 +62,7 @@ fun SubjectRoute(
                 onClickTrashBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickTrashIcon) },
                 onClickStudyCard = { id, name -> viewModel.setEvent(SubjectContract.SubjectEvent.OnClickStudyCard(id, name)) },
                 onClickCancleBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickCancleIcon) },
+                onClickAddSubject = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickAddSubject) },
                 subjects = subjectState.subjectList,
                 cardViewType = subjectState.cardViewType,
                 deletedSet = subjectState.subjectSetToDelete,

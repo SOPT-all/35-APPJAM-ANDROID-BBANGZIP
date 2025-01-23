@@ -18,6 +18,8 @@ class ModifySubjectNameContract {
     }
 
     sealed interface ModifySubjectNameEvent : BaseContract.Event {
+        data class Initialize(val subjectId: Int, val subjectName: String) : ModifySubjectNameEvent
+
         data class OnFocusTextField(val isTextFieldFocused: Boolean) : ModifySubjectNameEvent
 
         data class OnChangeSubjectName(val subjectName: String) : ModifySubjectNameEvent
@@ -37,6 +39,8 @@ class ModifySubjectNameContract {
         data object UpdateSubjectNameInputState : ModifySubjectNameReduce
 
         data class UpdateIsTextFieldFocused(val isTextFieldFocused: Boolean) : ModifySubjectNameReduce
+
+        data class UpdateSubjectData(val subjectId: Int, val subjectName: String) : ModifySubjectNameReduce
 
         data object ResetSubjectNamge : ModifySubjectNameReduce
 

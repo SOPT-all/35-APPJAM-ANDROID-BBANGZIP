@@ -98,6 +98,7 @@ fun MainNavHost(
             subjectNavGraph(
                 navigateAddStudy = { navigator.navigateToAddStudy(it) },
                 navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
+                navigateToAddSubject = {navigator.navigateToAddSubject()},
                 padding = padding,
             )
 

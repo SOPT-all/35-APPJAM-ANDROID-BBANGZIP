@@ -23,6 +23,7 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
+import org.android.bbangzip.presentation.ui.subject.addsubject.navigateToAddSubject
 import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.navigateToModifyMotivationMessage
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.navigateToModifySubjectName
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
@@ -97,6 +98,10 @@ class MainNavigator(
         subjectName: String) {
         Timber.tag("navaigateSubject").d("subjectId")
         navHostController.navigateToSubjectDetail(subjectId, subjectName)
+    }
+
+    fun navigateToAddSubject() {
+        navHostController.navigateToAddSubject()
     }
 
     fun navigateToModifyMotivationMessage(subjectId: Int, subjectName: String) {

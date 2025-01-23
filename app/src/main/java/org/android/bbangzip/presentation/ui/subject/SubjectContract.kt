@@ -28,6 +28,8 @@ class SubjectContract {
             val subjectName: String,
             ) : SubjectEvent
 
+        data object OnClickAddSubject : SubjectEvent
+
         data class OnClickDeleteModeCard(val subjectId: Int) : SubjectEvent
 
         data class OnClickDeleteButton(val subjectId: Int) : SubjectEvent

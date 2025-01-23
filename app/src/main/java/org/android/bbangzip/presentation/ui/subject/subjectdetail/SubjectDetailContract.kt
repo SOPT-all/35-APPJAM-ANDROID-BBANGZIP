@@ -17,9 +17,9 @@ class SubjectDetailContract {
         val pieceViewType: PieceViewType = PieceViewType.DEFAULT,
         val selectedItemSet: Set<Int> = setOf(),
         val revertCompleteBottomSheetState: Boolean = false,
-        val examDate: String = "",
-        val examDday: Int = 0,
-        val motivationMessage: String = "",
+        val examDate: String = "2025년 11월 25일",
+        val examDday: Int = -14,
+        val motivationMessage: String = "사장님의 각오 한마디를 작성해보세요",
         val selectedItemId: Int = -1,
         val subjectId: Int = 0,
         val subjectName: String = "",
@@ -159,6 +159,8 @@ class SubjectDetailContract {
 
         data object OnRevertCompleteBottomSheetDissmissRequest : SubjectDetailEvent
 
+        data object OnClickKebabMenu : SubjectDetailEvent
+
         data class OnClickEnrollMotivateMessage(
             val subjectId: Int,
             val subjectName: String
@@ -207,6 +209,8 @@ class SubjectDetailContract {
         data object UpdateRevertCompleteBottomSheetState : SubjectDetailReduce
 
         data class UpdateSelectedId(val pieceId: Int) : SubjectDetailReduce
+
+        data object UpdateIsMenuOpen : SubjectDetailReduce
     }
 
     sealed interface SubjectDetailSideEffect : BaseContract.SideEffect {

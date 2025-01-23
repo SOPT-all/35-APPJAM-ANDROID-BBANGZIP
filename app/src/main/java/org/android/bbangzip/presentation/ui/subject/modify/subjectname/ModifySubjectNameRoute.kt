@@ -6,7 +6,6 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
-import org.android.bbangzip.presentation.ui.ModifySubjectName.modify.ModifySubjectNamename.ModifySubjectNameViewModel
 
 @Composable
 fun ModifySubjectNameRoute(
@@ -18,6 +17,10 @@ fun ModifySubjectNameRoute(
     val modifySubjectNameState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(Unit){
+        viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.Initialize(subjectId, subjectName))
+    }
+
+    LaunchedEffect(viewModel.uiSideEffect){
         viewModel.uiSideEffect.collectLatest{ effect ->
             when(effect){
                 is ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail -> {

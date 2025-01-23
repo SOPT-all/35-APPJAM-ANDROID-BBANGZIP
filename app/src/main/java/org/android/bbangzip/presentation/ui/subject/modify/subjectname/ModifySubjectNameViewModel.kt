@@ -1,10 +1,9 @@
-package org.android.bbangzip.presentation.ui.ModifySubjectName.modify.ModifySubjectNamename
+package org.android.bbangzip.presentation.ui.subject.modify.subjectname
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
-import org.android.bbangzip.presentation.ui.subject.modify.subjectname.ModifySubjectNameContract
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import javax.inject.Inject
 
@@ -22,6 +21,11 @@ constructor(
 
     override fun handleEvent(event: ModifySubjectNameContract.ModifySubjectNameEvent) {
         when (event){
+
+            is ModifySubjectNameContract.ModifySubjectNameEvent.Initialize -> {
+                updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectData(subjectId = event.subjectId, subjectName = event.subjectName))
+            }
+
             is ModifySubjectNameContract.ModifySubjectNameEvent.OnChangeSubjectName -> {
                 updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectName(subjectName = event.subjectName))
                 updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
@@ -79,6 +83,13 @@ constructor(
             ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectNamge -> {
                 state.copy(
                     subjectName = ""
+                )
+            }
+
+            is ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectData -> {
+                state.copy(
+                    subjectId = reduce.subjectId,
+                    subjectName = reduce.subjectName
                 )
             }
         }

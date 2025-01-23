@@ -93,6 +93,10 @@ class SubjectDetailViewModel
                 SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
                     // Todo
                 }
+
+                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                }
             }
         }
 
@@ -216,7 +220,15 @@ class SubjectDetailViewModel
                     )
                 }
 
-                else -> state
+                is SubjectDetailContract.SubjectDetailReduce.DeleteSelectedItemSet -> {
+                    state
+                }
+
+                SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
+                    state.copy(
+                        isMenuOpen = !state.isMenuOpen
+                    )
+                }
             }
         }
 
