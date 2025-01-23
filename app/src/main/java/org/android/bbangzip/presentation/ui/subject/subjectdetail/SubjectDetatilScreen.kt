@@ -68,7 +68,7 @@ fun SubjectDetailScreen(
     revertCompleteBottomSheetState: Boolean,
     selectedItemId: Int,
     onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
-    onRevertCompleteBottomSheetApproveButtonClicked: () -> Unit = {},
+    onRevertCompleteBottomSheetApproveButtonClicked: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
     onTrashIconClicked: () -> Unit = {},
     onCloseIconClicked: () -> Unit = {},
@@ -268,6 +268,7 @@ fun SubjectDetailScreen(
         RevertCompleteBottomSheet(
             isBottomSheetVisible = revertCompleteBottomSheetState,
             bottomSheetTitle = "미완료 상태로 되돌릴까요?",
+            selectedCompleteItemId = selectedItemId,
             onDismissRequest = onRevertCompleteBottomSheetDismissRequest,
             onClickInteractButton = onRevertCompleteBottomSheetApproveButtonClicked,
             onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
@@ -636,9 +637,10 @@ private fun EmptySubjectCardView(
 fun RevertCompleteBottomSheet(
     isBottomSheetVisible: Boolean,
     bottomSheetTitle: String,
+    selectedCompleteItemId : Int,
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit = {},
-    onClickInteractButton: () -> Unit = {},
+    onClickInteractButton: (Int) -> Unit = {},
     onClickCancelButton: () -> Unit = {},
 ) {
     BbangZipBasicModalBottomSheet(
@@ -662,7 +664,7 @@ fun RevertCompleteBottomSheet(
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
-                onClick = { onClickInteractButton() },
+                onClick = { onClickInteractButton(selectedCompleteItemId) },
                 label = stringResource(R.string.todo_revert_bottomsheet_approve_text),
                 modifier = Modifier.fillMaxWidth(),
             )

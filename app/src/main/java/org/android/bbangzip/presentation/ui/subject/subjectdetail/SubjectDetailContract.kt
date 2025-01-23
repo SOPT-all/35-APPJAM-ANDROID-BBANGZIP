@@ -145,7 +145,7 @@ class SubjectDetailContract {
 
         data object OnDeleteButtonClicked : SubjectDetailEvent
 
-        data object OnRevertCompleteBottomSheetApproveButtonClicked : SubjectDetailEvent
+        data class OnRevertCompleteBottomSheetApproveButtonClicked(val pieceId: Int) : SubjectDetailEvent
 
         data object OnRevertCompleteBottomSheetDismissButtonClicked : SubjectDetailEvent
 
