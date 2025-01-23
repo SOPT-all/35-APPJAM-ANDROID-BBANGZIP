@@ -39,7 +39,7 @@ class SubjectDetailContract {
                     finishPage = 30,
                     deadline = "2025-01-22",
                     remainingDays = -3,
-                    BbangZipCardState.DEFAULT
+                    BbangZipCardState.DEFAULT,
                 ),
                 ToDoCardModel(
                     pieceId = 3,
@@ -61,7 +61,7 @@ class SubjectDetailContract {
                     finishPage = 0,
                     deadline = "2025-01-28",
                     remainingDays = -2,
-                    cardState = BbangZipCardState.DEFAULT
+                    cardState = BbangZipCardState.DEFAULT,
                 ),
                 ToDoCardModel(
                     pieceId = 5,
@@ -72,7 +72,7 @@ class SubjectDetailContract {
                     finishPage = 30,
                     deadline = "2025-01-22",
                     remainingDays = 4,
-                    BbangZipCardState.DEFAULT
+                    BbangZipCardState.DEFAULT,
                 ),
                 ToDoCardModel(
                     pieceId = 6,
@@ -83,7 +83,7 @@ class SubjectDetailContract {
                     finishPage = 80,
                     deadline = "2025-01-25",
                     remainingDays = -1,
-                    BbangZipCardState.DEFAULT
+                    BbangZipCardState.DEFAULT,
                 ),
                 ToDoCardModel(
                     pieceId = 7,
@@ -94,7 +94,7 @@ class SubjectDetailContract {
                     finishPage = 0,
                     deadline = "2025-01-28",
                     remainingDays = 5,
-                    BbangZipCardState.DEFAULT
+                    BbangZipCardState.DEFAULT,
                 ),
                 ToDoCardModel(
                     pieceId = 8,
@@ -105,7 +105,7 @@ class SubjectDetailContract {
                     finishPage = 30,
                     deadline = "2025-01-22",
                     remainingDays = -4,
-                    BbangZipCardState.DEFAULT
+                    BbangZipCardState.DEFAULT,
                 ),
                 ToDoCardModel(
                     pieceId = 9,
@@ -116,7 +116,7 @@ class SubjectDetailContract {
                     finishPage = 80,
                     deadline = "2025-01-25",
                     remainingDays = 3,
-                    BbangZipCardState.DEFAULT
+                    BbangZipCardState.DEFAULT,
                 ),
                 ToDoCardModel(
                     pieceId = 10,
@@ -127,7 +127,7 @@ class SubjectDetailContract {
                     finishPage = 0,
                     deadline = "2025-01-28",
                     remainingDays = -5,
-                    BbangZipCardState.DEFAULT
+                    BbangZipCardState.DEFAULT,
                 ),
             ),
     ) : BaseContract.State, Parcelable {
