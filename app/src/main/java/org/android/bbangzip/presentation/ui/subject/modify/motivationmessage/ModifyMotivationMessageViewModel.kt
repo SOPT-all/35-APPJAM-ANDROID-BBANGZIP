@@ -22,7 +22,7 @@ constructor(
     override fun handleEvent(event: ModifyMotivationMessageContract.ModifyMotivationMessageEvent) {
         when (event){
             is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnChangeMotivationMessage -> {
-                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessage(MotivationMessage = event.motivationMessage))
+                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessage(motivationMessage = event.motivationMessage))
                 updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
                 updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
             }
@@ -62,7 +62,7 @@ constructor(
             }
             is ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessage -> {
                 state.copy(
-                    motivationMessage = reduce.MotivationMessage
+                    motivationMessage = reduce.motivationMessage
                 )
             }
             ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState -> {

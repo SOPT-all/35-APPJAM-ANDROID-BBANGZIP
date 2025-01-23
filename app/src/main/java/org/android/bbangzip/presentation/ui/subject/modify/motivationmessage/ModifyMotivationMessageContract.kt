@@ -29,7 +29,7 @@ class ModifyMotivationMessageContract {
 
     }
     sealed interface ModifyMotivationMessageReduce : BaseContract.Reduce {
-        data class UpdateMotivationMessage(val MotivationMessage: String) : ModifyMotivationMessageReduce
+        data class UpdateMotivationMessage(val motivationMessage: String) : ModifyMotivationMessageReduce
 
         data object UpdateIsButtonEnabled : ModifyMotivationMessageReduce
 
