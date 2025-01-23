@@ -297,15 +297,16 @@ fun DateMessageCard(
                         painter = painterResource(R.drawable.img_pending_study_zero_header),
                         contentDescription = null,
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxWidth()
                             .aspectRatio(360f / 172f)
+                            .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp)),
                     )
                 } else {
                     Image(
                         painter = painterResource(R.drawable.img_no_peding_study),
                         contentDescription = null,
                         modifier = Modifier
-                            .fillMaxSize()
+                            .fillMaxWidth()
                             .aspectRatio(360f / 172f)
                     )
                 }
@@ -754,7 +755,7 @@ fun TodoScreenMockPreview() {
             ),
             TodoContract.TodoState(
                 todoList = mockToDoList,
-                pendingCount = 2,
+                pendingCount = 0,
                 remainingStudyCount = 2,
                 completeCount = 2,
                 screenType = ToDoScreenType.EMPTY,
