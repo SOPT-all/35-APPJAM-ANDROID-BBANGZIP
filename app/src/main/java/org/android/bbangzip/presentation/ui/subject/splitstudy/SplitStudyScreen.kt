@@ -32,6 +32,7 @@ import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.chip.BbangZipChip
 import org.android.bbangzip.presentation.component.textfield.BbangZipSimpleTextField
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
+import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.model.Date
 import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.type.AddStudyViewType
@@ -68,6 +69,12 @@ fun SplitStudyScreen(
             Date("2025", "1", "21"),
             Date("2025", "1", "21"),
         ),
+    startPageTextFieldStateList: List<BbangZipTextFieldInputState> = emptyList(),
+    startPageFocusedStateList: List<Boolean> = emptyList(),
+    startPageGuidelineList: List<String> = List(pieceNumber) { " " },
+    endPageTextFieldStateList: List<BbangZipTextFieldInputState> = emptyList(),
+    endPageFocusedStateList: List<Boolean> = emptyList(),
+    endPageGuidelineList: List<String> = emptyList(),
     onChangeStartPage: (Int, String) -> Unit = { _, _ -> },
     onChangeEndPage: (Int, String) -> Unit = { _, _ -> },
     onChangeStartPageFocused: (Int, Boolean) -> Unit = { _, _ -> },
@@ -80,6 +87,9 @@ fun SplitStudyScreen(
     onClickSaveButton: (SplitStudyData) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
+
+    Timber.tag("지은아자지마").d("pieceNumber : $pieceNumber")
+    Timber.tag("[과목 관리]").d(startPageGuidelineList.toString())
 
     val scrollState = rememberLazyListState()
     val isShadowed by remember {
@@ -216,9 +226,10 @@ fun SplitStudyScreen(
                         BbangZipSimpleTextField(
                             leadingIcon = R.drawable.ic_page_check_default_24,
                             placeholder = R.string.add_study_start_page_placeholder,
-                            guideline = stringResource(R.string.add_study_start_page_guideline),
+                            guideline = startPageGuidelineList[index],
                             value = startPageList[index],
                             modifier = Modifier.weight(1f),
+                            bbangZipTextFieldInputState = startPageTextFieldStateList[index],
                             onValueChange = {
                                 onChangeStartPage(index, it)
                             },
@@ -231,9 +242,10 @@ fun SplitStudyScreen(
                         BbangZipSimpleTextField(
                             leadingIcon = R.drawable.ic_page_check_default_24,
                             placeholder = R.string.add_study_end_page_placeholder,
-                            guideline = stringResource(R.string.add_study_end_page_guideline),
+                            guideline = endPageGuidelineList[index],
                             value = endPageList[index],
                             modifier = Modifier.weight(1f),
+                            bbangZipTextFieldInputState = endPageTextFieldStateList[index],
                             onValueChange = {
                                 onChangeEndPage(index, it)
                             },

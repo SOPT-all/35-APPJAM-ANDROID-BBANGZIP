@@ -24,6 +24,11 @@ fun dateStringToLocalDate(dateString: String): LocalDate {
     return LocalDate.of(year, month, day)
 }
 
+fun hyponStringDateToDate(dateString: String): Date {
+    val (year, month, day) = dateString.split("-").map { it.toInt() }
+    return Date(year.toString(), month.toString(), day.toString())
+}
+
 fun dateToString(date: Date): String {
     return "${date.year}-${date.month}-${date.day}"
 }

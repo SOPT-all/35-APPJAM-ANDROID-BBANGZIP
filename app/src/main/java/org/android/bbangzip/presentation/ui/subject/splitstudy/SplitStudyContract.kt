@@ -23,9 +23,11 @@ class SplitStudyContract {
         val startPageList: List<String> = List(pieceNumber) { "" },
         val startPageFocusedStateList: List<Boolean> = List(pieceNumber) { false },
         val startPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
+        val startPageGuidelineList: List<String> = List(pieceNumber) { " " },
         val endPageList: List<String> = List(pieceNumber) { "" },
         val endPageFocusedStateList: List<Boolean> = List(pieceNumber) { false },
         val endPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
+        val endPageGuidelineList: List<String> = List(pieceNumber) { "" },
         val dateList: List<Date> = List(pieceNumber) { Date("2025", "1", "21") },
         val datePickerBottomSheetState: Boolean = false,
         val isSaveEnable: Boolean = true,
@@ -91,6 +93,14 @@ class SplitStudyContract {
         data class UpdateSeletedIndex(val index: Int) : SplitStudyReduce
 
         data object UpdateSelectedDateList : SplitStudyReduce
+
+        data class UpdateStartPageTextFieldState(val index: Int) : SplitStudyReduce
+
+        data class UpdateEndPageTextFieldState(val index: Int) : SplitStudyReduce
+
+        data class UpdateStartPageGuideline(val index: Int) : SplitStudyReduce
+
+        data class UpdateEndPageGuideline(val index: Int) : SplitStudyReduce
 
         data object UpdateState : SplitStudyReduce
     }

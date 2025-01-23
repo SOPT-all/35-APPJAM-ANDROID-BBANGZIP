@@ -3,10 +3,13 @@ package org.android.bbangzip.presentation.ui.subject.splitstudy
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import org.android.bbangzip.presentation.util.casting.pageToInt
 import org.android.bbangzip.presentation.util.date.dateStringToLocalDate
 import org.android.bbangzip.presentation.util.date.divideDatesByN
+import org.android.bbangzip.presentation.util.date.hyponStringDateToDate
 import org.android.bbangzip.presentation.util.date.localDateToDate
 import timber.log.Timber
 import javax.inject.Inject
@@ -30,7 +33,11 @@ class SplitStudyViewModel
             return when (reduce) {
                 SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled -> {
                     state.copy(
-                        isSaveEnable = state.startPageList.all { it != "" } && state.endPageList.all { it != "" },
+                        isSaveEnable = state.startPageList.all { it != "" }
+                                && state.endPageList.all { it != "" }
+                                && state.startPageTextFieldStateList.all { it != BbangZipTextFieldInputState.Alert }
+                                && state.endPageTextFieldStateList.all {it != BbangZipTextFieldInputState.Alert}
+                        ,
                     )
                 }
                 is SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState -> {
@@ -67,7 +74,6 @@ class SplitStudyViewModel
                                     if (state.endPageList[index].isEmpty()) {
                                         ""
                                     } else {
-                                        Timber.d("[endPageFocusedStateList[index]] : ${state.endPageFocusedStateList[index]}")
                                         if (state.endPageFocusedStateList[index]) {
                                             state.endPageList[index].filter { it.isDigit() }.toInt().toString()
                                         } else {
@@ -133,10 +139,10 @@ class SplitStudyViewModel
                             },
                     )
                 }
-                is SplitStudyContract.SplitStudyReduce.UpdatePieceNumber -> {
-                    state
-                }
+
                 is SplitStudyContract.SplitStudyReduce.InitializeState -> {
+                    Timber.tag("[과목 관리]").d(reduce.addStudyData.deadLineList.toString())
+
                     state.copy(
                         subjectName = reduce.addStudyData.subjectName,
                         startPage = reduce.addStudyData.startPage,
@@ -147,12 +153,13 @@ class SplitStudyViewModel
                         startPageList = reduce.addStudyData.startPageList,
                         endPageList = reduce.addStudyData.endPageList,
                         dateList =
-                            divideDatesByN(
-                                dateStringToLocalDate(reduce.addStudyData.examDate),
-                                reduce.addStudyData.pieceNumber,
-                            ).map { localDateToDate(it) },
+                            reduce.addStudyData.deadLineList.map { hyponStringDateToDate(it) },
                         startPageFocusedStateList = List(reduce.addStudyData.pieceNumber) { false },
                         endPageFocusedStateList = List(reduce.addStudyData.pieceNumber) { false },
+                        startPageGuidelineList = List(reduce.addStudyData.pieceNumber) { "부터" },
+                        startPageTextFieldStateList = List(reduce.addStudyData.pieceNumber) { BbangZipTextFieldInputState.Default },
+                        endPageGuidelineList = List(reduce.addStudyData.pieceNumber) { "까지" },
+                        endPageTextFieldStateList = List(reduce.addStudyData.pieceNumber) { BbangZipTextFieldInputState.Default },
                     )
                 }
                 is SplitStudyContract.SplitStudyReduce.UpdateSeletedIndex -> {
@@ -175,6 +182,49 @@ class SplitStudyViewModel
                             },
                     )
                 }
+
+                is SplitStudyContract.SplitStudyReduce.UpdateStartPageTextFieldState -> {
+                    state.copy(
+                        startPageTextFieldStateList = state.startPageTextFieldStateList.mapIndexed { index, value ->
+                            if (index == reduce.index) determineStartTextFieldType(start = state.startPageList[index], end = state.endPageList[index], min = pageToInt(state.startPage), isFocused = state.startPageFocusedStateList[index]) else value
+                        }
+                    )
+                }
+                is SplitStudyContract.SplitStudyReduce.UpdateEndPageTextFieldState -> {
+                    state.copy(
+                        endPageTextFieldStateList = state.endPageTextFieldStateList.mapIndexed { index, value ->
+                            if (index == reduce.index) determineEndTextFieldType(start = state.startPageList[index], end = state.endPageList[index], max = pageToInt(state.endPage), isFocused = state.endPageFocusedStateList[index]) else value
+                        }
+                    )
+                }
+                is SplitStudyContract.SplitStudyReduce.UpdateEndPageGuideline -> {
+                    state.copy(
+                        endPageGuidelineList = state.endPageGuidelineList.mapIndexed { index, value ->
+                            if(index == reduce.index && state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert){
+                                if(state.startPageList[index] == "0p") "0p는 입력할 수 없어요"
+                                else "종료 범위 이전으로 입력해 주세요"
+                            }else if (state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert){
+                                value
+                            } else "까지"
+                        }
+                    )
+                }
+                is SplitStudyContract.SplitStudyReduce.UpdateStartPageGuideline -> {
+                    state.copy(
+                        startPageGuidelineList = state.startPageGuidelineList.mapIndexed { index, value ->
+                            if(index == reduce.index && state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert){
+                                if(state.startPageList[index] == "0p") "0p는 입력할 수 없어요"
+                                else "시작 범위 이후로 입력해 주세요"
+                            }else if (state.startPageTextFieldStateList[index] == BbangZipTextFieldInputState.Alert){
+                                value
+                            } else "부터"
+                        }
+                    )
+                }
+
+                SplitStudyContract.SplitStudyReduce.UpdatePieceNumber -> {
+                    state
+                }
             }
         }
 
@@ -186,6 +236,10 @@ class SplitStudyViewModel
                 is SplitStudyContract.SplitStudyEvent.OnChangeEndPageFocused -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageFocusedState(index = event.index, endPageFocusedState = event.endPageFocusedState))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageToString(index = event.index))
+                    updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPageTextFieldState(index = event.index))
+                    updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageTextFieldState(index = event.index))
+                    updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPageGuideline(index = event.index))
+                    updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageGuideline(index = event.index))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled)
                 }
                 is SplitStudyContract.SplitStudyEvent.OnChangeSelectedDate -> {
@@ -197,6 +251,10 @@ class SplitStudyViewModel
                 is SplitStudyContract.SplitStudyEvent.OnChangeStartPageFocused -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPageFocusedState(index = event.index, startPageFocusedState = event.startPageFocusedState))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPageToString(index = event.index))
+                    updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPageTextFieldState(index = event.index))
+                    updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageTextFieldState(index = event.index))
+                    updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPageGuideline(index = event.index))
+                    updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageGuideline(index = event.index))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled)
                 }
                 is SplitStudyContract.SplitStudyEvent.Initialize -> {
@@ -242,6 +300,38 @@ class SplitStudyViewModel
                 SplitStudyContract.SplitStudyEvent.OnCloseBottomSheet -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState)
                 }
+
+
             }
         }
     }
+
+private fun determineStartTextFieldType(
+    start: String,
+    end: String,
+    min: Int,
+    isFocused: Boolean,
+): BbangZipTextFieldInputState {
+    return when {
+        start.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
+        start.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
+        start == "0p" || (end.isNotEmpty() && pageToInt(start) > pageToInt(end)) || pageToInt(start) < min -> BbangZipTextFieldInputState.Alert
+        start.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
+        else -> BbangZipTextFieldInputState.Field
+    }
+}
+
+private fun determineEndTextFieldType(
+    start: String,
+    end: String,
+    max: Int,
+    isFocused: Boolean,
+): BbangZipTextFieldInputState {
+    return when {
+        end.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
+        end.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
+        end == "0p" || pageToInt(end) > max -> BbangZipTextFieldInputState.Alert
+        end.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
+        else -> BbangZipTextFieldInputState.Field
+    }
+}

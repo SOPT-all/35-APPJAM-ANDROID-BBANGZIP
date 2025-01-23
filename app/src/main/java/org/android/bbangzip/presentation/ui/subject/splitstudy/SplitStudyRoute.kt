@@ -18,9 +18,7 @@ fun SplitStudyRoute(
     navigateAddStudy: (SplitStudyData) -> Unit = {},
 ) {
     LaunchedEffect(Unit) {
-        Timber.tag("SplitStudy 진입").d("$addStudyData")
         viewModel.setEvent(SplitStudyContract.SplitStudyEvent.Initialize(addStudyData = addStudyData))
-        Timber.tag("SplitStudy 진입").d("${viewModel.uiState}addStudyData")
     }
 
     LaunchedEffect(viewModel.uiSideEffect) {
@@ -28,7 +26,6 @@ fun SplitStudyRoute(
             when (effect) {
                 is SplitStudyContract.SplitStudySideEffect.NavigateAddStudy -> {
                     navigateAddStudy(effect.splitStudyData)
-                    Timber.d("[NavigateAddStudy] : ${effect.splitStudyData}")
                 }
                 is SplitStudyContract.SplitStudySideEffect.NavigateBack -> {
                     onBackPress()
@@ -51,7 +48,13 @@ fun SplitStudyRoute(
             selectedIndex = splitStudyState.selectedPieceIndex,
             datePickerBottomSheetState = splitStudyState.datePickerBottomSheetState,
             startPageList = splitStudyState.startPageList,
+            startPageTextFieldStateList = splitStudyState.startPageTextFieldStateList,
+            startPageFocusedStateList = splitStudyState.startPageFocusedStateList,
+            startPageGuidelineList = splitStudyState.startPageGuidelineList,
             endPageList = splitStudyState.endPageList,
+            endPageTextFieldStateList = splitStudyState.endPageTextFieldStateList,
+            endPageFocusedStateList = splitStudyState.endPageFocusedStateList,
+            endPageGuidelineList = splitStudyState.endPageGuidelineList,
             seletedDateList = splitStudyState.dateList,
             isSaveEnable = splitStudyState.isSaveEnable,
             onBackBtnClick = {
