@@ -10,5 +10,5 @@ class DummyRemoteDataSource
     constructor(
         private val dummyService: DummyService,
     ) {
-        suspend fun getDummyData(): BaseResponse<ResponseDummyDto> = dummyService.getDummy()
+        suspend fun getDummyData(): BaseResponse<ResponseDummyDto?> = dummyService.getDummy()
     }

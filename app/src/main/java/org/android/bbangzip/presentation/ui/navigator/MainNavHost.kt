@@ -9,16 +9,19 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
-import org.android.bbangzip.presentation.ui.friend.friendNavGraph
+import org.android.bbangzip.presentation.ui.friend.navigation.friendNavGraph
 import org.android.bbangzip.presentation.ui.login.loginNavGraph
 import org.android.bbangzip.presentation.ui.my.myNavGraph
-import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
-import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
+import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.myBadgeCategoryNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingEndNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavGraph
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
+import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
+import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
+import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
+import org.android.bbangzip.presentation.ui.subject.splitstudy.splitStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
 import org.android.bbangzip.presentation.ui.todo.navigation.todoNavGraph
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.todoAddPendingNavGraph
@@ -51,11 +54,11 @@ fun MainNavHost(
             )
 
             onboardingStartNavGraph(
-                navigateToOnboarding = { navigator.navHostController.navigateOnboarding() },
+                navigateToOnboarding = { navigator.navigateToOnboarding() },
             )
 
             onboardingNavGraph(
-                navigateToOnboardingEnd = { navigator.navHostController.navigateOnboardingEnd() },
+                navigateToOnboardingEnd = { navigator.navigateToOnboardingEnd() },
             )
 
             onboardingEndNavGraph(
@@ -76,10 +79,27 @@ fun MainNavHost(
 
             friendNavGraph()
 
-            myNavGraph()
+            myNavGraph(
+                navigateToLogin = { navigator.navigateToLogin() },
+            )
+
+            myBadgeCategoryNavGraph(
+                navigateToBack = { navigator.navigateToMyBadgeCategory() },
+            )
 
             subjectNavGraph(
+                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
                 padding = padding,
+            )
+
+            addStudyNavGraph(
+                padding = padding,
+                navigateSplitStudy = { navigator.navHostController.navigateSplitStudy(it) },
+            )
+
+            splitStudyNavGraph(
+                navigateBack = { navigator.navHostController.popBackStack() },
+                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
             )
 
             todoNavGraph(

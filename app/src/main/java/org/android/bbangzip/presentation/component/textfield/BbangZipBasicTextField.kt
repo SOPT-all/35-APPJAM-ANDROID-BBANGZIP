@@ -47,7 +47,6 @@ import org.android.bbangzip.presentation.model.getIconColor
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
-import timber.log.Timber
 
 @Composable
 fun BbangZipBasicTextField(
@@ -107,7 +106,6 @@ fun BbangZipBasicTextField(
                         .onFocusChanged { focusState ->
                             isFocused = focusState.isFocused
                             onFocusChange(focusState.isFocused)
-                            Timber.d("[TextField] onFocusChange -> $isFocused")
                         }
                         .onKeyEvent { keyEvent ->
                             if (keyEvent.key == Key.Enter && keyEvent.type == KeyEventType.KeyUp) {

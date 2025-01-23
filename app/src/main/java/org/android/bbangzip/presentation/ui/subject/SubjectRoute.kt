@@ -5,10 +5,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import org.android.bbangzip.presentation.model.SplitStudyData
 
 @Composable
 fun SubjectRoute(
     padding: PaddingValues,
+    navigateAddStudy: (SplitStudyData) -> Unit,
     viewModel: SubjectViewModel = hiltViewModel(),
 ) {
     val subjectState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -21,5 +23,6 @@ fun SubjectRoute(
         subjects = subjectState.subjectList,
         cardViewType = subjectState.cardViewType,
         deletedSet = subjectState.subjectSetToDelete,
+        navigateAddStudy = navigateAddStudy,
     )
 }

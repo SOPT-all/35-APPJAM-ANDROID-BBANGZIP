@@ -31,6 +31,7 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.card.AddSubjectCard
 import org.android.bbangzip.presentation.component.card.SubjectCard
+import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.model.card.SubjectCardModel
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
@@ -50,6 +51,7 @@ fun SubjectScreen(
     onClickTrashBtn: () -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
     onClickDeleteModeCard: (Int) -> Unit = {},
+    navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
@@ -458,6 +460,8 @@ private fun SubjectScreenPreview() {
             cardViewType = CardViewType.DEFAULT,
             deletedSet = setOf(),
             padding = PaddingValues(64.dp),
+            navigateAddStudy = {}
         )
     }
 }
+// 위에 코드는 클릭마다 스낵바가뜨고 2초후에 사라지게 만든 코드입니다
