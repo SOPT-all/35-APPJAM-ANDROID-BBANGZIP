@@ -137,4 +137,6 @@
     <string name="add_study_date_picker_bottomsheet_title">시험이 언제인가요?</string>
     <string name="delete_subject_title">삭제할 과목을 선택해 주세요</string>
     <string name="add_subject_title">어떤 과목을 공부해 볼까요?</string>
+    <string name="modify_subject_name_placeholder">예) 거시경제학</string>
+    <string name="modify_subject_name_guideline">한글/영문/숫자 조합으로 최대 10자까지 입력 가능해요</string>
 </resources>

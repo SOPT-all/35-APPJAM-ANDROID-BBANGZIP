@@ -19,6 +19,8 @@ import org.android.bbangzip.presentation.ui.my.navigateMy
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
+import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyRoute
+import org.android.bbangzip.presentation.ui.subject.modify.subjectname.ModifySubjectNameRoute
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
@@ -31,7 +33,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = LoginRoute
+    val startDestination = ModifySubjectNameRoute
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =
