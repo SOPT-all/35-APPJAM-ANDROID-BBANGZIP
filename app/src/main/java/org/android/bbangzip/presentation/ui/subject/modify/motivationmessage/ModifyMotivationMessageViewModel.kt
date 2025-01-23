@@ -30,11 +30,13 @@ constructor(
 
             }
             ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn -> {
-
+                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail)
             }
             is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField -> {
                 updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
                 updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
+                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
+
             }
 
             ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn -> {
@@ -52,7 +54,7 @@ constructor(
         return when(reduce){
             ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled -> {
                 state.copy(
-                    isButtonEnable = state.motivationMessage.isNotEmpty()
+                    isButtonEnable = state.motivationMessage.isNotEmpty() && state.motivationMessageTextFieldState!=BbangZipTextFieldInputState.Alert
                 )
             }
             is ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsTextFieldFocused -> {

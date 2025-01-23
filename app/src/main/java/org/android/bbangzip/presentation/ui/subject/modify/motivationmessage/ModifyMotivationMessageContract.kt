@@ -42,6 +42,6 @@ class ModifyMotivationMessageContract {
     }
 
     sealed interface ModifyMotivationMessageSideEffect : BaseContract.SideEffect {
-
+        data object NavigateSubjectDetail : ModifyMotivationMessageSideEffect
     }
 }

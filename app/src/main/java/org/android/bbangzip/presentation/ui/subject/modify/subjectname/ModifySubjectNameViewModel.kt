@@ -31,11 +31,12 @@ constructor(
 
             }
             ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn -> {
-
+                setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail)
             }
             is ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField -> {
                 updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
                 updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
+                updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
             }
 
             ModifySubjectNameContract.ModifySubjectNameEvent.OnClickDeleteBtn -> {
@@ -53,7 +54,7 @@ constructor(
         return when(reduce){
             ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled -> {
                 state.copy(
-                    isButtonEnable = state.subjectName.isNotEmpty()
+                    isButtonEnable = state.subjectName.isNotEmpty() && state.subjectNameTextFieldState != BbangZipTextFieldInputState.Alert
                 )
             }
             is ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsTextFieldFocused -> {

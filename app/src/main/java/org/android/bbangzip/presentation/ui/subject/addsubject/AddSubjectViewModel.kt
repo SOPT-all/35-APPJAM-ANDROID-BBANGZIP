@@ -26,15 +26,19 @@ constructor(
                 updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
                 updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
             }
+
             AddSubjectContract.AddSubjectEvent.OnClickBackBtn -> {
 
             }
-            AddSubjectContract.AddSubjectEvent.OnClickAddBtn -> {
 
+            AddSubjectContract.AddSubjectEvent.OnClickAddBtn -> {
+                setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigationSubject)
             }
+
             is AddSubjectContract.AddSubjectEvent.OnFocusTextField -> {
                 updateState(AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
                 updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
+                updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
             }
 
             AddSubjectContract.AddSubjectEvent.OnClickDeleteBtn -> {

@@ -53,9 +53,9 @@ fun MainNavHost(
             startDestination = navigator.startDestination,
         ) {
             loginNavGraph(
-                navigateToSubject = { navigator.navHostController.navigateSubject() },
+                navigateToSubject = { navigator.navigateToSubject() },
                 navigateToOnboarding = {
-                    navigator.navHostController.navigateOnboardingStart()
+                    navigator.navigateToOnboardingStart()
                 },
             )
 
@@ -68,7 +68,7 @@ fun MainNavHost(
             )
 
             onboardingEndNavGraph(
-                navigateToSubject = { navigator.navHostController.navigateSubject() },
+                navigateToSubject = { navigator.navigateToSubject() },
             )
 
             todoAddNavGraph(
@@ -101,28 +101,30 @@ fun MainNavHost(
             )
 
             subjectNavGraph(
-                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
+                navigateAddStudy = { navigator.navigateToAddStudy(it) },
                 padding = padding,
             )
 
             addStudyNavGraph(
                 padding = padding,
-                navigateSplitStudy = { navigator.navHostController.navigateSplitStudy(it) },
+                navigateSplitStudy = { navigator.navigateToSplitStudy(it) },
             )
 
             modifySubjectNameNavGraph(
-
+                navigateToSubjectDetail = { navigator.navigateToSubjectDetail() }
             )
 
             modifyMotivationMessageNavGraph(
-                navigateToSubjectDetail = { navigator.navigateToSubject() }
+                navigateToSubjectDetail = { navigator.navigateToSubjectDetail() }
             )
 
-            addSubjectNavGraph()
+            addSubjectNavGraph(
+                navigateSubject = { navigator.navigateToSubject()}
+            )
 
             splitStudyNavGraph(
-                navigateBack = { navigator.navHostController.popBackStack() },
-                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
+                navigateBack = { navigator.popBackStackIfNotSubject() },
+                navigateAddStudy = { navigator.navigateToAddStudy(it) },
             )
 
             todoNavGraph(

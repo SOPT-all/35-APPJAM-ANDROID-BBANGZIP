@@ -42,6 +42,6 @@ class ModifySubjectNameContract {
     }
 
     sealed interface ModifySubjectNameSideEffect : BaseContract.SideEffect {
-
+        data object NavigationSubjectDetail : ModifySubjectNameSideEffect
     }
 }

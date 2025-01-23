@@ -13,11 +13,11 @@ fun NavController.navigateModifyMotivationMessage(
 }
 
 fun NavGraphBuilder.modifyMotivationMessageNavGraph(
-    navigatToSubjectDetail: () -> Unit
+    navigateToSubjectDetail: () -> Unit
 ) {
     composable<ModifyMotivationMessageRoute>() {
         ModifyMotivationMessageRoute(
-            navigateToSubjectDetail = navigatToSubjectDetail
+            navigateToSubjectDetail = navigateToSubjectDetail
         )
     }
 }

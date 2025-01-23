@@ -8,8 +8,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
 import org.android.bbangzip.presentation.model.Route
+import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.friend.navigation.navigateFriend
 import org.android.bbangzip.presentation.ui.login.LoginRoute
@@ -21,11 +23,14 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyRoute
+import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
 import org.android.bbangzip.presentation.ui.subject.addsubject.AddSubjectRoute
 import org.android.bbangzip.presentation.ui.subject.addsubject.navigateAddSubject
 import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.ModifyMotivationMessageRoute
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.ModifySubjectNameRoute
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
+import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
+import org.android.bbangzip.presentation.ui.subject.subjectdetail.navigateSubjectDetail
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
 import org.android.bbangzip.presentation.ui.todo.todoadd.navigation.navigateTodoAdd
@@ -80,6 +85,14 @@ class MainNavigator(
 
     fun navigateToSubjectDetail(){
         navHostController.navigateSubjectDetail()
+    }
+
+    fun navigateToAddStudy(splitStudyData: SplitStudyData){
+        navHostController.navigateAddStudy(splitStudyData = splitStudyData)
+    }
+
+    fun navigateToSplitStudy(addStudyData: AddStudyData){
+        navHostController.navigateSplitStudy(addStudyData = addStudyData)
     }
 
     fun navigateToOnboardingStart() {
