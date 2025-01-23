@@ -51,6 +51,7 @@ fun SubjectScreen(
     onClickTrashBtn: () -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
     onClickDeleteModeCard: (Int) -> Unit = {},
+    onClickStudyCard: (Int) -> Unit = {},
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
@@ -117,6 +118,7 @@ fun SubjectScreen(
                             modifier = modifier,
                             subjects = subjects,
                             onTrashIconClick = onClickTrashBtn,
+                            onClickStudyCard = onClickStudyCard,
                         )
 
                     CardViewType.DELETE ->
@@ -158,6 +160,7 @@ private fun DefaultCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     onTrashIconClick: () -> Unit = {},
+    onClickStudyCard: (Int) -> Unit = {},
 ) {
     Column {
         Row(
@@ -205,6 +208,7 @@ private fun DefaultCardView(
                     ) {
                         SubjectCard(
                             data = subjects.last(),
+                            onClick = { onClickStudyCard(it) },
                         )
                         AddSubjectCard()
                     }
@@ -221,7 +225,10 @@ private fun DefaultCardView(
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         for (j in i * 2 until (i + 1) * 2) {
-                            SubjectCard(data = subjects[j])
+                            SubjectCard(
+                                data = subjects[j],
+                                onClick = { onClickStudyCard(it) },
+                            )
                         }
                     }
                 }
@@ -254,7 +261,10 @@ private fun DefaultCardView(
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         for (j in i * 2 until (i + 1) * 2) {
-                            SubjectCard(data = subjects[j])
+                            SubjectCard(
+                                data = subjects[j],
+                                onClick = { onClickStudyCard(it) },
+                            )
                         }
                     }
                 }

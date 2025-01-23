@@ -2,8 +2,16 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
+import org.android.bbangzip.domain.usecase.GetSubjectDetailUseCase
+import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
+import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
+import org.android.bbangzip.presentation.model.SubjectDetailInfo
+import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.PieceViewType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import timber.log.Timber
@@ -13,6 +21,9 @@ import javax.inject.Inject
 class SubjectDetailViewModel
     @Inject
     constructor(
+        private val postCompleteCardIdUseCase: PostCompleteCardIdUseCase,
+        private val postUnCompleteCardIdUseCase: PostUnCompleteCardIdUseCase,
+        private val getSubjectDetailUseCase: GetSubjectDetailUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<SubjectDetailContract.SubjectDetailEvent, SubjectDetailContract.SubjectDetailState, SubjectDetailContract.SubjectDetailReduce, SubjectDetailContract.SubjectDetailSideEffect>(
             savedStateHandle = savedStateHandle,
@@ -21,13 +32,13 @@ class SubjectDetailViewModel
             return savedState as? SubjectDetailContract.SubjectDetailState ?: SubjectDetailContract.SubjectDetailState()
         }
 
-        init {
-            setEvent(SubjectDetailContract.SubjectDetailEvent.Initialize)
-        }
-
         override fun handleEvent(event: SubjectDetailContract.SubjectDetailEvent) {
             when (event) {
-                is SubjectDetailContract.SubjectDetailEvent.Initialize -> {}
+                is SubjectDetailContract.SubjectDetailEvent.Initialize ->
+                    launch {
+                        updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectId(event.subjectId))
+                        initData(event.subjectId)
+                    }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDeleteMode)
@@ -45,7 +56,11 @@ class SubjectDetailViewModel
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked -> {
+                    viewModelScope.launch {
+                        postCompleteCardId(event.pieceId)
+                    }
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDefaultCardState(event.pieceId))
+                    // 사이드 이펙트  스낵바 메시지
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked -> {
@@ -54,8 +69,12 @@ class SubjectDetailViewModel
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked -> {
+                    viewModelScope.launch {
+                        postUnCompleteCardId(event.pieceId)
+                    }
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateCompleteCardState)
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
+                    // TODO 사이드 이펙트 스낵바
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> {
@@ -174,7 +193,92 @@ class SubjectDetailViewModel
                     )
                 }
 
+                is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectDetail -> {
+                    state.copy(
+                        examDate = reduce.subjectDetailInfo.examDate,
+                        examDday = reduce.subjectDetailInfo.examDday,
+                        motivationMessage = reduce.subjectDetailInfo.motivationMessage,
+                        todoList = reduce.subjectDetailInfo.todoList,
+                    )
+                }
+
+                is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectId -> {
+                    state.copy(
+                        subjectId = reduce.subjectId,
+                    )
+                }
+
                 else -> state
+            }
+        }
+
+        private suspend fun initData(subjectId: Int) {
+            getSubjectDetail(
+                subjectId = subjectId,
+                examName = "fin",
+            )
+        }
+
+        private suspend fun getSubjectDetail(
+            subjectId: Int,
+            examName: String,
+        ) {
+            getSubjectDetailUseCase(
+                subjectId = subjectId,
+                examName = examName,
+            ).onSuccess { subjectDetailInfoEntity ->
+                updateState(
+                    SubjectDetailContract.SubjectDetailReduce.UpdateSubjectDetail(
+                        subjectDetailInfo =
+                            SubjectDetailInfo(
+                                examDate = subjectDetailInfoEntity.examDate,
+                                examDday = subjectDetailInfoEntity.examDday,
+                                motivationMessage = subjectDetailInfoEntity.motivationMessage,
+                                todoList =
+                                    subjectDetailInfoEntity.todoList.map { data ->
+                                        ToDoCardModel(
+                                            pieceId = data.pieceId,
+                                            subjectName = data.subjectName,
+                                            examName = data.examName,
+                                            studyContents = data.studyContents,
+                                            startPage = data.startPage,
+                                            finishPage = data.finishPage,
+                                            deadline = data.deadline,
+                                            remainingDays = data.remainingDays,
+                                            cardState = if (data.isFinished) BbangZipCardState.COMPLETE else BbangZipCardState.DEFAULT,
+                                        )
+                                    },
+                            ),
+                    ),
+                )
+            }.onFailure { error ->
+                Timber.tag("getSubjectDetail").e(error)
+            }
+        }
+
+        private suspend fun postUnCompleteCardId(
+            pieceId: Int,
+        ) {
+            postUnCompleteCardIdUseCase(
+                pieceId = pieceId,
+                requestMarkDoneDto = RequestMarkDoneDto(isFinished = false),
+            ).onSuccess {
+                Timber.tag("markDone").e("완료 성공!")
+            }.onFailure { error ->
+                Timber.tag("markDone").e(error)
+            }
+        }
+
+        private suspend fun postCompleteCardId(
+            pieceId: Int,
+        ) {
+            postCompleteCardIdUseCase(
+                pieceId = pieceId,
+                requestMarkDoneDto = RequestMarkDoneDto(isFinished = true),
+            ).onSuccess {
+                Timber.tag("markDone").e("완료 성공!")
+            }.onFailure { error ->
+                Timber.tag("markDone").e(error)
             }
         }
     }

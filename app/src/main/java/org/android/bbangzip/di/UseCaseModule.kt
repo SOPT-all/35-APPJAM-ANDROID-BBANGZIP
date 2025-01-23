@@ -5,9 +5,11 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import org.android.bbangzip.domain.repository.remote.DummyRepository
+import org.android.bbangzip.domain.repository.remote.ExamRepository
 import org.android.bbangzip.domain.repository.remote.MyPageRepository
 import org.android.bbangzip.domain.repository.remote.PieceRepository
 import org.android.bbangzip.domain.repository.remote.StudyRepository
+import org.android.bbangzip.domain.repository.remote.SubjectRepository
 import org.android.bbangzip.domain.repository.remote.UserRepository
 import org.android.bbangzip.domain.usecase.DeleteLogoutUseCase
 import org.android.bbangzip.domain.usecase.DeleteWithdrawUseCase
@@ -16,6 +18,8 @@ import org.android.bbangzip.domain.usecase.FetchDummyUseCase
 import org.android.bbangzip.domain.usecase.GetAddTodoListUseCase
 import org.android.bbangzip.domain.usecase.GetBadgeCategoryListUseCase
 import org.android.bbangzip.domain.usecase.GetBadgeDetailUseCase
+import org.android.bbangzip.domain.usecase.GetSubjectDetailUseCase
+import org.android.bbangzip.domain.usecase.GetSubjectInfoUseCase
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.domain.usecase.PostAddStudyUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
@@ -92,6 +96,16 @@ class UseCaseModule {
     @Singleton
     fun providesFetchBbangZipUseCase(myPageRepository: MyPageRepository): FetchBbangZipUseCase =
         FetchBbangZipUseCase(myPageRepository = myPageRepository)
+
+    @Provides
+    @Singleton
+    fun providesGetSubjectDetailUseCase(examRepository: ExamRepository): GetSubjectDetailUseCase =
+        GetSubjectDetailUseCase(examRepository = examRepository)
+
+    @Provides
+    @Singleton
+    fun providesGetSubjectInfoUseCase(subjectRepository: SubjectRepository): GetSubjectInfoUseCase =
+        GetSubjectInfoUseCase(subjectRepository = subjectRepository)
 
     @Provides
     @Singleton
