@@ -80,6 +80,7 @@ fun MainNavHost(
                 padding = padding,
                 navigateToBbangZipDetail = { navigator.navigateToBbangZipDetail() },
                 navigateToLogin = { navigator.navigateToLogin() },
+                navigateToBadgeDetail = { navigator.navigateToMyBadgeCategory() },
             )
 
             bbangZipDetailNavGraph(
@@ -87,7 +88,7 @@ fun MainNavHost(
             )
 
             myBadgeCategoryNavGraph(
-                navigateToBack = { navigator.navigateToMyBadgeCategory() },
+                popBackStack = { navigator.popBackStackIfNotSubject() },
             )
 
             subjectNavGraph()

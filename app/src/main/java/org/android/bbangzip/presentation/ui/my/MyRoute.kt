@@ -14,6 +14,7 @@ fun MyRoute(
     padding: PaddingValues,
     navigateToLogin: () -> Unit,
     navigateToBbangZipDetail: () -> Unit,
+    navigateToBadgeDetail: () -> Unit,
     viewModel: MyViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -28,6 +29,7 @@ fun MyRoute(
             when (effect) {
                 is MyContract.MySideEffect.NavigateToLogin -> navigateToLogin()
                 is MyContract.MySideEffect.NavigateToBbangZipDetail -> navigateToBbangZipDetail()
+                is MyContract.MySideEffect.NavigateToBadgeDetail -> navigateToBadgeDetail()
             }
         }
     }
@@ -38,6 +40,7 @@ fun MyRoute(
                 padding = padding,
                 state = state,
                 onClickBbangZip = { viewModel.setEvent(MyContract.MyEvent.OnClickBbangZip) },
+                onClickBadgeCount = { viewModel.setEvent(MyContract.MyEvent.OnClickMyBadgeCount) },
                 onClickLogoutBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutBtn) },
                 onClickWithdrawBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawBtn) },
                 onClickLogoutConfirmBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutConfirmBtn) },

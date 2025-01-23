@@ -169,7 +169,7 @@ private fun BbangZipPager(
                             imageVector = ImageVector.vectorResource(R.drawable.ic_lock_default_28),
                             contentDescription = null,
                             tint = BbangZipTheme.colors.lineStrong_68645E_52,
-                            modifier = Modifier.height(70.dp).aspectRatio(0.714f).alpha(0.52f),
+                            modifier = Modifier.height(70.dp).aspectRatio(0.714f).alpha(0.2f),
                         )
 
                         Text(

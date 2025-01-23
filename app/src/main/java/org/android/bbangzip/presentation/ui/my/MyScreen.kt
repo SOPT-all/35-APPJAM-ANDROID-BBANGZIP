@@ -40,6 +40,7 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.bottomsheet.BbangZipTwoButtonBottomSheet
 import org.android.bbangzip.presentation.type.BbangZipShadowType
 import org.android.bbangzip.presentation.ui.my.component.BbangZipLevelProgressBar
+import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -49,6 +50,7 @@ fun MyScreen(
     padding: PaddingValues,
     state: MyContract.MyState,
     onClickBbangZip: () -> Unit,
+    onClickBadgeCount: () -> Unit,
     onClickLogoutBtn: () -> Unit,
     onClickWithdrawBtn: () -> Unit,
     onClickLogoutConfirmBtn: () -> Unit,
@@ -88,6 +90,7 @@ fun MyScreen(
                             .align(Alignment.BottomCenter)
                             .padding(horizontal = 16.dp),
                     currentBadge = state.currentBadge.toString(),
+                    onClickBadgeCount = onClickBadgeCount,
                 )
             }
         }
@@ -224,6 +227,7 @@ private fun MainBbangZip(
 private fun MyBadgeInfo(
     currentBadge: String,
     modifier: Modifier = Modifier,
+    onClickBadgeCount: () -> Unit,
 ) {
     Row(
         modifier =
@@ -265,6 +269,7 @@ private fun MyBadgeInfo(
         }
 
         Column(
+            modifier = Modifier.applyFilterOnClick { onClickBadgeCount() },
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {

@@ -22,6 +22,8 @@ class MyContract {
 
         data object OnClickBbangZip : MyEvent
 
+        data object OnClickMyBadgeCount : MyEvent
+
         data object OnClickLogoutBtn : MyEvent
 
         data object OnClickWithdrawBtn : MyEvent
@@ -49,5 +51,7 @@ class MyContract {
         data object NavigateToBbangZipDetail : MySideEffect
 
         data object NavigateToLogin : MySideEffect
+
+        data object NavigateToBadgeDetail : MySideEffect
     }
 }

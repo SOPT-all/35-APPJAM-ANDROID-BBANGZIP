@@ -19,12 +19,14 @@ fun NavGraphBuilder.myNavGraph(
     padding: PaddingValues,
     navigateToLogin: () -> Unit,
     navigateToBbangZipDetail: () -> Unit,
+    navigateToBadgeDetail: () -> Unit,
 ) {
     composable<BottomNavigationRoute.My> {
         MyRoute(
             padding = padding,
             navigateToLogin = navigateToLogin,
             navigateToBbangZipDetail = navigateToBbangZipDetail,
+            navigateToBadgeDetail = navigateToBadgeDetail,
         )
     }
 }

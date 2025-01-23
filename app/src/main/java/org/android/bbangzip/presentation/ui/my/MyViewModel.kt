@@ -71,6 +71,10 @@ class MyViewModel
                         withdrawListener = { withdraw() },
                     )
                 }
+
+                is MyContract.MyEvent.OnClickMyBadgeCount -> {
+                    setSideEffect(MyContract.MySideEffect.NavigateToBadgeDetail)
+                }
             }
         }
 
