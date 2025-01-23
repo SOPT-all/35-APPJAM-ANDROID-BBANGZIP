@@ -1,4 +1,4 @@
-package org.android.bbangzip.data.repositoryImpl
+package org.android.bbangzip.data.repositoryImpl.remote
 
 import org.android.bbangzip.data.datasource.remote.PieceRemoteDataSource
 import org.android.bbangzip.data.dto.request.RequestMarkDoneDto

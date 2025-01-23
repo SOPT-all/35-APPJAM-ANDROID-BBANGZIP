@@ -54,7 +54,7 @@ fun Modifier.noRippleClickable(
 fun Modifier.applyFilterOnClick(
     baseColor: Color = Color.Transparent,
     radius: Dp = 0.dp,
-    isDisabled: Boolean = true,
+    isDisabled: Boolean = false,
     filterColor: Color = Color(0xFF282119).copy(alpha = 0.12f),
     onClick: () -> Unit = {},
 ): Modifier =
