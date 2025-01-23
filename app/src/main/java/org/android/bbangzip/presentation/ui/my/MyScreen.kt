@@ -3,7 +3,6 @@ package org.android.bbangzip.presentation.ui.my
 import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -102,7 +101,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_profile_setting),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -115,7 +114,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_notice),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -124,7 +123,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_personal_terms),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -133,7 +132,7 @@ fun MyScreen(
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_service_terms),
-                modifier = Modifier.padding(horizontal = 16.dp)
+                modifier = Modifier.padding(horizontal = 16.dp),
             )
 
             Spacer(modifier = Modifier.height(16.dp))

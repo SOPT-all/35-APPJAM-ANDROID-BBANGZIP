@@ -2,10 +2,8 @@ package org.android.bbangzip.presentation.ui.todo
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +15,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -31,7 +28,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
@@ -45,7 +41,7 @@ import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.type.ToDoScreenType
-import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
+import org.android.bbangzip.presentation.ui.todo.component.ToDoFilterPickerBottomSheet
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -253,7 +249,7 @@ fun TodoScreen(
             onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
         )
 
-        BbangZipToDoFilterPickerBottomSheet(
+        ToDoFilterPickerBottomSheet(
             isBottomSheetVisible = todoState.todoFilterBottomSheetState,
             selectedItem = todoState.selectedFilterItem,
             onSelectedItemChanged = onFilterBottomSheetItemClicked,
@@ -473,52 +469,6 @@ fun EmptyView(
     ) {
         Text(text = "Empty View")
     }
-}
-
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BbangZipToDoFilterPickerBottomSheet(
-    isBottomSheetVisible: Boolean,
-    modifier: Modifier = Modifier,
-    title: @Composable (ColumnScope.() -> Unit) = {},
-    selectedItem: ToDoFilterType = ToDoFilterType.RECENT,
-    onSelectedItemChanged: (ToDoFilterType) -> Unit = {},
-    onDismissRequest: () -> Unit = {},
-) {
-    BbangZipBasicModalBottomSheet(
-        modifier = modifier,
-        isBottomSheetVisible = isBottomSheetVisible,
-        onDismissRequest = onDismissRequest,
-        title = { title() },
-        content = {
-            LazyColumn(
-                modifier = Modifier.padding(top = 8.dp, bottom = 24.dp),
-                verticalArrangement = Arrangement.spacedBy(8.dp),
-                horizontalAlignment = Alignment.CenterHorizontally,
-            ) {
-                itemsIndexed(
-                    ToDoFilterType.entries,
-                    key = { _, item -> item },
-                ) { _, item ->
-                    Text(
-                        text = item.filter,
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .applyFilterOnClick { onSelectedItemChanged(item) }
-                                .background(
-                                    color = if (item != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
-                                    shape = RoundedCornerShape(16.dp),
-                                )
-                                .padding(vertical = 8.dp),
-                        textAlign = TextAlign.Center,
-                        style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
-                    )
-                }
-            }
-        },
-    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
