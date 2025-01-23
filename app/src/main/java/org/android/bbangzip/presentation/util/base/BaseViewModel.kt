@@ -19,7 +19,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 abstract class BaseViewModel<Event : BaseContract.Event, State : BaseContract.State, Reduce : BaseContract.Reduce, Effect : BaseContract.SideEffect>(
-    private val savedStateHandle: SavedStateHandle,
+    val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
     private val initialState: State by lazy { createInitialState(savedStateHandle[STATE_KEY]) }
 
