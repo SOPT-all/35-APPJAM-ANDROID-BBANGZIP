@@ -8,7 +8,8 @@ import org.android.bbangzip.presentation.ui.ModifySubjectName.modify.ModifySubje
 
 @Composable
 fun ModifySubjectNameRoute(
-    viewModel: ModifySubjectNameViewModel = hiltViewModel()
+    viewModel: ModifySubjectNameViewModel = hiltViewModel(),
+    navigateToSubjectDetail: () -> Unit,
 ){
     val modifySubjectNameState by viewModel.uiState.collectAsStateWithLifecycle()
 

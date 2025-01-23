@@ -21,7 +21,7 @@ fun NavController.navigateModifySubjectName(
 
 fun NavGraphBuilder.modifySubjectNameNavGraph(
 ) {
-    composable<ModifySubjectNameRoute>() {
+    composable<ModifySubjectNameRoute> {
         ModifySubjectNameRoute()
     }
 }

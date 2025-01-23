@@ -20,6 +20,7 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStar
 import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
 import org.android.bbangzip.presentation.ui.subject.addsubject.addSubjectNavGraph
+import org.android.bbangzip.presentation.ui.subject.addsubject.navigateAddSubject
 import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.modifyMotivationMessageNavGraph
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.modifySubjectNameNavGraph
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
@@ -100,9 +101,13 @@ fun MainNavHost(
                 navigateSplitStudy = { navigator.navHostController.navigateSplitStudy(it) },
             )
 
-            modifySubjectNameNavGraph()
+            modifySubjectNameNavGraph(
 
-            modifyMotivationMessageNavGraph()
+            )
+
+            modifyMotivationMessageNavGraph(
+                navigateToSubjectDetail = { navigator.navigateToSubject() }
+            )
 
             addSubjectNavGraph()
 

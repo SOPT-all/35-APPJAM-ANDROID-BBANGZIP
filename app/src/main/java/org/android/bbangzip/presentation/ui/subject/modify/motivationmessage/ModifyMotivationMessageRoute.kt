@@ -7,7 +7,8 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 
 @Composable
 fun ModifyMotivationMessageRoute(
-    viewModel: ModifyMotivationMessageViewModel = hiltViewModel()
+    viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
+    navigateToSubjectDetail: () -> Unit,
 ){
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
 
