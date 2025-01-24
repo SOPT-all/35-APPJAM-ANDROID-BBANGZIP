@@ -123,13 +123,14 @@ fun SubjectDetailScreen(
                             .height(backgroundHeight.dp)
                             .background(
                                 color = BbangZipTheme.colors.backgroundAccent_FFDAA0,
-                                shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp),
+                                shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp),
                             ),
                 ) {
                     Image(
                         painter = painterResource(R.drawable.img_subject_detail_header),
                         contentDescription = null,
                         modifier = Modifier
+                            .padding(top = 60.dp)
                             .fillMaxSize()
                             .aspectRatio(360f / 172f)
                             .clip(shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
