@@ -12,6 +12,7 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class AddStudyContract {
     @Parcelize
     data class AddStudyState(
+        val subjectId: Int = 0,
         val subjectName: String = "",
         val examDate: String = "시험 일자 입력",
         val examName: String = "",
@@ -37,6 +38,7 @@ class AddStudyContract {
         val deadLineList: List<String> = emptyList(),
         val addStudyViewType: AddStudyViewType = AddStudyViewType.DEFAULT,
         val isSuccess: Boolean = false,
+        val getBadgeBottomSheetState: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -75,6 +77,8 @@ class AddStudyContract {
         data object OnClickConfirmDateBtn : AddStudyEvent
 
         data class OnClickAgainSplitBtn(val pieceNumber: Int) : AddStudyEvent
+
+        data object OnClickAddStudyBtn : AddStudyEvent
     }
 
     sealed interface AddStudyReduce : BaseContract.Reduce {
@@ -129,5 +133,9 @@ class AddStudyContract {
 
     sealed interface AddStudySideEffect : BaseContract.SideEffect {
         data class NavigateSplitStudy(val addStudyData: AddStudyData) : AddStudySideEffect
+
+        data class NavigateSubjectDetail(val subjectId: Int, val subjectName: String) : AddStudySideEffect
+
+        data object PopBackStack : AddStudySideEffect
     }
 }

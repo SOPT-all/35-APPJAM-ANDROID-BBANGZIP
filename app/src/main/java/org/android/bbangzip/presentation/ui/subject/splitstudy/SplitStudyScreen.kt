@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject.splitstudy
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -48,6 +49,7 @@ import timber.log.Timber
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SplitStudyScreen(
+    subjectId: Int = 0,
     pieceNumber: Int = 0,
     subjectName: String,
     startPage: String = "",
@@ -84,9 +86,27 @@ fun SplitStudyScreen(
     onClickDatePicker: (Int) -> Unit = {},
     onClickConfirmDateBtn: () -> Unit = {},
     onCloseBottomSheet: () -> Unit = {},
-    onBackBtnClick: () -> Unit = {},
+    onBackBtnClick: (SplitStudyData) -> Unit = {},
     onClickSaveButton: (SplitStudyData) -> Unit = {},
 ) {
+    BackHandler {
+        onBackBtnClick(
+            SplitStudyData(
+                subjectName = subjectName,
+                pieceNumber = pieceNumber,
+                examDate = examDate,
+                examName = examName,
+                studyContent = studyContent,
+                startPage = startPage.dropLast(1),
+                endPage = endPage.dropLast(1),
+                startPageList = startPageList,
+                endPageList = endPageList,
+                deadLineList = seletedDateList.map { dateToString(it) },
+                addStudyViewType = AddStudyViewType.DEFAULT,
+                subjectId = subjectId,
+            ),
+        )
+    }
     val focusManager = LocalFocusManager.current
 
     Timber.tag("김재민").d("examName : $examName")
@@ -118,7 +138,24 @@ fun SplitStudyScreen(
                     isShadowed = isShadowed,
                     leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                     title = subjectName,
-                    onLeadingIconClick = { onBackBtnClick() },
+                    onLeadingIconClick = {
+                        onBackBtnClick(
+                            SplitStudyData(
+                                subjectName = subjectName,
+                                pieceNumber = pieceNumber,
+                                examDate = examDate,
+                                examName = examName,
+                                studyContent = studyContent,
+                                startPage = startPage,
+                                endPage = endPage,
+                                startPageList = startPageList,
+                                endPageList = endPageList,
+                                deadLineList = seletedDateList.map { dateToString(it) },
+                                addStudyViewType = AddStudyViewType.DEFAULT,
+                                subjectId = subjectId,
+                            ),
+                        )
+                    },
                 )
             }
             item {
@@ -289,6 +326,7 @@ fun SplitStudyScreen(
                         endPageList = endPageList,
                         deadLineList = seletedDateList.map { dateToString(it) },
                         addStudyViewType = AddStudyViewType.AGAIN,
+                        subjectId = subjectId,
                     ),
                 )
             },

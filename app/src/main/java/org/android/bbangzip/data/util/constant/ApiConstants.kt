@@ -17,4 +17,8 @@ object ApiConstants {
 
     // My
     const val MY_PAGE = "mypage"
+
+    // Study
+    const val STUDIES = "studies"
+    const val PIECES = "pieces"
 }

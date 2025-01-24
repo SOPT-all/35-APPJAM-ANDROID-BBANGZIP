@@ -115,6 +115,7 @@ fun SubjectDetailScreen(
     var selectedIndex by remember { mutableIntStateOf(0) }
     val splitStudyData =
         SplitStudyData(
+            subjectId = subjectId,
             subjectName = subjectName,
             pieceNumber = 0,
             examDate = "시험 일자 입력",
@@ -212,6 +213,7 @@ fun SubjectDetailScreen(
                         Spacer(modifier = Modifier.height(84.dp))
                         EmptySubjectCardView()
                     }
+
                     PieceViewType.DEFAULT -> {
                         DefaultPieceView(
                             todoList = todoList,
@@ -224,6 +226,7 @@ fun SubjectDetailScreen(
                             onClickAddStudy = onClickAddStudy,
                         )
                     }
+
                     PieceViewType.DELETE -> {
                         DeletePieceView(
                             todoList = todoList,
@@ -308,7 +311,9 @@ fun SubjectDetailScreen(
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
-                    onClick = { onClickCancleBtn() },
+                    onClick = {
+                        onClickCancleBtn()
+                    },
                     modifier = Modifier.fillMaxWidth(),
                     label = if (deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
                     trailingIcon = R.drawable.ic_trash_default_24,
@@ -475,7 +480,10 @@ private fun DefaultPieceView(
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
                         contentDescription = null,
-                        modifier = Modifier.size(20.dp).align(Alignment.Center),
+                        modifier =
+                            Modifier
+                                .size(20.dp)
+                                .align(Alignment.Center),
                     )
                 }
 

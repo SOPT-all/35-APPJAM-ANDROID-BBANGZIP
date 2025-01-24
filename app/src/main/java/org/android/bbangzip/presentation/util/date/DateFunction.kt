@@ -29,6 +29,23 @@ fun hyponStringDateToDate(dateString: String): Date {
     return Date(year.toString(), month.toString(), day.toString())
 }
 
+fun formatDate(input: String): String {
+    val parts = input.split("년", "월", "일").map { it.trim() }
+    return "${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}"
+}
+
+fun addLeadingZero(date: String): String {
+    val parts = date.split("-")
+    if (parts.size == 3) {
+        val year = parts[0]
+        val month = parts[1].padStart(2, '0')
+        val day = parts[2].padStart(2, '0')
+        return "$year-$month-$day"
+    } else {
+        throw IllegalArgumentException("잘못된 날짜 형식입니다: $date")
+    }
+}
+
 fun dateToString(date: Date): String {
     return "${date.year}-${date.month}-${date.day}"
 }

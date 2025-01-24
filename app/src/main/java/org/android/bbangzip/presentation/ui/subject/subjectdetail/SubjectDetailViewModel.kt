@@ -6,6 +6,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
+import org.android.bbangzip.domain.model.PieceIdEntity
+import org.android.bbangzip.domain.usecase.DeleteStudyPieceUseCase
 import org.android.bbangzip.domain.usecase.GetSubjectDetailUseCase
 import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
 import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
@@ -24,6 +26,7 @@ class SubjectDetailViewModel
         private val postCompleteCardIdUseCase: PostCompleteCardIdUseCase,
         private val postUnCompleteCardIdUseCase: PostUnCompleteCardIdUseCase,
         private val getSubjectDetailUseCase: GetSubjectDetailUseCase,
+        private val deleteStudyPieceUseCase: DeleteStudyPieceUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<SubjectDetailContract.SubjectDetailEvent, SubjectDetailContract.SubjectDetailState, SubjectDetailContract.SubjectDetailReduce, SubjectDetailContract.SubjectDetailSideEffect>(
             savedStateHandle = savedStateHandle,
@@ -72,6 +75,7 @@ class SubjectDetailViewModel
                     }
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateCompleteCardState)
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
+                    // TODO 사이드 이펙트 스낵바
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> {
@@ -89,11 +93,14 @@ class SubjectDetailViewModel
                 is SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName -> {
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
                 }
+
                 SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
                 is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
                     Timber.tag("김재민").d("되나?")
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
                 }
+
+                SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
 
                 SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
@@ -101,6 +108,15 @@ class SubjectDetailViewModel
 
                 is SubjectDetailContract.SubjectDetailEvent.OnClickTab -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
+                }
+
+                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {
+                    Timber.tag("[과목 관리]").d("버튼 클릭")
+                    viewModelScope.launch { deleteStudyPiece() }
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnClickGetBadgeBottomSheetCloseBtn -> {
@@ -272,7 +288,7 @@ class SubjectDetailViewModel
         private suspend fun initData(subjectId: Int) {
             getSubjectDetail(
                 subjectId = subjectId,
-                examName = "fin",
+                examName = "mid",
             )
         }
 
@@ -342,6 +358,21 @@ class SubjectDetailViewModel
                 Timber.tag("markDone").e("완료 성공!")
             }.onFailure { error ->
                 Timber.tag("markDone").e(error)
+            }
+        }
+
+        private suspend fun deleteStudyPiece() {
+            deleteStudyPieceUseCase(
+                pieceIdEntity =
+                    PieceIdEntity(
+                        piece = currentUiState.selectedItemSet.map { it },
+                    ),
+            ).onSuccess {
+                Timber.tag("[과목 관리]").d("통신 성공")
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
+            }.onFailure {
+                Timber.tag("[과목 관리]").d("$error")
+                Timber.tag("[과목 관리]").d("통신 실패")
             }
         }
     }
