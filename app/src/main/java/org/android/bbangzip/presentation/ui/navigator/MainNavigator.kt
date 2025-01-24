@@ -14,7 +14,6 @@ import org.android.bbangzip.presentation.model.Route
 import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.friend.navigation.navigateFriend
-import org.android.bbangzip.presentation.ui.login.LoginRoute
 import org.android.bbangzip.presentation.ui.login.navigateLogin
 import org.android.bbangzip.presentation.ui.my.bbangzipdetail.navigation.navigateBbangZipDetail
 import org.android.bbangzip.presentation.ui.my.mybadgecategory.navigation.navigateToMyBadgeCategory
@@ -26,6 +25,8 @@ import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
 import org.android.bbangzip.presentation.ui.subject.addsubject.navigateToAddSubject
 import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.navigateToModifyMotivationMessage
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.navigateToModifySubjectName
+import org.android.bbangzip.presentation.ui.splash.navigation.SplashRoute
+import org.android.bbangzip.presentation.ui.splash.navigation.navigateSplash
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
 import org.android.bbangzip.presentation.ui.subject.subjectdetail.navigateToSubjectDetail
@@ -40,7 +41,7 @@ class MainNavigator(
     private val currentDestination: NavDestination?
         @Composable get() = navHostController.currentBackStackEntryAsState().value?.destination
 
-    val startDestination = LoginRoute
+    val startDestination = SplashRoute
 
     val currentBottomNavigationBarItem: BottomNavigationType?
         @Composable get() =
@@ -71,6 +72,10 @@ class MainNavigator(
 
             Timber.d("[navigation] currentBackStack -> ${navHostController.currentBackStack.value}")
         }
+    }
+
+    fun navigateToSplash() {
+        navHostController.navigateSplash()
     }
 
     fun navigateToLogin() {

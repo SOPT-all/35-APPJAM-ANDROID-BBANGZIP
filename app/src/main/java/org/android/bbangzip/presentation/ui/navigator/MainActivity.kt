@@ -3,7 +3,6 @@ package org.android.bbangzip.presentation.ui.navigator
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -24,7 +23,6 @@ class MainActivity : ComponentActivity() {
             splashScreenView.remove()
         }
 
-        enableEdgeToEdge()
         setContent {
             val navigator: MainNavigator = rememberMainNavigator()
             var showSplash by remember { mutableStateOf(true) }
