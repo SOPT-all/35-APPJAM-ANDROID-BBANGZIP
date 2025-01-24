@@ -337,6 +337,7 @@ fun SubjectDetailScreen(
         }
 
         RevertCompleteBottomSheet(
+            modifier = Modifier.padding(bottom = 16.dp),
             isBottomSheetVisible = revertCompleteBottomSheetState,
             bottomSheetTitle = "미완료 상태로 되돌릴까요?",
             selectedCompleteItemId = selectedItemId,
