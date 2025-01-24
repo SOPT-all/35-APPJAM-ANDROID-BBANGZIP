@@ -17,11 +17,12 @@ class SubjectDetailContract {
         val pieceViewType: PieceViewType = PieceViewType.DEFAULT,
         val selectedItemSet: Set<Int> = setOf(),
         val revertCompleteBottomSheetState: Boolean = false,
-        val examDate: String = "",
-        val examDday: Int = 0,
-        val motivationMessage: String = "",
+        val examDate: String = "2025년 11월 25일",
+        val examDday: Int = -14,
+        val motivationMessage: String = "사장님의 각오 한마디를 작성해보세요",
         val selectedItemId: Int = -1,
         val subjectId: Int = 0,
+        val subjectName: String = "",
         val todoList: List<ToDoCardModel> =
             listOf(
                 ToDoCardModel(
@@ -140,7 +141,10 @@ class SubjectDetailContract {
     }
 
     sealed interface SubjectDetailEvent : BaseContract.Event {
-        data class Initialize(val subjectId: Int) : SubjectDetailEvent
+        data class Initialize(
+            val subjectId: Int,
+            val subjectName: String,
+        ) : SubjectDetailEvent
 
         data object OnPlusIconClicked : SubjectDetailEvent
 
@@ -155,6 +159,18 @@ class SubjectDetailContract {
         data object OnRevertCompleteBottomSheetDismissButtonClicked : SubjectDetailEvent
 
         data object OnRevertCompleteBottomSheetDissmissRequest : SubjectDetailEvent
+
+        data object OnClickKebabMenu : SubjectDetailEvent
+
+        data class OnClickEnrollMotivateMessage(
+            val subjectId: Int,
+            val subjectName: String,
+        ) : SubjectDetailEvent
+
+        data class OnClickModifySubjectName(
+            val subjectId: Int,
+            val subjectName: String,
+        ) : SubjectDetailEvent
 
         data class OnDeleteModeCardClicked(
             val pieceId: Int,
@@ -186,11 +202,16 @@ class SubjectDetailContract {
 
         data class DeleteSelectedItemSet(val pieceId: Int) : SubjectDetailReduce
 
-        data class UpdateSubjectId(val subjectId: Int) : SubjectDetailReduce
+        data class UpdateSubjectData(
+            val subjectId: Int,
+            val subjectName: String,
+        ) : SubjectDetailReduce
 
         data object UpdateRevertCompleteBottomSheetState : SubjectDetailReduce
 
         data class UpdateSelectedId(val pieceId: Int) : SubjectDetailReduce
+
+        data object UpdateIsMenuOpen : SubjectDetailReduce
     }
 
     sealed interface SubjectDetailSideEffect : BaseContract.SideEffect {
@@ -198,6 +219,11 @@ class SubjectDetailContract {
 
         data object NavigateToAddStudy : SubjectDetailSideEffect
 
+        data class NavigateToModifyMotivation(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
+
+        data class NavigateToModifySubjectName(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
+
+        // 공부 n개가 삭제 되었어요
         data object ShowDeleteSuccessSnackBar : SubjectDetailSideEffect
     }
 }

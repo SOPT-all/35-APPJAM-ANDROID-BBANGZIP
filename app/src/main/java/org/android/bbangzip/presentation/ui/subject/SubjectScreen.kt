@@ -53,8 +53,9 @@ fun SubjectScreen(
     deletedSet: Set<Int>,
     onClickTrashBtn: () -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
-    onClickDeleteModeCard: (Int) -> Unit = {},
-    onClickStudyCard: (Int) -> Unit = {},
+    onClickDeleteModeCard: (Int, String) -> Unit = { _, _ -> },
+    onClickStudyCard: (Int, String) -> Unit = { _, _ -> },
+    onClickAddSubject: () -> Unit = {},
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
@@ -97,7 +98,7 @@ fun SubjectScreen(
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Text(
-                            text = "2025년 2학기",
+                            text = "2025년 1학기",
                             style = BbangZipTheme.typography.body1Bold,
                             color = BbangZipTheme.colors.labelNormal_282119,
                         )
@@ -115,8 +116,6 @@ fun SubjectScreen(
                 }
             }
 
-            // 아이콘에 padding을 8dp 씩 주면서 갭의 수치가 피그마와 다를 수 있습니다!
-            // 위아래 8씩 빼주었다고 보면 됩니다.
             item {
                 Gap(height = 40)
             }
@@ -129,6 +128,7 @@ fun SubjectScreen(
                             subjects = subjects,
                             onTrashIconClick = onClickTrashBtn,
                             onClickStudyCard = onClickStudyCard,
+                            onClickAddSubject = onClickAddSubject,
                         )
 
                     CardViewType.DELETE ->
@@ -170,7 +170,8 @@ private fun DefaultCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     onTrashIconClick: () -> Unit = {},
-    onClickStudyCard: (Int) -> Unit = {},
+    onClickStudyCard: (Int, String) -> Unit = { _, _ -> },
+    onClickAddSubject: () -> Unit = {},
 ) {
     Column {
         Row(
@@ -218,9 +219,11 @@ private fun DefaultCardView(
                     ) {
                         SubjectCard(
                             data = subjects.last(),
-                            onClick = { onClickStudyCard(it) },
+                            onClick = onClickStudyCard,
                         )
-                        AddSubjectCard()
+                        AddSubjectCard(
+                            onClick = onClickAddSubject,
+                        )
                     }
                 } else {
                     Row(
@@ -237,7 +240,7 @@ private fun DefaultCardView(
                         for (j in i * 2 until (i + 1) * 2) {
                             SubjectCard(
                                 data = subjects[j],
-                                onClick = { onClickStudyCard(it) },
+                                onClick = onClickStudyCard,
                             )
                         }
                     }
@@ -256,7 +259,9 @@ private fun DefaultCardView(
                                 ),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        AddSubjectCard()
+                        AddSubjectCard(
+                            onClick = onClickAddSubject,
+                        )
                     }
                 } else {
                     Row(
@@ -273,7 +278,7 @@ private fun DefaultCardView(
                         for (j in i * 2 until (i + 1) * 2) {
                             SubjectCard(
                                 data = subjects[j],
-                                onClick = { onClickStudyCard(it) },
+                                onClick = { subjectId, subjectName -> onClickStudyCard(subjectId, subjectName) },
                             )
                         }
                     }
@@ -289,7 +294,7 @@ private fun DeleteCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     bottomPadding: Dp,
-    onDeleteModeCardClick: (Int) -> Unit = {},
+    onDeleteModeCardClick: (Int, String) -> Unit = { _, _ -> },
     onCancleClick: () -> Unit = {},
 ) {
     Box {
@@ -339,8 +344,8 @@ private fun DeleteCardView(
                         ) {
                             SubjectCard(
                                 data = subjects.last(),
-                                onClick = { index ->
-                                    onDeleteModeCardClick(index)
+                                onClick = { index, subjectName ->
+                                    onDeleteModeCardClick(index, subjectName)
                                 },
                             )
                         }
@@ -359,8 +364,8 @@ private fun DeleteCardView(
                             for (j in i * 2 until (i + 1) * 2) {
                                 SubjectCard(
                                     data = subjects[j],
-                                    onClick = { index ->
-                                        onDeleteModeCardClick(index)
+                                    onClick = { index, subjectName ->
+                                        onDeleteModeCardClick(index, subjectName)
                                     },
                                 )
                             }
@@ -383,8 +388,8 @@ private fun DeleteCardView(
                         for (j in i * 2 until (i + 1) * 2) {
                             SubjectCard(
                                 data = subjects[j],
-                                onClick = { index ->
-                                    onDeleteModeCardClick(index)
+                                onClick = { index, subjectName ->
+                                    onDeleteModeCardClick(index, subjectName)
                                 },
                             )
                         }
