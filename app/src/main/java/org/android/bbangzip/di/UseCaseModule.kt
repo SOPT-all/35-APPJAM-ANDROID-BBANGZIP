@@ -11,6 +11,7 @@ import org.android.bbangzip.domain.repository.remote.PieceRepository
 import org.android.bbangzip.domain.repository.remote.SubjectRepository
 import org.android.bbangzip.domain.repository.remote.UserRepository
 import org.android.bbangzip.domain.usecase.DeleteLogoutUseCase
+import org.android.bbangzip.domain.usecase.DeleteSubjectsUseCase
 import org.android.bbangzip.domain.usecase.DeleteWithdrawUseCase
 import org.android.bbangzip.domain.usecase.FetchBbangZipUseCase
 import org.android.bbangzip.domain.usecase.FetchDummyUseCase
@@ -20,11 +21,13 @@ import org.android.bbangzip.domain.usecase.GetBadgeDetailUseCase
 import org.android.bbangzip.domain.usecase.GetSubjectDetailUseCase
 import org.android.bbangzip.domain.usecase.GetSubjectInfoUseCase
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
+import org.android.bbangzip.domain.usecase.PostAddSubjectNameUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
 import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
 import org.android.bbangzip.domain.usecase.PostDeletedItemListUseCase
 import org.android.bbangzip.domain.usecase.PostOnboardingUseCase
 import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
+import org.android.bbangzip.domain.usecase.PutSubjectOptionsUseCase
 import javax.inject.Singleton
 
 @Module
@@ -104,4 +107,19 @@ class UseCaseModule {
     @Singleton
     fun providesGetSubjectInfoUseCase(subjectRepository: SubjectRepository): GetSubjectInfoUseCase =
         GetSubjectInfoUseCase(subjectRepository = subjectRepository)
+
+    @Provides
+    @Singleton
+    fun providesPostAddSubjectNameUseCase(subjectRepository: SubjectRepository): PostAddSubjectNameUseCase =
+        PostAddSubjectNameUseCase(subjectRepository = subjectRepository)
+
+    @Provides
+    @Singleton
+    fun providesDeleteSubjectsUseCase(subjectRepository: SubjectRepository): DeleteSubjectsUseCase =
+        DeleteSubjectsUseCase(subjectRepository = subjectRepository)
+
+    @Provides
+    @Singleton
+    fun providesPutSubjectOptionsUseCase(subjectRepository: SubjectRepository): PutSubjectOptionsUseCase =
+        PutSubjectOptionsUseCase(subjectRepository = subjectRepository)
 }

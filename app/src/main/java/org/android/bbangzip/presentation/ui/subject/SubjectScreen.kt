@@ -56,6 +56,7 @@ fun SubjectScreen(
     onClickDeleteModeCard: (Int, String) -> Unit = { _, _ -> },
     onClickStudyCard: (Int, String) -> Unit = { _, _ -> },
     onClickAddSubject: () -> Unit = {},
+    onClickDeleteBtn: () -> Unit = {},
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
@@ -155,7 +156,7 @@ fun SubjectScreen(
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
-                    onClick = { onClickCancleBtn() },
+                    onClick = { onClickDeleteBtn() },
                     modifier = Modifier.fillMaxWidth(),
                     label = if (deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
                     trailingIcon = R.drawable.ic_trash_default_24,
