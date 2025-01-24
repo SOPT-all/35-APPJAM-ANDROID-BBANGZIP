@@ -31,6 +31,7 @@ import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.nav
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.navigateToModifySubjectName
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
+import org.android.bbangzip.presentation.ui.subject.subjectdetail.SubjectDetailRoute
 import org.android.bbangzip.presentation.ui.subject.subjectdetail.navigateToSubjectDetail
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
@@ -110,9 +111,17 @@ class MainNavigator(
     fun navigateToSubjectDetail(
         subjectId: Int,
         subjectName: String,
+        navOptions: NavOptions? = null
     ) {
+        val route = SubjectDetailRoute(subjectId, subjectName)
         Timber.tag("navaigateSubject").d("subjectId")
-        navHostController.navigateToSubjectDetail(subjectId, subjectName)
+        navHostController.navigateToSubjectDetail(subjectId, subjectName,
+            navOptions ?: navOptions {
+                popUpTo(route) {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            },)
     }
 
     fun navigateToAddSubject() {
