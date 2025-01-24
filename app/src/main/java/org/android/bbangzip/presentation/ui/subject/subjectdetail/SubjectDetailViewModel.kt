@@ -107,10 +107,6 @@ class SubjectDetailViewModel
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
                 }
 
-                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
-                }
-
                 is SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {
                     Timber.tag("[과목 관리]").d("버튼 클릭")
                     viewModelScope.launch { deleteStudyPiece() }
