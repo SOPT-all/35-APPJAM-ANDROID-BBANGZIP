@@ -10,91 +10,16 @@ class MyBadgeCategoryContract {
     @Parcelize
     data class MyBadgeCategoryState(
         val badgeCategoryList1: List<BadgeCategory> =
-            listOf(
-                BadgeCategory(
-                    name = "Badge 1",
-                    categoryName = "Category 1",
-                    isLocked = true,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-                BadgeCategory(
-                    name = "Badge 2",
-                    categoryName = "Category 1",
-                    isLocked = false,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-                BadgeCategory(
-                    name = "Badge 3",
-                    categoryName = "Category 1",
-                    isLocked = true,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-            ),
+            listOf(),
         val badgeCategoryList2: List<BadgeCategory> =
-            listOf(
-                BadgeCategory(
-                    name = "Badge 4",
-                    categoryName = "Category 2",
-                    isLocked = true,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-                BadgeCategory(
-                    name = "Badge 5",
-                    categoryName = "Category 2",
-                    isLocked = false,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-                BadgeCategory(
-                    name = "Badge 6",
-                    categoryName = "Category 2",
-                    isLocked = true,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-            ),
+            listOf(),
         val badgeCategoryList3: List<BadgeCategory> =
-            listOf(
-                BadgeCategory(
-                    name = "Badge 4",
-                    categoryName = "Category 2",
-                    isLocked = true,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-                BadgeCategory(
-                    name = "Badge 5",
-                    categoryName = "Category 2",
-                    isLocked = false,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-                BadgeCategory(
-                    name = "Badge 6",
-                    categoryName = "Category 2",
-                    isLocked = true,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-            ),
+            listOf(),
         val badgeCategoryList4: List<BadgeCategory> =
-            listOf(
-                BadgeCategory(
-                    name = "Badge 4",
-                    categoryName = "Category 2",
-                    isLocked = true,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-                BadgeCategory(
-                    name = "Badge 5",
-                    categoryName = "Category 2",
-                    isLocked = false,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-                BadgeCategory(
-                    name = "Badge 6",
-                    categoryName = "Category 2",
-                    isLocked = true,
-                    imageUrl = "https://www.chosun.com/resizer/v2/HRGER65PGPIW36FJOBRNAP2PJM.jpg?auth=9da0c167de2cfb03a5d344ce4098faa669a22d7a2b90cb6a21fdc518b0af3558&width=530&height=757&smart=true",
-                ),
-            ),
+            listOf(),
         val badgeDetailBottomSheetState: Boolean = false,
         val badgeDetail: BadgeDetail = BadgeDetail(),
+        val nickname : String = "",
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -122,6 +47,8 @@ class MyBadgeCategoryContract {
         data class UpdateBadgeDetailBottomSheetState(val badgeDetailBottomSheetState: Boolean) : MyBadgeCategoryReduce
 
         data class UpdateBadgeDetail(val badgeDetail: BadgeDetail) : MyBadgeCategoryReduce
+
+        data class UpdateNickName(val nickname: String) : MyBadgeCategoryReduce
     }
 
     sealed interface MyBadgeCategorySideEffect : BaseContract.SideEffect {
