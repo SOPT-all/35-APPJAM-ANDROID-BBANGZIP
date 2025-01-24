@@ -78,6 +78,7 @@ fun AddStudyScreen(
     onClickCancleIcon: () -> Unit = {},
     onClickConfirmDateBtn: () -> Unit = {},
     onClickAgainSplitBtn: (Int) -> Unit = {},
+    popBackStack: () -> Unit
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -93,7 +94,9 @@ fun AddStudyScreen(
         BbangZipBaseTopBar(
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
             title = subjectTitle,
+            onLeadingIconClick = popBackStack
         )
+
         Column(
             modifier =
                 Modifier
@@ -392,5 +395,6 @@ fun AddStudyScreenPreview() {
         padding = PaddingValues(),
         selectedDate = Date("2025", "1", "21"),
         pieceNumber = 3,
+        popBackStack = {}
     )
 }

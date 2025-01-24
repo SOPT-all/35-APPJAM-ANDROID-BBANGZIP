@@ -272,12 +272,14 @@ fun TodoScreen(
             onDismissRequest = onFilterBottomSheetDismissRequest,
         )
 
-        BbangZipGetBadgeBottomSheet(
-            badgeList = todoState.badgeList,
-            isBottomSheetVisible = todoState.getBadgeBottomSheetState,
-            onDismissRequest = { onClickBadgeCloseBtn() },
-            onClickCancelButton = { onClickBadgeCloseBtn() }
-        )
+        if (todoState.badgeList.isNotEmpty()) {
+            BbangZipGetBadgeBottomSheet(
+                badgeList = todoState.badgeList,
+                isBottomSheetVisible = todoState.getBadgeBottomSheetState,
+                onDismissRequest = { onClickBadgeCloseBtn() },
+                onClickCancelButton = { onClickBadgeCloseBtn() }
+            )
+        }
     }
 }
 
