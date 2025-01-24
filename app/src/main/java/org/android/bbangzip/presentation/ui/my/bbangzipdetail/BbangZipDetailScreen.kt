@@ -97,30 +97,41 @@ private fun BbangZipPager(
                         .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                if (bbangZipList[page].isLocked) {
-                    AsyncImage(
-                        model =
-                            ImageRequest.Builder(context = LocalContext.current)
-                                .data(data = bbangZipList[page].imageUrl)
-                                .crossfade(enable = true)
-                                .build(),
-                        contentDescription = null,
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
-                        colorFilter = ColorFilter.tint(color = BbangZipTheme.colors.myBbangZip_9E6B45),
-                    )
-                } else {
-                    AsyncImage(
-                        model =
-                            ImageRequest.Builder(context = LocalContext.current)
-                                .data(data = bbangZipList[page].imageUrl)
-                                .crossfade(enable = true)
-                                .build(),
-                        contentDescription = null,
-                        modifier = Modifier.align(Alignment.CenterHorizontally),
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize(),
+                    contentAlignment = Alignment.BottomCenter
+                ) {
+                    if (bbangZipList[page].isLocked) {
+                        AsyncImage(
+                            model =
+                                ImageRequest.Builder(context = LocalContext.current)
+                                    .data(data = bbangZipList[page].imageUrl)
+                                    .crossfade(enable = true)
+                                    .build(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .align(Alignment.Center),
+                            colorFilter = ColorFilter.tint(color = BbangZipTheme.colors.myBbangZip_9E6B45),
+                        )
+                    } else {
+                        AsyncImage(
+                            model =
+                                ImageRequest.Builder(context = LocalContext.current)
+                                    .data(data = bbangZipList[page].imageUrl)
+                                    .crossfade(enable = true)
+                                    .build(),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .align(Alignment.Center),
+                        )
+                    }
+
+                    BbangZipPagerIndicator(
+                        pagerState = pagerState,
+                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp)
                     )
                 }
-
-                BbangZipPagerIndicator(pagerState = pagerState)
             }
 
             Column(
@@ -186,9 +197,10 @@ private fun BbangZipPager(
 @Composable
 private fun BbangZipPagerIndicator(
     pagerState: PagerState,
+    modifier: Modifier = Modifier
 ) {
     Row(
-        Modifier
+        modifier
             .padding(top = 19.dp)
             .fillMaxWidth(),
         horizontalArrangement = Arrangement.Center,

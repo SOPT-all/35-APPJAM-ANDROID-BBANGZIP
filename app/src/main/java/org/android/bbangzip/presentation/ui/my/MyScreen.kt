@@ -204,27 +204,35 @@ private fun MainBbangZip(
                 .height(height = (LocalConfiguration.current.screenHeightDp * 0.482).dp),
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
-        AsyncImage(
-            model =
-                ImageRequest.Builder(context = LocalContext.current)
-                    .data(data = bbangZipImgUrl)
-                    .crossfade(enable = true)
-                    .build(),
-            contentDescription = null,
-            modifier = Modifier.align(Alignment.CenterHorizontally),
-        )
-
-        BbangZipLevelProgressBar(
-            modifier =
-                Modifier
-                    .align(Alignment.CenterHorizontally)
-                    .padding(horizontal = 40.dp)
+        Box(
+            modifier = Modifier
+                .fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter
+        ) {
+            AsyncImage(
+                model =
+                    ImageRequest.Builder(context = LocalContext.current)
+                        .data(data = bbangZipImgUrl)
+                        .crossfade(enable = true)
+                        .build(),
+                contentDescription = null,
+                modifier = Modifier
+                    .align(Alignment.Center)
                     .padding(bottom = 50.dp),
-            level = level - 1,
-            currentPoint = currentPoint,
-            maxPoint = maxPoint,
-            bbangZipName = bbangZipName,
-        )
+            )
+
+            BbangZipLevelProgressBar(
+                modifier =
+                    Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(horizontal = 40.dp)
+                        .padding(bottom = 50.dp),
+                level = level - 1,
+                currentPoint = currentPoint,
+                maxPoint = maxPoint,
+                bbangZipName = bbangZipName,
+            )
+        }
     }
 }
 
