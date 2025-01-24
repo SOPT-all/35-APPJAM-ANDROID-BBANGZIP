@@ -56,7 +56,7 @@ fun SubjectScreen(
     onClickDeleteModeCard: (Int, String) -> Unit = { _, _ -> },
     onClickStudyCard: (Int, String) -> Unit = { _, _ -> },
     onClickAddSubject: () -> Unit = {},
-    onClickDeleteBtn: ()-> Unit = {},
+    onClickDeleteBtn: () -> Unit = {},
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     val configuration = LocalConfiguration.current

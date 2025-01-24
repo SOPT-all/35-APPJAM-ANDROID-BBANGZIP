@@ -9,38 +9,41 @@ import org.android.bbangzip.domain.repository.remote.SubjectRepository
 import javax.inject.Inject
 
 class SubjectRepositoryImpl
-@Inject
-constructor(
-    private val subjectRemoteDataSource: SubjectRemoteDataSource,
-) : SubjectRepository {
-    override suspend fun getSubjectInfo(): Result<SubjectInfoEntity> =
-        runCatching {
-            val response = subjectRemoteDataSource.getSubjectInfo()
+    @Inject
+    constructor(
+        private val subjectRemoteDataSource: SubjectRemoteDataSource,
+    ) : SubjectRepository {
+        override suspend fun getSubjectInfo(): Result<SubjectInfoEntity> =
+            runCatching {
+                val response = subjectRemoteDataSource.getSubjectInfo()
 
-            val responseData = response.data ?: throw IllegalStateException(response.message ?: "Null Error")
+                val responseData = response.data ?: throw IllegalStateException(response.message ?: "Null Error")
 
-            responseData.toSubjectInfoEntity()
-        }
+                responseData.toSubjectInfoEntity()
+            }
 
-    override suspend fun postSubjectName(requestAddSubjectsDto: RequestAddSubjectsDto): Result<Unit> =
-        runCatching {
-            val response = subjectRemoteDataSource.postSubjectName(requestAddSubjectsDto = requestAddSubjectsDto)
+        override suspend fun postSubjectName(requestAddSubjectsDto: RequestAddSubjectsDto): Result<Unit> =
+            runCatching {
+                val response = subjectRemoteDataSource.postSubjectName(requestAddSubjectsDto = requestAddSubjectsDto)
 
-            response.code ?: throw IllegalStateException(response.message ?: "Null Error")
-        }
+                response.code ?: throw IllegalStateException(response.message ?: "Null Error")
+            }
 
-    override suspend fun deleteSubjects(requestDeleteSubjectsDto: RequestDeleteSubjectsDto): Result<Unit> =
-        runCatching {
-            val response = subjectRemoteDataSource.deleteSubjects(requestDeleteSubjectsDto = requestDeleteSubjectsDto)
+        override suspend fun deleteSubjects(requestDeleteSubjectsDto: RequestDeleteSubjectsDto): Result<Unit> =
+            runCatching {
+                val response = subjectRemoteDataSource.deleteSubjects(requestDeleteSubjectsDto = requestDeleteSubjectsDto)
 
-            response.code ?: throw IllegalStateException(response.message ?: "Null Error")
-        }
+                response.code ?: throw IllegalStateException(response.message ?: "Null Error")
+            }
 
-    override suspend fun putSubjectOptions(subjectId: Int, options: String, requestSubjectOptions: RequestSubjectOptions): Result<Unit> =
-        runCatching {
-            val response = subjectRemoteDataSource.putSubjectOptions(subjectId, options, requestSubjectOptions)
+        override suspend fun putSubjectOptions(
+            subjectId: Int,
+            options: String,
+            requestSubjectOptions: RequestSubjectOptions,
+        ): Result<Unit> =
+            runCatching {
+                val response = subjectRemoteDataSource.putSubjectOptions(subjectId, options, requestSubjectOptions)
 
-            response.code ?: throw IllegalStateException(response.message ?: "Null Error")
-
-        }
-}
+                response.code ?: throw IllegalStateException(response.message ?: "Null Error")
+            }
+    }
