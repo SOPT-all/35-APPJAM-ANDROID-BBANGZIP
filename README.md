@@ -14,6 +14,16 @@
 
 <br>
 
+## 📸 _**ScreenShot**_
+
+
+| <img width="200" src="https://github.com/user-attachments/assets/578b43c4-4f82-4003-86ae-3d5a1c47f786"/> | <img width="200" src="https://github.com/user-attachments/assets/b1185d3d-bc5a-4b89-9017-93a2b55f26fa"/> | <img width="200" src="https://github.com/user-attachments/assets/e5e73816-6de1-48e8-bb0f-5f9a2b71be68"/> | <img width="200" src="https://github.com/user-attachments/assets/fb129aaa-6bcd-444d-9327-e1e4b90c13ce"/> | <img width="200" src="https://github.com/user-attachments/assets/812cb0b6-c673-476b-8dbf-89a1fcd507e6"/> |
+| :---: | :---: | :---: |:------------------------------------------------------------------------------------------------------------------------------:| :---:|
+|`스플래쉬`|`과목관리` | `오늘 할 일`|`마이페이지`|`로그아웃`|
+
+<br>
+
+
 ## _**🍀 우리만의 협업 룰**_
 
 > ### ✨ 그라운드룰
