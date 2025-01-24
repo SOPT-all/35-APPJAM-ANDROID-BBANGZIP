@@ -21,7 +21,7 @@ fun SubjectDetailRoute(
     padding: PaddingValues,
     subjectId: Int,
     subjectName: String,
-    navigateToBack: () -> Unit,
+    popBackStack: () -> Unit,
     navigateToModifyMotivation: (Int, String) -> Unit,
     navigateToModifySubjectName: (Int, String) -> Unit,
     navigateToAddStudy: (SplitStudyData) -> Unit,
@@ -51,6 +51,10 @@ fun SubjectDetailRoute(
 
                 is SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName -> {
                     navigateToModifySubjectName(effect.subjectId, effect.subjectName)
+                }
+
+                is SubjectDetailContract.SubjectDetailSideEffect.PopBackStack -> {
+                    popBackStack()
                 }
             }
         }

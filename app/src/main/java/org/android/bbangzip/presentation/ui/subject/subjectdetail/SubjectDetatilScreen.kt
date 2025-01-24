@@ -324,12 +324,14 @@ fun SubjectDetailScreen(
             onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
         )
 
-        BbangZipGetBadgeBottomSheet(
-            badgeList = state.badgeList,
-            isBottomSheetVisible = state.getBadgeBottomSheetState,
-            onDismissRequest = { onClickBadgeCloseBtn() },
-            onClickCancelButton = { onClickCancleBtn() }
-        )
+        if (state.badgeList.isNotEmpty()) {
+            BbangZipGetBadgeBottomSheet(
+                badgeList = state.badgeList,
+                isBottomSheetVisible = state.getBadgeBottomSheetState,
+                onDismissRequest = { onClickBadgeCloseBtn() },
+                onClickCancelButton = { onClickBadgeCloseBtn() }
+            )
+        }
     }
 }
 

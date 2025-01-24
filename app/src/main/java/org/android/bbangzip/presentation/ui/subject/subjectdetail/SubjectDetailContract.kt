@@ -240,5 +240,7 @@ class SubjectDetailContract {
 
         // 공부 n개가 삭제 되었어요
         data object ShowDeleteSuccessSnackBar : SubjectDetailSideEffect
+
+        data object PopBackStack: SubjectDetailSideEffect
     }
 }

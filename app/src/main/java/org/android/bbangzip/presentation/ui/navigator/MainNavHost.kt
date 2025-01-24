@@ -144,9 +144,10 @@ fun MainNavHost(
                 navigateToAddToDo = { navigator.navigateToToDoAdd() },
                 navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
             )
+
             subjectDetailNavGraph(
                 padding = padding,
-                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                popBackStack = { navigator.popBackStackIfNotSubject() },
                 navigateToModifyMotivation = { id, name -> navigator.navigateToModifyMotivationMessage(id, name) },
                 navigateToModifySubjectName = { id, name -> navigator.navigateToModifySubjectName(id, name) },
                 navigateToAddStudy = { splitStudyData -> navigator.navigateToAddStudy(splitStudyData) },

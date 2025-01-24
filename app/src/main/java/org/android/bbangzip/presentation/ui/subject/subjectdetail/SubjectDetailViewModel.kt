@@ -104,7 +104,7 @@ class SubjectDetailViewModel
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnClickGetBadgeBottomSheetCloseBtn -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = !currentUiState.getBadgeBottomSheetState))
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = false))
                 }
             }
         }
