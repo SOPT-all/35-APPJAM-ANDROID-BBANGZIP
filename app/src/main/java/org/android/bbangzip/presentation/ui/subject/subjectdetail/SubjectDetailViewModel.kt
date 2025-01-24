@@ -279,7 +279,7 @@ class SubjectDetailViewModel
                             ),
                     ),
                 )
-                if(subjectDetailInfoEntity.examDday == -999) {
+                if(subjectDetailInfoEntity.examDday == 999) {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToEmptyView)
                     Timber.tag("subject").d("${subjectDetailInfoEntity.examDday}")
                 }

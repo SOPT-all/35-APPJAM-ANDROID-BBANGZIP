@@ -107,7 +107,7 @@ fun SubjectInfo(
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        if (data.examName.isEmpty() || data.examRemainingDays == -999) {
+        if (data.examName.isEmpty() || data.examRemainingDays == 999) {
             Text(
                 text = "공부를 추가해주세요",
                 style = BbangZipTheme.typography.label2Bold,
