@@ -63,6 +63,7 @@ fun SubjectRoute(
                 onClickStudyCard = { id, name -> viewModel.setEvent(SubjectContract.SubjectEvent.OnClickStudyCard(id, name)) },
                 onClickCancleBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickCancleIcon) },
                 onClickAddSubject = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickAddSubject) },
+                onClickDeleteBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickDeleteButton) },
                 subjects = subjectState.subjectList,
                 cardViewType = subjectState.cardViewType,
                 deletedSet = subjectState.subjectSetToDelete,

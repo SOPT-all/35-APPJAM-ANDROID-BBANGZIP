@@ -20,7 +20,7 @@ interface SubjectService {
     @POST("/api/v1/subjects")
     suspend fun postSubjectName(@Body requestAddSubjectsDto: RequestAddSubjectsDto): BaseResponse<Unit?>
 
-    @DELETE("/api/v1/subjects")
+    @HTTP(method = "DELETE", path = "/api/v1/subjects", hasBody = true)
     suspend fun deleteSubjects(@Body requestDeleteSubjectsDto: RequestDeleteSubjectsDto): BaseResponse<Unit?>
 
     @HTTP(method = "PUT", path = "/api/v1/subjects/{subjectId}/{options}", hasBody = true)

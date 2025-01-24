@@ -2,7 +2,9 @@ package org.android.bbangzip.presentation.ui.subject
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import org.android.bbangzip.data.dto.request.RequestDeleteSubjectsDto
 import org.android.bbangzip.domain.usecase.DeleteSubjectsUseCase
 import org.android.bbangzip.domain.usecase.GetSubjectInfoUseCase
@@ -37,7 +39,9 @@ class SubjectViewModel
                 is SubjectContract.SubjectEvent.Initialize -> launch { getSubjectInfo() }
 
                 is SubjectContract.SubjectEvent.OnClickDeleteButton -> {
-                    updateState(SubjectContract.SubjectReduce.UpdateDeletedSet(event.subjectId))
+                    viewModelScope.launch {
+                        deleteSubjects()
+                    }
                 }
 
                 is SubjectContract.SubjectEvent.OnClickDeleteModeCard -> {
@@ -182,11 +186,14 @@ class SubjectViewModel
                 )
             )
                 .onSuccess {
+                    Timber.tag("delete").d("성공")
+
                     updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
+                    updateState(SubjectContract.SubjectReduce.RestoreDeletedSet)
                     getSubjectInfo()
                 }
                 .onFailure { error ->
-                    Timber.tag("이승범").d(error)
+                    Timber.tag("delete").d(error)
                 }
         }
     }

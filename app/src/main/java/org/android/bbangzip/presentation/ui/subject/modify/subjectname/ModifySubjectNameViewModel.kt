@@ -38,12 +38,11 @@ class ModifySubjectNameViewModel
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
                 }
                 ModifySubjectNameContract.ModifySubjectNameEvent.OnClickBackBtn -> {
-                    viewModelScope.launch {
-                        putMotivationMessage(currentUiState.subjectId, currentUiState.subjectName)
-                    }
                 }
                 is ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn -> {
-                    setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail(subjectId = event.subjectId, subjectName = event.subjectName))
+                    viewModelScope.launch {
+                        putModifySubjectName(currentUiState.subjectId, currentUiState.subjectName)
+                    }
                 }
                 is ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField -> {
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
@@ -117,7 +116,7 @@ class ModifySubjectNameViewModel
             }
         }
 
-    private suspend fun putMotivationMessage(
+    private suspend fun putModifySubjectName(
         subjectId:Int,
         subjectName:String
     ) {
@@ -125,10 +124,10 @@ class ModifySubjectNameViewModel
             subjectId = subjectId,
             options = "subjectName",
             requestSubjectOptions = RequestSubjectOptions(
-                value = currentUiState.subjectName
+                value = subjectName
             )
         ).onSuccess {
-            Timber.tag("motivate").d("각오 한 마디 저장")
+            Timber.tag("motivate").d("과목명 저장")
             setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail(subjectId = subjectId, subjectName = subjectName))
         }.onFailure {error->
             Timber.tag("motivate").d(error)

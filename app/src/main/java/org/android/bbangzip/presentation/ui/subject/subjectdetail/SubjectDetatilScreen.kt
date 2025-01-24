@@ -574,7 +574,7 @@ fun TwoLineTextWithWordWrap(
         text = displayText ?: AnnotatedString(text),
         modifier =
             Modifier
-                .width(200.dp)
+                .width(230.dp)
                 .padding(top = 92.dp, start = 20.dp),
         style = BbangZipTheme.typography.heading2Bold,
         onTextLayout = { textLayoutResult ->
