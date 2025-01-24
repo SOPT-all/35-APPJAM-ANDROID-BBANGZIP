@@ -38,7 +38,7 @@ class AddStudyContract {
         val deadLineList: List<String> = emptyList(),
         val addStudyViewType: AddStudyViewType = AddStudyViewType.DEFAULT,
         val isSuccess: Boolean = false,
-        val getBadgeBottomSheetState: Boolean = false
+        val getBadgeBottomSheetState: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }

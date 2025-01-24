@@ -21,229 +21,229 @@ import javax.inject.Inject
 
 @HiltViewModel
 class SubjectDetailViewModel
-@Inject
-constructor(
-    private val postCompleteCardIdUseCase: PostCompleteCardIdUseCase,
-    private val postUnCompleteCardIdUseCase: PostUnCompleteCardIdUseCase,
-    private val getSubjectDetailUseCase: GetSubjectDetailUseCase,
-    private val deleteStudyPieceUseCase: DeleteStudyPieceUseCase,
-    savedStateHandle: SavedStateHandle,
-) : BaseViewModel<SubjectDetailContract.SubjectDetailEvent, SubjectDetailContract.SubjectDetailState, SubjectDetailContract.SubjectDetailReduce, SubjectDetailContract.SubjectDetailSideEffect>(
-    savedStateHandle = savedStateHandle,
-) {
-    override fun createInitialState(savedState: Parcelable?): SubjectDetailContract.SubjectDetailState {
-        return savedState as? SubjectDetailContract.SubjectDetailState ?: SubjectDetailContract.SubjectDetailState()
-    }
+    @Inject
+    constructor(
+        private val postCompleteCardIdUseCase: PostCompleteCardIdUseCase,
+        private val postUnCompleteCardIdUseCase: PostUnCompleteCardIdUseCase,
+        private val getSubjectDetailUseCase: GetSubjectDetailUseCase,
+        private val deleteStudyPieceUseCase: DeleteStudyPieceUseCase,
+        savedStateHandle: SavedStateHandle,
+    ) : BaseViewModel<SubjectDetailContract.SubjectDetailEvent, SubjectDetailContract.SubjectDetailState, SubjectDetailContract.SubjectDetailReduce, SubjectDetailContract.SubjectDetailSideEffect>(
+            savedStateHandle = savedStateHandle,
+        ) {
+        override fun createInitialState(savedState: Parcelable?): SubjectDetailContract.SubjectDetailState {
+            return savedState as? SubjectDetailContract.SubjectDetailState ?: SubjectDetailContract.SubjectDetailState()
+        }
 
-    override fun handleEvent(event: SubjectDetailContract.SubjectDetailEvent) {
-        when (event) {
-            is SubjectDetailContract.SubjectDetailEvent.Initialize ->
-                launch {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData(event.subjectId, event.subjectName))
-                    initData(event.subjectId)
+        override fun handleEvent(event: SubjectDetailContract.SubjectDetailEvent) {
+            when (event) {
+                is SubjectDetailContract.SubjectDetailEvent.Initialize ->
+                    launch {
+                        updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData(event.subjectId, event.subjectName))
+                        initData(event.subjectId)
+                    }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDeleteMode)
                 }
 
-            is SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked -> {
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDeleteMode)
-            }
-
-            is SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked -> {
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
-            }
-
-            is SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked -> {
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteModeCardState(event.pieceId))
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet(event.pieceId))
-            }
-
-            is SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked -> {
-                viewModelScope.launch {
-                    postCompleteCardId(event.pieceId)
+                is SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
                 }
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDefaultCardState(event.pieceId))
-                // 사이드 이펙트  스낵바 메시지
-            }
 
-            is SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked -> {
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSelectedId(event.pieceId))
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
-            }
-
-            is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked -> {
-                viewModelScope.launch {
-                    postUnCompleteCardId(event.pieceId)
+                is SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteModeCardState(event.pieceId))
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet(event.pieceId))
                 }
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateCompleteCardState)
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
-                // TODO 사이드 이펙트 스낵바
-            }
 
-            is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> {
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
-            }
+                is SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked -> {
+                    viewModelScope.launch {
+                        postCompleteCardId(event.pieceId)
+                    }
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDefaultCardState(event.pieceId))
+                    // 사이드 이펙트  스낵바 메시지
+                }
 
-            is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest -> {
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
-            }
+                is SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSelectedId(event.pieceId))
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
+                }
 
-            is SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage -> {
-                setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifyMotivation(subjectId = event.subjectId, subjectName = event.subjectName))
-            }
+                is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked -> {
+                    viewModelScope.launch {
+                        postUnCompleteCardId(event.pieceId)
+                    }
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateCompleteCardState)
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
+                    // TODO 사이드 이펙트 스낵바
+                }
 
-            is SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName -> {
-                setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
-            }
+                is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
+                }
 
-            SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
-            is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
-                Timber.tag("김재민").d("되나?")
-                setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
-            }
+                is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
+                }
 
-            SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
+                is SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifyMotivation(subjectId = event.subjectId, subjectName = event.subjectName))
+                }
 
-            SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
-            }
+                is SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
+                }
 
-            is SubjectDetailContract.SubjectDetailEvent.OnClickTab -> {
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
-            }
+                SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
+                is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
+                    Timber.tag("김재민").d("되나?")
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
+                }
 
-            SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
-            }
+                SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
 
-            is SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {
-                Timber.tag("[과목 관리]").d("버튼 클릭")
-                viewModelScope.launch { deleteStudyPiece() }
+                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickTab -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
+                }
+
+                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {
+                    Timber.tag("[과목 관리]").d("버튼 클릭")
+                    viewModelScope.launch { deleteStudyPiece() }
+                }
             }
         }
-    }
 
-    override fun reduceState(
-        state: SubjectDetailContract.SubjectDetailState,
-        reduce: SubjectDetailContract.SubjectDetailReduce,
-    ): SubjectDetailContract.SubjectDetailState {
-        return when (reduce) {
-            is SubjectDetailContract.SubjectDetailReduce.UpdateToDeleteMode -> {
-                state.copy(
-                    todoList =
-                        state.todoList.map {
-                            if (it.cardState == BbangZipCardState.COMPLETE) it else it.copy(cardState = BbangZipCardState.CHECKABLE)
-                        },
-                    pieceViewType = PieceViewType.DELETE,
-                )
-            }
+        override fun reduceState(
+            state: SubjectDetailContract.SubjectDetailState,
+            reduce: SubjectDetailContract.SubjectDetailReduce,
+        ): SubjectDetailContract.SubjectDetailState {
+            return when (reduce) {
+                is SubjectDetailContract.SubjectDetailReduce.UpdateToDeleteMode -> {
+                    state.copy(
+                        todoList =
+                            state.todoList.map {
+                                if (it.cardState == BbangZipCardState.COMPLETE) it else it.copy(cardState = BbangZipCardState.CHECKABLE)
+                            },
+                        pieceViewType = PieceViewType.DELETE,
+                    )
+                }
 
-            is SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode -> {
-                state.copy(
-                    todoList =
-                        state.todoList.map {
-                            if (it.cardState == BbangZipCardState.COMPLETE) it else it.copy(cardState = BbangZipCardState.DEFAULT)
-                        },
-                    pieceViewType = PieceViewType.DEFAULT,
-                    selectedItemSet = setOf(),
-                )
-            }
+                is SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode -> {
+                    state.copy(
+                        todoList =
+                            state.todoList.map {
+                                if (it.cardState == BbangZipCardState.COMPLETE) it else it.copy(cardState = BbangZipCardState.DEFAULT)
+                            },
+                        pieceViewType = PieceViewType.DEFAULT,
+                        selectedItemSet = setOf(),
+                    )
+                }
 
-            is SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet -> {
-                Timber.d("[update] ${state.selectedItemSet}")
+                is SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet -> {
+                    Timber.d("[update] ${state.selectedItemSet}")
 
-                state.copy(
-                    selectedItemSet =
-                        run {
-                            val targetPiece = state.todoList.find { it.pieceId == reduce.pieceId }
+                    state.copy(
+                        selectedItemSet =
+                            run {
+                                val targetPiece = state.todoList.find { it.pieceId == reduce.pieceId }
 
-                            when (targetPiece?.cardState) {
-                                BbangZipCardState.CHECKED -> {
-                                    state.selectedItemSet.plus(targetPiece.pieceId)
+                                when (targetPiece?.cardState) {
+                                    BbangZipCardState.CHECKED -> {
+                                        state.selectedItemSet.plus(targetPiece.pieceId)
+                                    }
+
+                                    BbangZipCardState.CHECKABLE -> {
+                                        state.selectedItemSet.minus(targetPiece.pieceId)
+                                    }
+
+                                    else -> {
+                                        state.selectedItemSet
+                                    }
                                 }
+                            },
+                    )
+                }
 
-                                BbangZipCardState.CHECKABLE -> {
-                                    state.selectedItemSet.minus(targetPiece.pieceId)
+                is SubjectDetailContract.SubjectDetailReduce.UpdateDeleteModeCardState -> {
+                    state.copy(
+                        todoList =
+                            state.todoList.map { item ->
+                                if (item.cardState == BbangZipCardState.CHECKABLE && item.pieceId == reduce.pieceId) {
+                                    item.copy(cardState = BbangZipCardState.CHECKED)
+                                } else if (item.cardState == BbangZipCardState.CHECKED && item.pieceId == reduce.pieceId) {
+                                    item.copy(cardState = BbangZipCardState.CHECKABLE)
+                                } else {
+                                    item
                                 }
+                            },
+                    )
+                }
 
-                                else -> {
-                                    state.selectedItemSet
+                is SubjectDetailContract.SubjectDetailReduce.UpdateDefaultCardState -> {
+                    state.copy(
+                        todoList =
+                            state.todoList.map { item ->
+                                if (item.cardState == BbangZipCardState.DEFAULT && item.pieceId == reduce.pieceId) {
+                                    item.copy(cardState = BbangZipCardState.COMPLETE)
+                                } else {
+                                    item
                                 }
-                            }
-                        },
-                )
-            }
+                            },
+                    )
+                }
 
-            is SubjectDetailContract.SubjectDetailReduce.UpdateDeleteModeCardState -> {
-                state.copy(
-                    todoList =
-                        state.todoList.map { item ->
-                            if (item.cardState == BbangZipCardState.CHECKABLE && item.pieceId == reduce.pieceId) {
-                                item.copy(cardState = BbangZipCardState.CHECKED)
-                            } else if (item.cardState == BbangZipCardState.CHECKED && item.pieceId == reduce.pieceId) {
-                                item.copy(cardState = BbangZipCardState.CHECKABLE)
-                            } else {
-                                item
-                            }
-                        },
-                )
-            }
+                is SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState -> {
+                    state.copy(
+                        revertCompleteBottomSheetState = !state.revertCompleteBottomSheetState,
+                    )
+                }
 
-            is SubjectDetailContract.SubjectDetailReduce.UpdateDefaultCardState -> {
-                state.copy(
-                    todoList =
-                        state.todoList.map { item ->
-                            if (item.cardState == BbangZipCardState.DEFAULT && item.pieceId == reduce.pieceId) {
-                                item.copy(cardState = BbangZipCardState.COMPLETE)
-                            } else {
-                                item
-                            }
-                        },
-                )
-            }
+                is SubjectDetailContract.SubjectDetailReduce.UpdateSelectedId -> {
+                    state.copy(
+                        selectedItemId = reduce.pieceId,
+                    )
+                }
 
-            is SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState -> {
-                state.copy(
-                    revertCompleteBottomSheetState = !state.revertCompleteBottomSheetState,
-                )
-            }
+                is SubjectDetailContract.SubjectDetailReduce.UpdateCompleteCardState -> {
+                    state.copy(
+                        todoList =
+                            state.todoList.map { item ->
+                                if (item.pieceId == state.selectedItemId) {
+                                    item.copy(cardState = BbangZipCardState.DEFAULT)
+                                } else {
+                                    item
+                                }
+                            },
+                    )
+                }
 
-            is SubjectDetailContract.SubjectDetailReduce.UpdateSelectedId -> {
-                state.copy(
-                    selectedItemId = reduce.pieceId,
-                )
-            }
+                is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectDetail -> {
+                    state.copy(
+                        examDate = reduce.subjectDetailInfo.examDate,
+                        examDday = reduce.subjectDetailInfo.examDday,
+                        motivationMessage = reduce.subjectDetailInfo.motivationMessage,
+                        todoList = reduce.subjectDetailInfo.todoList,
+                    )
+                }
 
-            is SubjectDetailContract.SubjectDetailReduce.UpdateCompleteCardState -> {
-                state.copy(
-                    todoList =
-                        state.todoList.map { item ->
-                            if (item.pieceId == state.selectedItemId) {
-                                item.copy(cardState = BbangZipCardState.DEFAULT)
-                            } else {
-                                item
-                            }
-                        },
-                )
-            }
+                is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData -> {
+                    state.copy(
+                        subjectId = reduce.subjectId,
+                        subjectName = reduce.subjectName,
+                    )
+                }
 
-            is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectDetail -> {
-                state.copy(
-                    examDate = reduce.subjectDetailInfo.examDate,
-                    examDday = reduce.subjectDetailInfo.examDday,
-                    motivationMessage = reduce.subjectDetailInfo.motivationMessage,
-                    todoList = reduce.subjectDetailInfo.todoList,
-                )
-            }
-
-            is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData -> {
-                state.copy(
-                    subjectId = reduce.subjectId,
-                    subjectName = reduce.subjectName,
-                )
-            }
-
-            is SubjectDetailContract.SubjectDetailReduce.DeleteSelectedItemSet -> {
-                state
-            }
+                is SubjectDetailContract.SubjectDetailReduce.DeleteSelectedItemSet -> {
+                    state
+                }
 
                 SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
                     state.copy(
@@ -259,87 +259,88 @@ constructor(
             }
         }
 
-    private suspend fun initData(subjectId: Int) {
-        getSubjectDetail(
-            subjectId = subjectId,
-            examName = "mid",
-        )
-    }
-
-    private suspend fun getSubjectDetail(
-        subjectId: Int,
-        examName: String,
-    ) {
-        getSubjectDetailUseCase(
-            subjectId = subjectId,
-            examName = examName,
-        ).onSuccess { subjectDetailInfoEntity ->
-            updateState(
-                SubjectDetailContract.SubjectDetailReduce.UpdateSubjectDetail(
-                    subjectDetailInfo =
-                        SubjectDetailInfo(
-                            examDate = subjectDetailInfoEntity.examDate,
-                            examDday = subjectDetailInfoEntity.examDday,
-                            motivationMessage = subjectDetailInfoEntity.motivationMessage,
-                            todoList =
-                                subjectDetailInfoEntity.todoList.map { data ->
-                                    ToDoCardModel(
-                                        pieceId = data.pieceId,
-                                        subjectName = data.subjectName,
-                                        examName = data.examName,
-                                        studyContents = data.studyContents,
-                                        startPage = data.startPage,
-                                        finishPage = data.finishPage,
-                                        deadline = data.deadline,
-                                        remainingDays = data.remainingDays,
-                                        cardState = if (data.isFinished) BbangZipCardState.COMPLETE else BbangZipCardState.DEFAULT,
-                                    )
-                                },
-                        ),
-                ),
+        private suspend fun initData(subjectId: Int) {
+            getSubjectDetail(
+                subjectId = subjectId,
+                examName = "mid",
             )
-        }.onFailure { error ->
-            Timber.tag("getSubjectDetail").e(error)
         }
-    }
 
-    private suspend fun postUnCompleteCardId(
-        pieceId: Int,
-    ) {
-        postUnCompleteCardIdUseCase(
-            pieceId = pieceId,
-            requestMarkDoneDto = RequestMarkDoneDto(isFinished = false),
-        ).onSuccess {
-            Timber.tag("markDone").e("완료 성공!")
-        }.onFailure { error ->
-            Timber.tag("markDone").e(error)
+        private suspend fun getSubjectDetail(
+            subjectId: Int,
+            examName: String,
+        ) {
+            getSubjectDetailUseCase(
+                subjectId = subjectId,
+                examName = examName,
+            ).onSuccess { subjectDetailInfoEntity ->
+                updateState(
+                    SubjectDetailContract.SubjectDetailReduce.UpdateSubjectDetail(
+                        subjectDetailInfo =
+                            SubjectDetailInfo(
+                                examDate = subjectDetailInfoEntity.examDate,
+                                examDday = subjectDetailInfoEntity.examDday,
+                                motivationMessage = subjectDetailInfoEntity.motivationMessage,
+                                todoList =
+                                    subjectDetailInfoEntity.todoList.map { data ->
+                                        ToDoCardModel(
+                                            pieceId = data.pieceId,
+                                            subjectName = data.subjectName,
+                                            examName = data.examName,
+                                            studyContents = data.studyContents,
+                                            startPage = data.startPage,
+                                            finishPage = data.finishPage,
+                                            deadline = data.deadline,
+                                            remainingDays = data.remainingDays,
+                                            cardState = if (data.isFinished) BbangZipCardState.COMPLETE else BbangZipCardState.DEFAULT,
+                                        )
+                                    },
+                            ),
+                    ),
+                )
+            }.onFailure { error ->
+                Timber.tag("getSubjectDetail").e(error)
+            }
         }
-    }
 
-    private suspend fun postCompleteCardId(
-        pieceId: Int,
-    ) {
-        postCompleteCardIdUseCase(
-            pieceId = pieceId,
-            requestMarkDoneDto = RequestMarkDoneDto(isFinished = true),
-        ).onSuccess {
-            Timber.tag("markDone").e("완료 성공!")
-        }.onFailure { error ->
-            Timber.tag("markDone").e(error)
+        private suspend fun postUnCompleteCardId(
+            pieceId: Int,
+        ) {
+            postUnCompleteCardIdUseCase(
+                pieceId = pieceId,
+                requestMarkDoneDto = RequestMarkDoneDto(isFinished = false),
+            ).onSuccess {
+                Timber.tag("markDone").e("완료 성공!")
+            }.onFailure { error ->
+                Timber.tag("markDone").e(error)
+            }
         }
-    }
 
-    private suspend fun deleteStudyPiece() {
-        deleteStudyPieceUseCase(
-            pieceIdEntity = PieceIdEntity(
-                piece = currentUiState.selectedItemSet.map { it }
-            )
-        ).onSuccess {
-            Timber.tag("[과목 관리]").d("통신 성공")
-            updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
-        }.onFailure {
-            Timber.tag("[과목 관리]").d("$error")
-            Timber.tag("[과목 관리]").d("통신 실패")
+        private suspend fun postCompleteCardId(
+            pieceId: Int,
+        ) {
+            postCompleteCardIdUseCase(
+                pieceId = pieceId,
+                requestMarkDoneDto = RequestMarkDoneDto(isFinished = true),
+            ).onSuccess {
+                Timber.tag("markDone").e("완료 성공!")
+            }.onFailure { error ->
+                Timber.tag("markDone").e(error)
+            }
+        }
+
+        private suspend fun deleteStudyPiece() {
+            deleteStudyPieceUseCase(
+                pieceIdEntity =
+                    PieceIdEntity(
+                        piece = currentUiState.selectedItemSet.map { it },
+                    ),
+            ).onSuccess {
+                Timber.tag("[과목 관리]").d("통신 성공")
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
+            }.onFailure {
+                Timber.tag("[과목 관리]").d("$error")
+                Timber.tag("[과목 관리]").d("통신 실패")
+            }
         }
     }
-}

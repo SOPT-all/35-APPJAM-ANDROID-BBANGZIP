@@ -7,7 +7,7 @@ import org.android.bbangzip.domain.model.GetBadgeEntity
 @Serializable
 data class ResponseGetBadgeDto(
     @SerialName("badges")
-    val badges: List<GetBadgeDto>
+    val badges: List<GetBadgeDto>,
 ) {
     @Serializable
     data class GetBadgeDto(
@@ -16,16 +16,18 @@ data class ResponseGetBadgeDto(
         @SerialName("badgeImage")
         val badgeImg: String,
         @SerialName("hashTags")
-        val hashTags: List<String>
+        val hashTags: List<String>,
     ) {
-        fun toBadgeEntity() = GetBadgeEntity.Badge(
-            badgeName = badgeName,
-            badgeImg = badgeImg,
-            hashTags = hashTags
-        )
+        fun toBadgeEntity() =
+            GetBadgeEntity.Badge(
+                badgeName = badgeName,
+                badgeImg = badgeImg,
+                hashTags = hashTags,
+            )
     }
 
-    fun toGetBadgeEntity() = GetBadgeEntity(
-        badgesList = badges.map { it.toBadgeEntity() }
-    )
+    fun toGetBadgeEntity() =
+        GetBadgeEntity(
+            badgesList = badges.map { it.toBadgeEntity() },
+        )
 }

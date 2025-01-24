@@ -17,7 +17,7 @@ fun AddStudyRoute(
     viewModel: AddStudyViewModel = hiltViewModel(),
     popBackStack: () -> Unit = {},
     navigateSplitStudy: (AddStudyData) -> Unit = {},
-    navigateSubjectDetail: (Int, String) -> Unit = {_, _ -> }
+    navigateSubjectDetail: (Int, String) -> Unit = { _, _ -> },
 ) {
     LaunchedEffect(Unit) {
         viewModel.setEvent(AddStudyContract.AddStudyEvent.Initialize(splitStudyData = splitStudyData))
@@ -71,7 +71,7 @@ fun AddStudyRoute(
             onClickCancleIcon = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickCancleIcon) },
             onClickConfirmDateBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickConfirmDateBtn) },
             onClickAgainSplitBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAgainSplitBtn(it)) },
-            onClickAddStudyBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAddStudyBtn) }
+            onClickAddStudyBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAddStudyBtn) },
         )
     }
 }

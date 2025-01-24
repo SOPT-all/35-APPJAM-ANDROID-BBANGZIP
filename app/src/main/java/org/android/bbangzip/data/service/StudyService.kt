@@ -9,18 +9,17 @@ import org.android.bbangzip.data.util.constant.ApiConstants.PIECES
 import org.android.bbangzip.data.util.constant.ApiConstants.STUDIES
 import org.android.bbangzip.data.util.constant.ApiConstants.VERSION
 import retrofit2.http.Body
-import retrofit2.http.DELETE
 import retrofit2.http.HTTP
 import retrofit2.http.POST
 
 interface StudyService {
     @POST("$API/$VERSION/$STUDIES")
     suspend fun postStudy(
-        @Body requestAddStudyDto: RequestAddStudyDto
+        @Body requestAddStudyDto: RequestAddStudyDto,
     ): BaseResponse<ResponseGetBadgeDto>
 
-    @HTTP(method = "DELETE", path="$API/$VERSION/$STUDIES/$PIECES", hasBody = true)
+    @HTTP(method = "DELETE", path = "$API/$VERSION/$STUDIES/$PIECES", hasBody = true)
     suspend fun deleteStudyPieces(
-        @Body requestPieceIdDto: RequestPieceIdDto
+        @Body requestPieceIdDto: RequestPieceIdDto,
     ): BaseResponse<String>
 }

@@ -2,7 +2,6 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.model.SubjectDetailInfo
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
@@ -25,7 +24,7 @@ class SubjectDetailContract {
         val subjectId: Int = 0,
         val examName: String = "중간고사",
         val subjectName: String = "",
-        val todoList: List<ToDoCardModel> = emptyList()
+        val todoList: List<ToDoCardModel> = emptyList(),
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }

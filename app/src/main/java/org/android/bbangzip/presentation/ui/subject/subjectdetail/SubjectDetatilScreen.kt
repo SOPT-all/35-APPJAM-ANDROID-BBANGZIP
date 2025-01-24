@@ -466,9 +466,10 @@ private fun DefaultPieceView(
                     Icon(
                         imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
                         contentDescription = null,
-                        modifier = Modifier
-                            .size(20.dp)
-                            .align(Alignment.Center),
+                        modifier =
+                            Modifier
+                                .size(20.dp)
+                                .align(Alignment.Center),
                     )
                 }
 

@@ -78,7 +78,7 @@ fun AddStudyScreen(
     onClickCancleIcon: () -> Unit = {},
     onClickConfirmDateBtn: () -> Unit = {},
     onClickAgainSplitBtn: (Int) -> Unit = {},
-    onClickAddStudyBtn: () -> Unit = {}
+    onClickAddStudyBtn: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 

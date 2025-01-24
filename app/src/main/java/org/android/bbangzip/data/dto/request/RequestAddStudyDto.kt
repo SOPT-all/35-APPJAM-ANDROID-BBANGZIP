@@ -14,7 +14,7 @@ data class RequestAddStudyDto(
     @SerialName("studyContents")
     val studyContents: String,
     @SerialName("pieceList")
-    val pieceList: List<Piece>
+    val pieceList: List<Piece>,
 ) {
     @Serializable
     data class Piece(
@@ -23,6 +23,6 @@ data class RequestAddStudyDto(
         @SerialName("finishPage")
         val finishPage: Int,
         @SerialName("deadline")
-        val deadline: String
+        val deadline: String,
     )
 }

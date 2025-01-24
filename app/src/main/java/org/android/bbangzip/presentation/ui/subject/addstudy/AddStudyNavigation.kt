@@ -26,7 +26,7 @@ fun NavGraphBuilder.addStudyNavGraph(
     padding: PaddingValues,
     popBackStack: () -> Unit,
     navigateSplitStudy: (AddStudyData) -> Unit,
-    navigateSubjectDetail: (Int, String) ->Unit
+    navigateSubjectDetail: (Int, String) -> Unit,
 ) {
     composable<AddStudyRoute>(
         typeMap = mapOf(typeOf<SplitStudyData>() to SplitStudyDataType),

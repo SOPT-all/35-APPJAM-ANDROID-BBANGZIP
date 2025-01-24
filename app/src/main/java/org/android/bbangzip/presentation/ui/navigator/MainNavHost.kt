@@ -117,7 +117,7 @@ fun MainNavHost(
                 padding = padding,
                 popBackStack = { navigator.popBackStackIfNotSubject() },
                 navigateSplitStudy = { navigator.navigateToSplitStudy(it) },
-                navigateSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(subjectId = id, subjectName = name)}
+                navigateSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(subjectId = id, subjectName = name) },
             )
 
             modifySubjectNameNavGraph(

@@ -290,7 +290,7 @@ fun SplitStudyScreen(
                         endPageList = endPageList,
                         deadLineList = seletedDateList.map { dateToString(it) },
                         addStudyViewType = AddStudyViewType.AGAIN,
-                        subjectId = subjectId
+                        subjectId = subjectId,
                     ),
                 )
             },

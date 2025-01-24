@@ -7,25 +7,27 @@ data class AddStudyEntity(
     val examName: String,
     val examDate: String,
     val studyContents: String,
-    val pieceList: List<Piece>
+    val pieceList: List<Piece>,
 ) {
     data class Piece(
         val startPage: Int,
         val finishPage: Int,
-        val deadline: String
+        val deadline: String,
     ) {
-        fun toPieceDto() = RequestAddStudyDto.Piece(
-            startPage = startPage,
-            finishPage = finishPage,
-            deadline = deadline
-        )
+        fun toPieceDto() =
+            RequestAddStudyDto.Piece(
+                startPage = startPage,
+                finishPage = finishPage,
+                deadline = deadline,
+            )
     }
 
-    fun toAddStudyDto() = RequestAddStudyDto(
-        subjectId = subjectId,
-        examName = examName,
-        examDate = examDate,
-        studyContents = studyContents,
-        pieceList = pieceList.map { it.toPieceDto() }
-    )
+    fun toAddStudyDto() =
+        RequestAddStudyDto(
+            subjectId = subjectId,
+            examName = examName,
+            examDate = examDate,
+            studyContents = studyContents,
+            pieceList = pieceList.map { it.toPieceDto() },
+        )
 }

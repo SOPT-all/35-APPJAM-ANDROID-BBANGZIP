@@ -32,7 +32,6 @@ fun hyponStringDateToDate(dateString: String): Date {
 fun formatDate(input: String): String {
     val parts = input.split("년", "월", "일").map { it.trim() }
     return "${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}"
-
 }
 
 fun addLeadingZero(date: String): String {
