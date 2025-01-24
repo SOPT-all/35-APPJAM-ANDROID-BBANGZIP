@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.navigation.NavDestination
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
@@ -62,7 +64,7 @@ class MainNavigator(
             Timber.d("[navigation] restoreState -> $restoreState")
         }.let { navOptions ->
             when (bottomNavigationType) {
-                BottomNavigationType.SUBJECT -> navHostController.navigateSubject()
+                BottomNavigationType.SUBJECT -> navHostController.navigateSubject(navOptions)
                 BottomNavigationType.TODO -> navHostController.navigateTodo(navOptions)
                 BottomNavigationType.FRIEND -> navHostController.navigateFriend(navOptions)
                 BottomNavigationType.MY -> navHostController.navigateMy(navOptions)
@@ -82,8 +84,15 @@ class MainNavigator(
         navHostController.navigateLogin()
     }
 
-    fun navigateToSubject() {
-        navHostController.navigateSubject()
+    fun navigateToSubject(navOptions: NavOptions? = null) {
+        navHostController.navigateSubject(
+            navOptions ?: navOptions {
+                popUpTo(navHostController.graph.findStartDestination().id) {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            }
+        )
     }
 
     fun navigateToAddStudy(splitStudyData: SplitStudyData) {

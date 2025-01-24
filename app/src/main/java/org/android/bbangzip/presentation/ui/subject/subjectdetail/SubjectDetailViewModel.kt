@@ -102,6 +102,10 @@ class SubjectDetailViewModel
                 is SubjectDetailContract.SubjectDetailEvent.OnClickTab -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
                 }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickGetBadgeBottomSheetCloseBtn -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = !currentUiState.getBadgeBottomSheetState))
+                }
             }
         }
 
@@ -240,6 +244,18 @@ class SubjectDetailViewModel
                         examName = if (reduce.index == 0) "중간고사" else "기말고사",
                     )
                 }
+
+                is SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeList -> {
+                    state.copy(
+                        badgeList = reduce.badgeList
+                    )
+                }
+
+                is SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState -> {
+                    state.copy(
+                        getBadgeBottomSheetState = !currentUiState.getBadgeBottomSheetState
+                    )
+                }
             }
         }
 
@@ -306,7 +322,9 @@ class SubjectDetailViewModel
             postCompleteCardIdUseCase(
                 pieceId = pieceId,
                 requestMarkDoneDto = RequestMarkDoneDto(isFinished = true),
-            ).onSuccess {
+            ).onSuccess { data ->
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeList(badgeList = data.badgeCardList.map { it.toBadge() }))
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = true))
                 Timber.tag("markDone").e("완료 성공!")
             }.onFailure { error ->
                 Timber.tag("markDone").e(error)

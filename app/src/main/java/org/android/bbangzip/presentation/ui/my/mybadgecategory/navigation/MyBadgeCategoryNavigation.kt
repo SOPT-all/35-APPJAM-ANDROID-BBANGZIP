@@ -12,7 +12,9 @@ object MyBadgeCategoryRoute
 fun NavController.navigateToMyBadgeCategory() {
     navigate(
         route = MyBadgeCategoryRoute,
-    )
+    ) {
+        launchSingleTop = true
+    }
 }
 
 fun NavGraphBuilder.myBadgeCategoryNavGraph(

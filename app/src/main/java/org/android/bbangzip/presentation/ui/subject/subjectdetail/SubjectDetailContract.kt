@@ -3,6 +3,7 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
+import org.android.bbangzip.presentation.model.Badge
 import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.model.SubjectDetailInfo
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
@@ -138,6 +139,8 @@ class SubjectDetailContract {
                     BbangZipCardState.DEFAULT,
                 ),
             ),
+        val badgeList: List<Badge> = emptyList(),
+        val getBadgeBottomSheetState: Boolean = false
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -187,6 +190,8 @@ class SubjectDetailContract {
         data class OnCompleteCardClicked(
             val pieceId: Int,
         ) : SubjectDetailEvent
+
+        data object OnClickGetBadgeBottomSheetCloseBtn: SubjectDetailEvent
     }
 
     sealed interface SubjectDetailReduce : BaseContract.Reduce {
@@ -218,6 +223,10 @@ class SubjectDetailContract {
         data object UpdateIsMenuOpen : SubjectDetailReduce
 
         data class UpdateExamName(val index: Int) : SubjectDetailReduce
+
+        data class UpdateGetBadgeList(val badgeList: List<Badge>): SubjectDetailReduce
+
+        data class UpdateGetBadgeBottomSheetState(val getBadgeBottomSheetState: Boolean) : SubjectDetailReduce
     }
 
     sealed interface SubjectDetailSideEffect : BaseContract.SideEffect {

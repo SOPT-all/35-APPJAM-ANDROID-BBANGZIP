@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.balloon.TopTailBalloon
 import org.android.bbangzip.presentation.component.bottomsheet.BbangZipBasicModalBottomSheet
+import org.android.bbangzip.presentation.component.bottomsheet.BbangZipGetBadgeBottomSheet
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.component.card.ToDoCard
@@ -70,6 +71,7 @@ fun TodoScreen(
     onItemDeleteButtonClicked: () -> Unit = {},
     onDeleteScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
     onDefaultScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
+    onClickBadgeCloseBtn: () -> Unit
 ) {
     Box(
         modifier =
@@ -268,6 +270,13 @@ fun TodoScreen(
             selectedItem = todoState.selectedFilterItem,
             onSelectedItemChanged = onFilterBottomSheetItemClicked,
             onDismissRequest = onFilterBottomSheetDismissRequest,
+        )
+
+        BbangZipGetBadgeBottomSheet(
+            badgeList = todoState.badgeList,
+            isBottomSheetVisible = todoState.getBadgeBottomSheetState,
+            onDismissRequest = { onClickBadgeCloseBtn() },
+            onClickCancelButton = { onClickBadgeCloseBtn() }
         )
     }
 }
@@ -766,5 +775,6 @@ fun TodoScreenMockPreview() {
         todoState = mockTodoStates[2],
         todayDate = listOf("2025", "01", "18"),
         bottomPadding = PaddingValues(),
+        onClickBadgeCloseBtn = {}
     )
 }

@@ -39,7 +39,7 @@ fun OnboardingRoute(
     }
 
     LaunchedEffect(state.currentPage) {
-        Timber.d("[온보딩] currentPage -> ${state.currentPage}")
+        Timber.tag("[온보딩] currentPage").d("${state.currentPage} + ${pagerState.currentPage}")
         if (pagerState.currentPage != state.currentPage) {
             pagerState.animateScrollToPage(state.currentPage)
         }

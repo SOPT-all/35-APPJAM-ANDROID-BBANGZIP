@@ -152,10 +152,7 @@ constructor(
             is OnboardingContract.OnboardingEvent.OnClickNextBtn -> {
                 val nextPage = currentUiState.currentPage + 1
                 when (currentUiState.currentPage) {
-                    0 -> {
-                        updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
-                    }
-
+                    0 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
                     1 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
                     2 -> {
                         Timber.d("[온보딩] -> ${currentUiState.userName}, ${currentUiState.semester}, ${currentUiState.subjectName}")

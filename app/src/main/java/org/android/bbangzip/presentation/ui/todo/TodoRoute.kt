@@ -115,6 +115,9 @@ fun TodoRoute(
                 onDefaultScreenCardClicked = { pieceId, cardState ->
                     viewModel.setEvent(TodoContract.TodoEvent.OnDefaultScreenCardClicked(pieceId = pieceId, cardState = cardState))
                 },
+                onClickBadgeCloseBtn = {
+                    viewModel.setEvent(TodoContract.TodoEvent.OnClickGetBadgeBottomSheetCloseBtn)
+                }
             )
 
         false ->
