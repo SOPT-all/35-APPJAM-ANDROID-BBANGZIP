@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject.subjectdetail
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,8 +34,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
@@ -117,6 +121,15 @@ fun SubjectDetailScreen(
                                 shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp),
                             ),
                 ) {
+                    Image(
+                        painter = painterResource(R.drawable.img_subject_detail_header),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .aspectRatio(360f / 172f)
+                            .clip(shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
+                            .align(Alignment.BottomCenter),
+                    )
                     TwoLineTextWithWordWrap(motivationMessage)
 
                     Box(

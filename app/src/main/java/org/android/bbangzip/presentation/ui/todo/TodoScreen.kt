@@ -48,8 +48,6 @@ import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.type.ToDoScreenType
-import org.android.bbangzip.presentation.ui.subject.subjectdetail.RevertCompleteBottomSheet
-import org.android.bbangzip.presentation.ui.todo.component.ToDoFilterPickerBottomSheet
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
@@ -294,7 +292,7 @@ fun DateMessageCard(
             ) {
                 if (pendingCount == 0) {
                     Image(
-                        painter = painterResource(R.drawable.img_pending_study_zero_header),
+                        painter = painterResource(R.drawable.img_pending_study_zero),
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()

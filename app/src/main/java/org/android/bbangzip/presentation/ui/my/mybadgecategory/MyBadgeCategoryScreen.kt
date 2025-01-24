@@ -89,7 +89,7 @@ fun MyBadgeCategoryScreen(
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxSize()
-                        .aspectRatio(360f / 161f)
+                        .aspectRatio(360f / 121f)
                 )
                 Column(
                     modifier =
