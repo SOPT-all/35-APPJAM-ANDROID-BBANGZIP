@@ -71,10 +71,12 @@ fun MainNavHost(
 
             onboardingNavGraph(
                 navigateToOnboardingEnd = { navigator.navigateToOnboardingEnd() },
+                popBackStack = { navigator.popBackStackIfNotSubject() },
             )
 
             onboardingEndNavGraph(
                 navigateToSubject = { navigator.navigateToSubject() },
+                popBackStack = { navigator.popBackStackIfNotSubject() },
             )
 
             todoAddNavGraph(
@@ -115,6 +117,7 @@ fun MainNavHost(
 
             addStudyNavGraph(
                 padding = padding,
+                popBackStack = { navigator.popBackStackIfNotSubject() },
                 navigateSplitStudy = { navigator.navigateToSplitStudy(it) },
             )
 
@@ -142,9 +145,10 @@ fun MainNavHost(
                 navigateToAddToDo = { navigator.navigateToToDoAdd() },
                 navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
             )
+
             subjectDetailNavGraph(
                 padding = padding,
-                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                popBackStack = { navigator.popBackStackIfNotSubject() },
                 navigateToModifyMotivation = { id, name -> navigator.navigateToModifyMotivationMessage(id, name) },
                 navigateToModifySubjectName = { id, name -> navigator.navigateToModifySubjectName(id, name) },
                 navigateToAddStudy = { splitStudyData -> navigator.navigateToAddStudy(splitStudyData) },

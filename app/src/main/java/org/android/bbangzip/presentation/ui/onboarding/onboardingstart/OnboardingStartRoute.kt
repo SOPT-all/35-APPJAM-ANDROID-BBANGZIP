@@ -22,6 +22,6 @@ fun OnboardingStartRoute(
     }
 
     OnboardingStartScreen(
-        onClickNextBtn = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickNextBtn) },
+        onClickNextBtn = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickOnboardingNextBtn) },
     )
 }

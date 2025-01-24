@@ -9,7 +9,9 @@ import org.android.bbangzip.presentation.ui.my.bbangzipdetail.BbangZipDetailRout
 fun NavController.navigateBbangZipDetail() {
     navigate(
         route = BbangZipDetailRoute,
-    )
+    ) {
+        launchSingleTop = true
+    }
 }
 
 fun NavGraphBuilder.bbangZipDetailNavGraph(

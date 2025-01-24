@@ -13,9 +13,8 @@ class LoginContract {
         val isOnboardingCompleted: Boolean = false,
         val onBoardingList: List<Int> =
             immutableListOf(
-                R.drawable.img_login1,
-                R.drawable.img_login2,
-                R.drawable.img_login1,
+                R.drawable.img_onboarding_first,
+                R.drawable.img_onboarding_second,
             ),
         val loginState: Boolean = false,
     ) : BaseContract.State, Parcelable {

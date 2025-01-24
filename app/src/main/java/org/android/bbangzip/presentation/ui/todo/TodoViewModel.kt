@@ -223,6 +223,8 @@ class TodoViewModel
                 // 화면 이동
                 TodoContract.TodoEvent.OnAddStudyButtonClicked -> setSideEffect(TodoContract.TodoSideEffect.NavigateToAddToDo)
                 TodoContract.TodoEvent.OnAddPendingStudyButtonClicked -> setSideEffect(TodoContract.TodoSideEffect.NavigateToAddPendingToDo)
+                is TodoContract.TodoEvent.OnClickGetBadgeBottomSheetCloseBtn ->
+                    updateState(TodoContract.TodoReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = false))
             }
         }
 
@@ -321,6 +323,16 @@ class TodoViewModel
                 TodoContract.TodoReduce.ResetSelectedItemList ->
                     state.copy(
                         selectedItemList = listOf(),
+                    )
+
+                is TodoContract.TodoReduce.UpdateGetBadgeList ->
+                    state.copy(
+                        badgeList = reduce.badgeList,
+                    )
+
+                is TodoContract.TodoReduce.UpdateGetBadgeBottomSheetState ->
+                    state.copy(
+                        getBadgeBottomSheetState = !currentUiState.getBadgeBottomSheetState,
                     )
             }
         }
@@ -434,7 +446,11 @@ class TodoViewModel
             postCompleteCardIdUseCase(
                 pieceId = pieceId,
                 requestMarkDoneDto = RequestMarkDoneDto(isFinished = true),
-            ).onSuccess {
+            ).onSuccess { data ->
+                updateState(
+                    TodoContract.TodoReduce.UpdateGetBadgeList(badgeList = data.badgeCardList.map { it.toBadge() }),
+                )
+                updateState(TodoContract.TodoReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = true))
                 Timber.tag("markDone").e("완료 성공!")
             }.onFailure { error ->
                 Timber.tag("markDone").e(error)
