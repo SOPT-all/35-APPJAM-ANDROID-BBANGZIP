@@ -46,6 +46,8 @@ class OnboardingContract {
 
         data object OnClickBackBtn : OnboardingEvent
 
+        data object OnClickBackFromEndBtn : OnboardingEvent
+
         data object OnClickNextBtn : OnboardingEvent
 
         data object OnClickOnboardingNextBtn : OnboardingEvent

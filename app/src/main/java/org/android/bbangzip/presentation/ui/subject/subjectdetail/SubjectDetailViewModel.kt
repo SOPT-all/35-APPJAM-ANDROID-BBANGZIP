@@ -251,13 +251,13 @@ class SubjectDetailViewModel
 
                 is SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeList -> {
                     state.copy(
-                        badgeList = reduce.badgeList
+                        badgeList = reduce.badgeList,
                     )
                 }
 
                 is SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState -> {
                     state.copy(
-                        getBadgeBottomSheetState = !currentUiState.getBadgeBottomSheetState
+                        getBadgeBottomSheetState = !currentUiState.getBadgeBottomSheetState,
                     )
                 }
             }

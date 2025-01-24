@@ -90,7 +90,7 @@ fun SubjectDetailRoute(
                 onRevertCompleteBottomSheetApproveButtonClicked = { pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
                 onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },
                 onClickBadgeCloseBtn = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickGetBadgeBottomSheetCloseBtn) },
-                popBackStack = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickBackIconBtn)}
+                popBackStack = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickBackIconBtn) },
             )
         false ->
             Box(

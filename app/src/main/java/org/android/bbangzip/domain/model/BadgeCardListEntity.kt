@@ -11,9 +11,10 @@ data class BadgeCardEntity(
     val badgeName: String,
     val hashTags: List<String>,
 ) {
-    fun toBadge() = Badge(
-        badgeName = badgeName,
-        badgeImg = badgeImage,
-        hashTags = hashTags
-    )
+    fun toBadge() =
+        Badge(
+            badgeName = badgeName,
+            badgeImg = badgeImage,
+            hashTags = hashTags,
+        )
 }

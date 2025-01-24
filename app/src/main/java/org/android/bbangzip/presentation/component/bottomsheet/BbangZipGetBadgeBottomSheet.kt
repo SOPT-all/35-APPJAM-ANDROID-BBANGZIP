@@ -222,9 +222,10 @@ private fun BadgeDetailContent(
                         .crossfade(enable = true)
                         .build(),
                 contentDescription = null,
-                modifier = Modifier
-                    .clip(shape = RoundedCornerShape(48.dp))
-                    .align(Alignment.CenterHorizontally),
+                modifier =
+                    Modifier
+                        .clip(shape = RoundedCornerShape(48.dp))
+                        .align(Alignment.CenterHorizontally),
             )
 
             Spacer(modifier = Modifier.height(8.dp))

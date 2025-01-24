@@ -140,7 +140,7 @@ class SubjectDetailContract {
                 ),
             ),
         val badgeList: List<Badge> = emptyList(),
-        val getBadgeBottomSheetState: Boolean = false
+        val getBadgeBottomSheetState: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -191,7 +191,7 @@ class SubjectDetailContract {
             val pieceId: Int,
         ) : SubjectDetailEvent
 
-        data object OnClickGetBadgeBottomSheetCloseBtn: SubjectDetailEvent
+        data object OnClickGetBadgeBottomSheetCloseBtn : SubjectDetailEvent
 
         data object OnClickBackIconBtn : SubjectDetailEvent
     }
@@ -226,7 +226,7 @@ class SubjectDetailContract {
 
         data class UpdateExamName(val index: Int) : SubjectDetailReduce
 
-        data class UpdateGetBadgeList(val badgeList: List<Badge>): SubjectDetailReduce
+        data class UpdateGetBadgeList(val badgeList: List<Badge>) : SubjectDetailReduce
 
         data class UpdateGetBadgeBottomSheetState(val getBadgeBottomSheetState: Boolean) : SubjectDetailReduce
     }
@@ -243,6 +243,6 @@ class SubjectDetailContract {
         // 공부 n개가 삭제 되었어요
         data object ShowDeleteSuccessSnackBar : SubjectDetailSideEffect
 
-        data object PopBackStack: SubjectDetailSideEffect
+        data object PopBackStack : SubjectDetailSideEffect
     }
 }

@@ -11,7 +11,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.android.bbangzip.presentation.ui.onboarding.OnboardingContract
 import org.android.bbangzip.presentation.ui.onboarding.OnboardingViewModel
-import org.android.bbangzip.presentation.ui.subject.SubjectContract
 import timber.log.Timber
 
 @Composable

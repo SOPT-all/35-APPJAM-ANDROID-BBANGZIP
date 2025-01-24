@@ -25,6 +25,6 @@ fun OnboardingEndRoute(
 
     OnboardingEndScreen(
         onClickNextBtn = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickFinishBtn) },
-        onBackBtnClick = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickBackBtn) },
+        onBackBtnClick = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickBackFromEndBtn) },
     )
 }

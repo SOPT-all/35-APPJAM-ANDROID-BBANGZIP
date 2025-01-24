@@ -97,7 +97,7 @@ fun SubjectDetailScreen(
     onDefaultCardClicked: (Int) -> Unit = {},
     onCompleteCardClicked: (Int) -> Unit = {},
     onClickBadgeCloseBtn: () -> Unit,
-    popBackStack: () -> Unit
+    popBackStack: () -> Unit,
 ) {
     Timber.tag("김재민").d("SubjectDetailScreen : $subjectName $examName")
     val configuration = LocalConfiguration.current
@@ -331,7 +331,7 @@ fun SubjectDetailScreen(
                 badgeList = state.badgeList,
                 isBottomSheetVisible = state.getBadgeBottomSheetState,
                 onDismissRequest = { onClickBadgeCloseBtn() },
-                onClickCancelButton = { onClickBadgeCloseBtn() }
+                onClickCancelButton = { onClickBadgeCloseBtn() },
             )
         }
     }
@@ -769,6 +769,6 @@ private fun SubjectDetailScreenPreview() {
         examDDay = 14,
         examName = "중간고사",
         onClickBadgeCloseBtn = { },
-        popBackStack = { }
+        popBackStack = { },
     )
 }

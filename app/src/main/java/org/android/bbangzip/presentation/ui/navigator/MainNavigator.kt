@@ -91,7 +91,7 @@ class MainNavigator(
                     inclusive = true
                 }
                 launchSingleTop = true
-            }
+            },
         )
     }
 

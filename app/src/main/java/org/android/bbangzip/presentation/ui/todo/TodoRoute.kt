@@ -117,7 +117,7 @@ fun TodoRoute(
                 },
                 onClickBadgeCloseBtn = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnClickGetBadgeBottomSheetCloseBtn)
-                }
+                },
             )
 
         false ->

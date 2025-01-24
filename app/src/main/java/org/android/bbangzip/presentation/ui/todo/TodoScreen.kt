@@ -71,7 +71,7 @@ fun TodoScreen(
     onItemDeleteButtonClicked: () -> Unit = {},
     onDeleteScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
     onDefaultScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
-    onClickBadgeCloseBtn: () -> Unit
+    onClickBadgeCloseBtn: () -> Unit,
 ) {
     Box(
         modifier =
@@ -277,7 +277,7 @@ fun TodoScreen(
                 badgeList = todoState.badgeList,
                 isBottomSheetVisible = todoState.getBadgeBottomSheetState,
                 onDismissRequest = { onClickBadgeCloseBtn() },
-                onClickCancelButton = { onClickBadgeCloseBtn() }
+                onClickCancelButton = { onClickBadgeCloseBtn() },
             )
         }
     }
@@ -777,6 +777,6 @@ fun TodoScreenMockPreview() {
         todoState = mockTodoStates[2],
         todayDate = listOf("2025", "01", "18"),
         bottomPadding = PaddingValues(),
-        onClickBadgeCloseBtn = {}
+        onClickBadgeCloseBtn = {},
     )
 }

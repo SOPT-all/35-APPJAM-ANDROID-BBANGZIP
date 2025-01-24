@@ -7,7 +7,6 @@ import org.android.bbangzip.presentation.model.Badge
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.type.ToDoScreenType
-import org.android.bbangzip.presentation.ui.subject.subjectdetail.SubjectDetailContract.SubjectDetailEvent
 import org.android.bbangzip.presentation.util.base.BaseContract
 
 class TodoContract {
@@ -135,7 +134,7 @@ class TodoContract {
         val revertCompleteBottomSheetState: Boolean = false,
         val screenType: ToDoScreenType = ToDoScreenType.DEFAULT,
         val badgeList: List<Badge> = emptyList(),
-        val getBadgeBottomSheetState: Boolean = false
+        val getBadgeBottomSheetState: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -188,7 +187,7 @@ class TodoContract {
             val cardState: BbangZipCardState,
         ) : TodoEvent
 
-        data object OnClickGetBadgeBottomSheetCloseBtn: TodoEvent
+        data object OnClickGetBadgeBottomSheetCloseBtn : TodoEvent
     }
 
     sealed interface TodoReduce : BaseContract.Reduce {
@@ -235,7 +234,7 @@ class TodoContract {
 
         data object ResetSelectedItemList : TodoReduce
 
-        data class UpdateGetBadgeList(val badgeList: List<Badge>): TodoReduce
+        data class UpdateGetBadgeList(val badgeList: List<Badge>) : TodoReduce
 
         data class UpdateGetBadgeBottomSheetState(val getBadgeBottomSheetState: Boolean) : TodoReduce
     }

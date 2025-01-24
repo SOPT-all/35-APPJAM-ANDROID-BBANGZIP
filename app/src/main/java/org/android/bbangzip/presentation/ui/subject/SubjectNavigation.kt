@@ -11,7 +11,7 @@ import org.android.bbangzip.presentation.model.SplitStudyData
 fun NavController.navigateSubject(navOptions: NavOptions) {
     navigate(
         route = BottomNavigationRoute.Subject,
-        navOptions = navOptions
+        navOptions = navOptions,
     )
 }
 

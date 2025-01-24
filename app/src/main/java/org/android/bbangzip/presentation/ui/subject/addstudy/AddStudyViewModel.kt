@@ -80,7 +80,6 @@ class AddStudyViewModel
                 }
 
                 AddStudyContract.AddStudyEvent.OnClickBackIcon -> {
-
                 }
                 AddStudyContract.AddStudyEvent.OnClickDatePicker -> {
                     updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
