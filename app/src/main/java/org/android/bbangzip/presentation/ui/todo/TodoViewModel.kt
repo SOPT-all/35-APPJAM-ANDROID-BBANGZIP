@@ -103,7 +103,7 @@ class TodoViewModel
                         ),
                     )
                     updateState(TodoContract.TodoReduce.ResetSelectedItemList)
-                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("미완료 상태로 되돌려졌어요!"))
+                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("미완료 상태로 되돌렸어요!"))
                 }
 
                 TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> {
@@ -170,7 +170,7 @@ class TodoViewModel
                         viewModelScope.launch {
                             postCompleteCardId(pieceId = event.pieceId)
                         }
-                        setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("공부완료 ! 오늘의 빵굽기 성공!"))
+                        setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("공부완료! 오늘의 빵 굽기 성공!"))
                     } else {
                         updateState(
                             TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
