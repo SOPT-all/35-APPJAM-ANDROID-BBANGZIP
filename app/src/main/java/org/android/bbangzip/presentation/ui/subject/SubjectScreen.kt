@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -7,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -21,6 +23,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -75,6 +78,14 @@ fun SubjectScreen(
                             .height(backgroundHeight.dp)
                             .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
                 ) {
+                    Image(
+                        painter = painterResource(R.drawable.img_subject_header),
+                        contentDescription = null,
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .aspectRatio(360f / 220f),
+                    )
                     Row(
                         modifier =
                             modifier
@@ -363,7 +374,7 @@ private fun DeleteCardView(
                     }
                 }
             } else {
-                for (i in 0 until subjects.size / 2 + 1) {
+                for (i in 0 until subjects.size / 2) {
                     Row(
                         modifier =
                             Modifier

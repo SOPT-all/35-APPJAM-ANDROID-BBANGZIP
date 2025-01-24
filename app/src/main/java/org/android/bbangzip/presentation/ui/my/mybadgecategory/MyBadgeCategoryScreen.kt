@@ -1,6 +1,7 @@
 package org.android.bbangzip.presentation.ui.my.mybadgecategory
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -27,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -73,7 +75,7 @@ fun MyBadgeCategoryScreen(
         }
 
         item {
-            Column(
+            Box(
                 modifier =
                     Modifier
                         .fillMaxWidth()
@@ -82,14 +84,28 @@ fun MyBadgeCategoryScreen(
                             shape = RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp),
                         ),
             ) {
-                Text(
-                    text = stringResource(R.string.badge_category_title, "밍밍"),
-                    style = BbangZipTheme.typography.heading2Bold,
-                    color = BbangZipTheme.colors.labelNormal_282119,
+                Image(
+                    painter = painterResource(R.drawable.img_mypage_header),
+                    contentDescription = null,
                     modifier =
                         Modifier
-                            .padding(start = 24.dp, top = 28.dp, bottom = 48.dp),
+                            .fillMaxSize()
+                            .aspectRatio(360f / 121f),
                 )
+                Column(
+                    modifier =
+                        Modifier
+                            .fillMaxWidth(),
+                ) {
+                    Text(
+                        text = stringResource(R.string.badge_category_title, "밍밍"),
+                        style = BbangZipTheme.typography.heading2Bold,
+                        color = BbangZipTheme.colors.labelNormal_282119,
+                        modifier =
+                            Modifier
+                                .padding(start = 24.dp, top = 28.dp, bottom = 48.dp),
+                    )
+                }
             }
 
             Spacer(Modifier.height(48.dp))
