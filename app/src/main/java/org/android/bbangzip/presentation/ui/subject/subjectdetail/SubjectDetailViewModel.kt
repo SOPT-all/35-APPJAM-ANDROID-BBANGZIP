@@ -99,22 +99,17 @@ constructor(
                 Timber.tag("김재민").d("되나?")
                 setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
             }
-                is SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName -> {
-                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
-                }
-                SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
-                is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
-                    Timber.tag("김재민").d("되나?")
-                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
-                }
 
-                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
-                }
+            SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
 
-                is SubjectDetailContract.SubjectDetailEvent.OnClickTab -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
-                }
+            SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+            }
+
+            is SubjectDetailContract.SubjectDetailEvent.OnClickTab -> {
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
+            }
+
             SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
             }
@@ -123,8 +118,6 @@ constructor(
                 Timber.tag("[과목 관리]").d("버튼 클릭")
                 viewModelScope.launch { deleteStudyPiece() }
             }
-
-            is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> TODO()
         }
     }
 
@@ -269,7 +262,7 @@ constructor(
     private suspend fun initData(subjectId: Int) {
         getSubjectDetail(
             subjectId = subjectId,
-            examName = "fin",
+            examName = "mid",
         )
     }
 

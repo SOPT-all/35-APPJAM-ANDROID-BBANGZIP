@@ -141,6 +141,7 @@ class SplitStudyViewModel
 
                 is SplitStudyContract.SplitStudyReduce.InitializeState -> {
                     state.copy(
+                        subjectId = reduce.addStudyData.subjectId,
                         subjectName = reduce.addStudyData.subjectName,
                         startPage = reduce.addStudyData.startPage,
                         examDate = reduce.addStudyData.examDate,
@@ -295,6 +296,7 @@ class SplitStudyViewModel
                         SplitStudyContract.SplitStudySideEffect.NavigateAddStudy(
                             splitStudyData =
                                 SplitStudyData(
+                                    subjectId = event.splitStudyData.subjectId,
                                     subjectName = event.splitStudyData.subjectName,
                                     pieceNumber = event.splitStudyData.pieceNumber,
                                     examDate = event.splitStudyData.examDate,

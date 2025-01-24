@@ -17,6 +17,7 @@ fun AddStudyRoute(
     viewModel: AddStudyViewModel = hiltViewModel(),
     popBackStack: () -> Unit = {},
     navigateSplitStudy: (AddStudyData) -> Unit = {},
+    navigateSubjectDetail: (Int, String) -> Unit = {_, _ -> }
 ) {
     LaunchedEffect(Unit) {
         viewModel.setEvent(AddStudyContract.AddStudyEvent.Initialize(splitStudyData = splitStudyData))
@@ -29,6 +30,7 @@ fun AddStudyRoute(
                     navigateSplitStudy(it.addStudyData)
                 }
                 is AddStudyContract.AddStudySideEffect.PopBackStack -> popBackStack()
+                is AddStudyContract.AddStudySideEffect.NavigateSubjectDetail -> navigateSubjectDetail(it.subjectId, it.subjectName)
             }
         }
     }

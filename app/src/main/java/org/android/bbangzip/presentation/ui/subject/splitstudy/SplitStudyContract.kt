@@ -12,6 +12,7 @@ class SplitStudyContract {
     @Parcelize
     data class SplitStudyState(
         val isSuccess: Boolean = false,
+        val subjectId: Int = 0,
         val subjectName: String = "경제통계학",
         val startPage: String = "",
         val endPage: String = "",

@@ -48,6 +48,7 @@ import timber.log.Timber
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SplitStudyScreen(
+    subjectId: Int = 0,
     pieceNumber: Int = 0,
     subjectName: String,
     startPage: String = "",
@@ -289,6 +290,7 @@ fun SplitStudyScreen(
                         endPageList = endPageList,
                         deadLineList = seletedDateList.map { dateToString(it) },
                         addStudyViewType = AddStudyViewType.AGAIN,
+                        subjectId = subjectId
                     ),
                 )
             },

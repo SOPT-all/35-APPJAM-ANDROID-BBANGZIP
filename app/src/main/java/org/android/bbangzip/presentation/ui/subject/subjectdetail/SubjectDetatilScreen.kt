@@ -111,6 +111,7 @@ fun SubjectDetailScreen(
     var selectedIndex by remember { mutableIntStateOf(0) }
     val splitStudyData =
         SplitStudyData(
+            subjectId = subjectId,
             subjectName = subjectName,
             pieceNumber = 0,
             examDate = "시험 일자 입력",

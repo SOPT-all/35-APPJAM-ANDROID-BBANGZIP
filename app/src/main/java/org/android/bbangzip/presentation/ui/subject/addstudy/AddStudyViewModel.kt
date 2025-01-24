@@ -13,6 +13,8 @@ import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyContract.AddStudyReduce
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.casting.pageToInt
+import org.android.bbangzip.presentation.util.date.addLeadingZero
+import org.android.bbangzip.presentation.util.date.formatDate
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -111,6 +113,7 @@ constructor(
                     AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
                         addStudyData =
                             AddStudyData(
+                                subjectId = currentUiState.subjectId,
                                 subjectName = currentUiState.subjectName,
                                 pieceNumber = event.pieceNumber,
                                 examDate = currentUiState.examDate,
@@ -136,29 +139,6 @@ constructor(
                 AddStudyContract.AddStudyEvent.OnClickCancleIcon -> {
                     updateState(AddStudyReduce.ResetStudyContent)
                 }
-                is AddStudyContract.AddStudyEvent.OnClickPieceNumber -> {
-                    updateState(AddStudyReduce.UpdateAddStudyViewType)
-                    updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
-                    updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
-                    Timber.tag("김재민").d("addstudy에서 보내는 값$currentUiState")
-                    setSideEffect(
-                        AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
-                            addStudyData =
-                                AddStudyData(
-                                    subjectName = currentUiState.subjectName,
-                                    pieceNumber = event.pieceNumber,
-                                    examDate = currentUiState.examDate,
-                                    studyContent = currentUiState.studyContent ?: "",
-                                    startPage = currentUiState.startPage ?: "",
-                                    endPage = currentUiState.endPage ?: "",
-                                    startPageList = if (currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.startPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0, event.pieceNumber),
-                                    endPageList = if (currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.endPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1, event.pieceNumber + 1),
-                                    examName = currentUiState.examName,
-                                ),
-                        ),
-                    )
-                    updateState(AddStudyReduce.UpdateIsSuccess)
-                }
 
             AddStudyContract.AddStudyEvent.OnClickSplitBtn -> {
                 updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
@@ -171,6 +151,7 @@ constructor(
                         AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
                             addStudyData =
                                 AddStudyData(
+                                    subjectId = currentUiState.subjectId,
                                     subjectName = currentUiState.subjectName,
                                     pieceNumber = event.pieceNumber,
                                     examDate = currentUiState.examDate,
@@ -198,6 +179,7 @@ constructor(
             return when (reduce) {
                 is AddStudyReduce.Initialize -> {
                     state.copy(
+                        subjectId = reduce.splitStudyData.subjectId,
                         subjectName = reduce.splitStudyData.subjectName,
                         pieceNumber = reduce.splitStudyData.pieceNumber,
                         examDate = reduce.splitStudyData.examDate,
@@ -212,21 +194,6 @@ constructor(
                         isSuccess = true,
                     )
                 }
-            is AddStudyReduce.Initialize -> {
-                state.copy(
-                    subjectName = reduce.splitStudyData.subjectName,
-                    pieceNumber = reduce.splitStudyData.pieceNumber,
-                    examDate = reduce.splitStudyData.examDate,
-                    studyContent = reduce.splitStudyData.studyContent,
-                    startPage = reduce.splitStudyData.startPage,
-                    endPage = reduce.splitStudyData.endPage,
-                    startPageList = reduce.splitStudyData.startPageList,
-                    endPageList = reduce.splitStudyData.endPageList,
-                    deadLineList = reduce.splitStudyData.deadLineList,
-                    addStudyViewType = reduce.splitStudyData.addStudyViewType,
-                    isSuccess = true,
-                )
-            }
 
             AddStudyReduce.UpdateDatePickerBottomSheetState -> {
                 state.copy(datePickerBottomSheetState = !state.datePickerBottomSheetState)
@@ -405,15 +372,15 @@ constructor(
         viewModelScope.launch {
             postAddStudyUseCase.invoke(
                 AddStudyEntity(
-                    subjectId = 1,
-                    examName = "중간고사",
-                    examDate = currentUiState.examDate,
+                    subjectId = currentUiState.subjectId.toLong(),
+                    examName = currentUiState.examName,
+                    examDate = formatDate(currentUiState.examDate),
                     studyContents = currentUiState.studyContent ?: "",
                     pieceList = currentUiState.startPageList.mapIndexed { index, startPage ->
                         AddStudyEntity.Piece(
-                            startPage = startPage.toIntOrNull() ?: 0,
-                            finishPage = currentUiState.endPageList.getOrNull(index)?.toIntOrNull() ?: 0,
-                            deadline = currentUiState.deadLineList.getOrNull(index) ?: ""
+                            startPage = startPage.filter { it.isDigit() }.toIntOrNull() ?: 0,
+                            finishPage = currentUiState.endPageList[index].filter{it.isDigit()}.toIntOrNull() ?: 0,
+                            deadline = addLeadingZero( currentUiState.deadLineList.getOrNull(index) ?: "")
                         )
                     }
                 )
@@ -421,7 +388,7 @@ constructor(
                 if (data.badgesList.isNotEmpty()) {
 
                 }
-                setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
+                setSideEffect(AddStudyContract.AddStudySideEffect.NavigateSubjectDetail(currentUiState.subjectId, currentUiState.subjectName))
             }.onFailure {
                 Timber.tag("[공부 추가하기]").d(error.toString())
             }

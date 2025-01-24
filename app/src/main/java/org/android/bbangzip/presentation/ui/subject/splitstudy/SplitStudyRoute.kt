@@ -37,6 +37,7 @@ fun SplitStudyRoute(
 
     if (splitStudyState.isSuccess) {
         SplitStudyScreen(
+            subjectId = splitStudyState.subjectId,
             pieceNumber = splitStudyState.pieceNumber,
             subjectName = splitStudyState.subjectName,
             examDate = splitStudyState.examDate,

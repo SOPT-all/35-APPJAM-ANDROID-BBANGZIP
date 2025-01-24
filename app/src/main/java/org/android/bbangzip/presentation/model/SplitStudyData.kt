@@ -8,6 +8,7 @@ import org.android.bbangzip.presentation.type.AddStudyViewType
 @Serializable
 @Parcelize
 data class SplitStudyData(
+    val subjectId: Int,
     val subjectName: String,
     val pieceNumber: Int,
     val examDate: String,
