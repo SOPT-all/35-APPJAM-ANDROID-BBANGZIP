@@ -94,13 +94,10 @@ class SubjectDetailViewModel
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
                 }
 
-                SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
                 is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
                     Timber.tag("김재민").d("되나?")
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
                 }
-
-                SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
 
                 SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
@@ -282,6 +279,12 @@ class SubjectDetailViewModel
                         getBadgeBottomSheetState = !currentUiState.getBadgeBottomSheetState,
                     )
                 }
+
+                is SubjectDetailContract.SubjectDetailReduce.DeleteStudyPiece -> {
+                    state.copy(
+                        todoList = state.todoList.filter { !reduce.studyPieceId.contains(it.pieceId) },
+                    )
+                }
             }
         }
 
@@ -369,6 +372,7 @@ class SubjectDetailViewModel
                     ),
             ).onSuccess {
                 Timber.tag("[과목 관리]").d("통신 성공")
+                updateState(SubjectDetailContract.SubjectDetailReduce.DeleteStudyPiece(currentUiState.selectedItemSet))
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
             }.onFailure {
                 Timber.tag("[과목 관리]").d("$error")
