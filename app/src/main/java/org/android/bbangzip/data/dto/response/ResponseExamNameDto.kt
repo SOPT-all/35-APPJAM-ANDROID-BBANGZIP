@@ -12,7 +12,7 @@ data class ResponseExamNameDto(
     @SerialName("examDday")
     val examDday: Int,
     @SerialName("motivationMessage")
-    val motivationMessage: String,
+    val motivationMessage: String?,
     @SerialName("studyList")
     val studyList: List<StudyInfo>,
 ) {
@@ -20,7 +20,7 @@ data class ResponseExamNameDto(
         SubjectDetailInfoEntity(
             examDate = examDate,
             examDday = examDday,
-            motivationMessage = motivationMessage,
+            motivationMessage = motivationMessage ?: "",
             todoList = studyList.map { it.toToDoCardEntity() },
         )
 }

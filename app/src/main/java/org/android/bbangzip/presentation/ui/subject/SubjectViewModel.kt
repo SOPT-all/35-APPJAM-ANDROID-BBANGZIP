@@ -130,7 +130,6 @@ class SubjectViewModel
                 }
 
                 is SubjectContract.SubjectReduce.UpdateSubjectCardList -> {
-                    Timber.tag("이승범").d("뭐가 문제야%s", reduce.subjectList.toString())
                     state.copy(
                         subjectList = reduce.subjectList,
                     )

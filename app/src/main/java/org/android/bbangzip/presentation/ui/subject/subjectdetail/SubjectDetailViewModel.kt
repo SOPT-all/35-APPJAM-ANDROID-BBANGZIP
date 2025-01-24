@@ -229,6 +229,14 @@ class SubjectDetailViewModel
                         isMenuOpen = !state.isMenuOpen,
                     )
                 }
+
+                SubjectDetailContract.SubjectDetailReduce.UpdateToEmptyView -> {
+                    state.copy(
+                        pieceViewType =  PieceViewType.EMPTY,
+                    )
+                }
+
+
             }
         }
 
@@ -271,6 +279,10 @@ class SubjectDetailViewModel
                             ),
                     ),
                 )
+                if(subjectDetailInfoEntity.examDday == -999) {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToEmptyView)
+                    Timber.tag("subject").d("${subjectDetailInfoEntity.examDday}")
+                }
             }.onFailure { error ->
                 Timber.tag("getSubjectDetail").e(error)
             }

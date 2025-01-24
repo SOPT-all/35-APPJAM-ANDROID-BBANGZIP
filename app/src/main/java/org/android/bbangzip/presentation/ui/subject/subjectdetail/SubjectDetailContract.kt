@@ -212,6 +212,8 @@ class SubjectDetailContract {
         data class UpdateSelectedId(val pieceId: Int) : SubjectDetailReduce
 
         data object UpdateIsMenuOpen : SubjectDetailReduce
+
+        data object UpdateToEmptyView : SubjectDetailReduce
     }
 
     sealed interface SubjectDetailSideEffect : BaseContract.SideEffect {

@@ -46,28 +46,28 @@ fun SubjectCard(
     val width = (LocalConfiguration.current.screenWidthDp - 48) / 2
     Box(
         modifier =
-            modifier
-                .applyShadows(
-                    shadowType = data.state.getShadowOptions(),
-                    shape = RoundedCornerShape(radius),
-                )
-                .border(
-                    width = data.state.getBorderWidth(),
-                    color = data.state.getBorderColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .width(width = width.dp)
-                .aspectRatio(156 / 190f)
-                .background(
-                    color = data.state.getBackgroundColor(),
-                    shape = RoundedCornerShape(size = radius),
-                )
-                .applyFilterOnClick(
-                    baseColor = data.state.getBackgroundColor(),
-                    isDisabled = false,
-                    radius = radius,
-                ) { onClick(data.subjectId, data.subjectName) }
-                .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
+        modifier
+            .applyShadows(
+                shadowType = data.state.getShadowOptions(),
+                shape = RoundedCornerShape(radius),
+            )
+            .border(
+                width = data.state.getBorderWidth(),
+                color = data.state.getBorderColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .width(width = width.dp)
+            .aspectRatio(156 / 190f)
+            .background(
+                color = data.state.getBackgroundColor(),
+                shape = RoundedCornerShape(size = radius),
+            )
+            .applyFilterOnClick(
+                baseColor = data.state.getBackgroundColor(),
+                isDisabled = false,
+                radius = radius,
+            ) { onClick(data.subjectId, data.subjectName) }
+            .padding(end = 8.dp, start = 16.dp, top = 16.dp, bottom = 16.dp),
     ) {
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -107,17 +107,23 @@ fun SubjectInfo(
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        Text(
-            text = data.examName.ifEmpty { "공부를 추가해주세요" },
-            style = BbangZipTheme.typography.label2Bold,
-            color = BbangZipTheme.colors.labelNeutral_282119_88,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
+        if (data.examName.isEmpty() || data.examRemainingDays == -999) {
+            Text(
+                text = "공부를 추가해주세요",
+                style = BbangZipTheme.typography.label2Bold,
+                color = BbangZipTheme.colors.labelNeutral_282119_88,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        } else {
+            Text(
+                text = data.examName,
+                style = BbangZipTheme.typography.label2Bold,
+                color = BbangZipTheme.colors.labelNeutral_282119_88,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
 
-        data.examName.ifEmpty { Gap() }
-
-        if (data.examName.isNotEmpty()) {
             Gap(height = 4)
 
             BbangZipChip(
@@ -153,41 +159,41 @@ fun SubjectCardPreview() {
         Column {
             SubjectCard(
                 data =
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                        state = BbangZipCardState.DEFAULT,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                    state = BbangZipCardState.DEFAULT,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
                 data =
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                        state = BbangZipCardState.CHECKED,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 경제통계학",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                    state = BbangZipCardState.CHECKED,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
             SubjectCard(
                 data =
-                    SubjectCardModel(
-                        subjectName = "[경영] 해ㅜ저해줘재훠재헞",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                        state = BbangZipCardState.CHECKABLE,
-                    ),
+                SubjectCardModel(
+                    subjectName = "[경영] 해ㅜ저해줘재훠재헞",
+                    examName = "중간고사",
+                    pendingCount = 0,
+                    inProgressCount = 6,
+                    subjectId = 1,
+                    examRemainingDays = 1,
+                    state = BbangZipCardState.CHECKABLE,
+                ),
                 modifier = Modifier.padding(16.dp),
             )
         }
