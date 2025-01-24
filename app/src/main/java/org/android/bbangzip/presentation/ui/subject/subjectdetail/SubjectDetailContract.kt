@@ -222,6 +222,7 @@ class SubjectDetailContract {
 
         data class NavigateToModifySubjectName(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
 
+        //공부 n개가 삭제 되었어요
         data object ShowDeleteSuccessSnackBar : SubjectDetailSideEffect
     }
 }

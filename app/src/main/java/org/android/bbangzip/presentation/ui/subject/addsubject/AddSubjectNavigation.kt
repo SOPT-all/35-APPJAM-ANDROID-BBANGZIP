@@ -17,7 +17,7 @@ fun NavGraphBuilder.addSubjectNavGraph(
 ) {
     composable<AddSubjectRoute>{
         AddSubjectRoute(
-            navigateSubject = navigateSubject
+            navigateSubjectDetail = navigateSubject
         )
     }
 }

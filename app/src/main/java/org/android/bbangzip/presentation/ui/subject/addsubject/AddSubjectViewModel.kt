@@ -32,7 +32,7 @@ constructor(
             }
 
             AddSubjectContract.AddSubjectEvent.OnClickAddBtn -> {
-                setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigationSubject)
+                setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateSubjectDetail)
             }
 
             is AddSubjectContract.AddSubjectEvent.OnFocusTextField -> {
