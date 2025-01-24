@@ -8,7 +8,9 @@ import kotlinx.serialization.Serializable
 fun NavController.navigateLogin() {
     navigate(
         route = LoginRoute,
-    )
+    ) {
+        launchSingleTop = true
+    }
 }
 
 fun NavGraphBuilder.loginNavGraph(

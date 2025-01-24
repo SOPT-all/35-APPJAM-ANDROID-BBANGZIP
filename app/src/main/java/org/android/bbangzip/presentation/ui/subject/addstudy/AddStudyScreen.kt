@@ -96,6 +96,7 @@ fun AddStudyScreen(
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
             title = subjectTitle,
         )
+
         Column(
             modifier =
                 Modifier

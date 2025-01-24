@@ -1,6 +1,7 @@
 package org.android.bbangzip.data.repositoryImpl.local
 
 import kotlinx.coroutines.flow.Flow
+import org.android.bbangzip.BadgeInfo
 import org.android.bbangzip.OnboardingInfo
 import org.android.bbangzip.UserPreferences
 import org.android.bbangzip.data.datasource.local.UserLocalDataSource
@@ -100,6 +101,41 @@ class UserLocalRepositoryImpl
                 userData
                     .toBuilder()
                     .clearOnboardingInfo()
+                    .build()
+            }
+        }
+
+        override suspend fun setIsBadgeAvailable(isBadgeAvailable: Boolean) {
+            userDataSource.updateUserPreferences { userData ->
+                userData.toBuilder()
+                    .setIsBadgeAvailable(isBadgeAvailable)
+                    .build()
+            }
+        }
+
+        override suspend fun setIsOnOnboardingDone(isOnboardingDone: Boolean) {
+            userDataSource.updateUserPreferences { userData ->
+                userData.toBuilder()
+                    .setIsOnboardingDone(isOnboardingDone)
+                    .build()
+            }
+        }
+
+        override suspend fun setBadgeInfo(
+            badgeName: String,
+            badgeImage: String,
+            hashTags: List<String>,
+        ) {
+            userDataSource.updateUserPreferences { userData ->
+                val badgeInfo =
+                    BadgeInfo.newBuilder()
+                        .setBadgeName(badgeName)
+                        .setBadgeImage(badgeImage)
+                        .addAllHashTags(hashTags)
+                        .build()
+
+                userData.toBuilder()
+                    .addBadges(badgeInfo)
                     .build()
             }
         }

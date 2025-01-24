@@ -9,12 +9,14 @@ import org.android.bbangzip.presentation.ui.onboarding.OnboardingViewModel
 
 @Composable
 fun OnboardingEndRoute(
+    popBackStack: () -> Unit,
     navigateToSubject: () -> Unit,
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest {
             when (it) {
+                is OnboardingContract.OnboardingSideEffect.PopBackStack -> popBackStack()
                 is OnboardingContract.OnboardingSideEffect.NavigateToSubject -> navigateToSubject()
                 else -> Unit
             }
@@ -23,6 +25,6 @@ fun OnboardingEndRoute(
 
     OnboardingEndScreen(
         onClickNextBtn = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickFinishBtn) },
-        onBackBtnClick = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickBackBtn) },
+        onBackBtnClick = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickBackFromEndBtn) },
     )
 }

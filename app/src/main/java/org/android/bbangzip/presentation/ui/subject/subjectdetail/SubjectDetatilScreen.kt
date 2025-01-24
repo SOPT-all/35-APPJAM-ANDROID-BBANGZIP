@@ -47,6 +47,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.bottomsheet.BbangZipBasicModalBottomSheet
+import org.android.bbangzip.presentation.component.bottomsheet.BbangZipGetBadgeBottomSheet
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.component.card.ToDoCard
@@ -68,6 +69,7 @@ import timber.log.Timber
 @Composable
 fun SubjectDetailScreen(
     padding: PaddingValues,
+    state: SubjectDetailContract.SubjectDetailState,
     isMenuOpen: Boolean,
     todoList: List<ToDoCardModel>,
     pieceViewType: PieceViewType,
@@ -94,6 +96,8 @@ fun SubjectDetailScreen(
     onClickAddStudy: (SplitStudyData) -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit = {},
     onCompleteCardClicked: (Int) -> Unit = {},
+    onClickBadgeCloseBtn: () -> Unit,
+    popBackStack: () -> Unit,
 ) {
     Timber.tag("김재민").d("SubjectDetailScreen : $subjectName $examName")
     val configuration = LocalConfiguration.current
@@ -240,6 +244,7 @@ fun SubjectDetailScreen(
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 trailingIcon = R.drawable.ic_menu_kebab_default_24,
                 onTrailingIconClick = { onClickKebabMenu() },
+                onLeadingIconClick = { popBackStack() },
                 title = subjectName,
             )
             if (isMenuOpen) {
@@ -325,6 +330,15 @@ fun SubjectDetailScreen(
             onClickInteractButton = onRevertCompleteBottomSheetApproveButtonClicked,
             onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
         )
+
+        if (state.badgeList.isNotEmpty()) {
+            BbangZipGetBadgeBottomSheet(
+                badgeList = state.badgeList,
+                isBottomSheetVisible = state.getBadgeBottomSheetState,
+                onDismissRequest = { onClickBadgeCloseBtn() },
+                onClickCancelButton = { onClickBadgeCloseBtn() },
+            )
+        }
     }
 }
 
@@ -749,6 +763,7 @@ fun RevertCompleteBottomSheet(
 private fun SubjectDetailScreenPreview() {
     SubjectDetailScreen(
         padding = PaddingValues(64.dp),
+        state = SubjectDetailContract.SubjectDetailState(),
         todoList = emptyList(),
         pieceViewType = PieceViewType.DEFAULT,
         deletedSet = emptySet(),
@@ -761,5 +776,7 @@ private fun SubjectDetailScreenPreview() {
         examDate = "2025년 1월 1일",
         examDDay = 14,
         examName = "중간고사",
+        onClickBadgeCloseBtn = { },
+        popBackStack = { },
     )
 }

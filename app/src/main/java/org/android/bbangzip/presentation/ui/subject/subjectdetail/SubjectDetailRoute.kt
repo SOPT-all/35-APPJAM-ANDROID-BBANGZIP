@@ -21,7 +21,7 @@ fun SubjectDetailRoute(
     padding: PaddingValues,
     subjectId: Int,
     subjectName: String,
-    navigateToBack: () -> Unit,
+    popBackStack: () -> Unit,
     navigateToModifyMotivation: (Int, String) -> Unit,
     navigateToModifySubjectName: (Int, String) -> Unit,
     navigateToAddStudy: (SplitStudyData) -> Unit,
@@ -52,12 +52,17 @@ fun SubjectDetailRoute(
                 is SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName -> {
                     navigateToModifySubjectName(effect.subjectId, effect.subjectName)
                 }
+
+                is SubjectDetailContract.SubjectDetailSideEffect.PopBackStack -> {
+                    popBackStack()
+                }
             }
         }
     }
 
     SubjectDetailScreen(
         padding = padding,
+        state = subjectDetailState,
         isMenuOpen = subjectDetailState.isMenuOpen,
         todoList = subjectDetailState.todoList,
         pieceViewType = subjectDetailState.pieceViewType,
@@ -84,11 +89,14 @@ fun SubjectDetailRoute(
         onRevertCompleteBottomSheetDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest) },
         onRevertCompleteBottomSheetApproveButtonClicked = { pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
         onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },
+        onClickBadgeCloseBtn = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickGetBadgeBottomSheetCloseBtn) },
+        popBackStack = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickBackIconBtn) },
     )
     when (success) {
         true ->
             SubjectDetailScreen(
                 padding = padding,
+                state = subjectDetailState,
                 isMenuOpen = subjectDetailState.isMenuOpen,
                 todoList = subjectDetailState.todoList,
                 pieceViewType = subjectDetailState.pieceViewType,
@@ -113,6 +121,8 @@ fun SubjectDetailRoute(
                 onRevertCompleteBottomSheetDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest) },
                 onRevertCompleteBottomSheetApproveButtonClicked = { pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
                 onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },
+                onClickBadgeCloseBtn = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickGetBadgeBottomSheetCloseBtn) },
+                popBackStack = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickBackIconBtn) },
             )
         false ->
             Box(
