@@ -39,6 +39,7 @@ class AddStudyContract {
         val addStudyViewType: AddStudyViewType = AddStudyViewType.DEFAULT,
         val isSuccess: Boolean = false,
         val getBadgeBottomSheetState: Boolean = false,
+        val isDatePickerEnabled: Boolean = true,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }

@@ -118,7 +118,7 @@ fun SubjectDetailScreen(
             subjectId = subjectId,
             subjectName = subjectName,
             pieceNumber = 0,
-            examDate = "시험 일자 입력",
+            examDate = examDate.ifEmpty { "시험 일자 입력" },
             examName = examName,
             studyContent = "",
             startPage = "",

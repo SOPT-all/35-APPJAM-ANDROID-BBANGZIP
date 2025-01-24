@@ -15,6 +15,7 @@ import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.casting.pageToInt
 import org.android.bbangzip.presentation.util.date.addLeadingZero
 import org.android.bbangzip.presentation.util.date.formatDate
+import org.android.bbangzip.presentation.util.date.formatHyponDate
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -191,7 +192,8 @@ class AddStudyViewModel
                         subjectId = reduce.splitStudyData.subjectId,
                         subjectName = reduce.splitStudyData.subjectName,
                         pieceNumber = reduce.splitStudyData.pieceNumber,
-                        examDate = reduce.splitStudyData.examDate,
+                        examDate = if(reduce.splitStudyData.examDate=="Not Scheduled") "시험 일자 입력" else {if(reduce.splitStudyData.examDate.last() == '일') reduce.splitStudyData.examDate else formatHyponDate(reduce.splitStudyData.examDate)
+                        },
                         examName = reduce.splitStudyData.examName,
                         studyContent = reduce.splitStudyData.studyContent,
                         startPage = reduce.splitStudyData.startPage,
@@ -200,6 +202,7 @@ class AddStudyViewModel
                         endPageList = reduce.splitStudyData.endPageList,
                         deadLineList = reduce.splitStudyData.deadLineList,
                         addStudyViewType = reduce.splitStudyData.addStudyViewType,
+                        isDatePickerEnabled = reduce.splitStudyData.examDate=="Not Scheduled",
                         isSuccess = true,
                     )
                 }
