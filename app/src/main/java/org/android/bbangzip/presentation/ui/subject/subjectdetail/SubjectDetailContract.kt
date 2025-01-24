@@ -2,7 +2,6 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
-import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.Badge
 import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.model.SubjectDetailInfo
