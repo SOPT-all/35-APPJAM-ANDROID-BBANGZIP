@@ -3,7 +3,6 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.viewmodel.compose.viewModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
@@ -36,13 +35,13 @@ constructor(
         return savedState as? SubjectDetailContract.SubjectDetailState ?: SubjectDetailContract.SubjectDetailState()
     }
 
-        override fun handleEvent(event: SubjectDetailContract.SubjectDetailEvent) {
-            when (event) {
-                is SubjectDetailContract.SubjectDetailEvent.Initialize ->
-                    launch {
-                        updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData(event.subjectId, event.subjectName))
-                        initData(event.subjectId)
-                    }
+    override fun handleEvent(event: SubjectDetailContract.SubjectDetailEvent) {
+        when (event) {
+            is SubjectDetailContract.SubjectDetailEvent.Initialize ->
+                launch {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData(event.subjectId, event.subjectName))
+                    initData(event.subjectId)
+                }
 
             is SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked -> {
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDeleteMode)
@@ -52,10 +51,10 @@ constructor(
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
             }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteModeCardState(event.pieceId))
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet(event.pieceId))
-                }
+            is SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked -> {
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteModeCardState(event.pieceId))
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet(event.pieceId))
+            }
 
             is SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked -> {
                 viewModelScope.launch {
@@ -87,21 +86,23 @@ constructor(
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
             }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage -> {
-                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifyMotivation(subjectId = event.subjectId, subjectName = event.subjectName))
-                }
+            is SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage -> {
+                setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifyMotivation(subjectId = event.subjectId, subjectName = event.subjectName))
+            }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName -> {
-                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
-                }
-                SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
-                SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
-                    // Todo
-                }
+            is SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName -> {
+                setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
+            }
 
-                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
-                }
+            SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
+            SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
+                // Todo
+            }
+
+            SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+            }
+
             is SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {
                 Timber.tag("[과목 관리]").d("버튼 클릭")
                 viewModelScope.launch { deleteStudyPiece() }
@@ -224,30 +225,22 @@ constructor(
                 )
             }
 
-                is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData -> {
-                    state.copy(
-                        subjectId = reduce.subjectId,
-                        subjectName = reduce.subjectName,
-                    )
-                }
-            is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectId -> {
+            is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData -> {
                 state.copy(
                     subjectId = reduce.subjectId,
+                    subjectName = reduce.subjectName,
                 )
             }
 
-                is SubjectDetailContract.SubjectDetailReduce.DeleteSelectedItemSet -> {
-                    state
-                }
-
-                SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
-                    state.copy(
-                        isMenuOpen = !state.isMenuOpen,
-                    )
-                }
+            is SubjectDetailContract.SubjectDetailReduce.DeleteSelectedItemSet -> {
+                state
             }
-        }
-            else -> state
+
+            is SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
+                state.copy(
+                    isMenuOpen = !state.isMenuOpen,
+                )
+            }
         }
     }
 
@@ -322,16 +315,16 @@ constructor(
     }
 
     private suspend fun deleteStudyPiece() {
-            deleteStudyPieceUseCase(
-                pieceIdEntity = PieceIdEntity(
-                    piece = currentUiState.selectedItemSet.map { it }
-                )
-            ).onSuccess {
-                Timber.tag("[과목 관리]").d("통신 성공")
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
-            }.onFailure {
-                Timber.tag("[과목 관리]").d("$error")
-                Timber.tag("[과목 관리]").d("통신 실패")
-            }
+        deleteStudyPieceUseCase(
+            pieceIdEntity = PieceIdEntity(
+                piece = currentUiState.selectedItemSet.map { it }
+            )
+        ).onSuccess {
+            Timber.tag("[과목 관리]").d("통신 성공")
+            updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
+        }.onFailure {
+            Timber.tag("[과목 관리]").d("$error")
+            Timber.tag("[과목 관리]").d("통신 실패")
         }
+    }
 }
