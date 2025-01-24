@@ -106,6 +106,10 @@ class SubjectDetailViewModel
                 is SubjectDetailContract.SubjectDetailEvent.OnClickGetBadgeBottomSheetCloseBtn -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = false))
                 }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickBackIconBtn -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.PopBackStack)
+                }
             }
         }
 
