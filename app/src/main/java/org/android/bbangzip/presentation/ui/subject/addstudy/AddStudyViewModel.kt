@@ -79,7 +79,9 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateSelectedDate(date = event.selectedDate))
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickBackIcon -> { }
+                AddStudyContract.AddStudyEvent.OnClickBackIcon -> {
+
+                }
                 AddStudyContract.AddStudyEvent.OnClickDatePicker -> {
                     updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
                 }
