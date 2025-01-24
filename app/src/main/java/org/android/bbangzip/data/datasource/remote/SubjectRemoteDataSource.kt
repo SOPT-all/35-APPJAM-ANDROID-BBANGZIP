@@ -6,7 +6,11 @@ import org.android.bbangzip.data.util.base.BaseResponse
 import javax.inject.Inject
 
 class SubjectRemoteDataSource
-    @Inject
-    constructor(private val subjectService: SubjectService) {
-        suspend fun getSubjectInfo(): BaseResponse<ResponseSubjectFilterDto?> = subjectService.getSubjectInfo()
-    }
+@Inject
+constructor(private val subjectService: SubjectService) {
+    suspend fun getSubjectInfo(): BaseResponse<ResponseSubjectFilterDto?> = subjectService.getSubjectInfo()
+
+    suspend fun postSubjectName(): BaseResponse<Unit?> = subjectService.postSubjectName()
+
+    suspend fun deleteSubjects(): BaseResponse<Unit?> = subjectService.deleteSubjects()
+}
