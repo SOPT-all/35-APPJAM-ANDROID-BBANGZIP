@@ -96,7 +96,8 @@ fun SubjectDetailScreen(
     onClickAddStudy: (SplitStudyData) -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit = {},
     onCompleteCardClicked: (Int) -> Unit = {},
-    onClickBadgeCloseBtn: () -> Unit
+    onClickBadgeCloseBtn: () -> Unit,
+    popBackStack: () -> Unit
 ) {
     Timber.tag("김재민").d("SubjectDetailScreen : $subjectName $examName")
     val configuration = LocalConfiguration.current
@@ -240,6 +241,7 @@ fun SubjectDetailScreen(
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 trailingIcon = R.drawable.ic_menu_kebab_default_24,
                 onTrailingIconClick = { onClickKebabMenu() },
+                onLeadingIconClick = { popBackStack() },
                 title = subjectName,
             )
             if (isMenuOpen) {
@@ -766,6 +768,7 @@ private fun SubjectDetailScreenPreview() {
         examDate = "2025년 1월 1일",
         examDDay = 14,
         examName = "중간고사",
-        onClickBadgeCloseBtn = { }
+        onClickBadgeCloseBtn = { },
+        popBackStack = { }
     )
 }

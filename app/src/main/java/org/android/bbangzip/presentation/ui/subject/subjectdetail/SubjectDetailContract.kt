@@ -192,6 +192,8 @@ class SubjectDetailContract {
         ) : SubjectDetailEvent
 
         data object OnClickGetBadgeBottomSheetCloseBtn: SubjectDetailEvent
+
+        data object OnClickBackIconBtn : SubjectDetailEvent
     }
 
     sealed interface SubjectDetailReduce : BaseContract.Reduce {
