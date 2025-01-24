@@ -179,6 +179,12 @@ class AddStudyViewModel
                 AddStudyContract.AddStudyEvent.OnClickAddStudyBtn -> {
                     postAddStudy()
                 }
+
+                AddStudyContract.AddStudyEvent.OnClickDirectEnrollBtn -> {
+                    updateState(AddStudyReduce.UpdatePieceList)
+                    Timber.tag("김재민").d("자고싶당 : $currentUiState")
+                    postAddStudy()
+                }
             }
         }
 
@@ -367,6 +373,14 @@ class AddStudyViewModel
                             } else {
                                 "까지"
                             },
+                    )
+                }
+
+                AddStudyReduce.UpdatePieceList -> {
+                    state.copy(
+                        startPageList = listOf(currentUiState.startPage!!),
+                        endPageList = listOf(currentUiState.endPage!!),
+                        deadLineList = listOf(formatDate(currentUiState.examDate))
                     )
                 }
             }

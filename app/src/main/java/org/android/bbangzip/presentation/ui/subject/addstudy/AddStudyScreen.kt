@@ -38,6 +38,7 @@ import org.android.bbangzip.presentation.model.Date
 import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
+import org.android.bbangzip.presentation.type.PieceViewType
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -80,6 +81,7 @@ fun AddStudyScreen(
     onClickConfirmDateBtn: () -> Unit = {},
     onClickAgainSplitBtn: (Int) -> Unit = {},
     onClickAddStudyBtn: () -> Unit = {},
+    onClickDirectEnrollBtn: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -197,6 +199,8 @@ fun AddStudyScreen(
                         endPageTextFieldState = endPageTextFieldState,
                         startGuideline = startGuideline,
                         endGuideline = endGuideline,
+                        addStudyViewType = addStudyViewType,
+                        onClickDirectEnrollBtn = onClickDirectEnrollBtn
                     )
                 }
 
@@ -223,7 +227,7 @@ fun AddStudyScreen(
             BbangZipButton(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
-                onClick = { onClickAddStudyBtn() },
+                onClick = { if(addStudyViewType == AddStudyViewType.DEFAULT) onClickDirectEnrollBtn() else onClickAddStudyBtn() },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_enroll_study_label),
                 trailingIcon = R.drawable.ic_plus_thick_24,
@@ -265,9 +269,11 @@ private fun DefaultRangeView(
     endPageTextFieldState: BbangZipTextFieldInputState,
     endGuideline: String,
     endPage: String,
+    addStudyViewType: AddStudyViewType,
     onChangeEndPage: (String) -> Unit,
     onChangeEndPageFocused: (Boolean) -> Unit,
     onClickSplitBtn: () -> Unit,
+    onClickDirectEnrollBtn: () -> Unit,
     isSplitBtnEnable: Boolean,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {

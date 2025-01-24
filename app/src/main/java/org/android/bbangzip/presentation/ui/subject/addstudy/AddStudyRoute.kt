@@ -74,6 +74,7 @@ fun AddStudyRoute(
             onClickAgainSplitBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAgainSplitBtn(it)) },
             onClickAddStudyBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAddStudyBtn) },
             onClickBackIcon = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickBackIcon) },
+            onClickDirectEnrollBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickDirectEnrollBtn) },
         )
     }
 }
