@@ -191,7 +191,7 @@ fun AddStudyScreen(
                         onChangeEndPage = onChangeEndPage,
                         onChangeEndPageFocused = onChangeEndPageFocused,
                         onClickSplitBtn = onClickSplitBtn,
-                        isSplitBtnEnable = isSplitBtnEnable,
+                        isSplitBtnEnable = isButtonEnable,
                         startPageTextFieldState = startPageTextFieldState,
                         endPageTextFieldState = endPageTextFieldState,
                         startGuideline = startGuideline,
@@ -204,7 +204,7 @@ fun AddStudyScreen(
                         focusManager = focusManager,
                         pieceNumber = pieceNumber,
                         onClickSplitBtn = onClickAgainSplitBtn,
-                        isSplitBtnEnable = isSplitBtnEnable,
+                        isSplitBtnEnable = isButtonEnable,
                     )
                 }
             }
@@ -226,7 +226,7 @@ fun AddStudyScreen(
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_enroll_study_label),
                 trailingIcon = R.drawable.ic_plus_thick_24,
-                isEnable = isSplitBtnEnable,
+                isEnable = isButtonEnable,
             )
         }
 

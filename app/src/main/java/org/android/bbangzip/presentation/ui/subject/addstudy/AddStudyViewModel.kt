@@ -73,6 +73,7 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateStudyContent(studyContent = event.studyContent))
                     updateState(AddStudyReduce.UpdateStudyContentInputState)
                 }
+
                 is AddStudyContract.AddStudyEvent.OnChangeStudyContentFocused -> {
                     updateState(AddStudyReduce.UpdateStudyContentFocusedState(studyContentFocusedState = event.studyContentFocusedState))
                     updateState(AddStudyReduce.UpdateStudyContentInputState)
@@ -89,9 +90,6 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateSelectedDate(date = event.selectedDate))
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickBackIcon -> {
-                    setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
-                }
                 AddStudyContract.AddStudyEvent.OnClickDatePicker -> {
                     updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
                 }
@@ -111,6 +109,7 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
                     updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
                     Timber.tag("김재민").d("addstudy에서 보내는 값$currentUiState")
+                    setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
                     setSideEffect(
                         AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
                             addStudyData =
@@ -132,7 +131,9 @@ class AddStudyViewModel
                 }
 
                 AddStudyContract.AddStudyEvent.OnClickBackIcon -> {
+                    setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
                 }
+
                 AddStudyContract.AddStudyEvent.OnClickDatePicker -> {
                     updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
                 }
@@ -154,6 +155,7 @@ class AddStudyViewModel
                 is AddStudyContract.AddStudyEvent.OnClickAgainSplitBtn -> {
                     updateState(AddStudyReduce.UpdateAddStudyViewType)
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
+                    setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
                     setSideEffect(
                         AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
                             addStudyData =
@@ -286,9 +288,9 @@ class AddStudyViewModel
                                 ""
                             } else {
                                 if (state.startPageFocusedState) {
-                                    state.startPage.filter { it.isDigit() }.toInt().toString()
+                                    state.startPage.filter { it.isDigit() }
                                 } else {
-                                    state.startPage.toInt().toString() + "p"
+                                    state.startPage + "p"
                                 }
                             },
                     )
@@ -301,9 +303,9 @@ class AddStudyViewModel
                                 ""
                             } else {
                                 if (state.endPageFocusedState) {
-                                    state.endPage.filter { it.isDigit() }.toInt().toString()
+                                    state.endPage.filter { it.isDigit() }
                                 } else {
-                                    state.endPage.toInt().toString() + "p"
+                                    state.endPage + "p"
                                 }
                             },
                     )

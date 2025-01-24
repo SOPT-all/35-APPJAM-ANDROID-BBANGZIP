@@ -35,7 +35,6 @@ fun NavGraphBuilder.subjectDetailNavGraph(
             subjectId = backStackEntry.toRoute<SubjectDetailRoute>().subjectId,
             subjectName = backStackEntry.toRoute<SubjectDetailRoute>().subjectName,
             popBackStack = popBackStack,
-            navigateToSubject = navigateToSubject,
             navigateToModifyMotivation = navigateToModifyMotivation,
             navigateToModifySubjectName = navigateToModifySubjectName,
             navigateToAddStudy = navigateToAddStudy,

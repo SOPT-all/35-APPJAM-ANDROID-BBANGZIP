@@ -24,6 +24,7 @@ fun SplitStudyRoute(
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
                 is SplitStudyContract.SplitStudySideEffect.NavigateAddStudy -> {
+                    onBackPress()
                     navigateAddStudy(effect.splitStudyData)
                 }
                 is SplitStudyContract.SplitStudySideEffect.NavigateBack -> {

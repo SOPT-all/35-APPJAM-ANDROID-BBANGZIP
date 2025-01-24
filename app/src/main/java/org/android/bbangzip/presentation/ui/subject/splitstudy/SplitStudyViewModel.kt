@@ -39,11 +39,13 @@ class SplitStudyViewModel
                                 state.endPageTextFieldStateList.all { it != BbangZipTextFieldInputState.Alert },
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState -> {
                     state.copy(
                         datePickerBottomSheetState = !state.datePickerBottomSheetState,
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateEndPage -> {
                     state.copy(
                         endPageList =
@@ -52,6 +54,7 @@ class SplitStudyViewModel
                             },
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateEndPageFocusedState -> {
                     state.copy(
                         endPageFocusedStateList =
@@ -60,9 +63,11 @@ class SplitStudyViewModel
                             },
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateEndPageInputState -> {
                     state
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateEndPageToString -> {
                     state.copy(
                         endPageList =
@@ -74,12 +79,12 @@ class SplitStudyViewModel
                                         ""
                                     } else {
                                         if (state.endPageFocusedStateList[index]) {
-                                            state.endPageList[index].filter { it.isDigit() }.toInt().toString()
+                                            state.endPageList[index].filter { it.isDigit() }
                                         } else {
                                             if (state.endPageList[index].last() == 'p') {
-                                                state.endPageList[index].dropLast(1)
+                                                state.endPageList[index]
                                             } else {
-                                                state.endPageList[index].toInt().toString() + "p"
+                                                state.endPageList[index] + "p"
                                             }
                                         }
                                     }
@@ -87,14 +92,17 @@ class SplitStudyViewModel
                             },
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateExamDate -> {
                     state
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateSelectedDate -> {
                     state.copy(
                         selectedDate = reduce.date,
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateStartPage -> {
                     state.copy(
                         startPageList =
@@ -103,6 +111,7 @@ class SplitStudyViewModel
                             },
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateStartPageFocusedState -> {
                     state.copy(
                         startPageFocusedStateList =
@@ -111,9 +120,11 @@ class SplitStudyViewModel
                             },
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateStartPageInputState -> {
                     state
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateStartPageToString -> {
                     state.copy(
                         startPageList =
@@ -125,9 +136,13 @@ class SplitStudyViewModel
                                         ""
                                     } else {
                                         if (state.startPageFocusedStateList[index]) {
-                                            state.startPageList[index].filter { it.isDigit() }.toInt().toString()
+                                            state.startPageList[index].filter { it.isDigit() }
                                         } else {
-                                            state.startPageList[index].toInt().toString() + "p"
+                                            if (state.startPageList[index].last() == 'p') {
+                                                state.startPageList[index]
+                                            } else {
+                                                state.startPageList[index] + "p"
+                                            }
                                         }
                                     }
                                 }
@@ -157,6 +172,7 @@ class SplitStudyViewModel
                         endPageTextFieldStateList = List(reduce.addStudyData.pieceNumber) { BbangZipTextFieldInputState.Default },
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateSeletedIndex -> {
                     state.copy(
                         selectedPieceIndex = reduce.index,
@@ -186,6 +202,7 @@ class SplitStudyViewModel
                             },
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateEndPageTextFieldState -> {
                     state.copy(
                         endPageTextFieldStateList =
@@ -194,6 +211,7 @@ class SplitStudyViewModel
                             },
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateEndPageGuideline -> {
                     state.copy(
                         endPageGuidelineList =
@@ -212,6 +230,7 @@ class SplitStudyViewModel
                             },
                     )
                 }
+
                 is SplitStudyContract.SplitStudyReduce.UpdateStartPageGuideline -> {
                     state.copy(
                         startPageGuidelineList =
@@ -242,6 +261,7 @@ class SplitStudyViewModel
                 is SplitStudyContract.SplitStudyEvent.OnChangeEndPage -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPage(index = event.index, endPage = event.endPage))
                 }
+
                 is SplitStudyContract.SplitStudyEvent.OnChangeEndPageFocused -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageFocusedState(index = event.index, endPageFocusedState = event.endPageFocusedState))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageToString(index = event.index))
@@ -251,12 +271,15 @@ class SplitStudyViewModel
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageGuideline(index = event.index))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled)
                 }
+
                 is SplitStudyContract.SplitStudyEvent.OnChangeSelectedDate -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateSelectedDate(date = event.selectedDate))
                 }
+
                 is SplitStudyContract.SplitStudyEvent.OnChangeStartPage -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPage(index = event.index, startPage = event.startPage))
                 }
+
                 is SplitStudyContract.SplitStudyEvent.OnChangeStartPageFocused -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPageFocusedState(index = event.index, startPageFocusedState = event.startPageFocusedState))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateStartPageToString(index = event.index))
@@ -266,11 +289,13 @@ class SplitStudyViewModel
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateEndPageGuideline(index = event.index))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateButtonEnabled)
                 }
+
                 is SplitStudyContract.SplitStudyEvent.Initialize -> {
                     Timber.d("[Initialize] : ${event.addStudyData}")
                     updateState(SplitStudyContract.SplitStudyReduce.InitializeState(addStudyData = event.addStudyData))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateState)
                 }
+
                 is SplitStudyContract.SplitStudyEvent.OnClickBackIcon -> {
                     setSideEffect(SplitStudyContract.SplitStudySideEffect.NavigateAddStudy(event.splitStudyData))
                 }
@@ -279,11 +304,13 @@ class SplitStudyViewModel
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateSelectedDateList)
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState)
                 }
+
                 is SplitStudyContract.SplitStudyEvent.OnClickDatePicker -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState)
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateSeletedIndex(event.index))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateSelectedDate(date = currentUiState.dateList[event.index]))
                 }
+
                 SplitStudyContract.SplitStudyEvent.OnClickNextBtn -> {}
 
                 is SplitStudyContract.SplitStudyEvent.OnClickSaveBtn -> {
@@ -308,6 +335,7 @@ class SplitStudyViewModel
                         ),
                     )
                 }
+
                 SplitStudyContract.SplitStudyEvent.OnCloseBottomSheet -> {
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateDatePickerBottomSheetState)
                 }
