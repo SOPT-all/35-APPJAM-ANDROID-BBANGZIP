@@ -5,7 +5,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -31,9 +30,9 @@ fun OnboardingEndScreen(
 ) {
     Column(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
+            Modifier
+                .fillMaxWidth()
+                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         BbangZipBaseTopBar(
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
@@ -43,30 +42,30 @@ fun OnboardingEndScreen(
         Text(
             text = stringResource(id = R.string.onboarding_final_title),
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp)
-                .padding(top = (LocalConfiguration.current.screenHeightDp * 0.081).dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp)
+                    .padding(top = (LocalConfiguration.current.screenHeightDp * 0.081).dp),
             style = BbangZipTheme.typography.title2Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
         )
         Spacer(modifier = Modifier.height(32.dp))
 
-
         Image(
             painter = painterResource(id = R.drawable.img_onboarding_end),
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(8f / 9f),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(8f / 9f),
             contentDescription = null,
         )
         Spacer(modifier = Modifier.weight(1f))
 
-
         BbangZipButton(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
             bbangZipButtonType = BbangZipButtonType.Solid,
             bbangZipButtonSize = BbangZipButtonSize.Large,
             onClick = { onClickNextBtn() },

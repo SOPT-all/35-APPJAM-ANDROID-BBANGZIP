@@ -129,12 +129,13 @@ fun SubjectDetailScreen(
                     Image(
                         painter = painterResource(R.drawable.img_subject_detail_header),
                         contentDescription = null,
-                        modifier = Modifier
-                            .padding(top = 60.dp)
-                            .fillMaxSize()
-                            .aspectRatio(360f / 172f)
-                            .clip(shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
-                            .align(Alignment.BottomCenter),
+                        modifier =
+                            Modifier
+                                .padding(top = 60.dp)
+                                .fillMaxSize()
+                                .aspectRatio(360f / 172f)
+                                .clip(shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
+                                .align(Alignment.BottomCenter),
                     )
                     TwoLineTextWithWordWrap(motivationMessage)
 

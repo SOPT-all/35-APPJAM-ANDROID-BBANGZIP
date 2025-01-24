@@ -73,11 +73,12 @@ fun FriendCard(
                     painter = painterResource(id = data.imgSrc),
                     contentDescription = null,
                     contentScale = ContentScale.FillBounds,
-                    modifier = Modifier.size(48.dp).clip(CircleShape).border(
-                        width = 1.dp,
-                        color = BbangZipTheme.colors.lineNormal_68645E_22,
-                        shape = CircleShape,
-                    ),
+                    modifier =
+                        Modifier.size(48.dp).clip(CircleShape).border(
+                            width = 1.dp,
+                            color = BbangZipTheme.colors.lineNormal_68645E_22,
+                            shape = CircleShape,
+                        ),
                 )
 
                 Spacer(modifier = Modifier.width(16.dp))

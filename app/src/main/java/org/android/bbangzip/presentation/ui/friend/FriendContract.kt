@@ -18,49 +18,49 @@ class FriendContract {
                     friendName = "이승범",
                     imageUrl = "https://example.com/alice.jpg",
                     state = BbangZipCardState.DEFAULT,
-                    imgSrc = R.drawable.img_friend_profile_1
+                    imgSrc = R.drawable.img_friend_profile_1,
                 ),
                 FriendCardModel(
                     friendId = 2,
                     friendName = "김재민",
                     imageUrl = "https://example.com/bob.jpg",
                     state = BbangZipCardState.DEFAULT,
-                    imgSrc = R.drawable.img_friend_profile_2
+                    imgSrc = R.drawable.img_friend_profile_2,
                 ),
                 FriendCardModel(
                     friendId = 3,
                     friendName = "하지은",
                     imageUrl = "https://example.com/charlie.jpg",
                     state = BbangZipCardState.DEFAULT,
-                    imgSrc = R.drawable.img_friend_profile_3
+                    imgSrc = R.drawable.img_friend_profile_3,
                 ),
                 FriendCardModel(
                     friendId = 4,
                     friendName = "신우연",
                     imageUrl = "https://example.com/alice.jpg",
                     state = BbangZipCardState.DEFAULT,
-                    imgSrc = R.drawable.img_friend_profile_4
+                    imgSrc = R.drawable.img_friend_profile_4,
                 ),
                 FriendCardModel(
                     friendId = 5,
                     friendName = "김재민",
                     imageUrl = "https://example.com/bob.jpg",
                     state = BbangZipCardState.DEFAULT,
-                    imgSrc = R.drawable.img_friend_profile_1
+                    imgSrc = R.drawable.img_friend_profile_1,
                 ),
                 FriendCardModel(
                     friendId = 6,
                     friendName = "하지은",
                     imageUrl = "https://example.com/charlie.jpg",
                     state = BbangZipCardState.DEFAULT,
-                    imgSrc = R.drawable.img_friend_profile_2
+                    imgSrc = R.drawable.img_friend_profile_2,
                 ),
                 FriendCardModel(
                     friendId = 7,
                     friendName = "이승범",
                     imageUrl = "https://example.com/alice.jpg",
                     state = BbangZipCardState.DEFAULT,
-                    imgSrc = R.drawable.img_friend_profile_3
+                    imgSrc = R.drawable.img_friend_profile_3,
                 ),
             ),
         val menuFilterType: FriendMenuType = FriendMenuType.ALL,

@@ -11,5 +11,5 @@ data class FriendCardModel(
     val friendName: String,
     val imageUrl: String,
     val state: BbangZipCardState,
-    @DrawableRes val imgSrc : Int = 0,
-    ) : Parcelable
+    @DrawableRes val imgSrc: Int = 0,
+) : Parcelable

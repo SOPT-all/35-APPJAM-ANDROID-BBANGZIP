@@ -81,9 +81,10 @@ fun SubjectScreen(
                     Image(
                         painter = painterResource(R.drawable.img_subject_header),
                         contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .aspectRatio(360f / 220f)
+                        modifier =
+                            Modifier
+                                .fillMaxSize()
+                                .aspectRatio(360f / 220f),
                     )
                     Row(
                         modifier =

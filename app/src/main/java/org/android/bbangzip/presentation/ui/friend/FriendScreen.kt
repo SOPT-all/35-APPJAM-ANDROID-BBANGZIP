@@ -124,7 +124,7 @@ fun FriendScreen(
                 modifier =
                     Modifier
                         .fillMaxWidth()
-                        .padding(bottom=24.dp, start = 24.dp, end = 24.dp),
+                        .padding(bottom = 24.dp, start = 24.dp, end = 24.dp),
             ) {
                 Text(
                     text = stringResource(R.string.friend_boss_count, friendState.friendList.size),

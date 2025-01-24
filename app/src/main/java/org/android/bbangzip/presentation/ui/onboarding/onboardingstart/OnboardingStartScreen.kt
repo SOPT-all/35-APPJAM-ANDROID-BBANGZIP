@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,16 +29,16 @@ fun OnboardingStartScreen(
 ) {
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp),
     ) {
         Text(
             text = stringResource(id = R.string.onboarding_start_title),
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(top = (LocalConfiguration.current.screenHeightDp * 0.15).dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(top = (LocalConfiguration.current.screenHeightDp * 0.15).dp),
             style = BbangZipTheme.typography.title2Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
         )
@@ -49,9 +48,10 @@ fun OnboardingStartScreen(
         Image(
             painter = painterResource(id = R.drawable.img_onboarding_start),
             contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .aspectRatio(8f / 9f)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(8f / 9f),
         )
 
         Spacer(modifier = Modifier.weight(1f))
