@@ -162,7 +162,7 @@ fun MyScreen(
 
         item {
             Spacer(modifier = Modifier.height(padding.calculateBottomPadding()))
-            Spacer(modifier = Modifier.height(120.dp))
+            Spacer(modifier = Modifier.height(16.dp))
         }
     }
 

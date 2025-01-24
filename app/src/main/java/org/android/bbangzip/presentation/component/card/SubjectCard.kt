@@ -107,17 +107,23 @@ fun SubjectInfo(
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        Text(
-            text = data.examName.ifEmpty { "공부를 추가해주세요" },
-            style = BbangZipTheme.typography.label2Bold,
-            color = BbangZipTheme.colors.labelNeutral_282119_88,
-            maxLines = 1,
-            overflow = TextOverflow.Ellipsis,
-        )
+        if (data.examName.isEmpty() || data.examRemainingDays == 999) {
+            Text(
+                text = "공부를 추가해주세요",
+                style = BbangZipTheme.typography.label2Bold,
+                color = BbangZipTheme.colors.labelNeutral_282119_88,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
+        } else {
+            Text(
+                text = data.examName,
+                style = BbangZipTheme.typography.label2Bold,
+                color = BbangZipTheme.colors.labelNeutral_282119_88,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+            )
 
-        data.examName.ifEmpty { Gap() }
-
-        if (data.examName.isNotEmpty()) {
             Gap(height = 4)
 
             BbangZipChip(

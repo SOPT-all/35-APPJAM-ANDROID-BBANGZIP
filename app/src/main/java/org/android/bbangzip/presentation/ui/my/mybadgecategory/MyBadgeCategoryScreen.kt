@@ -98,7 +98,7 @@ fun MyBadgeCategoryScreen(
                             .fillMaxWidth(),
                 ) {
                     Text(
-                        text = stringResource(R.string.badge_category_title, "밍밍"),
+                        text = stringResource(R.string.badge_category_title, badgeCategoryState.nickname),
                         style = BbangZipTheme.typography.heading2Bold,
                         color = BbangZipTheme.colors.labelNormal_282119,
                         modifier =
@@ -182,7 +182,7 @@ fun BadgeCategoryGridList(
             text = badgeCategoryTitle,
             style = BbangZipTheme.typography.title3Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
-            modifier = Modifier.padding(start = 8.dp),
+            modifier = Modifier.padding(start = 8.dp, bottom = 2.dp),
         )
 
         Text(

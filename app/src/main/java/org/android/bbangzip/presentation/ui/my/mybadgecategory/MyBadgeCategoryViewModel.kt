@@ -4,7 +4,11 @@ import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
+import org.android.bbangzip.UserPreferences
+import org.android.bbangzip.domain.repository.local.UserLocalRepository
 import org.android.bbangzip.domain.usecase.GetBadgeCategoryListUseCase
 import org.android.bbangzip.domain.usecase.GetBadgeDetailUseCase
 import org.android.bbangzip.presentation.model.BadgeCategory
@@ -17,12 +21,15 @@ import javax.inject.Inject
 class MyBadgeCategoryViewModel
     @Inject
     constructor(
+        private val userLocalRepository: UserLocalRepository,
         private val getBadgeCategoryListUseCase: GetBadgeCategoryListUseCase,
         private val getBadgeDetailUseCase: GetBadgeDetailUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<MyBadgeCategoryContract.MyBadgeCategoryEvent, MyBadgeCategoryContract.MyBadgeCategoryState, MyBadgeCategoryContract.MyBadgeCategoryReduce, MyBadgeCategoryContract.MyBadgeCategorySideEffect>(
             savedStateHandle = savedStateHandle,
         ) {
+        private val userPreferencesFlow: Flow<UserPreferences> = userLocalRepository.userPreferenceFlow
+
         override fun createInitialState(savedState: Parcelable?): MyBadgeCategoryContract.MyBadgeCategoryState {
             return savedState as? MyBadgeCategoryContract.MyBadgeCategoryState
                 ?: MyBadgeCategoryContract.MyBadgeCategoryState()
@@ -34,7 +41,16 @@ class MyBadgeCategoryViewModel
 
         override fun handleEvent(event: MyBadgeCategoryContract.MyBadgeCategoryEvent) {
             when (event) {
-                MyBadgeCategoryContract.MyBadgeCategoryEvent.Initialize -> launch { initData() }
+                MyBadgeCategoryContract.MyBadgeCategoryEvent.Initialize ->
+                    launch {
+                        initData()
+                        updateState(
+                            MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateNickName(
+                                nickname = getInitialInOnboardingPreferences(),
+                            ),
+                        )
+                    }
+
                 MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBackIconClicked ->
                     setSideEffect(MyBadgeCategoryContract.MyBadgeCategorySideEffect.NavigateToBack)
 
@@ -84,6 +100,11 @@ class MyBadgeCategoryViewModel
                 is MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState ->
                     state.copy(
                         badgeDetailBottomSheetState = reduce.badgeDetailBottomSheetState,
+                    )
+
+                is MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateNickName ->
+                    state.copy(
+                        nickname = reduce.nickname,
                     )
             }
         }
@@ -159,5 +180,18 @@ class MyBadgeCategoryViewModel
                 .onFailure { error ->
                     Timber.tag("badges").e(error)
                 }
+        }
+
+        private suspend fun getInitialInOnboardingPreferences() = userPreferencesFlow.first().onboardingInfo.userName
+
+        private suspend fun clearDataStore() {
+            with(userLocalRepository) {
+                clearAccessToken()
+                clearRefreshToken()
+                setIsLogin(false)
+                clearOnboardingInfo()
+                setIsOnOnboardingDone(false)
+                setIsBadgeAvailable(false)
+            }
         }
     }

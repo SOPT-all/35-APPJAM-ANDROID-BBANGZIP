@@ -96,14 +96,14 @@ fun ToDoInfo(
     }
 
     val count =
-        if (data.remainingDays >= 0) {
+        if (data.remainingDays > 0) {
             stringResource(R.string.card_d_minus)
         } else {
             stringResource(R.string.card_d_plus)
         }
 
     val chipBackgroundColor =
-        if (data.remainingDays >= 0) {
+        if (data.remainingDays > 0) {
             getColor(BbangZipTheme.colors.statusDestructive_FF8345)
         } else {
             getColor(BbangZipTheme.colors.labelAlternative_282119_61)
@@ -150,7 +150,7 @@ fun ToDoInfo(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             BbangZipChip(
-                text = count + data.remainingDays,
+                text = if (data.remainingDays != 0)count + data.remainingDays else stringResource(R.string.card_chip_d_day),
                 backgroundColor = chipBackgroundColor,
             )
 

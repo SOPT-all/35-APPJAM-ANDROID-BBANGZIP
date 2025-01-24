@@ -211,7 +211,10 @@ fun SubjectDetailScreen(
                 when (pieceViewType) {
                     PieceViewType.EMPTY -> {
                         Spacer(modifier = Modifier.height(84.dp))
-                        EmptySubjectCardView()
+                        EmptySubjectCardView(
+                            splitStudyData = splitStudyData,
+                            onClickAddStudy = onClickAddStudy,
+                        )
                     }
 
                     PieceViewType.DEFAULT -> {
@@ -244,7 +247,7 @@ fun SubjectDetailScreen(
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 trailingIcon = R.drawable.ic_menu_kebab_default_24,
                 onTrailingIconClick = { onClickKebabMenu() },
-                onLeadingIconClick = { popBackStack() },
+                onLeadingIconClick = popBackStack,
                 title = subjectName,
             )
             if (isMenuOpen) {
@@ -675,7 +678,9 @@ private fun processTextForWordWrap(
 @Composable
 private fun EmptySubjectCardView(
     modifier: Modifier = Modifier,
+    splitStudyData: SplitStudyData,
     onAddSubjectButtonClicked: () -> Unit = {},
+    onClickAddStudy: (SplitStudyData) -> Unit = {},
 ) {
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
         Box(
@@ -696,7 +701,7 @@ private fun EmptySubjectCardView(
         BbangZipButton(
             bbangZipButtonType = BbangZipButtonType.Solid,
             bbangZipButtonSize = BbangZipButtonSize.Large,
-            onClick = { onAddSubjectButtonClicked() },
+            onClick = { onClickAddStudy(splitStudyData) },
             label = stringResource(R.string.btn_add_todo_label),
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = R.drawable.ic_plus_thick_24,

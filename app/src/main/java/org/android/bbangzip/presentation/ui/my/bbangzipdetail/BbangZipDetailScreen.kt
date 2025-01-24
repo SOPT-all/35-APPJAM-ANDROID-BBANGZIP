@@ -121,8 +121,6 @@ private fun BbangZipPager(
                 }
 
                 BbangZipPagerIndicator(pagerState = pagerState)
-
-                Spacer(modifier = Modifier.height(24.dp))
             }
 
             Column(
@@ -200,7 +198,7 @@ private fun BbangZipPagerIndicator(
             Box(
                 modifier =
                     Modifier
-                        .padding(4.dp)
+                        .padding(horizontal = 4.dp)
                         .background(color, CircleShape)
                         .size(6.dp),
             )

@@ -22,10 +22,12 @@
     <string name="card_subject_exam_name_text">%s / %s</string>
     <string name="card_d_minus">D+</string>
     <string name="card_d_plus">D</string>
+    <string name="card_chip_d_day">D-Day</string>
+
 
     <!--button-->
     <string name="btn_kakao_login_label">카카오로 로그인하기</string>
-    <string name="btn_todo_overdue_label">"밀린 공부 %d개 하러가기"</string>
+    <string name="btn_todo_overdue_label">"밀린 공부 %d개 하러 가기"</string>
     <string name="btn_select_due_label">"%s년 %s월 %s일 까지"</string>
     <string name="btn_start_app_label">빵집 오픈하러 가기</string>
     <string name="btn_finish_onboarding_label">빵점 탈출하러 가기</string>
@@ -157,6 +159,8 @@
     <string name="cancel">취소</string>
     <string name="withdraw_title">정말 탈퇴하시겠어요?</string>
     <string name="withdraw_confirm">탈퇴하기</string>
+
+    <!-- modify -->
     <string name="modify_subject_name_placeholder">예) 거시경제학</string>
     <string name="modify_subject_name_guideline">한글/영문/숫자 조합으로 최대 10자까지 입력 가능해요</string>
     <string name="modify_motivation_message_placeholder">예) 이번에 열심히 공부해서 빵점 탈출!</string>

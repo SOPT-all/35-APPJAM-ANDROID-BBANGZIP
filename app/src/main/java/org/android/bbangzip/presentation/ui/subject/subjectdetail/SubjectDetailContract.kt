@@ -116,6 +116,8 @@ class SubjectDetailContract {
         data class UpdateGetBadgeList(val badgeList: List<Badge>) : SubjectDetailReduce
 
         data class UpdateGetBadgeBottomSheetState(val getBadgeBottomSheetState: Boolean) : SubjectDetailReduce
+
+        data object UpdateToEmptyView : SubjectDetailReduce
     }
 
     sealed interface SubjectDetailSideEffect : BaseContract.SideEffect {
