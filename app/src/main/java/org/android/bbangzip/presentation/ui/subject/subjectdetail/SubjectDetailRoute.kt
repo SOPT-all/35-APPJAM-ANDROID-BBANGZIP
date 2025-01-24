@@ -76,7 +76,7 @@ fun SubjectDetailRoute(
                 selectedItemId = subjectDetailState.selectedItemId,
                 subjectId = subjectDetailState.subjectId,
                 subjectName = subjectDetailState.subjectName,
-                motivationMessage = if(subjectDetailState.motivationMessage == "") "사장님의 각오 한마디를 작성해보세요" else subjectDetailState.motivationMessage,
+                motivationMessage = if (subjectDetailState.motivationMessage == "") "사장님의 각오 한마디를 작성해보세요" else subjectDetailState.motivationMessage,
                 examDDay = subjectDetailState.examDday,
                 examDate = subjectDetailState.examDate,
                 examName = subjectDetailState.examName,

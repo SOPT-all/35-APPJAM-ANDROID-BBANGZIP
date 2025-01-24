@@ -134,13 +134,14 @@ fun SubjectDetailScreen(
 
     Timber.d("${deletedSet.size}")
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .pointerInput(Unit) {
-                detectTapGestures {
-                    onClickKebabOutside()
-                }
-        },
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        onClickKebabOutside()
+                    }
+                },
     ) {
         LazyColumn(
             modifier =
@@ -268,8 +269,7 @@ fun SubjectDetailScreen(
                             .width(200.dp)
                             .applyShadows(BbangZipShadowType.HEAVY, shape = RoundedCornerShape(32.dp))
                             .align(Alignment.End)
-                            .offset(y = (-8).dp)
-
+                            .offset(y = (-8).dp),
                 ) {
                     Column(
                         modifier =

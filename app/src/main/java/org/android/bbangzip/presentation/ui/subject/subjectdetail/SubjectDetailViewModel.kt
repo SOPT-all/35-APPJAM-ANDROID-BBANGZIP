@@ -291,7 +291,6 @@ class SubjectDetailViewModel
                         isMenuOpen = false,
                     )
                 }
-
             }
         }
 

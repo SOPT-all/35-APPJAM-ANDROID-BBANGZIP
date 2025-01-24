@@ -111,17 +111,20 @@ class MainNavigator(
     fun navigateToSubjectDetail(
         subjectId: Int,
         subjectName: String,
-        navOptions: NavOptions? = null
+        navOptions: NavOptions? = null,
     ) {
         val route = SubjectDetailRoute(subjectId, subjectName)
         Timber.tag("navaigateSubject").d("subjectId")
-        navHostController.navigateToSubjectDetail(subjectId, subjectName,
+        navHostController.navigateToSubjectDetail(
+            subjectId,
+            subjectName,
             navOptions ?: navOptions {
                 popUpTo(route) {
                     inclusive = true
                 }
                 launchSingleTop = true
-            },)
+            },
+        )
     }
 
     fun navigateToAddSubject() {

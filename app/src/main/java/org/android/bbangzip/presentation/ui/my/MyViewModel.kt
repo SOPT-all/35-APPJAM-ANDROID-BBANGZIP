@@ -107,7 +107,7 @@ class MyViewModel
                                     reward = data.reward,
                                     maxReward = data.maxReward,
                                     bbangZipImgUrl = data.levelDetails[data.level - 1].levelImage,
-                                    badgeCount = data.badgeCounts
+                                    badgeCount = data.badgeCounts,
                                 ),
                         ),
                     )

@@ -205,9 +205,10 @@ private fun MainBbangZip(
         verticalArrangement = Arrangement.SpaceBetween,
     ) {
         Box(
-            modifier = Modifier
-                .fillMaxSize(),
-            contentAlignment = Alignment.BottomCenter
+            modifier =
+                Modifier
+                    .fillMaxSize(),
+            contentAlignment = Alignment.BottomCenter,
         ) {
             AsyncImage(
                 model =
@@ -216,9 +217,10 @@ private fun MainBbangZip(
                         .crossfade(enable = true)
                         .build(),
                 contentDescription = null,
-                modifier = Modifier
-                    .align(Alignment.Center)
-                    .padding(bottom = 50.dp),
+                modifier =
+                    Modifier
+                        .align(Alignment.Center)
+                        .padding(bottom = 50.dp),
             )
 
             BbangZipLevelProgressBar(

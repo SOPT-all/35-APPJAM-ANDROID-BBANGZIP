@@ -198,8 +198,12 @@ class AddStudyViewModel
                         subjectId = reduce.splitStudyData.subjectId,
                         subjectName = reduce.splitStudyData.subjectName,
                         pieceNumber = reduce.splitStudyData.pieceNumber,
-                        examDate = if(reduce.splitStudyData.examDate=="Not Scheduled") "시험 일자 입력" else {if(reduce.splitStudyData.examDate.last() == '일') reduce.splitStudyData.examDate else formatHyponDate(reduce.splitStudyData.examDate)
-                        },
+                        examDate =
+                            if (reduce.splitStudyData.examDate == "Not Scheduled") {
+                                "시험 일자 입력"
+                            } else {
+                                if (reduce.splitStudyData.examDate.last() == '일') reduce.splitStudyData.examDate else formatHyponDate(reduce.splitStudyData.examDate)
+                            },
                         examName = reduce.splitStudyData.examName,
                         studyContent = reduce.splitStudyData.studyContent,
                         startPage = reduce.splitStudyData.startPage,
@@ -208,7 +212,7 @@ class AddStudyViewModel
                         endPageList = reduce.splitStudyData.endPageList,
                         deadLineList = reduce.splitStudyData.deadLineList,
                         addStudyViewType = reduce.splitStudyData.addStudyViewType,
-                        isDatePickerEnabled = reduce.splitStudyData.examDate=="Not Scheduled",
+                        isDatePickerEnabled = reduce.splitStudyData.examDate == "Not Scheduled",
                         isSuccess = true,
                     )
                 }
@@ -380,7 +384,7 @@ class AddStudyViewModel
                     state.copy(
                         startPageList = listOf(currentUiState.startPage!!),
                         endPageList = listOf(currentUiState.endPage!!),
-                        deadLineList = listOf(formatDate(currentUiState.examDate))
+                        deadLineList = listOf(formatDate(currentUiState.examDate)),
                     )
                 }
             }

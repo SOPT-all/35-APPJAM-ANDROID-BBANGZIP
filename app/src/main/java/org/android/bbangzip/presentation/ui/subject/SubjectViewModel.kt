@@ -147,28 +147,29 @@ class SubjectViewModel
             getSubjectInfoUseCase()
                 .onSuccess { data ->
                     Timber.tag("이승범").d(data.toString())
-                    val subjectCardList = data.subjectList.map {
-                        val firstStudy = it.studyList.firstOrNull() // 첫 번째 요소를 안전하게 가져옴
-                        if (firstStudy == null) {
-                            SubjectCardModel(
-                                subjectName = it.subjectName,
-                                examName = "",
-                                pendingCount = 0,
-                                inProgressCount = 0,
-                                subjectId = it.subjectId,
-                                examRemainingDays = 0,
-                            )
-                        } else {
-                            SubjectCardModel(
-                                subjectName = it.subjectName,
-                                examName = firstStudy.examName ?: "",
-                                pendingCount = firstStudy.pendingCount ?: 0,
-                                inProgressCount = firstStudy.remainingCount ?: 0,
-                                subjectId = it.subjectId,
-                                examRemainingDays = firstStudy.examDday ?: 0,
-                            )
+                    val subjectCardList =
+                        data.subjectList.map {
+                            val firstStudy = it.studyList.firstOrNull() // 첫 번째 요소를 안전하게 가져옴
+                            if (firstStudy == null) {
+                                SubjectCardModel(
+                                    subjectName = it.subjectName,
+                                    examName = "",
+                                    pendingCount = 0,
+                                    inProgressCount = 0,
+                                    subjectId = it.subjectId,
+                                    examRemainingDays = 0,
+                                )
+                            } else {
+                                SubjectCardModel(
+                                    subjectName = it.subjectName,
+                                    examName = firstStudy.examName ?: "",
+                                    pendingCount = firstStudy.pendingCount ?: 0,
+                                    inProgressCount = firstStudy.remainingCount ?: 0,
+                                    subjectId = it.subjectId,
+                                    examRemainingDays = firstStudy.examDday ?: 0,
+                                )
+                            }
                         }
-                    }
                     updateState(SubjectContract.SubjectReduce.UpdateSubjectCardList(subjectList = subjectCardList))
                 }.onFailure { error ->
                     Timber.tag("SubjectInfo").d(error)

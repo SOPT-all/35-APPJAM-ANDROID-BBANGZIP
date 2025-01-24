@@ -12,7 +12,7 @@ import org.android.bbangzip.presentation.model.SplitStudyData
 fun NavController.navigateToSubjectDetail(
     subjectId: Int,
     subjectName: String,
-    navOptions: NavOptions
+    navOptions: NavOptions,
 ) {
     navigate(
         route =

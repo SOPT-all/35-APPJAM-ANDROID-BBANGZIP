@@ -98,9 +98,10 @@ private fun BbangZipPager(
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentAlignment = Alignment.BottomCenter
+                    modifier =
+                        Modifier
+                            .fillMaxSize(),
+                    contentAlignment = Alignment.BottomCenter,
                 ) {
                     if (bbangZipList[page].isLocked) {
                         AsyncImage(
@@ -110,8 +111,9 @@ private fun BbangZipPager(
                                     .crossfade(enable = true)
                                     .build(),
                             contentDescription = null,
-                            modifier = Modifier
-                                .align(Alignment.Center),
+                            modifier =
+                                Modifier
+                                    .align(Alignment.Center),
                             colorFilter = ColorFilter.tint(color = BbangZipTheme.colors.myBbangZip_9E6B45),
                         )
                     } else {
@@ -122,14 +124,15 @@ private fun BbangZipPager(
                                     .crossfade(enable = true)
                                     .build(),
                             contentDescription = null,
-                            modifier = Modifier
-                                .align(Alignment.Center),
+                            modifier =
+                                Modifier
+                                    .align(Alignment.Center),
                         )
                     }
 
                     BbangZipPagerIndicator(
                         pagerState = pagerState,
-                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp)
+                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp),
                     )
                 }
             }
@@ -197,7 +200,7 @@ private fun BbangZipPager(
 @Composable
 private fun BbangZipPagerIndicator(
     pagerState: PagerState,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier
