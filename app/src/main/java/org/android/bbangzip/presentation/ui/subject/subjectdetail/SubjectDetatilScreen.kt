@@ -3,6 +3,7 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -36,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -97,6 +99,7 @@ fun SubjectDetailScreen(
     onDefaultCardClicked: (Int) -> Unit = {},
     onCompleteCardClicked: (Int) -> Unit = {},
     onClickBadgeCloseBtn: () -> Unit,
+    onClickKebabOutside: () -> Unit = {},
     popBackStack: () -> Unit,
 ) {
     Timber.tag("김재민").d("SubjectDetailScreen : $subjectName $examName")
@@ -131,7 +134,13 @@ fun SubjectDetailScreen(
 
     Timber.d("${deletedSet.size}")
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
+            .pointerInput(Unit) {
+                detectTapGestures {
+                    onClickKebabOutside()
+                }
+        },
     ) {
         LazyColumn(
             modifier =
@@ -259,7 +268,8 @@ fun SubjectDetailScreen(
                             .width(200.dp)
                             .applyShadows(BbangZipShadowType.HEAVY, shape = RoundedCornerShape(32.dp))
                             .align(Alignment.End)
-                            .offset(y = (-8).dp),
+                            .offset(y = (-8).dp)
+
                 ) {
                     Column(
                         modifier =

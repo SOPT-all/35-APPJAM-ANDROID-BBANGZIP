@@ -81,10 +81,14 @@ class SubjectDetailContract {
         data object OnClickGetBadgeBottomSheetCloseBtn : SubjectDetailEvent
 
         data object OnClickBackIconBtn : SubjectDetailEvent
+
+        data object OnClickKebabOutside : SubjectDetailEvent
     }
 
     sealed interface SubjectDetailReduce : BaseContract.Reduce {
         data class UpdateSubjectDetail(val subjectDetailInfo: SubjectDetailInfo) : SubjectDetailReduce
+
+        data object UpdateIsKebabMenuOpen : SubjectDetailReduce
 
         data object UpdateToDeleteMode : SubjectDetailReduce
 

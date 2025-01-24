@@ -119,6 +119,10 @@ class SubjectDetailViewModel
                 is SubjectDetailContract.SubjectDetailEvent.OnClickBackIconBtn -> {
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.PopBackStack)
                 }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickKebabOutside -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsKebabMenuOpen)
+                }
             }
         }
 
@@ -281,6 +285,13 @@ class SubjectDetailViewModel
                         todoList = state.todoList.filter { !reduce.studyPieceId.contains(it.pieceId) },
                     )
                 }
+
+                is SubjectDetailContract.SubjectDetailReduce.UpdateIsKebabMenuOpen -> {
+                    state.copy(
+                        isMenuOpen = false,
+                    )
+                }
+
             }
         }
 
