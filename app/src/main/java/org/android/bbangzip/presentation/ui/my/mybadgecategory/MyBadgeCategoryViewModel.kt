@@ -21,7 +21,7 @@ import javax.inject.Inject
 class MyBadgeCategoryViewModel
     @Inject
     constructor(
-        userLocalRepository: UserLocalRepository,
+        private val userLocalRepository: UserLocalRepository,
         private val getBadgeCategoryListUseCase: GetBadgeCategoryListUseCase,
         private val getBadgeDetailUseCase: GetBadgeDetailUseCase,
         savedStateHandle: SavedStateHandle,
@@ -183,4 +183,15 @@ class MyBadgeCategoryViewModel
         }
 
         private suspend fun getInitialInOnboardingPreferences() = userPreferencesFlow.first().onboardingInfo.userName
+
+        private suspend fun clearDataStore() {
+            with(userLocalRepository) {
+                clearAccessToken()
+                clearRefreshToken()
+                setIsLogin(false)
+                clearOnboardingInfo()
+                setIsOnOnboardingDone(false)
+                setIsBadgeAvailable(false)
+            }
+        }
     }
