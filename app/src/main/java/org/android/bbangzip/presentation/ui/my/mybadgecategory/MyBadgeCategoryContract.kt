@@ -19,7 +19,7 @@ class MyBadgeCategoryContract {
             listOf(),
         val badgeDetailBottomSheetState: Boolean = false,
         val badgeDetail: BadgeDetail = BadgeDetail(),
-        val nickname : String = "",
+        val nickname: String = "",
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }

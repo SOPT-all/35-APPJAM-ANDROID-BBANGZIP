@@ -121,7 +121,6 @@ private fun BbangZipPager(
                 }
 
                 BbangZipPagerIndicator(pagerState = pagerState)
-
             }
 
             Column(

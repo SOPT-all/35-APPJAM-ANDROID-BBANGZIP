@@ -232,11 +232,9 @@ class SubjectDetailViewModel
 
                 SubjectDetailContract.SubjectDetailReduce.UpdateToEmptyView -> {
                     state.copy(
-                        pieceViewType =  PieceViewType.EMPTY,
+                        pieceViewType = PieceViewType.EMPTY,
                     )
                 }
-
-
             }
         }
 
@@ -279,7 +277,7 @@ class SubjectDetailViewModel
                             ),
                     ),
                 )
-                if(subjectDetailInfoEntity.examDday == 999) {
+                if (subjectDetailInfoEntity.examDday == 999) {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToEmptyView)
                     Timber.tag("subject").d("${subjectDetailInfoEntity.examDday}")
                 }

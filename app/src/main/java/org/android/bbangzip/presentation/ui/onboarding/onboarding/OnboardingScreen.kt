@@ -105,7 +105,7 @@ fun OnboardingScreen(
             label = stringResource(id = R.string.btn_next_label),
             isEnable = state.buttonEnabled,
             trailingIcon = R.drawable.ic_chevronright_thick_small_24,
-            )
+        )
     }
 }
 

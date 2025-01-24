@@ -150,7 +150,7 @@ fun ToDoInfo(
 
         Row(verticalAlignment = Alignment.CenterVertically) {
             BbangZipChip(
-                text = if(data.remainingDays !=0)count + data.remainingDays else stringResource(R.string.card_chip_d_day),
+                text = if (data.remainingDays != 0)count + data.remainingDays else stringResource(R.string.card_chip_d_day),
                 backgroundColor = chipBackgroundColor,
             )
 
