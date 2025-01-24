@@ -22,10 +22,10 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStar
 import org.android.bbangzip.presentation.ui.splash.navigation.splashNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
-import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
 import org.android.bbangzip.presentation.ui.subject.addsubject.addSubjectNavGraph
 import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.modifyMotivationMessageNavGraph
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.modifySubjectNameNavGraph
+import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
 import org.android.bbangzip.presentation.ui.subject.splitstudy.splitStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
 import org.android.bbangzip.presentation.ui.subject.subjectdetail.subjectDetailNavGraph

@@ -21,12 +21,12 @@ import org.android.bbangzip.presentation.ui.my.navigation.navigateMy
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboarding
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingEnd
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
+import org.android.bbangzip.presentation.ui.splash.navigation.SplashRoute
+import org.android.bbangzip.presentation.ui.splash.navigation.navigateSplash
 import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
 import org.android.bbangzip.presentation.ui.subject.addsubject.navigateToAddSubject
 import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.navigateToModifyMotivationMessage
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.navigateToModifySubjectName
-import org.android.bbangzip.presentation.ui.splash.navigation.SplashRoute
-import org.android.bbangzip.presentation.ui.splash.navigation.navigateSplash
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
 import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
 import org.android.bbangzip.presentation.ui.subject.subjectdetail.navigateToSubjectDetail
