@@ -41,6 +41,7 @@ fun AddStudyRoute(
             pieceNumber = addStudyState.pieceNumber,
             subjectTitle = addStudyState.subjectName,
             examDate = addStudyState.examDate,
+            examName = addStudyState.examName,
             studyContent = addStudyState.studyContent ?: "",
             startPage = addStudyState.startPage ?: "",
             startGuideline = addStudyState.startPageGuideline,

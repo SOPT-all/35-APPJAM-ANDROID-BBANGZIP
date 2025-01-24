@@ -16,6 +16,7 @@ class SplitStudyContract {
         val startPage: String = "",
         val endPage: String = "",
         val examDate: String = "",
+        val examName: String = "",
         val studyContent: String = "",
         val pieceNumber: Int = 0,
         val selectedDate: Date = Date("2025", "1", "21"),

@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject.subjectdetail
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
@@ -8,6 +9,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -32,8 +34,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.AnnotatedString
@@ -47,7 +51,9 @@ import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.component.card.ToDoCard
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
+import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
+import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.BbangZipShadowType
@@ -73,6 +79,7 @@ fun SubjectDetailScreen(
     motivationMessage: String,
     examDDay: Int,
     examDate: String,
+    examName: String,
     onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
     onRevertCompleteBottomSheetApproveButtonClicked: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
@@ -83,9 +90,12 @@ fun SubjectDetailScreen(
     onClickEnrollMotivationMessage: (Int, String) -> Unit = { _, _ -> },
     onClickModifySubjectName: (Int, String) -> Unit = { _, _ -> },
     onClickKebabMenu: () -> Unit = {},
+    onClickTab: (Int) -> Unit = {},
+    onClickAddStudy: (SplitStudyData) -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit = {},
     onCompleteCardClicked: (Int) -> Unit = {},
 ) {
+    Timber.tag("김재민").d("SubjectDetailScreen : $subjectName $examName")
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
     val backgroundHeight = (screenHeightDp * 0.32).toInt()
@@ -99,6 +109,20 @@ fun SubjectDetailScreen(
 
     val tabs = listOf("중간고사", "기말고사")
     var selectedIndex by remember { mutableIntStateOf(0) }
+    val splitStudyData =
+        SplitStudyData(
+            subjectName = subjectName,
+            pieceNumber = 0,
+            examDate = "시험 일자 입력",
+            examName = examName,
+            studyContent = "",
+            startPage = "",
+            endPage = "",
+            startPageList = emptyList(),
+            endPageList = emptyList(),
+            deadLineList = emptyList(),
+            addStudyViewType = AddStudyViewType.DEFAULT,
+        )
 
     Timber.d("${deletedSet.size}")
     Box(
@@ -119,9 +143,20 @@ fun SubjectDetailScreen(
                             .height(backgroundHeight.dp)
                             .background(
                                 color = BbangZipTheme.colors.backgroundAccent_FFDAA0,
-                                shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp),
+                                shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp),
                             ),
                 ) {
+                    Image(
+                        painter = painterResource(R.drawable.img_subject_detail_header),
+                        contentDescription = null,
+                        modifier =
+                            Modifier
+                                .padding(top = 60.dp)
+                                .fillMaxSize()
+                                .aspectRatio(360f / 172f)
+                                .clip(shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
+                                .align(Alignment.BottomCenter),
+                    )
                     TwoLineTextWithWordWrap(motivationMessage)
 
                     Box(
@@ -157,7 +192,10 @@ fun SubjectDetailScreen(
                                 examTab(
                                     text = tabName,
                                     isSelected = selectedIndex == index,
-                                    onClick = { selectedIndex = index },
+                                    onClick = {
+                                        onClickTab(index)
+                                        selectedIndex = index
+                                    },
                                 )
                             }
                         }
@@ -179,6 +217,8 @@ fun SubjectDetailScreen(
                             onCompleteCardClicked = onCompleteCardClicked,
                             dDay = examDDay.toString(),
                             examDay = examDate,
+                            splitStudyData = splitStudyData,
+                            onClickAddStudy = onClickAddStudy,
                         )
                     }
 
@@ -292,9 +332,11 @@ private fun DefaultPieceView(
     todoList: List<ToDoCardModel>,
     dDay: String,
     examDay: String,
+    splitStudyData: SplitStudyData,
     onTrashIconClicked: () -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit,
     onCompleteCardClicked: (Int) -> Unit,
+    onClickAddStudy: (SplitStudyData) -> Unit = {},
 ) {
     Column(
         modifier =
@@ -367,7 +409,9 @@ private fun DefaultPieceView(
                         .applyFilterOnClick(
                             radius = 20.dp,
                             isDisabled = false,
-                        ) { }
+                        ) {
+                            onClickAddStudy(splitStudyData)
+                        }
                         .padding(8.dp),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
@@ -399,7 +443,7 @@ private fun DefaultPieceView(
                     .applyFilterOnClick(
                         radius = 24.dp,
                         isDisabled = false,
-                    ) { },
+                    ) { onClickAddStudy(splitStudyData) },
         ) {
             Row(
                 modifier =
@@ -565,9 +609,8 @@ fun TwoLineTextWithWordWrap(
         text = displayText ?: AnnotatedString(text),
         modifier =
             Modifier
-                .width(200.dp)
-                .padding(top = 92.dp, start = 20.dp)
-                .height(56.dp),
+                .width(230.dp)
+                .padding(top = 92.dp, start = 20.dp),
         style = BbangZipTheme.typography.heading2Bold,
         onTextLayout = { textLayoutResult ->
             if (displayText == null) {
@@ -715,5 +758,6 @@ private fun SubjectDetailScreenPreview() {
         motivationMessage = "사장님의 각오 한마디를 작성해보세요",
         examDate = "2025년 1월 1일",
         examDDay = 14,
+        examName = "중간고사",
     )
 }

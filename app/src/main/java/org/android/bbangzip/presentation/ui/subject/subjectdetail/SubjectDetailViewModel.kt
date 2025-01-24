@@ -95,10 +95,26 @@ constructor(
             }
 
             SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
-            SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
-                // Todo
+            is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
+                Timber.tag("김재민").d("되나?")
+                setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
             }
+                is SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
+                }
+                SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
+                is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
+                    Timber.tag("김재민").d("되나?")
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
+                }
 
+                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickTab -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
+                }
             SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
             }
@@ -236,13 +252,19 @@ constructor(
                 state
             }
 
-            is SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
-                state.copy(
-                    isMenuOpen = !state.isMenuOpen,
-                )
+                SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
+                    state.copy(
+                        isMenuOpen = !state.isMenuOpen,
+                    )
+                }
+
+                is SubjectDetailContract.SubjectDetailReduce.UpdateExamName -> {
+                    state.copy(
+                        examName = if (reduce.index == 0) "중간고사" else "기말고사",
+                    )
+                }
             }
         }
-    }
 
     private suspend fun initData(subjectId: Int) {
         getSubjectDetail(

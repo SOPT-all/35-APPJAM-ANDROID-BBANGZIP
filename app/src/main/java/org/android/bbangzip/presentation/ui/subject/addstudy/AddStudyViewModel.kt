@@ -117,37 +117,73 @@ constructor(
                                 studyContent = currentUiState.studyContent ?: "",
                                 startPage = currentUiState.startPage ?: "",
                                 endPage = currentUiState.endPage ?: "",
-                                startPageList = divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0, event.pieceNumber),
-                                endPageList = divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1, event.pieceNumber + 1),
+                                startPageList = if (currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.startPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0, event.pieceNumber),
+                                endPageList = if (currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.endPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1, event.pieceNumber + 1),
+                                examName = currentUiState.examName,
                             ),
                     ),
                 )
                 updateState(AddStudyReduce.UpdateIsSuccess)
             }
+                AddStudyContract.AddStudyEvent.OnClickBackIcon -> { }
+                AddStudyContract.AddStudyEvent.OnClickDatePicker -> {
+                    updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
+                }
+                AddStudyContract.AddStudyEvent.OnClickEnrollBtn -> {
+                }
+                AddStudyContract.AddStudyEvent.OnClickNextBtn -> {
+                }
+                AddStudyContract.AddStudyEvent.OnClickCancleIcon -> {
+                    updateState(AddStudyReduce.ResetStudyContent)
+                }
+                is AddStudyContract.AddStudyEvent.OnClickPieceNumber -> {
+                    updateState(AddStudyReduce.UpdateAddStudyViewType)
+                    updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
+                    updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
+                    Timber.tag("김재민").d("addstudy에서 보내는 값$currentUiState")
+                    setSideEffect(
+                        AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
+                            addStudyData =
+                                AddStudyData(
+                                    subjectName = currentUiState.subjectName,
+                                    pieceNumber = event.pieceNumber,
+                                    examDate = currentUiState.examDate,
+                                    studyContent = currentUiState.studyContent ?: "",
+                                    startPage = currentUiState.startPage ?: "",
+                                    endPage = currentUiState.endPage ?: "",
+                                    startPageList = if (currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.startPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0, event.pieceNumber),
+                                    endPageList = if (currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.endPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1, event.pieceNumber + 1),
+                                    examName = currentUiState.examName,
+                                ),
+                        ),
+                    )
+                    updateState(AddStudyReduce.UpdateIsSuccess)
+                }
 
             AddStudyContract.AddStudyEvent.OnClickSplitBtn -> {
                 updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
             }
 
-            is AddStudyContract.AddStudyEvent.OnClickAgainSplitBtn -> {
-                updateState(AddStudyReduce.UpdateAddStudyViewType)
-                updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
-                setSideEffect(
-                    AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
-                        addStudyData =
-                            AddStudyData(
-                                subjectName = currentUiState.subjectName,
-                                pieceNumber = event.pieceNumber,
-                                examDate = currentUiState.examDate,
-                                studyContent = currentUiState.studyContent ?: "",
-                                startPage = currentUiState.startPage ?: "",
-                                endPage = currentUiState.endPage ?: "",
-                                startPageList = divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0, event.pieceNumber),
-                                endPageList = divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1, event.pieceNumber + 1),
-                            ),
-                    ),
-                )
-            }
+                is AddStudyContract.AddStudyEvent.OnClickAgainSplitBtn -> {
+                    updateState(AddStudyReduce.UpdateAddStudyViewType)
+                    updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
+                    setSideEffect(
+                        AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
+                            addStudyData =
+                                AddStudyData(
+                                    subjectName = currentUiState.subjectName,
+                                    pieceNumber = event.pieceNumber,
+                                    examDate = currentUiState.examDate,
+                                    studyContent = currentUiState.studyContent ?: "",
+                                    startPage = currentUiState.startPage ?: "",
+                                    endPage = currentUiState.endPage ?: "",
+                                    startPageList = currentUiState.startPageList,
+                                    endPageList = currentUiState.endPageList,
+                                    examName = currentUiState.examName,
+                                ),
+                        ),
+                    )
+                }
 
             AddStudyContract.AddStudyEvent.OnClickAddStudyBtn -> {
                 postAddStudy()
@@ -155,11 +191,27 @@ constructor(
         }
     }
 
-    override fun reduceState(
-        state: AddStudyContract.AddStudyState,
-        reduce: AddStudyReduce,
-    ): AddStudyContract.AddStudyState {
-        return when (reduce) {
+        override fun reduceState(
+            state: AddStudyContract.AddStudyState,
+            reduce: AddStudyReduce,
+        ): AddStudyContract.AddStudyState {
+            return when (reduce) {
+                is AddStudyReduce.Initialize -> {
+                    state.copy(
+                        subjectName = reduce.splitStudyData.subjectName,
+                        pieceNumber = reduce.splitStudyData.pieceNumber,
+                        examDate = reduce.splitStudyData.examDate,
+                        examName = reduce.splitStudyData.examName,
+                        studyContent = reduce.splitStudyData.studyContent,
+                        startPage = reduce.splitStudyData.startPage,
+                        endPage = reduce.splitStudyData.endPage,
+                        startPageList = reduce.splitStudyData.startPageList,
+                        endPageList = reduce.splitStudyData.endPageList,
+                        deadLineList = reduce.splitStudyData.deadLineList,
+                        addStudyViewType = reduce.splitStudyData.addStudyViewType,
+                        isSuccess = true,
+                    )
+                }
             is AddStudyReduce.Initialize -> {
                 state.copy(
                     subjectName = reduce.splitStudyData.subjectName,
