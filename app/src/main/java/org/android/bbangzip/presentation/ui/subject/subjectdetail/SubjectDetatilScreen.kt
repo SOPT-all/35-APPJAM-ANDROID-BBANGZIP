@@ -62,11 +62,17 @@ import timber.log.Timber
 @Composable
 fun SubjectDetailScreen(
     padding: PaddingValues,
+    isMenuOpen: Boolean,
     todoList: List<ToDoCardModel>,
     pieceViewType: PieceViewType,
     deletedSet: Set<Int>,
     revertCompleteBottomSheetState: Boolean,
     selectedItemId: Int,
+    subjectId: Int,
+    subjectName: String,
+    motivationMessage: String,
+    examDDay: Int,
+    examDate: String,
     onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
     onRevertCompleteBottomSheetApproveButtonClicked: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
@@ -74,6 +80,9 @@ fun SubjectDetailScreen(
     onCloseIconClicked: () -> Unit = {},
     onDeleteModeCardClicked: (Int) -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
+    onClickEnrollMotivationMessage: (Int, String) -> Unit = { _, _ -> },
+    onClickModifySubjectName: (Int, String) -> Unit = { _, _ -> },
+    onClickKebabMenu: () -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit = {},
     onCompleteCardClicked: (Int) -> Unit = {},
 ) {
@@ -90,10 +99,6 @@ fun SubjectDetailScreen(
 
     val tabs = listOf("중간고사", "기말고사")
     var selectedIndex by remember { mutableIntStateOf(0) }
-    var isMenuOpen by remember { mutableStateOf(false) }
-    var motivationMessage by remember { mutableStateOf("사장님의 각오 한마디를 작성해보세요") }
-    var dDay by remember { mutableIntStateOf(14) }
-    var examDay by remember { mutableStateOf("2025년 11월 25일") }
 
     Timber.d("${deletedSet.size}")
     Box(
@@ -172,8 +177,8 @@ fun SubjectDetailScreen(
                             onTrashIconClicked = onTrashIconClicked,
                             onDefaultCardClicked = onDefaultCardClicked,
                             onCompleteCardClicked = onCompleteCardClicked,
-                            dDay = dDay.toString(),
-                            examDay = examDay,
+                            dDay = examDDay.toString(),
+                            examDay = examDate,
                         )
                     }
 
@@ -193,8 +198,8 @@ fun SubjectDetailScreen(
                 backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 trailingIcon = R.drawable.ic_menu_kebab_default_24,
-                onTrailingIconClick = { isMenuOpen = !isMenuOpen },
-                title = "경제통계학",
+                onTrailingIconClick = { onClickKebabMenu() },
+                title = subjectName,
             )
             if (isMenuOpen) {
                 Box(
@@ -227,7 +232,9 @@ fun SubjectDetailScreen(
                                     .applyFilterOnClick(
                                         radius = 16.dp,
                                         isDisabled = false,
-                                    ) { }
+                                    ) {
+                                        onClickEnrollMotivationMessage(subjectId, subjectName)
+                                    }
                                     .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
                         )
                         Spacer(Modifier.weight(1f))
@@ -241,7 +248,7 @@ fun SubjectDetailScreen(
                                     .applyFilterOnClick(
                                         radius = 16.dp,
                                         isDisabled = false,
-                                    ) { }
+                                    ) { onClickModifySubjectName(subjectId, subjectName) }
                                     .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
                         )
                     }
@@ -303,7 +310,7 @@ private fun DefaultPieceView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = "시험까지 D-$dDay",
+                text = "시험까지 D$dDay",
                 style = BbangZipTheme.typography.caption1Medium,
                 color = BbangZipTheme.colors.staticWhite_FFFFFF,
                 modifier =
@@ -696,11 +703,17 @@ fun RevertCompleteBottomSheet(
 @Composable
 private fun SubjectDetailScreenPreview() {
     SubjectDetailScreen(
-        PaddingValues(64.dp),
-        emptyList(),
-        PieceViewType.DEFAULT,
-        emptySet(),
-        false,
+        padding = PaddingValues(64.dp),
+        todoList = emptyList(),
+        pieceViewType = PieceViewType.DEFAULT,
+        deletedSet = emptySet(),
+        isMenuOpen = false,
         selectedItemId = 0,
+        subjectId = 0,
+        subjectName = "",
+        revertCompleteBottomSheetState = true,
+        motivationMessage = "사장님의 각오 한마디를 작성해보세요",
+        examDate = "2025년 1월 1일",
+        examDDay = 14,
     )
 }

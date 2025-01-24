@@ -36,13 +36,13 @@ constructor(
         return savedState as? SubjectDetailContract.SubjectDetailState ?: SubjectDetailContract.SubjectDetailState()
     }
 
-    override fun handleEvent(event: SubjectDetailContract.SubjectDetailEvent) {
-        when (event) {
-            is SubjectDetailContract.SubjectDetailEvent.Initialize ->
-                launch {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectId(event.subjectId))
-                    initData(event.subjectId)
-                }
+        override fun handleEvent(event: SubjectDetailContract.SubjectDetailEvent) {
+            when (event) {
+                is SubjectDetailContract.SubjectDetailEvent.Initialize ->
+                    launch {
+                        updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData(event.subjectId, event.subjectName))
+                        initData(event.subjectId)
+                    }
 
             is SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked -> {
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDeleteMode)
@@ -52,12 +52,10 @@ constructor(
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
             }
 
-            is SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked -> {
-                Timber.d("OnDeleteModeCardClicked: ${event.pieceId}")
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteModeCardState(event.pieceId))
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet(event.pieceId))
-                Timber.d("OnDeleteModeCardClicked: ${event.pieceId}")
-            }
+                is SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteModeCardState(event.pieceId))
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet(event.pieceId))
+                }
 
             is SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked -> {
                 viewModelScope.launch {
@@ -89,6 +87,21 @@ constructor(
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
             }
 
+                is SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifyMotivation(subjectId = event.subjectId, subjectName = event.subjectName))
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
+                }
+                SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
+                SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
+                    // Todo
+                }
+
+                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                }
             is SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {
                 Timber.tag("[과목 관리]").d("버튼 클릭")
                 viewModelScope.launch { deleteStudyPiece() }
@@ -211,12 +224,29 @@ constructor(
                 )
             }
 
+                is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData -> {
+                    state.copy(
+                        subjectId = reduce.subjectId,
+                        subjectName = reduce.subjectName,
+                    )
+                }
             is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectId -> {
                 state.copy(
                     subjectId = reduce.subjectId,
                 )
             }
 
+                is SubjectDetailContract.SubjectDetailReduce.DeleteSelectedItemSet -> {
+                    state
+                }
+
+                SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
+                    state.copy(
+                        isMenuOpen = !state.isMenuOpen,
+                    )
+                }
+            }
+        }
             else -> state
         }
     }

@@ -22,6 +22,9 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStar
 import org.android.bbangzip.presentation.ui.splash.navigation.splashNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
+import org.android.bbangzip.presentation.ui.subject.addsubject.addSubjectNavGraph
+import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.modifyMotivationMessageNavGraph
+import org.android.bbangzip.presentation.ui.subject.modify.subjectname.modifySubjectNameNavGraph
 import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
 import org.android.bbangzip.presentation.ui.subject.splitstudy.splitStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
@@ -57,7 +60,9 @@ fun MainNavHost(
 
             loginNavGraph(
                 navigateToSubject = { navigator.navigateToSubject() },
-                navigateToOnboarding = { navigator.navigateToOnboardingStart() },
+                navigateToOnboarding = {
+                    navigator.navigateToOnboardingStart()
+                },
             )
 
             onboardingStartNavGraph(
@@ -102,20 +107,34 @@ fun MainNavHost(
             )
 
             subjectNavGraph(
-                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
-                navigateToSubjectDetail = { id -> navigator.navigateToSubjectDetail(id) },
+                navigateAddStudy = { navigator.navigateToAddStudy(it) },
+                navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
+                navigateToAddSubject = { navigator.navigateToAddSubject() },
                 padding = padding,
             )
 
             addStudyNavGraph(
                 padding = padding,
                 popBackStack = { navigator.popBackStackIfNotSubject() },
-                navigateSplitStudy = { navigator.navHostController.navigateSplitStudy(it) },
+                navigateSplitStudy = { navigator.navigateSplitStudy(it) },
+            )
+
+            modifySubjectNameNavGraph(
+                navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
+            )
+
+            modifyMotivationMessageNavGraph(
+                navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
+                snackbarHostState = snackBarHostState,
+            )
+
+            addSubjectNavGraph(
+                navigateSubject = { navigator.navigateToSubject() },
             )
 
             splitStudyNavGraph(
-                navigateBack = { navigator.navHostController.popBackStack() },
-                navigateAddStudy = { navigator.navHostController.navigateAddStudy(it) },
+                navigateBack = { navigator.popBackStackIfNotSubject() },
+                navigateAddStudy = { navigator.navigateToAddStudy(it) },
             )
 
             todoNavGraph(
@@ -127,8 +146,8 @@ fun MainNavHost(
             subjectDetailNavGraph(
                 padding = padding,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
-                navigateToModifyMotivation = { },
-                navigateToModifySubjectName = { },
+                navigateToModifyMotivation = { id, name -> navigator.navigateToModifyMotivationMessage(id, name) },
+                navigateToModifySubjectName = { id, name -> navigator.navigateToModifySubjectName(id, name) },
             )
 
             todoNavGraph(
