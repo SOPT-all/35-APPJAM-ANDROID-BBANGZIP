@@ -147,6 +147,7 @@ fun MainNavHost(
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
                 navigateToModifyMotivation = { id, name -> navigator.navigateToModifyMotivationMessage(id, name) },
                 navigateToModifySubjectName = { id, name -> navigator.navigateToModifySubjectName(id, name) },
+                navigateToAddStudy = {splitStudyData ->  navigator.navigateToAddStudy(splitStudyData)}
             )
 
             todoNavGraph(

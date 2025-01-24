@@ -53,6 +53,7 @@ fun SplitStudyScreen(
     startPage: String = "",
     endPage: String = "",
     examDate: String = "",
+    examName: String = "",
     studyContent: String = "",
     selectedIndex: Int = 0,
     selectedDate: Date = Date("2025", "1", "21"),
@@ -88,8 +89,7 @@ fun SplitStudyScreen(
 ) {
     val focusManager = LocalFocusManager.current
 
-    Timber.tag("지은아자지마").d("pieceNumber : $pieceNumber")
-    Timber.tag("[과목 관리]").d(startPageGuidelineList.toString())
+    Timber.tag("김재민").d("examName : $examName")
 
     val scrollState = rememberLazyListState()
     val isShadowed by remember {
@@ -164,7 +164,7 @@ fun SplitStudyScreen(
                                 Spacer(modifier = Modifier.width(4.dp))
 
                                 Text(
-                                    text = "까지",
+                                    text = "부터",
                                     style = BbangZipTheme.typography.label1Bold,
                                     color = BbangZipTheme.colors.labelAlternative_282119_61,
                                 )
@@ -281,6 +281,7 @@ fun SplitStudyScreen(
                         subjectName = subjectName,
                         pieceNumber = pieceNumber,
                         examDate = examDate,
+                        examName = examName,
                         studyContent = studyContent,
                         startPage = startPage,
                         endPage = endPage,

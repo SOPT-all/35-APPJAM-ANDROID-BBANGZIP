@@ -49,6 +49,7 @@ fun AddStudyScreen(
     pieceNumber: Int,
     subjectTitle: String = "",
     examDate: String = "",
+    examName: String = "",
     studyContent: String = "",
     startPage: String = "",
     startGuideline: String = "",
@@ -79,6 +80,8 @@ fun AddStudyScreen(
     onClickAgainSplitBtn: (Int) -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
+
+    Timber.tag("김재민").d("AddStudyScreenExamName : $examName")
 
     Column(
         modifier =

@@ -149,6 +149,7 @@ class SplitStudyViewModel
                         pieceNumber = reduce.addStudyData.pieceNumber,
                         startPageList = reduce.addStudyData.startPageList,
                         endPageList = reduce.addStudyData.endPageList,
+                        examName = reduce.addStudyData.examName,
                         dateList =
                             divideDatesByN(dateStringToLocalDate(reduce.addStudyData.examDate), reduce.addStudyData.pieceNumber).map { localDateToDate(it) },
                         startPageFocusedStateList = List(reduce.addStudyData.pieceNumber) { false },
@@ -304,6 +305,7 @@ class SplitStudyViewModel
                                     startPage = event.splitStudyData.startPage,
                                     endPage = event.splitStudyData.endPage,
                                     addStudyViewType = event.splitStudyData.addStudyViewType,
+                                    examName = event.splitStudyData.examName
                                 ),
                         ),
                     )

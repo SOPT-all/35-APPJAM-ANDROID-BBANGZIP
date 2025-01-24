@@ -6,6 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import kotlinx.serialization.Serializable
+import org.android.bbangzip.presentation.model.SplitStudyData
 
 fun NavController.navigateToSubjectDetail(
     subjectId: Int,
@@ -25,6 +26,7 @@ fun NavGraphBuilder.subjectDetailNavGraph(
     navigateToBack: () -> Unit = {},
     navigateToModifyMotivation: (Int, String) -> Unit = { _, _ -> },
     navigateToModifySubjectName: (Int, String) -> Unit = { _, _ -> },
+    navigateToAddStudy: (SplitStudyData) -> Unit = {},
 ) {
     composable<SubjectDetailRoute> { backStackEntry ->
         SubjectDetailRoute(
@@ -34,6 +36,7 @@ fun NavGraphBuilder.subjectDetailNavGraph(
             navigateToBack = navigateToBack,
             navigateToModifyMotivation = navigateToModifyMotivation,
             navigateToModifySubjectName = navigateToModifySubjectName,
+            navigateToAddStudy = navigateToAddStudy
         )
     }
 }

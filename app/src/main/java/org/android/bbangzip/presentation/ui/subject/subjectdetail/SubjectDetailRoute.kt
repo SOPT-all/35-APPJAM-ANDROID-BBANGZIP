@@ -7,6 +7,7 @@ import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
+import org.android.bbangzip.presentation.model.SplitStudyData
 
 @Composable
 fun SubjectDetailRoute(
@@ -16,6 +17,7 @@ fun SubjectDetailRoute(
     navigateToBack: () -> Unit,
     navigateToModifyMotivation: (Int, String) -> Unit,
     navigateToModifySubjectName: (Int, String) -> Unit,
+    navigateToAddStudy: (SplitStudyData) -> Unit,
     viewModel: SubjectDetailViewModel = hiltViewModel(),
 ) {
     val subjectDetailState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -30,7 +32,7 @@ fun SubjectDetailRoute(
 //                    navigateToModifyMotivation()
                 }
                 is SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy -> {
-//                    navigateToModifySubjectName("")
+                    navigateToAddStudy(effect.splitStudyData)
                 }
                 is SubjectDetailContract.SubjectDetailSideEffect.ShowDeleteSuccessSnackBar -> {
                 }
@@ -59,6 +61,8 @@ fun SubjectDetailRoute(
         motivationMessage = subjectDetailState.motivationMessage,
         examDDay = subjectDetailState.examDday,
         examDate = subjectDetailState.examDate,
+        examName = subjectDetailState.examName,
+        onClickTab = { index -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickTab(index)) },
         onCloseIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked) },
         onTrashIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked) },
         onDeleteModeCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked(id)) },
@@ -67,6 +71,7 @@ fun SubjectDetailRoute(
         onClickEnrollMotivationMessage = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage(id, name)) },
         onClickModifySubjectName = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName(id, name)) },
         onClickKebabMenu = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu) },
+        onClickAddStudy = { splitStudyData -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked(splitStudyData)) },
         onRevertCompleteBottomSheetDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest) },
         onRevertCompleteBottomSheetApproveButtonClicked = { pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
         onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },

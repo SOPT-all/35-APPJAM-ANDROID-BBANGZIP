@@ -9,6 +9,7 @@ import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyContract.AddStudyReduce
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.casting.pageToInt
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -93,6 +94,7 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateAddStudyViewType)
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
                     updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
+                    Timber.tag("김재민").d("addstudy에서 보내는 값${currentUiState}")
                     setSideEffect(
                         AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
                             addStudyData =
@@ -103,8 +105,9 @@ class AddStudyViewModel
                                     studyContent = currentUiState.studyContent ?: "",
                                     startPage = currentUiState.startPage ?: "",
                                     endPage = currentUiState.endPage ?: "",
-                                    startPageList = divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0, event.pieceNumber),
-                                    endPageList = divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1, event.pieceNumber + 1),
+                                    startPageList = if(currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.startPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0, event.pieceNumber),
+                                    endPageList = if(currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.endPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1, event.pieceNumber + 1),
+                                    examName = currentUiState.examName
                                 ),
                         ),
                     )
@@ -128,8 +131,9 @@ class AddStudyViewModel
                                     studyContent = currentUiState.studyContent ?: "",
                                     startPage = currentUiState.startPage ?: "",
                                     endPage = currentUiState.endPage ?: "",
-                                    startPageList = divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0, event.pieceNumber),
-                                    endPageList = divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1, event.pieceNumber + 1),
+                                    startPageList = currentUiState.startPageList,
+                                    endPageList = currentUiState.endPageList,
+                                    examName = currentUiState.examName
                                 ),
                         ),
                     )
@@ -147,6 +151,7 @@ class AddStudyViewModel
                         subjectName = reduce.splitStudyData.subjectName,
                         pieceNumber = reduce.splitStudyData.pieceNumber,
                         examDate = reduce.splitStudyData.examDate,
+                        examName = reduce.splitStudyData.examName,
                         studyContent = reduce.splitStudyData.studyContent,
                         startPage = reduce.splitStudyData.startPage,
                         endPage = reduce.splitStudyData.endPage,
