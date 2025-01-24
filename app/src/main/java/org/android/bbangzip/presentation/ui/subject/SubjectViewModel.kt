@@ -3,7 +3,9 @@ package org.android.bbangzip.presentation.ui.subject
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.android.bbangzip.domain.usecase.DeleteSubjectsUseCase
 import org.android.bbangzip.domain.usecase.GetSubjectInfoUseCase
+import org.android.bbangzip.domain.usecase.PostAddSubjectNameUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.SubjectCardModel
 import org.android.bbangzip.presentation.type.CardViewType
@@ -16,6 +18,8 @@ class SubjectViewModel
     @Inject
     constructor(
         private val getSubjectInfoUseCase: GetSubjectInfoUseCase,
+        private val deleteSubjectsUseCase: DeleteSubjectsUseCase,
+        private val postAddSubjectNameUseCase: PostAddSubjectNameUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<SubjectContract.SubjectEvent, SubjectContract.SubjectState, SubjectContract.SubjectReduce, SubjectContract.SubjectSideEffect>(
             savedStateHandle = savedStateHandle,
@@ -124,6 +128,12 @@ class SubjectViewModel
                         subjectList = reduce.subjectList,
                     )
                 }
+
+                is SubjectContract.SubjectReduce.RestoreDeletedSet -> {
+                    state.copy(
+                        subjectSetToDelete = setOf(),
+                    )
+                }
             }
         }
 
@@ -156,6 +166,27 @@ class SubjectViewModel
                     updateState(SubjectContract.SubjectReduce.UpdateSubjectCardList(subjectList = subjectCardList))
                 }.onFailure { error ->
                     Timber.tag("SubjectInfo").d(error)
+                }
+        }
+
+        private suspend fun deleteSubjects() {
+            deleteSubjectsUseCase()
+                .onSuccess {
+                    updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
+                    getSubjectInfo()
+                }
+                .onFailure { error ->
+                    Timber.tag("이승범").d(error)
+                }
+        }
+
+        private suspend fun postAddSubjectName() {
+            postAddSubjectNameUseCase()
+                .onSuccess {
+                    Timber.tag("AddSubject").d("AddSubjectName 성공")
+                }
+                .onFailure { error ->
+                    Timber.tag("이승범").d(error)
                 }
         }
     }

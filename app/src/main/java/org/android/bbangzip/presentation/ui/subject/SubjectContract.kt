@@ -40,6 +40,8 @@ class SubjectContract {
         data class UpdateSubjectCardList(val subjectList: List<SubjectCardModel>) : SubjectReduce
 
         data class UpdateDeletedSet(val subjectId: Int) : SubjectReduce
+
+        data object RestoreDeletedSet : SubjectReduce
     }
 
     sealed interface SubjectSideEffect : BaseContract.SideEffect {
