@@ -37,6 +37,7 @@ fun SplitStudyRoute(
 
     if (splitStudyState.isSuccess) {
         SplitStudyScreen(
+            subjectId = splitStudyState.subjectId,
             pieceNumber = splitStudyState.pieceNumber,
             subjectName = splitStudyState.subjectName,
             examDate = splitStudyState.examDate,
@@ -58,7 +59,7 @@ fun SplitStudyRoute(
             seletedDateList = splitStudyState.dateList,
             isSaveEnable = splitStudyState.isSaveEnable,
             onBackBtnClick = {
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickBackIcon)
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickBackIcon(it))
             },
             onChangeStartPage = { index, value ->
                 viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPage(index, value))

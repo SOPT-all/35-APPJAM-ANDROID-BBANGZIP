@@ -8,9 +8,11 @@ import org.android.bbangzip.domain.repository.remote.DummyRepository
 import org.android.bbangzip.domain.repository.remote.ExamRepository
 import org.android.bbangzip.domain.repository.remote.MyPageRepository
 import org.android.bbangzip.domain.repository.remote.PieceRepository
+import org.android.bbangzip.domain.repository.remote.StudyRepository
 import org.android.bbangzip.domain.repository.remote.SubjectRepository
 import org.android.bbangzip.domain.repository.remote.UserRepository
 import org.android.bbangzip.domain.usecase.DeleteLogoutUseCase
+import org.android.bbangzip.domain.usecase.DeleteStudyPieceUseCase
 import org.android.bbangzip.domain.usecase.DeleteSubjectsUseCase
 import org.android.bbangzip.domain.usecase.DeleteWithdrawUseCase
 import org.android.bbangzip.domain.usecase.FetchBbangZipUseCase
@@ -21,6 +23,7 @@ import org.android.bbangzip.domain.usecase.GetBadgeDetailUseCase
 import org.android.bbangzip.domain.usecase.GetSubjectDetailUseCase
 import org.android.bbangzip.domain.usecase.GetSubjectInfoUseCase
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
+import org.android.bbangzip.domain.usecase.PostAddStudyUseCase
 import org.android.bbangzip.domain.usecase.PostAddSubjectNameUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
 import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
@@ -122,4 +125,14 @@ class UseCaseModule {
     @Singleton
     fun providesPutSubjectOptionsUseCase(subjectRepository: SubjectRepository): PutSubjectOptionsUseCase =
         PutSubjectOptionsUseCase(subjectRepository = subjectRepository)
+
+    @Provides
+    @Singleton
+    fun providesPostAddStudyUseCase(studyRepository: StudyRepository): PostAddStudyUseCase =
+        PostAddStudyUseCase(studyRepository = studyRepository)
+
+    @Provides
+    @Singleton
+    fun providesDeleteStudyPieceUseCase(studyRepository: StudyRepository): DeleteStudyPieceUseCase =
+        DeleteStudyPieceUseCase(studyRepository = studyRepository)
 }

@@ -12,6 +12,7 @@ class SplitStudyContract {
     @Parcelize
     data class SplitStudyState(
         val isSuccess: Boolean = false,
+        val subjectId: Int = 0,
         val subjectName: String = "경제통계학",
         val startPage: String = "",
         val endPage: String = "",
@@ -51,7 +52,7 @@ class SplitStudyContract {
 
         data class OnClickDatePicker(val index: Int) : SplitStudyEvent
 
-        data object OnClickBackIcon : SplitStudyEvent
+        data class OnClickBackIcon(val splitStudyData: SplitStudyData) : SplitStudyEvent
 
         data object OnClickNextBtn : SplitStudyEvent
 

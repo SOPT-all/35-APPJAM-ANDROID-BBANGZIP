@@ -9,6 +9,7 @@ import org.android.bbangzip.data.repositoryImpl.remote.DummyRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.remote.ExamRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.remote.MyPageRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.remote.PieceRepositoryImpl
+import org.android.bbangzip.data.repositoryImpl.remote.StudyRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.remote.SubjectRepositoryImpl
 import org.android.bbangzip.data.repositoryImpl.remote.UserRepositoryImpl
 import org.android.bbangzip.domain.repository.local.UserLocalRepository
@@ -16,6 +17,7 @@ import org.android.bbangzip.domain.repository.remote.DummyRepository
 import org.android.bbangzip.domain.repository.remote.ExamRepository
 import org.android.bbangzip.domain.repository.remote.MyPageRepository
 import org.android.bbangzip.domain.repository.remote.PieceRepository
+import org.android.bbangzip.domain.repository.remote.StudyRepository
 import org.android.bbangzip.domain.repository.remote.SubjectRepository
 import org.android.bbangzip.domain.repository.remote.UserRepository
 import javax.inject.Singleton
@@ -50,4 +52,8 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindsSubjectRepository(repositoryImpl: SubjectRepositoryImpl): SubjectRepository
+
+    @Binds
+    @Singleton
+    abstract fun bindsServiceRepository(repositoryImpl: StudyRepositoryImpl): StudyRepository
 }

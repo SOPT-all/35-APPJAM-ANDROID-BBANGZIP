@@ -127,11 +127,7 @@ class SplitStudyViewModel
                                         if (state.startPageFocusedStateList[index]) {
                                             state.startPageList[index].filter { it.isDigit() }.toInt().toString()
                                         } else {
-                                            if (state.startPageList[index].last() == 'p') {
-                                                state.startPageList[index].dropLast(1)
-                                            } else {
-                                                state.startPageList[index].toInt().toString() + "p"
-                                            }
+                                            state.startPageList[index].toInt().toString() + "p"
                                         }
                                     }
                                 }
@@ -141,6 +137,7 @@ class SplitStudyViewModel
 
                 is SplitStudyContract.SplitStudyReduce.InitializeState -> {
                     state.copy(
+                        subjectId = reduce.addStudyData.subjectId,
                         subjectName = reduce.addStudyData.subjectName,
                         startPage = reduce.addStudyData.startPage,
                         examDate = reduce.addStudyData.examDate,
@@ -274,8 +271,8 @@ class SplitStudyViewModel
                     updateState(SplitStudyContract.SplitStudyReduce.InitializeState(addStudyData = event.addStudyData))
                     updateState(SplitStudyContract.SplitStudyReduce.UpdateState)
                 }
-                SplitStudyContract.SplitStudyEvent.OnClickBackIcon -> {
-                    setSideEffect(SplitStudyContract.SplitStudySideEffect.NavigateBack)
+                is SplitStudyContract.SplitStudyEvent.OnClickBackIcon -> {
+                    setSideEffect(SplitStudyContract.SplitStudySideEffect.NavigateAddStudy(event.splitStudyData))
                 }
 
                 is SplitStudyContract.SplitStudyEvent.OnClickConfirmDateBtn -> {
@@ -295,6 +292,7 @@ class SplitStudyViewModel
                         SplitStudyContract.SplitStudySideEffect.NavigateAddStudy(
                             splitStudyData =
                                 SplitStudyData(
+                                    subjectId = event.splitStudyData.subjectId,
                                     subjectName = event.splitStudyData.subjectName,
                                     pieceNumber = event.splitStudyData.pieceNumber,
                                     examDate = event.splitStudyData.examDate,

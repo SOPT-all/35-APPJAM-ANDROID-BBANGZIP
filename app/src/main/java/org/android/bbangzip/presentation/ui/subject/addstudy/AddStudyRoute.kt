@@ -13,10 +13,11 @@ import org.android.bbangzip.presentation.model.SplitStudyData
 @Composable
 fun AddStudyRoute(
     padding: PaddingValues,
-    popBackStack: () -> Unit,
     splitStudyData: SplitStudyData,
     viewModel: AddStudyViewModel = hiltViewModel(),
+    popBackStack: () -> Unit = {},
     navigateSplitStudy: (AddStudyData) -> Unit = {},
+    navigateSubjectDetail: (Int, String) -> Unit = { _, _ -> },
 ) {
     LaunchedEffect(Unit) {
         viewModel.setEvent(AddStudyContract.AddStudyEvent.Initialize(splitStudyData = splitStudyData))
@@ -28,6 +29,8 @@ fun AddStudyRoute(
                 is AddStudyContract.AddStudySideEffect.NavigateSplitStudy -> {
                     navigateSplitStudy(it.addStudyData)
                 }
+                is AddStudyContract.AddStudySideEffect.PopBackStack -> popBackStack()
+                is AddStudyContract.AddStudySideEffect.NavigateSubjectDetail -> navigateSubjectDetail(it.subjectId, it.subjectName)
             }
         }
     }
@@ -68,6 +71,8 @@ fun AddStudyRoute(
             onClickCancleIcon = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickCancleIcon) },
             onClickConfirmDateBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickConfirmDateBtn) },
             onClickAgainSplitBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAgainSplitBtn(it)) },
+            onClickAddStudyBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAddStudyBtn) },
+            onClickBackIcon = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickBackIcon) },
         )
     }
 }

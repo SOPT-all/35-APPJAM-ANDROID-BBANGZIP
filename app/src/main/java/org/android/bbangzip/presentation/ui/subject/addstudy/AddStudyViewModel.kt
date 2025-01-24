@@ -2,13 +2,19 @@ package org.android.bbangzip.presentation.ui.subject.addstudy
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
+import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
+import org.android.bbangzip.domain.model.AddStudyEntity
+import org.android.bbangzip.domain.usecase.PostAddStudyUseCase
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyContract.AddStudyReduce
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.casting.pageToInt
+import org.android.bbangzip.presentation.util.date.addLeadingZero
+import org.android.bbangzip.presentation.util.date.formatDate
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -16,6 +22,7 @@ import javax.inject.Inject
 class AddStudyViewModel
     @Inject
     constructor(
+        private val postAddStudyUseCase: PostAddStudyUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<AddStudyContract.AddStudyEvent, AddStudyContract.AddStudyState, AddStudyReduce, AddStudyContract.AddStudySideEffect>(
             savedStateHandle = savedStateHandle,
@@ -31,12 +38,15 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateSplitButtonEnabled)
                     updateState(AddStudyReduce.UpdateButtonEnabled)
                 }
+
                 is AddStudyContract.AddStudyEvent.OnChangeEndPage -> {
                     updateState(AddStudyReduce.UpdateEndPage(endPage = event.endPage))
                 }
+
                 is AddStudyContract.AddStudyEvent.OnChangeStartPage -> {
                     updateState(AddStudyReduce.UpdateStartPage(startPage = event.startPage))
                 }
+
                 is AddStudyContract.AddStudyEvent.OnChangeStartPageFocused -> {
                     updateState(AddStudyReduce.UpdateStartPageFocusedState(startPageFocusedState = event.startPageFocusedState))
                     updateState(AddStudyReduce.UpdateStartPageToString)
@@ -80,17 +90,22 @@ class AddStudyViewModel
                 }
 
                 AddStudyContract.AddStudyEvent.OnClickBackIcon -> {
+                    setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
                 }
                 AddStudyContract.AddStudyEvent.OnClickDatePicker -> {
                     updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
                 }
+
                 AddStudyContract.AddStudyEvent.OnClickEnrollBtn -> {
                 }
+
                 AddStudyContract.AddStudyEvent.OnClickNextBtn -> {
                 }
+
                 AddStudyContract.AddStudyEvent.OnClickCancleIcon -> {
                     updateState(AddStudyReduce.ResetStudyContent)
                 }
+
                 is AddStudyContract.AddStudyEvent.OnClickPieceNumber -> {
                     updateState(AddStudyReduce.UpdateAddStudyViewType)
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
@@ -100,6 +115,7 @@ class AddStudyViewModel
                         AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
                             addStudyData =
                                 AddStudyData(
+                                    subjectId = currentUiState.subjectId,
                                     subjectName = currentUiState.subjectName,
                                     pieceNumber = event.pieceNumber,
                                     examDate = currentUiState.examDate,
@@ -115,6 +131,22 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateIsSuccess)
                 }
 
+                AddStudyContract.AddStudyEvent.OnClickBackIcon -> {
+                }
+                AddStudyContract.AddStudyEvent.OnClickDatePicker -> {
+                    updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
+                }
+
+                AddStudyContract.AddStudyEvent.OnClickEnrollBtn -> {
+                }
+
+                AddStudyContract.AddStudyEvent.OnClickNextBtn -> {
+                }
+
+                AddStudyContract.AddStudyEvent.OnClickCancleIcon -> {
+                    updateState(AddStudyReduce.ResetStudyContent)
+                }
+
                 AddStudyContract.AddStudyEvent.OnClickSplitBtn -> {
                     updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
                 }
@@ -126,6 +158,7 @@ class AddStudyViewModel
                         AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
                             addStudyData =
                                 AddStudyData(
+                                    subjectId = currentUiState.subjectId,
                                     subjectName = currentUiState.subjectName,
                                     pieceNumber = event.pieceNumber,
                                     examDate = currentUiState.examDate,
@@ -139,6 +172,10 @@ class AddStudyViewModel
                         ),
                     )
                 }
+
+                AddStudyContract.AddStudyEvent.OnClickAddStudyBtn -> {
+                    postAddStudy()
+                }
             }
         }
 
@@ -149,6 +186,7 @@ class AddStudyViewModel
             return when (reduce) {
                 is AddStudyReduce.Initialize -> {
                     state.copy(
+                        subjectId = reduce.splitStudyData.subjectId,
                         subjectName = reduce.splitStudyData.subjectName,
                         pieceNumber = reduce.splitStudyData.pieceNumber,
                         examDate = reduce.splitStudyData.examDate,
@@ -205,26 +243,31 @@ class AddStudyViewModel
                         endPageFocusedState = reduce.endPageFocusedState,
                     )
                 }
+
                 AddStudyReduce.UpdateStartPageInputState -> {
                     state.copy(
                         startPageTextFieldState = determineStartTextFieldType(state.startPage ?: "", state.endPage ?: "", state.startPageFocusedState),
                     )
                 }
+
                 AddStudyReduce.UpdateEndPageInputState -> {
                     state.copy(
                         endPageTextFieldState = determineEndTextFieldType(state.endPage ?: "", state.startPage ?: "", state.endPageFocusedState),
                     )
                 }
+
                 is AddStudyReduce.UpdateStartPageFocusedState -> {
                     state.copy(
                         startPageFocusedState = reduce.startPageFocusedState,
                     )
                 }
+
                 is AddStudyReduce.UpdateStudyContentFocusedState -> {
                     state.copy(
                         studyContentFocusedState = reduce.studyContentFocusedState,
                     )
                 }
+
                 AddStudyReduce.UpdateStudyContentInputState -> {
                     val checkedText = determineLongTextFieldType(state.studyContent ?: "", state.studyContentFocusedState)
                     state.copy(studyContentTextFieldState = checkedText)
@@ -245,11 +288,7 @@ class AddStudyViewModel
                                 if (state.startPageFocusedState) {
                                     state.startPage.filter { it.isDigit() }.toInt().toString()
                                 } else {
-                                    if (state.startPage.last() == 'p') {
-                                        state.startPage.dropLast(1)
-                                    } else {
-                                        state.startPage.toInt().toString() + "p"
-                                    }
+                                    state.startPage.toInt().toString() + "p"
                                 }
                             },
                     )
@@ -264,11 +303,7 @@ class AddStudyViewModel
                                 if (state.endPageFocusedState) {
                                     state.endPage.filter { it.isDigit() }.toInt().toString()
                                 } else {
-                                    if (state.endPage.last() == 'p') {
-                                        state.endPage.dropLast(1)
-                                    } else {
-                                        state.endPage.toInt().toString() + "p"
-                                    }
+                                    state.endPage.toInt().toString() + "p"
                                 }
                             },
                     )
@@ -291,6 +326,7 @@ class AddStudyViewModel
                         studyContent = "",
                     )
                 }
+
                 AddStudyReduce.UpdateAddStudyViewType -> {
                     state.copy(
                         addStudyViewType = AddStudyViewType.AGAIN,
@@ -327,6 +363,33 @@ class AddStudyViewModel
                                 "까지"
                             },
                     )
+                }
+            }
+        }
+
+        private fun postAddStudy() {
+            viewModelScope.launch {
+                postAddStudyUseCase.invoke(
+                    AddStudyEntity(
+                        subjectId = currentUiState.subjectId.toLong(),
+                        examName = currentUiState.examName,
+                        examDate = formatDate(currentUiState.examDate),
+                        studyContents = currentUiState.studyContent ?: "",
+                        pieceList =
+                            currentUiState.startPageList.mapIndexed { index, startPage ->
+                                AddStudyEntity.Piece(
+                                    startPage = startPage.filter { it.isDigit() }.toIntOrNull() ?: 0,
+                                    finishPage = currentUiState.endPageList[index].filter { it.isDigit() }.toIntOrNull() ?: 0,
+                                    deadline = addLeadingZero(currentUiState.deadLineList.getOrNull(index) ?: ""),
+                                )
+                            },
+                    ),
+                ).onSuccess { data ->
+                    if (data.badgesList.isNotEmpty()) {
+                    }
+                    setSideEffect(AddStudyContract.AddStudySideEffect.NavigateSubjectDetail(currentUiState.subjectId, currentUiState.subjectName))
+                }.onFailure {
+                    Timber.tag("[공부 추가하기]").d(error.toString())
                 }
             }
         }

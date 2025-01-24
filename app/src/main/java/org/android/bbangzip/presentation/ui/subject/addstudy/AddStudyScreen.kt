@@ -78,6 +78,7 @@ fun AddStudyScreen(
     onClickCancleIcon: () -> Unit = {},
     onClickConfirmDateBtn: () -> Unit = {},
     onClickAgainSplitBtn: (Int) -> Unit = {},
+    onClickAddStudyBtn: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -91,6 +92,7 @@ fun AddStudyScreen(
                 .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         BbangZipBaseTopBar(
+            onLeadingIconClick = { onClickBackIcon() },
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
             title = subjectTitle,
         )
@@ -220,7 +222,7 @@ fun AddStudyScreen(
             BbangZipButton(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
-                onClick = {},
+                onClick = { onClickAddStudyBtn() },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_enroll_study_label),
                 trailingIcon = R.drawable.ic_plus_thick_24,

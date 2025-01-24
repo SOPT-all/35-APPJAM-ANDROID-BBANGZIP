@@ -60,6 +60,38 @@ fun SubjectDetailRoute(
         }
     }
 
+    SubjectDetailScreen(
+        padding = padding,
+        state = subjectDetailState,
+        isMenuOpen = subjectDetailState.isMenuOpen,
+        todoList = subjectDetailState.todoList,
+        pieceViewType = subjectDetailState.pieceViewType,
+        deletedSet = subjectDetailState.selectedItemSet,
+        revertCompleteBottomSheetState = subjectDetailState.revertCompleteBottomSheetState,
+        selectedItemId = subjectDetailState.selectedItemId,
+        onClickCancleBtn = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked) },
+        subjectId = subjectDetailState.subjectId,
+        subjectName = subjectDetailState.subjectName,
+        motivationMessage = subjectDetailState.motivationMessage,
+        examDDay = subjectDetailState.examDday,
+        examDate = subjectDetailState.examDate,
+        examName = subjectDetailState.examName,
+        onClickTab = { index -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickTab(index)) },
+        onCloseIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked) },
+        onTrashIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked) },
+        onDeleteModeCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked(id)) },
+        onDefaultCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked(id)) },
+        onCompleteCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked(id)) },
+        onClickEnrollMotivationMessage = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage(id, name)) },
+        onClickModifySubjectName = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName(id, name)) },
+        onClickKebabMenu = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu) },
+        onClickAddStudy = { splitStudyData -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked(splitStudyData)) },
+        onRevertCompleteBottomSheetDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest) },
+        onRevertCompleteBottomSheetApproveButtonClicked = { pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
+        onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },
+        onClickBadgeCloseBtn = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickGetBadgeBottomSheetCloseBtn) },
+        popBackStack = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickBackIconBtn) },
+    )
     when (success) {
         true ->
             SubjectDetailScreen(
