@@ -36,7 +36,7 @@ class SubjectDetailViewModel
             when (event) {
                 is SubjectDetailContract.SubjectDetailEvent.Initialize ->
                     launch {
-                        updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectId(event.subjectId))
+                        updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData(event.subjectId, event.subjectName))
                         initData(event.subjectId)
                     }
 
@@ -49,10 +49,8 @@ class SubjectDetailViewModel
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked -> {
-                    Timber.d("OnDeleteModeCardClicked: ${event.pieceId}")
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteModeCardState(event.pieceId))
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet(event.pieceId))
-                    Timber.d("OnDeleteModeCardClicked: ${event.pieceId}")
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked -> {
@@ -74,7 +72,6 @@ class SubjectDetailViewModel
                     }
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateCompleteCardState)
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
-                    // TODO 사이드 이펙트 스낵바
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> {
@@ -85,7 +82,21 @@ class SubjectDetailViewModel
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
                 }
 
-                else -> {}
+                is SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifyMotivation(subjectId = event.subjectId, subjectName = event.subjectName))
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
+                }
+                SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
+                SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
+                    // Todo
+                }
+
+                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                }
             }
         }
 
@@ -202,13 +213,22 @@ class SubjectDetailViewModel
                     )
                 }
 
-                is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectId -> {
+                is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData -> {
                     state.copy(
                         subjectId = reduce.subjectId,
+                        subjectName = reduce.subjectName,
                     )
                 }
 
-                else -> state
+                is SubjectDetailContract.SubjectDetailReduce.DeleteSelectedItemSet -> {
+                    state
+                }
+
+                SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
+                    state.copy(
+                        isMenuOpen = !state.isMenuOpen,
+                    )
+                }
             }
         }
 

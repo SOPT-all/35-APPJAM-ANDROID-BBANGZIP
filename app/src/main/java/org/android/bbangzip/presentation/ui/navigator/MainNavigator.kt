@@ -8,8 +8,10 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navOptions
+import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
 import org.android.bbangzip.presentation.model.Route
+import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.type.BottomNavigationType
 import org.android.bbangzip.presentation.ui.friend.navigation.navigateFriend
 import org.android.bbangzip.presentation.ui.login.navigateLogin
@@ -21,7 +23,12 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.splash.navigation.SplashRoute
 import org.android.bbangzip.presentation.ui.splash.navigation.navigateSplash
+import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
+import org.android.bbangzip.presentation.ui.subject.addsubject.navigateToAddSubject
+import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.navigateToModifyMotivationMessage
+import org.android.bbangzip.presentation.ui.subject.modify.subjectname.navigateToModifySubjectName
 import org.android.bbangzip.presentation.ui.subject.navigateSubject
+import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
 import org.android.bbangzip.presentation.ui.subject.subjectdetail.navigateToSubjectDetail
 import org.android.bbangzip.presentation.ui.todo.navigation.navigateTodo
 import org.android.bbangzip.presentation.ui.todo.pendingtodoadd.navigation.navigateTodoAddPending
@@ -71,21 +78,50 @@ class MainNavigator(
         navHostController.navigateSplash()
     }
 
+    fun navigateToLogin() {
+        navHostController.navigateLogin()
+    }
+
     fun navigateToSubject() {
         navHostController.navigateSubject()
     }
 
-    fun navigateToLogin() {
-        navHostController.navigateLogin()
+    fun navigateToAddStudy(splitStudyData: SplitStudyData) {
+        navHostController.navigateAddStudy(splitStudyData = splitStudyData)
+    }
+
+    fun navigateToSplitStudy(addStudyData: AddStudyData) {
+        navHostController.navigateSplitStudy(addStudyData = addStudyData)
     }
 
     fun navigateToOnboardingStart() {
         navHostController.navigateOnboardingStart()
     }
 
-    fun navigateToSubjectDetail(subjectId: Int) {
+    fun navigateToSubjectDetail(
+        subjectId: Int,
+        subjectName: String,
+    ) {
         Timber.tag("navaigateSubject").d("subjectId")
-        navHostController.navigateToSubjectDetail(subjectId)
+        navHostController.navigateToSubjectDetail(subjectId, subjectName)
+    }
+
+    fun navigateToAddSubject() {
+        navHostController.navigateToAddSubject()
+    }
+
+    fun navigateToModifyMotivationMessage(
+        subjectId: Int,
+        subjectName: String,
+    ) {
+        navHostController.navigateToModifyMotivationMessage(subjectId, subjectName)
+    }
+
+    fun navigateToModifySubjectName(
+        subjectId: Int,
+        subjectName: String,
+    ) {
+        navHostController.navigateToModifySubjectName(subjectId, subjectName)
     }
 
     fun navigateToMyBadgeCategory() {

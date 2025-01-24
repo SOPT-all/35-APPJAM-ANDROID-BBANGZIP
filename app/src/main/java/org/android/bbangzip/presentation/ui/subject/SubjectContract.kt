@@ -23,7 +23,12 @@ class SubjectContract {
 
         data object OnClickCancleIcon : SubjectEvent
 
-        data class OnClickStudyCard(val subjectId: Int) : SubjectEvent
+        data class OnClickStudyCard(
+            val subjectId: Int,
+            val subjectName: String,
+        ) : SubjectEvent
+
+        data object OnClickAddSubject : SubjectEvent
 
         data class OnClickDeleteModeCard(val subjectId: Int) : SubjectEvent
 
@@ -49,7 +54,10 @@ class SubjectContract {
 
         data object NavigateToAddStudy : SubjectSideEffect
 
-        data class NavigateToSubjectDetail(val subjectId: Int) : SubjectSideEffect
+        data class NavigateToSubjectDetail(
+            val subjectId: Int,
+            val subjectName: String,
+        ) : SubjectSideEffect
 
         data object ShowDeleteSuccessSnackBar : SubjectSideEffect
     }
