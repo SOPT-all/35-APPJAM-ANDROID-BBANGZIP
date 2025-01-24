@@ -374,7 +374,7 @@ private fun DeleteCardView(
                     }
                 }
             } else {
-                for (i in 0 until subjects.size / 2 + 1) {
+                for (i in 0 until subjects.size / 2) {
                     Row(
                         modifier =
                             Modifier
