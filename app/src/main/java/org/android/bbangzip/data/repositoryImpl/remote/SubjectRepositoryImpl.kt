@@ -1,6 +1,7 @@
 package org.android.bbangzip.data.repositoryImpl.remote
 
 import org.android.bbangzip.data.datasource.remote.SubjectRemoteDataSource
+import org.android.bbangzip.data.dto.request.RequestSubjectOptions
 import org.android.bbangzip.domain.model.SubjectInfoEntity
 import org.android.bbangzip.domain.repository.remote.SubjectRepository
 import javax.inject.Inject
@@ -29,6 +30,13 @@ constructor(
     override suspend fun deleteSubjects(): Result<Unit> =
         runCatching {
             val response = subjectRemoteDataSource.deleteSubjects()
+
+            response.data ?: throw IllegalStateException(response.message ?: "Null Error")
+        }
+
+    override suspend fun putSubjectOptions(subjectId: Int, options: String, requestSubjectOptions: RequestSubjectOptions): Result<Unit> =
+        runCatching {
+            val response = subjectRemoteDataSource.putSubjectOptions(subjectId, options, requestSubjectOptions)
 
             response.data ?: throw IllegalStateException(response.message ?: "Null Error")
         }
