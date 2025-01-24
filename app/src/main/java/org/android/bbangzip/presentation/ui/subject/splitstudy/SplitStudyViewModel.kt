@@ -305,7 +305,7 @@ class SplitStudyViewModel
                                     startPage = event.splitStudyData.startPage,
                                     endPage = event.splitStudyData.endPage,
                                     addStudyViewType = event.splitStudyData.addStudyViewType,
-                                    examName = event.splitStudyData.examName
+                                    examName = event.splitStudyData.examName,
                                 ),
                         ),
                     )

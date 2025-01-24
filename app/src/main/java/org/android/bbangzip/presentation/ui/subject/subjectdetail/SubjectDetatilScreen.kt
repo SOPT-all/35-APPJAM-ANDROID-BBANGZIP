@@ -109,19 +109,20 @@ fun SubjectDetailScreen(
 
     val tabs = listOf("중간고사", "기말고사")
     var selectedIndex by remember { mutableIntStateOf(0) }
-    val splitStudyData = SplitStudyData(
-        subjectName = subjectName,
-        pieceNumber = 0,
-        examDate = "시험 일자 입력",
-        examName = examName,
-        studyContent = "",
-        startPage = "",
-        endPage = "",
-        startPageList = emptyList(),
-        endPageList = emptyList(),
-        deadLineList = emptyList(),
-        addStudyViewType = AddStudyViewType.DEFAULT
-    )
+    val splitStudyData =
+        SplitStudyData(
+            subjectName = subjectName,
+            pieceNumber = 0,
+            examDate = "시험 일자 입력",
+            examName = examName,
+            studyContent = "",
+            startPage = "",
+            endPage = "",
+            startPageList = emptyList(),
+            endPageList = emptyList(),
+            deadLineList = emptyList(),
+            addStudyViewType = AddStudyViewType.DEFAULT,
+        )
 
     Timber.d("${deletedSet.size}")
     Box(
@@ -194,7 +195,7 @@ fun SubjectDetailScreen(
                                     onClick = {
                                         onClickTab(index)
                                         selectedIndex = index
-                                              },
+                                    },
                                 )
                             }
                         }
@@ -216,7 +217,7 @@ fun SubjectDetailScreen(
                             dDay = examDDay.toString(),
                             examDay = examDate,
                             splitStudyData = splitStudyData,
-                            onClickAddStudy = onClickAddStudy
+                            onClickAddStudy = onClickAddStudy,
                         )
                     }
                     PieceViewType.DELETE -> {
@@ -438,7 +439,7 @@ private fun DefaultPieceView(
                     .applyFilterOnClick(
                         radius = 24.dp,
                         isDisabled = false,
-                    ) {onClickAddStudy(splitStudyData) },
+                    ) { onClickAddStudy(splitStudyData) },
         ) {
             Row(
                 modifier =
@@ -751,6 +752,6 @@ private fun SubjectDetailScreenPreview() {
         motivationMessage = "사장님의 각오 한마디를 작성해보세요",
         examDate = "2025년 1월 1일",
         examDDay = 14,
-        examName = "중간고사"
+        examName = "중간고사",
     )
 }

@@ -36,7 +36,7 @@ fun NavGraphBuilder.subjectDetailNavGraph(
             navigateToBack = navigateToBack,
             navigateToModifyMotivation = navigateToModifyMotivation,
             navigateToModifySubjectName = navigateToModifySubjectName,
-            navigateToAddStudy = navigateToAddStudy
+            navigateToAddStudy = navigateToAddStudy,
         )
     }
 }

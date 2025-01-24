@@ -94,7 +94,7 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateAddStudyViewType)
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
                     updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
-                    Timber.tag("김재민").d("addstudy에서 보내는 값${currentUiState}")
+                    Timber.tag("김재민").d("addstudy에서 보내는 값$currentUiState")
                     setSideEffect(
                         AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
                             addStudyData =
@@ -105,9 +105,9 @@ class AddStudyViewModel
                                     studyContent = currentUiState.studyContent ?: "",
                                     startPage = currentUiState.startPage ?: "",
                                     endPage = currentUiState.endPage ?: "",
-                                    startPageList = if(currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.startPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0, event.pieceNumber),
-                                    endPageList = if(currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.endPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1, event.pieceNumber + 1),
-                                    examName = currentUiState.examName
+                                    startPageList = if (currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.startPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(0, event.pieceNumber),
+                                    endPageList = if (currentUiState.addStudyViewType == AddStudyViewType.AGAIN) currentUiState.endPageList else divideRangeIntoInts(currentUiState.startPage!!.filter { it.isDigit() }.toInt(), currentUiState.endPage!!.filter { it.isDigit() }.toInt(), event.pieceNumber).map { it.toString() }.subList(1, event.pieceNumber + 1),
+                                    examName = currentUiState.examName,
                                 ),
                         ),
                     )
@@ -133,7 +133,7 @@ class AddStudyViewModel
                                     endPage = currentUiState.endPage ?: "",
                                     startPageList = currentUiState.startPageList,
                                     endPageList = currentUiState.endPageList,
-                                    examName = currentUiState.examName
+                                    examName = currentUiState.examName,
                                 ),
                         ),
                     )
