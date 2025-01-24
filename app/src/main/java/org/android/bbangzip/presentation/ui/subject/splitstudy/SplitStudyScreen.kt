@@ -27,7 +27,6 @@ import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import okhttp3.internal.concurrent.TaskRunner
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.bottomsheet.BbangZipDatePickerBottomSheet
 import org.android.bbangzip.presentation.component.button.BbangZipButton
@@ -90,24 +89,23 @@ fun SplitStudyScreen(
     onBackBtnClick: (SplitStudyData) -> Unit = {},
     onClickSaveButton: (SplitStudyData) -> Unit = {},
 ) {
-
     BackHandler {
-       onBackBtnClick(
-           SplitStudyData(
-               subjectName = subjectName,
-               pieceNumber = pieceNumber,
-               examDate = examDate,
-               examName = examName,
-               studyContent = studyContent,
-               startPage = startPage.dropLast(1),
-               endPage = endPage.dropLast(1),
-               startPageList = startPageList,
-               endPageList = endPageList,
-               deadLineList = seletedDateList.map { dateToString(it) },
-               addStudyViewType = AddStudyViewType.DEFAULT,
-               subjectId = subjectId,
-           )
-       )
+        onBackBtnClick(
+            SplitStudyData(
+                subjectName = subjectName,
+                pieceNumber = pieceNumber,
+                examDate = examDate,
+                examName = examName,
+                studyContent = studyContent,
+                startPage = startPage.dropLast(1),
+                endPage = endPage.dropLast(1),
+                startPageList = startPageList,
+                endPageList = endPageList,
+                deadLineList = seletedDateList.map { dateToString(it) },
+                addStudyViewType = AddStudyViewType.DEFAULT,
+                subjectId = subjectId,
+            ),
+        )
     }
     val focusManager = LocalFocusManager.current
 
@@ -140,22 +138,24 @@ fun SplitStudyScreen(
                     isShadowed = isShadowed,
                     leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                     title = subjectName,
-                    onLeadingIconClick = { onBackBtnClick(
-                        SplitStudyData(
-                            subjectName = subjectName,
-                            pieceNumber = pieceNumber,
-                            examDate = examDate,
-                            examName = examName,
-                            studyContent = studyContent,
-                            startPage = startPage,
-                            endPage = endPage,
-                            startPageList = startPageList,
-                            endPageList = endPageList,
-                            deadLineList = seletedDateList.map { dateToString(it) },
-                            addStudyViewType = AddStudyViewType.DEFAULT,
-                            subjectId = subjectId,
+                    onLeadingIconClick = {
+                        onBackBtnClick(
+                            SplitStudyData(
+                                subjectName = subjectName,
+                                pieceNumber = pieceNumber,
+                                examDate = examDate,
+                                examName = examName,
+                                studyContent = studyContent,
+                                startPage = startPage,
+                                endPage = endPage,
+                                startPageList = startPageList,
+                                endPageList = endPageList,
+                                deadLineList = seletedDateList.map { dateToString(it) },
+                                addStudyViewType = AddStudyViewType.DEFAULT,
+                                subjectId = subjectId,
+                            ),
                         )
-                    ) },
+                    },
                 )
             }
             item {

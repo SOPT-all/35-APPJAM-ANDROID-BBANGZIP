@@ -72,7 +72,7 @@ fun AddStudyRoute(
             onClickConfirmDateBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickConfirmDateBtn) },
             onClickAgainSplitBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAgainSplitBtn(it)) },
             onClickAddStudyBtn = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickAddStudyBtn) },
-            onClickBackIcon = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickBackIcon) }
+            onClickBackIcon = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnClickBackIcon) },
         )
     }
 }
