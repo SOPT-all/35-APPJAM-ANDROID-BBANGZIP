@@ -3,6 +3,7 @@ package org.android.bbangzip.presentation.ui.onboarding.onboardingstart
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -37,20 +38,23 @@ fun OnboardingStartScreen(
             modifier =
                 Modifier
                     .fillMaxWidth()
-                    .padding(top = (LocalConfiguration.current.screenHeightDp * 0.184).dp),
+                    .padding(top = (LocalConfiguration.current.screenHeightDp * 0.15).dp),
             style = BbangZipTheme.typography.title2Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
         )
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(32.dp))
 
         Image(
             painter = painterResource(id = R.drawable.img_onboarding_start),
-            modifier = Modifier.fillMaxWidth(),
             contentDescription = null,
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(8f / 9f),
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Spacer(modifier = Modifier.weight(1f))
 
         BbangZipButton(
             modifier = Modifier.fillMaxWidth(),
@@ -67,5 +71,6 @@ fun OnboardingStartScreen(
 @Composable
 private fun OnboardingStartScreenPreview() {
     BBANGZIPTheme {
+        OnboardingStartScreen()
     }
 }

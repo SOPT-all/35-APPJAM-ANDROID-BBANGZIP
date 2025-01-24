@@ -1,12 +1,16 @@
 package org.android.bbangzip.presentation.ui.todo
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -15,6 +19,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -26,8 +31,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
@@ -41,7 +48,7 @@ import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.ToDoFilterType
 import org.android.bbangzip.presentation.type.ToDoScreenType
-import org.android.bbangzip.presentation.ui.todo.component.ToDoFilterPickerBottomSheet
+import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -85,7 +92,14 @@ fun TodoScreen(
             if (todoState.screenType == ToDoScreenType.EMPTY) {
                 item {
                     Column(modifier = modifier.padding(horizontal = 16.dp)) {
-                        EmptyView()
+                        Image(
+                            painter = painterResource(id = R.drawable.img_empty_view),
+                            contentDescription = null,
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .aspectRatio(16f / 15f),
+                        )
 
                         Spacer(modifier = Modifier.height(16.dp))
 
@@ -249,7 +263,7 @@ fun TodoScreen(
             onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
         )
 
-        ToDoFilterPickerBottomSheet(
+        BbangZipToDoFilterPickerBottomSheet(
             isBottomSheetVisible = todoState.todoFilterBottomSheetState,
             selectedItem = todoState.selectedFilterItem,
             onSelectedItemChanged = onFilterBottomSheetItemClicked,
@@ -271,81 +285,102 @@ fun DateMessageCard(
                 .fillMaxWidth(),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            Column(
+            Box(
                 Modifier
                     .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp))
                     .fillMaxWidth()
-                    .height(LocalConfiguration.current.screenHeightDp.dp * (172f / 764f))
-                    .padding(start = 24.dp),
+                    .height(LocalConfiguration.current.screenHeightDp.dp * (172f / 800f)),
             ) {
-                Spacer(modifier = Modifier.height(44.dp))
-
-                Row(
-                    verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(start = 8.dp),
-                ) {
-                    Text(
-                        text = todayDate[0].toInt().toString(),
-                        style = BbangZipTheme.typography.title3Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
+                if (pendingCount == 0) {
+                    Image(
+                        painter = painterResource(R.drawable.img_pending_study_zero),
+                        contentDescription = null,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(360f / 172f)
+                                .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp)),
                     )
-
-                    Text(
-                        text = stringResource(R.string.todo_month_text),
-                        style = BbangZipTheme.typography.headline1Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61,
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Text(
-                        text = todayDate[1].toInt().toString(),
-                        style = BbangZipTheme.typography.title3Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
-                    )
-
-                    Text(
-                        text = stringResource(R.string.todo_day_text),
-                        style = BbangZipTheme.typography.headline1Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61,
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Text(
-                        text = todayDate[2],
-                        style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
+                } else {
+                    Image(
+                        painter = painterResource(R.drawable.img_no_peding_study),
+                        contentDescription = null,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(360f / 172f),
                     )
                 }
+                Column(
+                    modifier = Modifier.padding(start = 24.dp),
+                ) {
+                    Spacer(modifier = Modifier.height(44.dp))
 
-                Spacer(modifier = modifier.height(8.dp))
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                    ) {
+                        if (pendingCount != 0) Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = todayDate[0].toInt().toString(),
+                            style = BbangZipTheme.typography.title3Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119,
+                        )
 
-                if (pendingCount == 0) {
-                    Text(
-                        text = stringResource(R.string.todo_pending_count_text),
-                        style = BbangZipTheme.typography.headline1Bold,
-                        color = BbangZipTheme.colors.labelAlternative_282119_61,
-                    )
+                        Text(
+                            text = stringResource(R.string.todo_month_text),
+                            style = BbangZipTheme.typography.headline1Bold,
+                            color = BbangZipTheme.colors.labelAlternative_282119_61,
+                        )
 
-                    Spacer(modifier = Modifier.height(62.dp))
-                } else {
-                    BbangZipButton(
-                        bbangZipButtonType = BbangZipButtonType.Outlined,
-                        bbangZipButtonSize = BbangZipButtonSize.Medium,
-                        onClick = { onAddPendingStudyButtonClicked() },
-                        label = String.format(stringResource(R.string.btn_todo_overdue_label), pendingCount),
-                        trailingIcon = R.drawable.ic_chevronright_thick_small_24,
-                        modifier = Modifier.wrapContentSize(),
-                    )
+                        Spacer(modifier = Modifier.width(8.dp))
 
-                    Spacer(modifier = Modifier.height(48.dp))
+                        Text(
+                            text = todayDate[1].toInt().toString(),
+                            style = BbangZipTheme.typography.title3Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119,
+                        )
+
+                        Text(
+                            text = stringResource(R.string.todo_day_text),
+                            style = BbangZipTheme.typography.headline1Bold,
+                            color = BbangZipTheme.colors.labelAlternative_282119_61,
+                        )
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        Text(
+                            text = todayDate[2],
+                            style = BbangZipTheme.typography.body1Bold,
+                            color = BbangZipTheme.colors.labelNormal_282119,
+                        )
+                    }
+
+                    Spacer(modifier = modifier.height(8.dp))
+
+                    if (pendingCount == 0) {
+                        Text(
+                            text = stringResource(R.string.todo_pending_count_text),
+                            style = BbangZipTheme.typography.headline1Bold,
+                            color = BbangZipTheme.colors.labelAlternative_282119_61,
+                        )
+
+                        Spacer(modifier = Modifier.height(62.dp))
+                    } else {
+                        BbangZipButton(
+                            bbangZipButtonType = BbangZipButtonType.Outlined,
+                            bbangZipButtonSize = BbangZipButtonSize.Medium,
+                            onClick = { onAddPendingStudyButtonClicked() },
+                            label = String.format(stringResource(R.string.btn_todo_overdue_label), pendingCount),
+                            trailingIcon = R.drawable.ic_chevronright_thick_small_24,
+                            modifier = Modifier.wrapContentSize(),
+                        )
+
+                        Spacer(modifier = Modifier.height(48.dp))
+                    }
                 }
             }
-
             Spacer(modifier = Modifier.height(24.dp))
         }
-
         TopTailBalloon(
             text = stringResource(R.string.todo_top_tail_balloon_text),
             leadingIcon = {
@@ -455,20 +490,50 @@ fun DeleteAndFilterIcons(
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EmptyView(
+fun BbangZipToDoFilterPickerBottomSheet(
+    isBottomSheetVisible: Boolean,
     modifier: Modifier = Modifier,
+    title: @Composable (ColumnScope.() -> Unit) = {},
+    selectedItem: ToDoFilterType = ToDoFilterType.RECENT,
+    onSelectedItemChanged: (ToDoFilterType) -> Unit = {},
+    onDismissRequest: () -> Unit = {},
 ) {
-    Box(
-        modifier =
-            modifier
-                .fillMaxWidth()
-                .height(328.dp)
-                .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
-        contentAlignment = Alignment.Center,
-    ) {
-        Text(text = "Empty View")
-    }
+    BbangZipBasicModalBottomSheet(
+        modifier = modifier,
+        isBottomSheetVisible = isBottomSheetVisible,
+        onDismissRequest = onDismissRequest,
+        title = { title() },
+        content = {
+            LazyColumn(
+                modifier = Modifier.padding(top = 8.dp, bottom = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+            ) {
+                itemsIndexed(
+                    ToDoFilterType.entries,
+                    key = { _, item -> item },
+                ) { _, item ->
+                    Text(
+                        text = item.filter,
+                        modifier =
+                            Modifier
+                                .fillMaxWidth()
+                                .applyFilterOnClick { onSelectedItemChanged(item) }
+                                .background(
+                                    color = if (item != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
+                                    shape = RoundedCornerShape(16.dp),
+                                )
+                                .padding(vertical = 8.dp),
+                        textAlign = TextAlign.Center,
+                        style = BbangZipTheme.typography.body1Bold,
+                        color = BbangZipTheme.colors.labelNormal_282119,
+                    )
+                }
+            }
+        },
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -698,7 +763,7 @@ fun TodoScreenMockPreview() {
         )
 
     TodoScreen(
-        todoState = mockTodoStates[0],
+        todoState = mockTodoStates[2],
         todayDate = listOf("2025", "01", "18"),
         bottomPadding = PaddingValues(),
     )
