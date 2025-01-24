@@ -60,6 +60,7 @@ fun AddStudyScreen(
     piecePickerBottomSheetState: Boolean = false,
     isButtonEnable: Boolean = false,
     isSplitBtnEnable: Boolean = false,
+    isDatePickerEnable: Boolean,
     studyContentTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     startPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     endPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
@@ -117,9 +118,9 @@ fun AddStudyScreen(
                         Modifier
                             .applyFilterOnClick(
                                 radius = 20.dp,
-                                isDisabled = false,
-                            ) {
-                                onClickDatePicker()
+                                isDisabled = isDatePickerEnable
+                                ) {
+                                if(isDatePickerEnable) onClickDatePicker()
                             }
                             .fillMaxWidth()
                             .background(
@@ -395,5 +396,6 @@ fun AddStudyScreenPreview() {
         padding = PaddingValues(),
         selectedDate = Date("2025", "1", "21"),
         pieceNumber = 3,
+        isDatePickerEnable = true
     )
 }

@@ -29,6 +29,14 @@ fun hyponStringDateToDate(dateString: String): Date {
     return Date(year.toString(), month.toString(), day.toString())
 }
 
+fun formatHyponDate(input: String): String {
+    val parts = input.split("-")
+    val year = parts[0]
+    val month = parts[1].toInt() // 월을 정수로 변환해 앞의 0 제거
+    val day = parts[2].toInt() // 일을 정수로 변환해 앞의 0 제거
+    return "${year}년 ${month}월 ${day}일"
+}
+
 fun formatDate(input: String): String {
     val parts = input.split("년", "월", "일").map { it.trim() }
     return "${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}"

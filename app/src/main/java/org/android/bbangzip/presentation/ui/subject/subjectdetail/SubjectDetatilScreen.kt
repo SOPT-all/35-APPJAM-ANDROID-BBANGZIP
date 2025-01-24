@@ -88,7 +88,7 @@ fun SubjectDetailScreen(
     onTrashIconClicked: () -> Unit = {},
     onCloseIconClicked: () -> Unit = {},
     onDeleteModeCardClicked: (Int) -> Unit = {},
-    onClickCancleBtn: () -> Unit = {},
+    onClickDeleteBtn: () -> Unit = {},
     onClickEnrollMotivationMessage: (Int, String) -> Unit = { _, _ -> },
     onClickModifySubjectName: (Int, String) -> Unit = { _, _ -> },
     onClickKebabMenu: () -> Unit = {},
@@ -118,7 +118,7 @@ fun SubjectDetailScreen(
             subjectId = subjectId,
             subjectName = subjectName,
             pieceNumber = 0,
-            examDate = "시험 일자 입력",
+            examDate = examDate.ifEmpty { "시험 일자 입력" },
             examName = examName,
             studyContent = "",
             startPage = "",
@@ -315,7 +315,8 @@ fun SubjectDetailScreen(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
                     onClick = {
-                        onClickCancleBtn()
+                        onClickDeleteBtn()
+                        Timber.tag("김재민").d("onClickDeleteBtn")
                     },
                     modifier = Modifier.fillMaxWidth(),
                     label = if (deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),

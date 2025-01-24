@@ -107,9 +107,11 @@ class MyViewModel
                                     reward = data.reward,
                                     maxReward = data.maxReward,
                                     bbangZipImgUrl = data.levelDetails[data.level - 1].levelImage,
+                                    badgeCount = data.badgeCounts
                                 ),
                         ),
                     )
+                    updateState(MyContract.MyReduce.UpdateMyCurrentBadge(currentBadge = data.badgeCounts))
                 }.onFailure {
                     Timber.d("[마이페이지] fetch 실패 -> $error")
                 }

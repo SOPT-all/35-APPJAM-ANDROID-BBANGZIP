@@ -58,6 +58,7 @@ fun AddStudyRoute(
             endPageTextFieldState = addStudyState.endPageTextFieldState,
             isSplitBtnEnable = addStudyState.buttonSplitEnabled,
             isButtonEnable = addStudyState.buttonEnabled,
+            isDatePickerEnable = addStudyState.isDatePickerEnabled,
             onChangeSelectedDate = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeSelectedDate(it)) },
             onChangeStudyContent = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeStudyContent(it)) },
             onChangeStudyContentFocused = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnChangeStudyContentFocused(it)) },

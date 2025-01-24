@@ -74,7 +74,7 @@ fun SubjectDetailRoute(
                 deletedSet = subjectDetailState.selectedItemSet,
                 revertCompleteBottomSheetState = subjectDetailState.revertCompleteBottomSheetState,
                 selectedItemId = subjectDetailState.selectedItemId,
-                onClickCancleBtn = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked) },
+                onClickDeleteBtn = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked) },
                 subjectId = subjectDetailState.subjectId,
                 subjectName = subjectDetailState.subjectName,
                 motivationMessage = subjectDetailState.motivationMessage,
