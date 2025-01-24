@@ -5,23 +5,33 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.android.bbangzip.presentation.ui.onboarding.OnboardingContract
 import org.android.bbangzip.presentation.ui.onboarding.OnboardingViewModel
+import org.android.bbangzip.presentation.ui.subject.SubjectContract
 import timber.log.Timber
 
 @Composable
 fun OnboardingRoute(
+    popBackStack: () -> Unit,
     navigateToOnboardingEnd: () -> Unit,
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
     val pagerState = rememberPagerState(pageCount = { 3 })
 
+    LifecycleEventEffect(Lifecycle.Event.ON_RESUME) {
+        Timber.tag("[온보딩]").d("isOnboardingDone 검사 ${state.currentPage}")
+        viewModel.setEvent(OnboardingContract.OnboardingEvent.Initialize)
+    }
+
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest {
             when (it) {
+                is OnboardingContract.OnboardingSideEffect.PopBackStack -> popBackStack()
                 is OnboardingContract.OnboardingSideEffect.NavigateToOnboardingEnd -> navigateToOnboardingEnd()
                 else -> Unit
             }
@@ -33,10 +43,6 @@ fun OnboardingRoute(
         if (pagerState.currentPage != state.currentPage) {
             pagerState.animateScrollToPage(state.currentPage)
         }
-    }
-
-    LaunchedEffect(pagerState.currentPage) {
-        viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeCurrentPage(pagerState.currentPage))
     }
 
     OnboardingScreen(

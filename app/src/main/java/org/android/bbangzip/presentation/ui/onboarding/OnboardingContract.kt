@@ -26,6 +26,8 @@ class OnboardingContract {
     }
 
     sealed interface OnboardingEvent : BaseContract.Event {
+        data object Initialize : OnboardingEvent
+
         data class OnChangeUserName(val userName: String) : OnboardingEvent
 
         data class OnChangeUserNameFocused(val isFocused: Boolean) : OnboardingEvent
@@ -45,6 +47,8 @@ class OnboardingContract {
         data object OnClickBackBtn : OnboardingEvent
 
         data object OnClickNextBtn : OnboardingEvent
+
+        data object OnClickOnboardingNextBtn : OnboardingEvent
 
         data object OnClickFinishBtn : OnboardingEvent
     }

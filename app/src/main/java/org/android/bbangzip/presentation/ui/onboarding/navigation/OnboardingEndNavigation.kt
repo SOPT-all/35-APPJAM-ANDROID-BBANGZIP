@@ -1,6 +1,7 @@
 package org.android.bbangzip.presentation.ui.onboarding.navigation
 
 import androidx.navigation.NavController
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
@@ -13,10 +14,12 @@ fun NavController.navigateOnboardingEnd() {
 }
 
 fun NavGraphBuilder.onboardingEndNavGraph(
+    popBackStack: () ->Unit,
     navigateToSubject: () -> Unit,
 ) {
     composable<OnboardingEndRoute> {
         OnboardingEndRoute(
+            popBackStack = popBackStack,
             navigateToSubject = navigateToSubject,
         )
     }

@@ -2,6 +2,7 @@ package org.android.bbangzip.domain.repository.local
 
 import kotlinx.coroutines.flow.Flow
 import org.android.bbangzip.UserPreferences
+import org.android.bbangzip.presentation.model.Badge
 
 interface UserLocalRepository {
     val userPreferenceFlow: Flow<UserPreferences>
@@ -26,4 +27,14 @@ interface UserLocalRepository {
     suspend fun setIsOnboardingCompleted(isOnboardingCompleted: Boolean)
 
     suspend fun clearOnboardingInfo()
+
+    suspend fun setIsOnOnboardingDone(isOnboardingDone: Boolean)
+
+    suspend fun setIsBadgeAvailable(isBadgeAvailable: Boolean)
+
+    suspend fun setBadgeInfo(
+        badgeName: String,
+        badgeImage: String,
+        hashTags: List<String>
+    )
 }
