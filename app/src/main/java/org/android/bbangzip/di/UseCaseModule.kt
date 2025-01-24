@@ -12,6 +12,7 @@ import org.android.bbangzip.domain.repository.remote.StudyRepository
 import org.android.bbangzip.domain.repository.remote.SubjectRepository
 import org.android.bbangzip.domain.repository.remote.UserRepository
 import org.android.bbangzip.domain.usecase.DeleteLogoutUseCase
+import org.android.bbangzip.domain.usecase.DeleteStudyPieceUseCase
 import org.android.bbangzip.domain.usecase.DeleteWithdrawUseCase
 import org.android.bbangzip.domain.usecase.FetchBbangZipUseCase
 import org.android.bbangzip.domain.usecase.FetchDummyUseCase
@@ -111,4 +112,9 @@ class UseCaseModule {
     @Singleton
     fun providesPostAddStudyUseCase(studyRepository: StudyRepository): PostAddStudyUseCase =
         PostAddStudyUseCase(studyRepository = studyRepository)
+
+    @Provides
+    @Singleton
+    fun providesDeleteStudyPieceUseCase(studyRepository: StudyRepository): DeleteStudyPieceUseCase =
+        DeleteStudyPieceUseCase(studyRepository = studyRepository)
 }

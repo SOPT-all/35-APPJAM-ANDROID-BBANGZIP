@@ -17,6 +17,7 @@ fun SubjectDetailRoute(
     viewModel: SubjectDetailViewModel = hiltViewModel(),
 ) {
     val subjectDetailState by viewModel.uiState.collectAsStateWithLifecycle()
+
     LaunchedEffect(Unit) {
         viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.Initialize(subjectId))
     }
@@ -28,6 +29,7 @@ fun SubjectDetailRoute(
         deletedSet = subjectDetailState.selectedItemSet,
         revertCompleteBottomSheetState = subjectDetailState.revertCompleteBottomSheetState,
         selectedItemId = subjectDetailState.selectedItemId,
+        onClickCancleBtn = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked) },
         onCloseIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked) },
         onTrashIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked) },
         onDeleteModeCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked(id)) },
