@@ -86,20 +86,21 @@ fun AddStudyScreen(
 
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .addFocusCleaner(focusManager)
-                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
+        Modifier
+            .fillMaxSize()
+            .addFocusCleaner(focusManager)
+            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         BbangZipBaseTopBar(
+            onLeadingIconClick = { onClickBackIcon() },
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
             title = subjectTitle,
         )
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
         ) {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
@@ -112,20 +113,20 @@ fun AddStudyScreen(
 
                 Box(
                     modifier =
-                        Modifier
-                            .applyFilterOnClick(
-                                radius = 20.dp,
-                                isDisabled = false,
-                            ) {
-                                onClickDatePicker()
-                            }
-                            .fillMaxWidth()
-                            .background(
-                                color = BbangZipTheme.colors.fillNormal_68645E_08,
-                                shape = RoundedCornerShape(20.dp),
-                            )
-                            .padding(start = 16.dp)
-                            .padding(vertical = 18.dp),
+                    Modifier
+                        .applyFilterOnClick(
+                            radius = 20.dp,
+                            isDisabled = false,
+                        ) {
+                            onClickDatePicker()
+                        }
+                        .fillMaxWidth()
+                        .background(
+                            color = BbangZipTheme.colors.fillNormal_68645E_08,
+                            shape = RoundedCornerShape(20.dp),
+                        )
+                        .padding(start = 16.dp)
+                        .padding(vertical = 18.dp),
                 ) {
                     Row(
                         verticalAlignment = Alignment.CenterVertically,
@@ -135,9 +136,9 @@ fun AddStudyScreen(
                             contentDescription = null,
                             tint = if (examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
                             modifier =
-                                Modifier
-                                    .padding(2.dp)
-                                    .size(16.dp),
+                            Modifier
+                                .padding(2.dp)
+                                .size(16.dp),
                         )
 
                         Spacer(modifier = Modifier.width(8.dp))

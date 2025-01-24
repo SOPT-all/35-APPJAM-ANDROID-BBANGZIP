@@ -52,7 +52,7 @@ class SplitStudyContract {
 
         data class OnClickDatePicker(val index: Int) : SplitStudyEvent
 
-        data object OnClickBackIcon : SplitStudyEvent
+        data class OnClickBackIcon(val splitStudyData: SplitStudyData) : SplitStudyEvent
 
         data object OnClickNextBtn : SplitStudyEvent
 
