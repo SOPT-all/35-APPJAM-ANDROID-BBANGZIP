@@ -72,6 +72,10 @@
 
 <br>
 
+##  🔗 프로젝트 설계 
+[와이어프레임 분석](https://southern-comet-4a3.notion.site/3b833ec1322a41b2989663453a07c025?pvs=74) <br>
+[UI 설계](https://southern-comet-4a3.notion.site/UI-2553c2ed9c8249099d476f1472714bb7?pvs=74) <br>
+[데이터/도메인 레이어 설계](https://southern-comet-4a3.notion.site/4e8c4b9477bc414abdcfc0350746cf9b?pvs=74)
 
 <br>
 
@@ -92,6 +96,43 @@
 <b>Communication</b>
 
 <img src="https://img.shields.io/badge/notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"> <img src="https://img.shields.io/badge/kakaotalk-FFCD00?style=for-the-badge&logo=kakaotalk&logoColor=white"> <img src="https://img.shields.io/badge/discord-5865F2?style=for-the-badge&logo=discord&logoColor=white">
+
+<br>
+
+##  _📂 FOLDERING _
+
+```
+## ✅ 전체 패키지 구조
+📂 org.android.bbangzip
+┣ 📂 data
+┃ ┣ 📂 datasource
+┃ ┃ ┣ 📂 local
+┃ ┃ ┣ 📂 remote
+┃ ┣ 📂 dto
+┃ ┃ ┣ 📂 request
+┃ ┃ ┣ 📂 response
+┃ ┣ 📂 repositoryImpl
+┃ ┣ 📂 service
+┃ ┣ 📂 util
+┣ 📂 di
+┣ 📂 domain
+┃ ┣ 📂 model
+┃ ┣ 📂 repository
+┃ ┣ 📂 usecase
+┃ ┣ 📂 util
+┣ 📂 presentation
+┃ ┣ 📂 model
+┃ ┣ 📂 component
+┃ ┣ 📂 util
+
+## ✅ **ui 패키지 내부**
+📂 dummyui
+┣ 📂 component
+┣ 📂 navigation
+┃ DummyRoute
+┃ DummyScreen
+┃ DummyViewModel
+```
 
 <b>Technology</b>
 | Category | Content | 선정 이유 |
