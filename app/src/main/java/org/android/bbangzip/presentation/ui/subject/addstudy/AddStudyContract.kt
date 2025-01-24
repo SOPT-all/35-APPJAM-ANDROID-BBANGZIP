@@ -14,6 +14,7 @@ class AddStudyContract {
     data class AddStudyState(
         val subjectName: String = "",
         val examDate: String = "시험 일자 입력",
+        val examName: String = "",
         val selectedDate: Date = Date("2025", "1", "21"),
         val studyContent: String? = null,
         val studyContentTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,

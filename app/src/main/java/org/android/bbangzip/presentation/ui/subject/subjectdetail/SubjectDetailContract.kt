@@ -3,6 +3,7 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
+import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.model.SubjectDetailInfo
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.PieceViewType
@@ -22,6 +23,7 @@ class SubjectDetailContract {
         val motivationMessage: String = "사장님의 각오 한마디를 작성해보세요",
         val selectedItemId: Int = -1,
         val subjectId: Int = 0,
+        val examName: String = "중간고사",
         val subjectName: String = "",
         val todoList: List<ToDoCardModel> =
             listOf(
@@ -146,7 +148,7 @@ class SubjectDetailContract {
             val subjectName: String,
         ) : SubjectDetailEvent
 
-        data object OnPlusIconClicked : SubjectDetailEvent
+        data class OnPlusIconClicked(val splitStudyData: SplitStudyData) : SubjectDetailEvent
 
         data object OnTrashIconClicked : SubjectDetailEvent
 
@@ -161,6 +163,8 @@ class SubjectDetailContract {
         data object OnRevertCompleteBottomSheetDissmissRequest : SubjectDetailEvent
 
         data object OnClickKebabMenu : SubjectDetailEvent
+
+        data class OnClickTab(val index: Int) : SubjectDetailEvent
 
         data class OnClickEnrollMotivateMessage(
             val subjectId: Int,
@@ -212,12 +216,14 @@ class SubjectDetailContract {
         data class UpdateSelectedId(val pieceId: Int) : SubjectDetailReduce
 
         data object UpdateIsMenuOpen : SubjectDetailReduce
+
+        data class UpdateExamName(val index: Int) : SubjectDetailReduce
     }
 
     sealed interface SubjectDetailSideEffect : BaseContract.SideEffect {
         data object NavigateToAddSubject : SubjectDetailSideEffect
 
-        data object NavigateToAddStudy : SubjectDetailSideEffect
+        data class NavigateToAddStudy(val splitStudyData: SplitStudyData) : SubjectDetailSideEffect
 
         data class NavigateToModifyMotivation(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
 

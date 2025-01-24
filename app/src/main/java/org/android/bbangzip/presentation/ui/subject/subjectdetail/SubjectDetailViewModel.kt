@@ -90,12 +90,17 @@ class SubjectDetailViewModel
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
                 }
                 SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
-                SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
-                    // Todo
+                is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
+                    Timber.tag("김재민").d("되나?")
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickTab -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
                 }
             }
         }
@@ -227,6 +232,12 @@ class SubjectDetailViewModel
                 SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
                     state.copy(
                         isMenuOpen = !state.isMenuOpen,
+                    )
+                }
+
+                is SubjectDetailContract.SubjectDetailReduce.UpdateExamName -> {
+                    state.copy(
+                        examName = if (reduce.index == 0) "중간고사" else "기말고사",
                     )
                 }
             }

@@ -40,6 +40,7 @@ fun SplitStudyRoute(
             pieceNumber = splitStudyState.pieceNumber,
             subjectName = splitStudyState.subjectName,
             examDate = splitStudyState.examDate,
+            examName = splitStudyState.examName,
             studyContent = splitStudyState.studyContent,
             startPage = splitStudyState.startPage,
             endPage = splitStudyState.endPage,
