@@ -1,5 +1,7 @@
 package org.android.bbangzip.data.service
 
+import org.android.bbangzip.data.dto.request.RequestAddSubjectsDto
+import org.android.bbangzip.data.dto.request.RequestDeleteSubjectsDto
 import org.android.bbangzip.data.dto.request.RequestSubjectOptions
 import org.android.bbangzip.data.dto.response.ResponseSubjectFilterDto
 import org.android.bbangzip.data.util.base.BaseResponse
@@ -16,10 +18,10 @@ interface SubjectService {
     suspend fun getSubjectInfo(): BaseResponse<ResponseSubjectFilterDto?>
 
     @POST("/api/v1/subjects")
-    suspend fun postSubjectName(): BaseResponse<Unit?>
+    suspend fun postSubjectName(@Body requestAddSubjectsDto: RequestAddSubjectsDto): BaseResponse<Unit?>
 
     @DELETE("/api/v1/subjects")
-    suspend fun deleteSubjects(): BaseResponse<Unit?>
+    suspend fun deleteSubjects(@Body requestDeleteSubjectsDto: RequestDeleteSubjectsDto): BaseResponse<Unit?>
 
     @HTTP(method = "PUT", path = "/api/v1/subjects/{subjectId}/{options}", hasBody = true)
     suspend fun putSubjectOptions(

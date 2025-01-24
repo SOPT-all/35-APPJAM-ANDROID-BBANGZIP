@@ -3,6 +3,7 @@ package org.android.bbangzip.presentation.ui.subject
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
 import dagger.hilt.android.lifecycle.HiltViewModel
+import org.android.bbangzip.data.dto.request.RequestDeleteSubjectsDto
 import org.android.bbangzip.domain.usecase.DeleteSubjectsUseCase
 import org.android.bbangzip.domain.usecase.GetSubjectInfoUseCase
 import org.android.bbangzip.domain.usecase.PostAddSubjectNameUseCase
@@ -19,7 +20,6 @@ class SubjectViewModel
     constructor(
         private val getSubjectInfoUseCase: GetSubjectInfoUseCase,
         private val deleteSubjectsUseCase: DeleteSubjectsUseCase,
-        private val postAddSubjectNameUseCase: PostAddSubjectNameUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<SubjectContract.SubjectEvent, SubjectContract.SubjectState, SubjectContract.SubjectReduce, SubjectContract.SubjectSideEffect>(
             savedStateHandle = savedStateHandle,
@@ -174,20 +174,16 @@ class SubjectViewModel
         }
 
         private suspend fun deleteSubjects() {
-            deleteSubjectsUseCase()
+            deleteSubjectsUseCase(
+                RequestDeleteSubjectsDto(
+                    subjectIds = currentUiState.subjectSetToDelete.toList(),
+                    year = 2025,
+                    semester = "1학기",
+                )
+            )
                 .onSuccess {
                     updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
                     getSubjectInfo()
-                }
-                .onFailure { error ->
-                    Timber.tag("이승범").d(error)
-                }
-        }
-
-        private suspend fun postAddSubjectName() {
-            postAddSubjectNameUseCase()
-                .onSuccess {
-                    Timber.tag("AddSubject").d("AddSubjectName 성공")
                 }
                 .onFailure { error ->
                     Timber.tag("이승범").d(error)
