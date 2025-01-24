@@ -9,91 +9,91 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ModifyMotivationMessageViewModel
-@Inject
-constructor(
-    savedStateHandle: SavedStateHandle,
-) : BaseViewModel<ModifyMotivationMessageContract.ModifyMotivationMessageEvent, ModifyMotivationMessageContract.ModifyMotivationMessageState, ModifyMotivationMessageContract.ModifyMotivationMessageReduce, ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect>(
-    savedStateHandle = savedStateHandle,
-) {
-    override fun createInitialState(savedState: Parcelable?): ModifyMotivationMessageContract.ModifyMotivationMessageState {
-        return savedState as? ModifyMotivationMessageContract.ModifyMotivationMessageState ?: ModifyMotivationMessageContract.ModifyMotivationMessageState()
-    }
+    @Inject
+    constructor(
+        savedStateHandle: SavedStateHandle,
+    ) : BaseViewModel<ModifyMotivationMessageContract.ModifyMotivationMessageEvent, ModifyMotivationMessageContract.ModifyMotivationMessageState, ModifyMotivationMessageContract.ModifyMotivationMessageReduce, ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect>(
+            savedStateHandle = savedStateHandle,
+        ) {
+        override fun createInitialState(savedState: Parcelable?): ModifyMotivationMessageContract.ModifyMotivationMessageState {
+            return savedState as? ModifyMotivationMessageContract.ModifyMotivationMessageState ?: ModifyMotivationMessageContract.ModifyMotivationMessageState()
+        }
 
-    override fun handleEvent(event: ModifyMotivationMessageContract.ModifyMotivationMessageEvent) {
-        when (event){
-            is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnChangeMotivationMessage -> {
-                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessage(motivationMessage = event.motivationMessage))
-                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
-                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
-            }
-            ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickBackBtn -> {
+        override fun handleEvent(event: ModifyMotivationMessageContract.ModifyMotivationMessageEvent) {
+            when (event) {
+                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnChangeMotivationMessage -> {
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessage(motivationMessage = event.motivationMessage))
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
+                }
+                ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickBackBtn -> {
+                }
+                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn -> {
+                    setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail(subjectId = event.subjectId, subjectName = event.subjectName))
+                    setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar("각오 한 마디 작성 완료!"))
+                }
+                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField -> {
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
+                }
 
-            }
-            is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn -> {
-                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail(subjectId = event.subjectId, subjectName = event.subjectName))
-                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar("각오 한 마디 작성 완료!"))
-            }
-            is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField -> {
-                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
-                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
-                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
-
-            }
-
-            ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn -> {
-                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectNamge)
-                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
-                updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
+                ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn -> {
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectNamge)
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
+                }
             }
         }
-    }
-    override fun reduceState(
-        state: ModifyMotivationMessageContract.ModifyMotivationMessageState,
-        reduce: ModifyMotivationMessageContract.ModifyMotivationMessageReduce
-    ) : ModifyMotivationMessageContract.ModifyMotivationMessageState
-    {
-        return when(reduce){
-            ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled -> {
-                state.copy(
-                    isButtonEnable = state.motivationMessage.isNotEmpty() && state.motivationMessageTextFieldState!=BbangZipTextFieldInputState.Alert
-                )
-            }
-            is ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsTextFieldFocused -> {
-                state.copy(
-                    isTextFieldFocused = reduce.isTextFieldFocused
-                )
-            }
-            is ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessage -> {
-                state.copy(
-                    motivationMessage = reduce.motivationMessage
-                )
-            }
-            ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState -> {
-                state.copy(
-                    motivationMessageTextFieldState = determineTextFieldType(
-                        state.motivationMessage,
-                        state.isTextFieldFocused
+
+        override fun reduceState(
+            state: ModifyMotivationMessageContract.ModifyMotivationMessageState,
+            reduce: ModifyMotivationMessageContract.ModifyMotivationMessageReduce,
+        ): ModifyMotivationMessageContract.ModifyMotivationMessageState {
+            return when (reduce) {
+                ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled -> {
+                    state.copy(
+                        isButtonEnable = state.motivationMessage.isNotEmpty() && state.motivationMessageTextFieldState != BbangZipTextFieldInputState.Alert,
                     )
-                )
-            }
+                }
+                is ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsTextFieldFocused -> {
+                    state.copy(
+                        isTextFieldFocused = reduce.isTextFieldFocused,
+                    )
+                }
+                is ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessage -> {
+                    state.copy(
+                        motivationMessage = reduce.motivationMessage,
+                    )
+                }
+                ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState -> {
+                    state.copy(
+                        motivationMessageTextFieldState =
+                            determineTextFieldType(
+                                state.motivationMessage,
+                                state.isTextFieldFocused,
+                            ),
+                    )
+                }
 
-            ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectNamge -> {
-                state.copy(
-                    motivationMessage = ""
-                )
+                ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectNamge -> {
+                    state.copy(
+                        motivationMessage = "",
+                    )
+                }
+            }
+        }
+
+        private fun determineTextFieldType(
+            text: String,
+            isFocused: Boolean,
+        ): BbangZipTextFieldInputState {
+            return when {
+                text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
+                text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
+                text.contains(Regex("[\\p{So}\\p{Cn}]+")) -> BbangZipTextFieldInputState.Alert
+                text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
+                else -> BbangZipTextFieldInputState.Field
             }
         }
     }
-    private fun determineTextFieldType(
-        text: String,
-        isFocused: Boolean,
-    ): BbangZipTextFieldInputState {
-        return when {
-            text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
-            text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
-            text.contains(Regex("[\\p{So}\\p{Cn}]+")) -> BbangZipTextFieldInputState.Alert
-            text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
-            else -> BbangZipTextFieldInputState.Field
-        }
-    }
-}

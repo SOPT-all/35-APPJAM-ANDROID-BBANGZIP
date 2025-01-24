@@ -80,8 +80,8 @@ fun SubjectDetailScreen(
     onCloseIconClicked: () -> Unit = {},
     onDeleteModeCardClicked: (Int) -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
-    onClickEnrollMotivationMessage: (Int, String) -> Unit = {_,_ ->},
-    onClickModifySubjectName: (Int, String) -> Unit = {_,_ ->},
+    onClickEnrollMotivationMessage: (Int, String) -> Unit = { _, _ -> },
+    onClickModifySubjectName: (Int, String) -> Unit = { _, _ -> },
     onClickKebabMenu: () -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit = {},
     onCompleteCardClicked: (Int) -> Unit = {},
@@ -708,6 +708,6 @@ private fun SubjectDetailScreenPreview() {
         revertCompleteBottomSheetState = true,
         motivationMessage = "사장님의 각오 한마디를 작성해보세요",
         examDate = "2025년 1월 1일",
-        examDDay = 14
+        examDDay = 14,
     )
 }

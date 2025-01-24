@@ -5,19 +5,18 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import kotlinx.serialization.Serializable
 
-fun NavController.navigateToAddSubject(
-) {
+fun NavController.navigateToAddSubject() {
     navigate(
         route = AddSubjectRoute,
     )
 }
 
 fun NavGraphBuilder.addSubjectNavGraph(
-    navigateSubject: () -> Unit
+    navigateSubject: () -> Unit,
 ) {
-    composable<AddSubjectRoute>{
+    composable<AddSubjectRoute> {
         AddSubjectRoute(
-            navigateSubjectDetail = navigateSubject
+            navigateSubjectDetail = navigateSubject,
         )
     }
 }

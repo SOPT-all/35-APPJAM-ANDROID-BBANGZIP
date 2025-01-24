@@ -25,7 +25,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun SubjectRoute(
     padding: PaddingValues,
     navigateAddStudy: (SplitStudyData) -> Unit,
-    navigateToSubjectDetail: (Int, String) -> Unit = {_, _ ->},
+    navigateToSubjectDetail: (Int, String) -> Unit = { _, _ -> },
     navigateToAddSubject: () -> Unit = {},
     viewModel: SubjectViewModel = hiltViewModel(),
 ) {

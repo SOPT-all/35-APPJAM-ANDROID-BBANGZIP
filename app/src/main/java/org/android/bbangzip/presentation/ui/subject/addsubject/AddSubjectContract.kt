@@ -11,7 +11,7 @@ class AddSubjectContract {
         val subjectName: String = "",
         val isTextFieldFocused: Boolean = false,
         val isButtonEnable: Boolean = false,
-        val subjectTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default
+        val subjectTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -27,6 +27,7 @@ class AddSubjectContract {
 
         data object OnClickDeleteBtn : AddSubjectEvent
     }
+
     sealed interface AddSubjectReduce : BaseContract.Reduce {
         data class UpdateSubjectName(val subjectName: String) : AddSubjectReduce
 
@@ -37,7 +38,6 @@ class AddSubjectContract {
         data class UpdateIsTextFieldFocused(val isTextFieldFocused: Boolean) : AddSubjectReduce
 
         data object ResetSubjectName : AddSubjectReduce
-
     }
 
     sealed interface AddSubjectSideEffect : BaseContract.SideEffect {

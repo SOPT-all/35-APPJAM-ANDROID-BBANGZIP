@@ -128,7 +128,6 @@ class SubjectViewModel
                         subjectList = reduce.subjectList,
                     )
                 }
-
             }
         }
 

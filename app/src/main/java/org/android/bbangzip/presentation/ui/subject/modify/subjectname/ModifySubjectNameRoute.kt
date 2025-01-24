@@ -13,18 +13,23 @@ fun ModifySubjectNameRoute(
     subjectId: Int,
     subjectName: String,
     navigateToSubjectDetail: (Int, String) -> Unit,
-){
+) {
     val modifySubjectNameState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    LaunchedEffect(Unit){
+    LaunchedEffect(Unit) {
         viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.Initialize(subjectId, subjectName))
     }
 
-    LaunchedEffect(viewModel.uiSideEffect){
-        viewModel.uiSideEffect.collectLatest{ effect ->
-            when(effect){
+    LaunchedEffect(viewModel.uiSideEffect) {
+        viewModel.uiSideEffect.collectLatest { effect ->
+            when (effect) {
                 is ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigationSubjectDetail -> {
                     navigateToSubjectDetail(effect.subjectId, effect.subjectName)
+                }
+
+                ModifySubjectNameContract.ModifySubjectNameSideEffect.RedundantSnackBar -> {
+                }
+                ModifySubjectNameContract.ModifySubjectNameSideEffect.ShowSnackBar -> {
                 }
             }
         }
@@ -36,9 +41,9 @@ fun ModifySubjectNameRoute(
         isTextFieldFocused = modifySubjectNameState.isTextFieldFocused,
         textFieldInputState = modifySubjectNameState.subjectNameTextFieldState,
         subjectId = modifySubjectNameState.subjectId,
-        onSubjectNameChanged = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnChangeSubjectName(it))},
-        onTextFieldFocusChanged = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField(it))},
-        onModifyBtnClicked = {id, name ->viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn(id, name))},
-        onDeleteBtnClicked = {viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickDeleteBtn)}
+        onSubjectNameChanged = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnChangeSubjectName(it)) },
+        onTextFieldFocusChanged = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField(it)) },
+        onModifyBtnClicked = { id, name -> viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn(id, name)) },
+        onDeleteBtnClicked = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickDeleteBtn) },
     )
 }

@@ -26,7 +26,7 @@ class SubjectContract {
         data class OnClickStudyCard(
             val subjectId: Int,
             val subjectName: String,
-            ) : SubjectEvent
+        ) : SubjectEvent
 
         data object OnClickAddSubject : SubjectEvent
 
@@ -54,7 +54,8 @@ class SubjectContract {
 
         data class NavigateToSubjectDetail(
             val subjectId: Int,
-            val subjectName: String, ) : SubjectSideEffect
+            val subjectName: String,
+        ) : SubjectSideEffect
 
         data object ShowDeleteSuccessSnackBar : SubjectSideEffect
     }

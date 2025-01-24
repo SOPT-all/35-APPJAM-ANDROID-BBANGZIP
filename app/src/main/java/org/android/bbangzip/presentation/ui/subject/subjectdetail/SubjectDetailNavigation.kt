@@ -9,19 +9,22 @@ import kotlinx.serialization.Serializable
 
 fun NavController.navigateToSubjectDetail(
     subjectId: Int,
-    subjectName: String) {
+    subjectName: String,
+) {
     navigate(
-        route = SubjectDetailRoute(
-            subjectId = subjectId,
-            subjectName = subjectName),
+        route =
+            SubjectDetailRoute(
+                subjectId = subjectId,
+                subjectName = subjectName,
+            ),
     )
 }
 
 fun NavGraphBuilder.subjectDetailNavGraph(
     padding: PaddingValues,
     navigateToBack: () -> Unit = {},
-    navigateToModifyMotivation: (Int, String) -> Unit = {_,_ ->},
-    navigateToModifySubjectName: (Int,String) -> Unit = {_, _ ->},
+    navigateToModifyMotivation: (Int, String) -> Unit = { _, _ -> },
+    navigateToModifySubjectName: (Int, String) -> Unit = { _, _ -> },
 ) {
     composable<SubjectDetailRoute> { backStackEntry ->
         SubjectDetailRoute(
@@ -39,4 +42,4 @@ fun NavGraphBuilder.subjectDetailNavGraph(
 data class SubjectDetailRoute(
     val subjectId: Int,
     val subjectName: String,
-    )
+)

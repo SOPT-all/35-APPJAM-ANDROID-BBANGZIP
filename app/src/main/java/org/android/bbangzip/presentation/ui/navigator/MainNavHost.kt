@@ -98,7 +98,7 @@ fun MainNavHost(
             subjectNavGraph(
                 navigateAddStudy = { navigator.navigateToAddStudy(it) },
                 navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
-                navigateToAddSubject = {navigator.navigateToAddSubject()},
+                navigateToAddSubject = { navigator.navigateToAddSubject() },
                 padding = padding,
             )
 
@@ -108,16 +108,16 @@ fun MainNavHost(
             )
 
             modifySubjectNameNavGraph(
-                navigateToSubjectDetail = {id, name ->  navigator.navigateToSubjectDetail(id, name) }
+                navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
             )
 
             modifyMotivationMessageNavGraph(
-                navigateToSubjectDetail = {id, name -> navigator.navigateToSubjectDetail(id, name) },
-                snackbarHostState = snackBarHostState
+                navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
+                snackbarHostState = snackBarHostState,
             )
 
             addSubjectNavGraph(
-                navigateSubject = { navigator.navigateToSubject()}
+                navigateSubject = { navigator.navigateToSubject() },
             )
 
             splitStudyNavGraph(
@@ -134,8 +134,8 @@ fun MainNavHost(
             subjectDetailNavGraph(
                 padding = padding,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
-                navigateToModifyMotivation = {id, name -> navigator.navigateToModifyMotivationMessage(id, name) },
-                navigateToModifySubjectName = {id, name -> navigator.navigateToModifySubjectName(id, name) },
+                navigateToModifyMotivation = { id, name -> navigator.navigateToModifyMotivationMessage(id, name) },
+                navigateToModifySubjectName = { id, name -> navigator.navigateToModifySubjectName(id, name) },
             )
 
             todoNavGraph(

@@ -14,8 +14,8 @@ fun SubjectDetailRoute(
     subjectId: Int,
     subjectName: String,
     navigateToBack: () -> Unit,
-    navigateToModifyMotivation: (Int,String) -> Unit,
-    navigateToModifySubjectName: (Int,String) -> Unit,
+    navigateToModifyMotivation: (Int, String) -> Unit,
+    navigateToModifySubjectName: (Int, String) -> Unit,
     viewModel: SubjectDetailViewModel = hiltViewModel(),
 ) {
     val subjectDetailState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -23,9 +23,9 @@ fun SubjectDetailRoute(
         viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.Initialize(subjectId, subjectName))
     }
 
-    LaunchedEffect(viewModel.uiSideEffect){
-        viewModel.uiSideEffect.collectLatest{ effect ->
-            when(effect){
+    LaunchedEffect(viewModel.uiSideEffect) {
+        viewModel.uiSideEffect.collectLatest { effect ->
+            when (effect) {
                 is SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddSubject -> {
 //                    navigateToModifyMotivation()
                 }
@@ -64,9 +64,9 @@ fun SubjectDetailRoute(
         onDeleteModeCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked(id)) },
         onDefaultCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked(id)) },
         onCompleteCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked(id)) },
-        onClickEnrollMotivationMessage = { id, name ->viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage(id, name)) },
+        onClickEnrollMotivationMessage = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage(id, name)) },
         onClickModifySubjectName = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName(id, name)) },
-        onClickKebabMenu = {viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu)},
+        onClickKebabMenu = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu) },
         onRevertCompleteBottomSheetDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest) },
         onRevertCompleteBottomSheetApproveButtonClicked = { pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
         onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },

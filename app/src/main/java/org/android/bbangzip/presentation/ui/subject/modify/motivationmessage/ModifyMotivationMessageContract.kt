@@ -13,7 +13,7 @@ class ModifyMotivationMessageContract {
         val isButtonEnable: Boolean = false,
         val subjectId: Int = 0,
         val subjectName: String = "",
-        val motivationMessageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default
+        val motivationMessageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -28,8 +28,8 @@ class ModifyMotivationMessageContract {
         data class OnClickModifyBtn(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageEvent
 
         data object OnClickDeleteBtn : ModifyMotivationMessageEvent
-
     }
+
     sealed interface ModifyMotivationMessageReduce : BaseContract.Reduce {
         data class UpdateMotivationMessage(val motivationMessage: String) : ModifyMotivationMessageReduce
 
@@ -40,12 +40,11 @@ class ModifyMotivationMessageContract {
         data class UpdateIsTextFieldFocused(val isTextFieldFocused: Boolean) : ModifyMotivationMessageReduce
 
         data object ResetSubjectNamge : ModifyMotivationMessageReduce
-
     }
 
     sealed interface ModifyMotivationMessageSideEffect : BaseContract.SideEffect {
         data class NavigateSubjectDetail(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageSideEffect
 
-        data class ShowSnackBar(val message : String) : ModifyMotivationMessageSideEffect
+        data class ShowSnackBar(val message: String) : ModifyMotivationMessageSideEffect
     }
 }

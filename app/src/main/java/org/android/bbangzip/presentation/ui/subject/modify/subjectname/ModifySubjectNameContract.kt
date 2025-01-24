@@ -12,7 +12,7 @@ class ModifySubjectNameContract {
         val isTextFieldFocused: Boolean = false,
         val isButtonEnable: Boolean = false,
         val subjectId: Int = 0,
-        val subjectNameTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default
+        val subjectNameTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -29,8 +29,8 @@ class ModifySubjectNameContract {
         data class OnClickModifyBtn(val subjectId: Int, val subjectName: String) : ModifySubjectNameEvent
 
         data object OnClickDeleteBtn : ModifySubjectNameEvent
-
     }
+
     sealed interface ModifySubjectNameReduce : BaseContract.Reduce {
         data class UpdateSubjectName(val subjectName: String) : ModifySubjectNameReduce
 
@@ -43,13 +43,13 @@ class ModifySubjectNameContract {
         data class UpdateSubjectData(val subjectId: Int, val subjectName: String) : ModifySubjectNameReduce
 
         data object ResetSubjectNamge : ModifySubjectNameReduce
-
     }
 
     sealed interface ModifySubjectNameSideEffect : BaseContract.SideEffect {
         data class NavigationSubjectDetail(
             val subjectId: Int,
-            val subjectName: String) : ModifySubjectNameSideEffect
+            val subjectName: String,
+        ) : ModifySubjectNameSideEffect
 
         // 과목명 수정 완료!
         data object ShowSnackBar : ModifySubjectNameSideEffect

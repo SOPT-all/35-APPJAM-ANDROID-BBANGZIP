@@ -82,7 +82,7 @@ class SubjectDetailViewModel
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage ->{
+                is SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage -> {
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifyMotivation(subjectId = event.subjectId, subjectName = event.subjectName))
                 }
 
@@ -216,7 +216,7 @@ class SubjectDetailViewModel
                 is SubjectDetailContract.SubjectDetailReduce.UpdateSubjectData -> {
                     state.copy(
                         subjectId = reduce.subjectId,
-                        subjectName = reduce.subjectName
+                        subjectName = reduce.subjectName,
                     )
                 }
 
@@ -226,7 +226,7 @@ class SubjectDetailViewModel
 
                 SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
                     state.copy(
-                        isMenuOpen = !state.isMenuOpen
+                        isMenuOpen = !state.isMenuOpen,
                     )
                 }
             }

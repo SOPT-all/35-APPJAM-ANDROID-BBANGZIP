@@ -40,7 +40,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun SubjectCard(
     data: SubjectCardModel,
     modifier: Modifier = Modifier,
-    onClick: (Int, String) -> Unit = {_, _ ->},
+    onClick: (Int, String) -> Unit = { _, _ -> },
 ) {
     val radius = data.state.getRadius()
     val width = (LocalConfiguration.current.screenWidthDp - 48) / 2

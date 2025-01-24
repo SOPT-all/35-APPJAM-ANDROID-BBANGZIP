@@ -81,11 +81,11 @@ class MainNavigator(
         navHostController.navigateSubject()
     }
 
-    fun navigateToAddStudy(splitStudyData: SplitStudyData){
+    fun navigateToAddStudy(splitStudyData: SplitStudyData) {
         navHostController.navigateAddStudy(splitStudyData = splitStudyData)
     }
 
-    fun navigateToSplitStudy(addStudyData: AddStudyData){
+    fun navigateToSplitStudy(addStudyData: AddStudyData) {
         navHostController.navigateSplitStudy(addStudyData = addStudyData)
     }
 
@@ -95,7 +95,8 @@ class MainNavigator(
 
     fun navigateToSubjectDetail(
         subjectId: Int,
-        subjectName: String) {
+        subjectName: String,
+    ) {
         Timber.tag("navaigateSubject").d("subjectId")
         navHostController.navigateToSubjectDetail(subjectId, subjectName)
     }
@@ -104,11 +105,17 @@ class MainNavigator(
         navHostController.navigateToAddSubject()
     }
 
-    fun navigateToModifyMotivationMessage(subjectId: Int, subjectName: String) {
+    fun navigateToModifyMotivationMessage(
+        subjectId: Int,
+        subjectName: String,
+    ) {
         navHostController.navigateToModifyMotivationMessage(subjectId, subjectName)
     }
 
-    fun navigateToModifySubjectName(subjectId: Int, subjectName: String) {
+    fun navigateToModifySubjectName(
+        subjectId: Int,
+        subjectName: String,
+    ) {
         navHostController.navigateToModifySubjectName(subjectId, subjectName)
     }
 

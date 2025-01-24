@@ -9,14 +9,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.android.bbangzip.presentation.ui.subject.splitstudy.SplitStudyContract
 
 @Composable
 fun ModifyMotivationMessageRoute(
     viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
     navigateToSubjectDetail: (Int, String) -> Unit,
-    snackbarHostState: SnackbarHostState
-){
+    snackbarHostState: SnackbarHostState,
+) {
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
 
     LaunchedEffect(viewModel.uiSideEffect) {
@@ -45,9 +44,9 @@ fun ModifyMotivationMessageRoute(
         textFieldInputState = modifyMotivationMessageState.motivationMessageTextFieldState,
         subjectId = modifyMotivationMessageState.subjectId,
         subjectName = modifyMotivationMessageState.subjectName,
-        onMotivationMessageChanged = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnChangeMotivationMessage(it))},
-        onTextFieldFocusChanged = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField(it))},
-        onModifyBtnClicked = {id, name ->viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn(id, name))},
-        onDeleteBtnClicked = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn)}
+        onMotivationMessageChanged = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnChangeMotivationMessage(it)) },
+        onTextFieldFocusChanged = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField(it)) },
+        onModifyBtnClicked = { id, name -> viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn(id, name)) },
+        onDeleteBtnClicked = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn) },
     )
 }

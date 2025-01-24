@@ -30,33 +30,34 @@ fun AddSubjectScreen(
     isTextFieldFocused: Boolean = false,
     textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onSubjectNameChanged: (String) -> Unit = {},
-    onTextFieldFocusChanged : (Boolean) -> Unit = {},
+    onTextFieldFocusChanged: (Boolean) -> Unit = {},
     onAddBtnClicked: () -> Unit = {},
-    onDeleteBtnClicked: () -> Unit = {}
+    onDeleteBtnClicked: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .addFocusCleaner(focusManager = focusManager)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .addFocusCleaner(focusManager = focusManager),
     ) {
-
         BbangZipBaseTopBar(
             title = "과목 추가하기",
-            leadingIcon = R.drawable.ic_chevronleft_thick_small_24
+            leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
         )
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .padding(top = 48.dp, bottom = 20.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 48.dp, bottom = 20.dp),
         ) {
             Text(
                 text = "과목명",
                 style = BbangZipTheme.typography.headline1Bold,
-                color = BbangZipTheme.colors.labelNormal_282119
+                color = BbangZipTheme.colors.labelNormal_282119,
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -72,7 +73,7 @@ fun AddSubjectScreen(
                 onFocusChange = onTextFieldFocusChanged,
                 onDeleteButtonClick = onDeleteBtnClicked,
                 maxCharacter = 10,
-                focusManager = focusManager
+                focusManager = focusManager,
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -85,7 +86,7 @@ fun AddSubjectScreen(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_add_label),
-                isEnable = isButtonEnable
+                isEnable = isButtonEnable,
             )
         }
     }
@@ -94,7 +95,8 @@ fun AddSubjectScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun AddSubjectScreenPreview() {
-    AddSubjectScreen("Preview",
+    AddSubjectScreen(
+        "Preview",
         false,
     )
 }

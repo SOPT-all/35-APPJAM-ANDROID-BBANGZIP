@@ -392,4 +392,3 @@ class AddStudyViewModel
             }
         }
     }
-

@@ -31,31 +31,31 @@ fun ModifySubjectNameScreen(
     isTextFieldFocused: Boolean = false,
     textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onSubjectNameChanged: (String) -> Unit = {},
-    onTextFieldFocusChanged : (Boolean) -> Unit = {},
-    onModifyBtnClicked: (Int, String) -> Unit = {_, _ ->},
-    onDeleteBtnClicked: () -> Unit = {}
+    onTextFieldFocusChanged: (Boolean) -> Unit = {},
+    onModifyBtnClicked: (Int, String) -> Unit = { _, _ -> },
+    onDeleteBtnClicked: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier.fillMaxSize().addFocusCleaner(focusManager = focusManager)
+        modifier = Modifier.fillMaxSize().addFocusCleaner(focusManager = focusManager),
     ) {
-
         BbangZipBaseTopBar(
             title = "과목명 수정하기",
-            leadingIcon = R.drawable.ic_chevronleft_thick_small_24
+            leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
         )
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .padding(top = 48.dp, bottom = 20.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 48.dp, bottom = 20.dp),
         ) {
             Text(
                 text = "과목명",
                 style = BbangZipTheme.typography.body1Bold,
-                color = BbangZipTheme.colors.labelNormal_282119
+                color = BbangZipTheme.colors.labelNormal_282119,
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -71,7 +71,7 @@ fun ModifySubjectNameScreen(
                 onFocusChange = onTextFieldFocusChanged,
                 onDeleteButtonClick = onDeleteBtnClicked,
                 maxCharacter = 10,
-                focusManager = focusManager
+                focusManager = focusManager,
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -84,7 +84,7 @@ fun ModifySubjectNameScreen(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),
-                isEnable = isButtonEnable
+                isEnable = isButtonEnable,
             )
         }
     }

@@ -32,33 +32,34 @@ fun ModifyMotivationMessageScreen(
     subjectName: String,
     textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onMotivationMessageChanged: (String) -> Unit = {},
-    onTextFieldFocusChanged : (Boolean) -> Unit = {},
-    onModifyBtnClicked: (Int, String) -> Unit = {_, _ ->},
-    onDeleteBtnClicked: () -> Unit = {}
+    onTextFieldFocusChanged: (Boolean) -> Unit = {},
+    onModifyBtnClicked: (Int, String) -> Unit = { _, _ -> },
+    onDeleteBtnClicked: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .addFocusCleaner(focusManager = focusManager)
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .addFocusCleaner(focusManager = focusManager),
     ) {
-
         BbangZipBaseTopBar(
             title = "각오 한 마디 작성하기",
-            leadingIcon = R.drawable.ic_chevronleft_thick_small_24
+            leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
         )
 
         Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .padding(top = 48.dp, bottom = 20.dp)
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 48.dp, bottom = 20.dp),
         ) {
             Text(
                 text = "사장님의 각오 한 마디를\n작성해 보세요",
                 style = BbangZipTheme.typography.headline1Bold,
-                color = BbangZipTheme.colors.labelNormal_282119
+                color = BbangZipTheme.colors.labelNormal_282119,
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -74,7 +75,7 @@ fun ModifyMotivationMessageScreen(
                 onFocusChange = onTextFieldFocusChanged,
                 onDeleteButtonClick = onDeleteBtnClicked,
                 maxCharacter = 25,
-                focusManager = focusManager
+                focusManager = focusManager,
             )
 
             Spacer(modifier = Modifier.weight(1f))
@@ -87,7 +88,7 @@ fun ModifyMotivationMessageScreen(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),
-                isEnable = isButtonEnable
+                isEnable = isButtonEnable,
             )
         }
     }

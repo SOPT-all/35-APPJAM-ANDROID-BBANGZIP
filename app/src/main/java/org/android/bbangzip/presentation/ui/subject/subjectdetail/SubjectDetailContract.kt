@@ -143,7 +143,8 @@ class SubjectDetailContract {
     sealed interface SubjectDetailEvent : BaseContract.Event {
         data class Initialize(
             val subjectId: Int,
-            val subjectName: String) : SubjectDetailEvent
+            val subjectName: String,
+        ) : SubjectDetailEvent
 
         data object OnPlusIconClicked : SubjectDetailEvent
 
@@ -163,12 +164,12 @@ class SubjectDetailContract {
 
         data class OnClickEnrollMotivateMessage(
             val subjectId: Int,
-            val subjectName: String
+            val subjectName: String,
         ) : SubjectDetailEvent
 
         data class OnClickModifySubjectName(
             val subjectId: Int,
-            val subjectName: String
+            val subjectName: String,
         ) : SubjectDetailEvent
 
         data class OnDeleteModeCardClicked(
@@ -203,7 +204,7 @@ class SubjectDetailContract {
 
         data class UpdateSubjectData(
             val subjectId: Int,
-            val subjectName: String
+            val subjectName: String,
         ) : SubjectDetailReduce
 
         data object UpdateRevertCompleteBottomSheetState : SubjectDetailReduce
@@ -222,7 +223,7 @@ class SubjectDetailContract {
 
         data class NavigateToModifySubjectName(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
 
-        //공부 n개가 삭제 되었어요
+        // 공부 n개가 삭제 되었어요
         data object ShowDeleteSuccessSnackBar : SubjectDetailSideEffect
     }
 }

@@ -50,8 +50,8 @@ fun SubjectScreen(
     deletedSet: Set<Int>,
     onClickTrashBtn: () -> Unit = {},
     onClickCancleBtn: () -> Unit = {},
-    onClickDeleteModeCard: (Int, String) -> Unit = {_,_ ->},
-    onClickStudyCard: (Int, String) -> Unit = {_,_ ->},
+    onClickDeleteModeCard: (Int, String) -> Unit = { _, _ -> },
+    onClickStudyCard: (Int, String) -> Unit = { _, _ -> },
     onClickAddSubject: () -> Unit = {},
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
@@ -118,7 +118,7 @@ fun SubjectScreen(
                             subjects = subjects,
                             onTrashIconClick = onClickTrashBtn,
                             onClickStudyCard = onClickStudyCard,
-                            onClickAddSubject = onClickAddSubject
+                            onClickAddSubject = onClickAddSubject,
                         )
 
                     CardViewType.DELETE ->
@@ -160,7 +160,7 @@ private fun DefaultCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     onTrashIconClick: () -> Unit = {},
-    onClickStudyCard: (Int, String) -> Unit = {_,_ ->},
+    onClickStudyCard: (Int, String) -> Unit = { _, _ -> },
     onClickAddSubject: () -> Unit = {},
 ) {
     Column {
@@ -268,7 +268,7 @@ private fun DefaultCardView(
                         for (j in i * 2 until (i + 1) * 2) {
                             SubjectCard(
                                 data = subjects[j],
-                                onClick = {subjectId, subjectName -> onClickStudyCard(subjectId, subjectName) },
+                                onClick = { subjectId, subjectName -> onClickStudyCard(subjectId, subjectName) },
                             )
                         }
                     }
@@ -284,7 +284,7 @@ private fun DeleteCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     bottomPadding: Dp,
-    onDeleteModeCardClick: (Int, String) -> Unit = {_, _ ->},
+    onDeleteModeCardClick: (Int, String) -> Unit = { _, _ -> },
     onCancleClick: () -> Unit = {},
 ) {
     Box {
@@ -378,7 +378,7 @@ private fun DeleteCardView(
                         for (j in i * 2 until (i + 1) * 2) {
                             SubjectCard(
                                 data = subjects[j],
-                                onClick = {index, subjectName ->
+                                onClick = { index, subjectName ->
                                     onDeleteModeCardClick(index, subjectName)
                                 },
                             )
