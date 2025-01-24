@@ -26,4 +26,14 @@ interface UserLocalRepository {
     suspend fun setIsOnboardingCompleted(isOnboardingCompleted: Boolean)
 
     suspend fun clearOnboardingInfo()
+
+    suspend fun setIsOnOnboardingDone(isOnboardingDone: Boolean)
+
+    suspend fun setIsBadgeAvailable(isBadgeAvailable: Boolean)
+
+    suspend fun setBadgeInfo(
+        badgeName: String,
+        badgeImage: String,
+        hashTags: List<String>,
+    )
 }

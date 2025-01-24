@@ -11,6 +11,7 @@ data class SplitStudyData(
     val subjectName: String,
     val pieceNumber: Int,
     val examDate: String,
+    val examName: String,
     val studyContent: String,
     val startPage: String,
     val endPage: String,

@@ -52,7 +52,7 @@ class SplashViewModel
                 val isLogin = getInitialIsLoginPreferences()
                 val isOnboardingCompleted = getInitialInOnboardingPreferences()
 
-                delay(2000L)
+                delay(20L)
 
                 if (isLogin) {
                     if (isOnboardingCompleted) {

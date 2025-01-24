@@ -9,6 +9,9 @@ message UserPreferences {
     bool isLogin = 3;
     bool isOnboardingCompleted = 4;
     OnboardingInfo onboardingInfo = 5;
+    bool isOnboardingDone = 6;
+    bool isBadgeAvailable = 7;
+    repeated BadgeInfo badges = 8;
 }
 
 message OnboardingInfo {
@@ -16,4 +19,10 @@ message OnboardingInfo {
     int32 year = 2;
     string semester = 3;
     string subjectName = 4;
+}
+
+message BadgeInfo {
+    string badgeName = 1;
+    string badgeImage = 2;
+    repeated string hashTags = 3;
 }

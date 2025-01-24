@@ -3,6 +3,8 @@ package org.android.bbangzip.presentation.ui.subject.subjectdetail
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
+import org.android.bbangzip.presentation.model.Badge
+import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.model.SubjectDetailInfo
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
 import org.android.bbangzip.presentation.type.PieceViewType
@@ -22,6 +24,7 @@ class SubjectDetailContract {
         val motivationMessage: String = "사장님의 각오 한마디를 작성해보세요",
         val selectedItemId: Int = -1,
         val subjectId: Int = 0,
+        val examName: String = "중간고사",
         val subjectName: String = "",
         val todoList: List<ToDoCardModel> =
             listOf(
@@ -136,6 +139,8 @@ class SubjectDetailContract {
                     BbangZipCardState.DEFAULT,
                 ),
             ),
+        val badgeList: List<Badge> = emptyList(),
+        val getBadgeBottomSheetState: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -146,7 +151,7 @@ class SubjectDetailContract {
             val subjectName: String,
         ) : SubjectDetailEvent
 
-        data object OnPlusIconClicked : SubjectDetailEvent
+        data class OnPlusIconClicked(val splitStudyData: SplitStudyData) : SubjectDetailEvent
 
         data object OnTrashIconClicked : SubjectDetailEvent
 
@@ -161,6 +166,8 @@ class SubjectDetailContract {
         data object OnRevertCompleteBottomSheetDissmissRequest : SubjectDetailEvent
 
         data object OnClickKebabMenu : SubjectDetailEvent
+
+        data class OnClickTab(val index: Int) : SubjectDetailEvent
 
         data class OnClickEnrollMotivateMessage(
             val subjectId: Int,
@@ -183,6 +190,10 @@ class SubjectDetailContract {
         data class OnCompleteCardClicked(
             val pieceId: Int,
         ) : SubjectDetailEvent
+
+        data object OnClickGetBadgeBottomSheetCloseBtn : SubjectDetailEvent
+
+        data object OnClickBackIconBtn : SubjectDetailEvent
     }
 
     sealed interface SubjectDetailReduce : BaseContract.Reduce {
@@ -213,13 +224,19 @@ class SubjectDetailContract {
 
         data object UpdateIsMenuOpen : SubjectDetailReduce
 
+        data class UpdateExamName(val index: Int) : SubjectDetailReduce
+
+        data class UpdateGetBadgeList(val badgeList: List<Badge>) : SubjectDetailReduce
+
+        data class UpdateGetBadgeBottomSheetState(val getBadgeBottomSheetState: Boolean) : SubjectDetailReduce
+
         data object UpdateToEmptyView : SubjectDetailReduce
     }
 
     sealed interface SubjectDetailSideEffect : BaseContract.SideEffect {
         data object NavigateToAddSubject : SubjectDetailSideEffect
 
-        data object NavigateToAddStudy : SubjectDetailSideEffect
+        data class NavigateToAddStudy(val splitStudyData: SplitStudyData) : SubjectDetailSideEffect
 
         data class NavigateToModifyMotivation(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
 
@@ -227,5 +244,7 @@ class SubjectDetailContract {
 
         // 공부 n개가 삭제 되었어요
         data object ShowDeleteSuccessSnackBar : SubjectDetailSideEffect
+
+        data object PopBackStack : SubjectDetailSideEffect
     }
 }

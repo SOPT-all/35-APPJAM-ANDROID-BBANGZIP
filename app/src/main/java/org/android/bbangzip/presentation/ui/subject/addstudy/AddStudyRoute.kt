@@ -13,6 +13,7 @@ import org.android.bbangzip.presentation.model.SplitStudyData
 @Composable
 fun AddStudyRoute(
     padding: PaddingValues,
+    popBackStack: () -> Unit,
     splitStudyData: SplitStudyData,
     viewModel: AddStudyViewModel = hiltViewModel(),
     navigateSplitStudy: (AddStudyData) -> Unit = {},
@@ -39,6 +40,7 @@ fun AddStudyRoute(
             pieceNumber = addStudyState.pieceNumber,
             subjectTitle = addStudyState.subjectName,
             examDate = addStudyState.examDate,
+            examName = addStudyState.examName,
             studyContent = addStudyState.studyContent ?: "",
             startPage = addStudyState.startPage ?: "",
             startGuideline = addStudyState.startPageGuideline,

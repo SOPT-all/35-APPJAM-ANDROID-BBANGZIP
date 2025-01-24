@@ -24,6 +24,7 @@ fun NavController.navigateAddStudy(
 
 fun NavGraphBuilder.addStudyNavGraph(
     padding: PaddingValues,
+    popBackStack: () -> Unit,
     navigateSplitStudy: (AddStudyData) -> Unit,
 ) {
     composable<AddStudyRoute>(
@@ -31,6 +32,7 @@ fun NavGraphBuilder.addStudyNavGraph(
     ) {
         AddStudyRoute(
             padding = padding,
+            popBackStack = popBackStack,
             navigateSplitStudy = navigateSplitStudy,
             splitStudyData = it.toRoute<AddStudyRoute>().splitStudyData,
         )

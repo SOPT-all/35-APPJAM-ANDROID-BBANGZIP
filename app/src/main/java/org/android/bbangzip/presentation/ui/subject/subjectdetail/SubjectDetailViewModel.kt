@@ -90,12 +90,25 @@ class SubjectDetailViewModel
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
                 }
                 SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {}
-                SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
-                    // Todo
+                is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
+                    Timber.tag("김재민").d("되나?")
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickTab -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickGetBadgeBottomSheetCloseBtn -> {
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = false))
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnClickBackIconBtn -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.PopBackStack)
                 }
             }
         }
@@ -235,6 +248,24 @@ class SubjectDetailViewModel
                         pieceViewType = PieceViewType.EMPTY,
                     )
                 }
+
+                is SubjectDetailContract.SubjectDetailReduce.UpdateExamName -> {
+                    state.copy(
+                        examName = if (reduce.index == 0) "중간고사" else "기말고사",
+                    )
+                }
+
+                is SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeList -> {
+                    state.copy(
+                        badgeList = reduce.badgeList,
+                    )
+                }
+
+                is SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState -> {
+                    state.copy(
+                        getBadgeBottomSheetState = !currentUiState.getBadgeBottomSheetState,
+                    )
+                }
             }
         }
 
@@ -305,7 +336,9 @@ class SubjectDetailViewModel
             postCompleteCardIdUseCase(
                 pieceId = pieceId,
                 requestMarkDoneDto = RequestMarkDoneDto(isFinished = true),
-            ).onSuccess {
+            ).onSuccess { data ->
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeList(badgeList = data.badgeCardList.map { it.toBadge() }))
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = true))
                 Timber.tag("markDone").e("완료 성공!")
             }.onFailure { error ->
                 Timber.tag("markDone").e(error)

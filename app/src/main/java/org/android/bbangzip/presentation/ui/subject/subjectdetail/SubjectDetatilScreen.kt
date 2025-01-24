@@ -47,11 +47,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.bottomsheet.BbangZipBasicModalBottomSheet
+import org.android.bbangzip.presentation.component.bottomsheet.BbangZipGetBadgeBottomSheet
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.component.card.ToDoCard
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
+import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
+import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.BbangZipShadowType
@@ -66,6 +69,7 @@ import timber.log.Timber
 @Composable
 fun SubjectDetailScreen(
     padding: PaddingValues,
+    state: SubjectDetailContract.SubjectDetailState,
     isMenuOpen: Boolean,
     todoList: List<ToDoCardModel>,
     pieceViewType: PieceViewType,
@@ -77,6 +81,7 @@ fun SubjectDetailScreen(
     motivationMessage: String,
     examDDay: Int,
     examDate: String,
+    examName: String,
     onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
     onRevertCompleteBottomSheetApproveButtonClicked: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
@@ -87,9 +92,14 @@ fun SubjectDetailScreen(
     onClickEnrollMotivationMessage: (Int, String) -> Unit = { _, _ -> },
     onClickModifySubjectName: (Int, String) -> Unit = { _, _ -> },
     onClickKebabMenu: () -> Unit = {},
+    onClickTab: (Int) -> Unit = {},
+    onClickAddStudy: (SplitStudyData) -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit = {},
     onCompleteCardClicked: (Int) -> Unit = {},
+    onClickBadgeCloseBtn: () -> Unit,
+    popBackStack: () -> Unit,
 ) {
+    Timber.tag("김재민").d("SubjectDetailScreen : $subjectName $examName")
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
     val backgroundHeight = (screenHeightDp * 0.32).toInt()
@@ -103,6 +113,20 @@ fun SubjectDetailScreen(
 
     val tabs = listOf("중간고사", "기말고사")
     var selectedIndex by remember { mutableIntStateOf(0) }
+    val splitStudyData =
+        SplitStudyData(
+            subjectName = subjectName,
+            pieceNumber = 0,
+            examDate = "시험 일자 입력",
+            examName = examName,
+            studyContent = "",
+            startPage = "",
+            endPage = "",
+            startPageList = emptyList(),
+            endPageList = emptyList(),
+            deadLineList = emptyList(),
+            addStudyViewType = AddStudyViewType.DEFAULT,
+        )
 
     Timber.d("${deletedSet.size}")
     Box(
@@ -172,7 +196,10 @@ fun SubjectDetailScreen(
                                 examTab(
                                     text = tabName,
                                     isSelected = selectedIndex == index,
-                                    onClick = { selectedIndex = index },
+                                    onClick = {
+                                        onClickTab(index)
+                                        selectedIndex = index
+                                    },
                                 )
                             }
                         }
@@ -193,6 +220,8 @@ fun SubjectDetailScreen(
                             onCompleteCardClicked = onCompleteCardClicked,
                             dDay = examDDay.toString(),
                             examDay = examDate,
+                            splitStudyData = splitStudyData,
+                            onClickAddStudy = onClickAddStudy,
                         )
                     }
                     PieceViewType.DELETE -> {
@@ -212,6 +241,7 @@ fun SubjectDetailScreen(
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 trailingIcon = R.drawable.ic_menu_kebab_default_24,
                 onTrailingIconClick = { onClickKebabMenu() },
+                onLeadingIconClick = { popBackStack() },
                 title = subjectName,
             )
             if (isMenuOpen) {
@@ -295,6 +325,15 @@ fun SubjectDetailScreen(
             onClickInteractButton = onRevertCompleteBottomSheetApproveButtonClicked,
             onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
         )
+
+        if (state.badgeList.isNotEmpty()) {
+            BbangZipGetBadgeBottomSheet(
+                badgeList = state.badgeList,
+                isBottomSheetVisible = state.getBadgeBottomSheetState,
+                onDismissRequest = { onClickBadgeCloseBtn() },
+                onClickCancelButton = { onClickBadgeCloseBtn() },
+            )
+        }
     }
 }
 
@@ -303,9 +342,11 @@ private fun DefaultPieceView(
     todoList: List<ToDoCardModel>,
     dDay: String,
     examDay: String,
+    splitStudyData: SplitStudyData,
     onTrashIconClicked: () -> Unit = {},
     onDefaultCardClicked: (Int) -> Unit,
     onCompleteCardClicked: (Int) -> Unit,
+    onClickAddStudy: (SplitStudyData) -> Unit = {},
 ) {
     Column(
         modifier =
@@ -378,7 +419,9 @@ private fun DefaultPieceView(
                         .applyFilterOnClick(
                             radius = 20.dp,
                             isDisabled = false,
-                        ) { }
+                        ) {
+                            onClickAddStudy(splitStudyData)
+                        }
                         .padding(8.dp),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
@@ -410,7 +453,7 @@ private fun DefaultPieceView(
                     .applyFilterOnClick(
                         radius = 24.dp,
                         isDisabled = false,
-                    ) { },
+                    ) { onClickAddStudy(splitStudyData) },
         ) {
             Row(
                 modifier =
@@ -712,6 +755,7 @@ fun RevertCompleteBottomSheet(
 private fun SubjectDetailScreenPreview() {
     SubjectDetailScreen(
         padding = PaddingValues(64.dp),
+        state = SubjectDetailContract.SubjectDetailState(),
         todoList = emptyList(),
         pieceViewType = PieceViewType.DEFAULT,
         deletedSet = emptySet(),
@@ -723,5 +767,8 @@ private fun SubjectDetailScreenPreview() {
         motivationMessage = "사장님의 각오 한마디를 작성해보세요",
         examDate = "2025년 1월 1일",
         examDDay = 14,
+        examName = "중간고사",
+        onClickBadgeCloseBtn = { },
+        popBackStack = { },
     )
 }
