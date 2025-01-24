@@ -10,4 +10,5 @@ data class RequestDeleteSubjectsDto(
     @SerialName("year")
     val year: Int,
     @SerialName("semester")
-    val semester: String)
+    val semester: String,
+)

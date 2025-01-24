@@ -6,11 +6,8 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import org.android.bbangzip.data.dto.request.RequestAddSubjectsDto
-import org.android.bbangzip.data.dto.request.RequestSubjectOptions
 import org.android.bbangzip.domain.usecase.PostAddSubjectNameUseCase
-import org.android.bbangzip.domain.usecase.PutSubjectOptionsUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
-import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.ModifyMotivationMessageContract
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import timber.log.Timber
 import javax.inject.Inject
@@ -111,19 +108,19 @@ class AddSubjectViewModel
             }
         }
 
-    private suspend fun putMotivationMessage(
-    ) {
-        postAddSubjectNameUseCase(
-           requestAddSubjectsDto = RequestAddSubjectsDto(
-                subjectName = currentUiState.subjectName,
-               year = 2025,
-               semester = "1학기"
-            )
-        ).onSuccess {
-            Timber.tag("motivate").d("과목명 저장")
-            setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateSubjectDetail)
-        }.onFailure {error->
-            Timber.tag("motivate").d(error)
+        private suspend fun putMotivationMessage() {
+            postAddSubjectNameUseCase(
+                requestAddSubjectsDto =
+                    RequestAddSubjectsDto(
+                        subjectName = currentUiState.subjectName,
+                        year = 2025,
+                        semester = "1학기",
+                    ),
+            ).onSuccess {
+                Timber.tag("motivate").d("과목명 저장")
+                setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateSubjectDetail)
+            }.onFailure { error ->
+                Timber.tag("motivate").d(error)
+            }
         }
-    }
     }

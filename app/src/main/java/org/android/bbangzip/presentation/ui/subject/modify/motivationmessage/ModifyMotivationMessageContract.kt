@@ -29,7 +29,7 @@ class ModifyMotivationMessageContract {
 
         data object OnClickDeleteBtn : ModifyMotivationMessageEvent
 
-        data class Initialize(val subjectId: Int,val subjectName: String) : ModifyMotivationMessageEvent
+        data class Initialize(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageEvent
     }
 
     sealed interface ModifyMotivationMessageReduce : BaseContract.Reduce {
@@ -43,7 +43,7 @@ class ModifyMotivationMessageContract {
 
         data object ResetSubjectNamge : ModifyMotivationMessageReduce
 
-        data class UpdateSubjectInfo(val subjectId: Int,val subjectName: String) : ModifyMotivationMessageReduce
+        data class UpdateSubjectInfo(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageReduce
     }
 
     sealed interface ModifyMotivationMessageSideEffect : BaseContract.SideEffect {

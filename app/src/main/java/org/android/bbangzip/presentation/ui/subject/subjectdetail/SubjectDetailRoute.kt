@@ -54,39 +54,39 @@ fun SubjectDetailRoute(
         }
     }
 
-    when(success) {
+    when (success) {
         true ->
-        SubjectDetailScreen(
-            padding = padding,
-            isMenuOpen = subjectDetailState.isMenuOpen,
-            todoList = subjectDetailState.todoList,
-            pieceViewType = subjectDetailState.pieceViewType,
-            deletedSet = subjectDetailState.selectedItemSet,
-            revertCompleteBottomSheetState = subjectDetailState.revertCompleteBottomSheetState,
-            selectedItemId = subjectDetailState.selectedItemId,
-            subjectId = subjectDetailState.subjectId,
-            subjectName = subjectDetailState.subjectName,
-            motivationMessage = subjectDetailState.motivationMessage,
-            examDDay = subjectDetailState.examDday,
-            examDate = subjectDetailState.examDate,
-            onCloseIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked) },
-            onTrashIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked) },
-            onDeleteModeCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked(id)) },
-            onDefaultCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked(id)) },
-            onCompleteCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked(id)) },
-            onClickEnrollMotivationMessage = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage(id, name)) },
-            onClickModifySubjectName = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName(id, name)) },
-            onClickKebabMenu = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu) },
-            onRevertCompleteBottomSheetDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest) },
-            onRevertCompleteBottomSheetApproveButtonClicked = { pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
-            onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },
-        )
+            SubjectDetailScreen(
+                padding = padding,
+                isMenuOpen = subjectDetailState.isMenuOpen,
+                todoList = subjectDetailState.todoList,
+                pieceViewType = subjectDetailState.pieceViewType,
+                deletedSet = subjectDetailState.selectedItemSet,
+                revertCompleteBottomSheetState = subjectDetailState.revertCompleteBottomSheetState,
+                selectedItemId = subjectDetailState.selectedItemId,
+                subjectId = subjectDetailState.subjectId,
+                subjectName = subjectDetailState.subjectName,
+                motivationMessage = subjectDetailState.motivationMessage,
+                examDDay = subjectDetailState.examDday,
+                examDate = subjectDetailState.examDate,
+                onCloseIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked) },
+                onTrashIconClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked) },
+                onDeleteModeCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked(id)) },
+                onDefaultCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked(id)) },
+                onCompleteCardClicked = { id -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked(id)) },
+                onClickEnrollMotivationMessage = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage(id, name)) },
+                onClickModifySubjectName = { id, name -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName(id, name)) },
+                onClickKebabMenu = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu) },
+                onRevertCompleteBottomSheetDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest) },
+                onRevertCompleteBottomSheetApproveButtonClicked = { pieceId -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId)) },
+                onRevertCompleteBottomSheetDismissButtonClicked = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked) },
+            )
         false ->
             Box(
                 modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+                    Modifier
+                        .fillMaxSize()
+                        .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
                 contentAlignment = Alignment.Center,
             ) {
                 CircularProgressIndicator(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)

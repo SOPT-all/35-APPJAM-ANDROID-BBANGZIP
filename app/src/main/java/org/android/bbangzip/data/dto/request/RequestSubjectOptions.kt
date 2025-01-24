@@ -6,5 +6,5 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class RequestSubjectOptions(
     @SerialName("value")
-    val value: String
+    val value: String,
 )

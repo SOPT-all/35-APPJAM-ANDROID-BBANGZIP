@@ -17,7 +17,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun ModifyMotivationMessageRoute(
     subjectId: Int,
-    subjectName:String,
+    subjectName: String,
     viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
     navigateToSubjectDetail: (Int, String) -> Unit,
     snackbarHostState: SnackbarHostState,
@@ -28,7 +28,7 @@ fun ModifyMotivationMessageRoute(
 
     activity.window.statusBarColor = BbangZipTheme.colors.staticWhite_FFFFFF.toArgb()
 
-    LaunchedEffect (Unit){
+    LaunchedEffect(Unit) {
         viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.Initialize(subjectId, subjectName))
     }
 

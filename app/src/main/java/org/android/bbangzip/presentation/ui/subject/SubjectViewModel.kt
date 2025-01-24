@@ -8,7 +8,6 @@ import kotlinx.coroutines.launch
 import org.android.bbangzip.data.dto.request.RequestDeleteSubjectsDto
 import org.android.bbangzip.domain.usecase.DeleteSubjectsUseCase
 import org.android.bbangzip.domain.usecase.GetSubjectInfoUseCase
-import org.android.bbangzip.domain.usecase.PostAddSubjectNameUseCase
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.SubjectCardModel
 import org.android.bbangzip.presentation.type.CardViewType
@@ -183,7 +182,7 @@ class SubjectViewModel
                     subjectIds = currentUiState.subjectSetToDelete.toList(),
                     year = 2025,
                     semester = "1학기",
-                )
+                ),
             )
                 .onSuccess {
                     Timber.tag("delete").d("성공")
