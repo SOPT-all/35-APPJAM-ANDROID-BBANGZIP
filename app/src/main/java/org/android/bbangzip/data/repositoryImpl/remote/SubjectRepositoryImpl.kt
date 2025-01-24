@@ -24,20 +24,21 @@ constructor(
         runCatching {
             val response = subjectRemoteDataSource.postSubjectName()
 
-            response.data ?: throw IllegalStateException(response.message ?: "Null Error")
+            response.code ?: throw IllegalStateException(response.message ?: "Null Error")
         }
 
     override suspend fun deleteSubjects(): Result<Unit> =
         runCatching {
             val response = subjectRemoteDataSource.deleteSubjects()
 
-            response.data ?: throw IllegalStateException(response.message ?: "Null Error")
+            response.code ?: throw IllegalStateException(response.message ?: "Null Error")
         }
 
     override suspend fun putSubjectOptions(subjectId: Int, options: String, requestSubjectOptions: RequestSubjectOptions): Result<Unit> =
         runCatching {
             val response = subjectRemoteDataSource.putSubjectOptions(subjectId, options, requestSubjectOptions)
 
-            response.data ?: throw IllegalStateException(response.message ?: "Null Error")
+            response.code ?: throw IllegalStateException(response.message ?: "Null Error")
+
         }
 }

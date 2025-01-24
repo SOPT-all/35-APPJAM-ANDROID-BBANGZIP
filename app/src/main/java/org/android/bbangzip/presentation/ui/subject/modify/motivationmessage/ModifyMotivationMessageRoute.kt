@@ -12,11 +12,17 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun ModifyMotivationMessageRoute(
+    subjectId: Int,
+    subjectName:String,
     viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
     navigateToSubjectDetail: (Int, String) -> Unit,
     snackbarHostState: SnackbarHostState,
 ) {
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
+
+    LaunchedEffect (Unit){
+        viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.Initialize(subjectId, subjectName))
+    }
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->

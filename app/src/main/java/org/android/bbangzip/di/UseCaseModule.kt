@@ -27,6 +27,7 @@ import org.android.bbangzip.domain.usecase.PostCompleteCardIdUseCase
 import org.android.bbangzip.domain.usecase.PostDeletedItemListUseCase
 import org.android.bbangzip.domain.usecase.PostOnboardingUseCase
 import org.android.bbangzip.domain.usecase.PostUnCompleteCardIdUseCase
+import org.android.bbangzip.domain.usecase.PutSubjectOptionsUseCase
 import javax.inject.Singleton
 
 @Module
@@ -116,4 +117,9 @@ class UseCaseModule {
     @Singleton
     fun providesDeleteSubjectsUseCase(subjectRepository: SubjectRepository): DeleteSubjectsUseCase =
         DeleteSubjectsUseCase(subjectRepository = subjectRepository)
+
+    @Provides
+    @Singleton
+    fun providesPutSubjectOptionsUseCase(subjectRepository: SubjectRepository): PutSubjectOptionsUseCase =
+        PutSubjectOptionsUseCase(subjectRepository = subjectRepository)
 }
