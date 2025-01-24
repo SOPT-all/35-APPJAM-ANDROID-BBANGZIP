@@ -157,4 +157,8 @@
     <string name="cancel">취소</string>
     <string name="withdraw_title">정말 탈퇴하시겠어요?</string>
     <string name="withdraw_confirm">탈퇴하기</string>
+    <string name="modify_subject_name_placeholder">예) 거시경제학</string>
+    <string name="modify_subject_name_guideline">한글/영문/숫자 조합으로 최대 10자까지 입력 가능해요</string>
+    <string name="modify_motivation_message_placeholder">예) 이번에 열심히 공부해서 빵점 탈출!</string>
+    <string name="modify_motivation_message_guideline">한글/영문/숫자/기호 조합으로 최대25자까지 입력 가능해요</string>
 </resources>
