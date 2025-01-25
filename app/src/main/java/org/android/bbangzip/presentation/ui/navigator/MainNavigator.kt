@@ -104,8 +104,15 @@ class MainNavigator(
         navHostController.navigateSplitStudy(addStudyData = addStudyData)
     }
 
-    fun navigateToOnboardingStart() {
-        navHostController.navigateOnboardingStart()
+    fun navigateToOnboardingStart(navOptions: NavOptions? = null) {
+        navHostController.navigateOnboardingStart(
+            navOptions ?: navOptions {
+                popUpTo(navHostController.graph.findStartDestination().id) {
+                    inclusive = true
+                }
+                launchSingleTop = true
+            }
+        )
     }
 
     fun navigateToSubjectDetail(

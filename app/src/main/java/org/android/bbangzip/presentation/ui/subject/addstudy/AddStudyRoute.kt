@@ -1,18 +1,22 @@
 package org.android.bbangzip.presentation.ui.subject.addstudy
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.SplitStudyData
 
 @Composable
 fun AddStudyRoute(
     padding: PaddingValues,
+    snackBarHostState: SnackbarHostState,
     splitStudyData: SplitStudyData,
     viewModel: AddStudyViewModel = hiltViewModel(),
     popBackStack: () -> Unit = {},
@@ -31,6 +35,16 @@ fun AddStudyRoute(
                 }
                 is AddStudyContract.AddStudySideEffect.PopBackStack -> popBackStack()
                 is AddStudyContract.AddStudySideEffect.NavigateSubjectDetail -> navigateSubjectDetail(it.subjectId, it.subjectName)
+
+                is AddStudyContract.AddStudySideEffect.ShowSnackBar ->{
+                    val job =
+                        launch {
+                            snackBarHostState.currentSnackbarData?.dismiss()
+                            snackBarHostState.showSnackbar(it.message)
+                        }
+                    delay(2000)
+                    job.cancel()
+                }
             }
         }
     }

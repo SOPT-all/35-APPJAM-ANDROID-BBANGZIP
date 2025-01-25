@@ -142,5 +142,7 @@ class AddStudyContract {
         data class NavigateSubjectDetail(val subjectId: Int, val subjectName: String) : AddStudySideEffect
 
         data object PopBackStack : AddStudySideEffect
+
+        data class ShowSnackBar(val message: String) : AddStudySideEffect
     }
 }
