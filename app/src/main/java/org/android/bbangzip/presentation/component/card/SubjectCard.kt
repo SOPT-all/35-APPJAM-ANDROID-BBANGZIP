@@ -127,7 +127,7 @@ fun SubjectInfo(
             Gap(height = 4)
 
             BbangZipChip(
-                text = (stringResource(R.string.card_d_minus_day_text, data.pendingCount)),
+                text = (stringResource(R.string.card_d_minus_day_text, data.examRemainingDays)),
                 backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
             )
 

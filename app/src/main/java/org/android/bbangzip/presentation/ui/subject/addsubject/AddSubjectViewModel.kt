@@ -34,7 +34,7 @@ class AddSubjectViewModel
                 }
 
                 AddSubjectContract.AddSubjectEvent.OnClickBackBtn -> {
-                    setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateSubjectDetail)
+                    setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateToBack)
                 }
 
                 AddSubjectContract.AddSubjectEvent.OnClickAddBtn -> {

@@ -45,5 +45,7 @@ class AddSubjectContract {
 
         // 공부 추가 완료! 미룬이 탈출이 코앞이에요
         data class ShowSnackBar(val message: String) : AddSubjectSideEffect
+
+        data object NavigateToBack : AddSubjectSideEffect
     }
 }
