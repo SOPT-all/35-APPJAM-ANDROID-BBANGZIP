@@ -15,7 +15,7 @@ class OnboardingContract {
         val userName: String? = null,
         val semester: Semester = Semester(YEAR_OF_TODAY.toString(), SemesterType.FIRST),
         val subjectName: String? = null,
-        val buttonEnabled: Boolean = true,
+        val buttonEnabled: Boolean = false,
         val userNameTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
         val userNameFocusedState: Boolean = false,
         val semesterPickerState: Boolean = true,

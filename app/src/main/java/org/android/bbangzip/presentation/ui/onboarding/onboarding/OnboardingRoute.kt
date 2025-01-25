@@ -41,6 +41,8 @@ fun OnboardingRoute(
         Timber.tag("[온보딩] currentPage").d("${state.currentPage} + ${pagerState.currentPage}")
         if (pagerState.currentPage != state.currentPage) {
             pagerState.animateScrollToPage(state.currentPage)
+            // TODO 로직 확인
+            viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeCurrentPage(state.currentPage))
         }
     }
 
