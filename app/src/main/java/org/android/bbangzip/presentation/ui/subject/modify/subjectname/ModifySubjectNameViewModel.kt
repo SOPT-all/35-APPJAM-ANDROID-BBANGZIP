@@ -37,6 +37,7 @@ class ModifySubjectNameViewModel
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
                 }
                 ModifySubjectNameContract.ModifySubjectNameEvent.OnClickBackBtn -> {
+                    setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.PopBackStack)
                 }
                 is ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn -> {
                     viewModelScope.launch {

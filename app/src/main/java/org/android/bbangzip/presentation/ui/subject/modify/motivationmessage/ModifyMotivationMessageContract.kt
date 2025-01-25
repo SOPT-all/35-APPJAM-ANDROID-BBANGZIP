@@ -50,5 +50,7 @@ class ModifyMotivationMessageContract {
         data class NavigateSubjectDetail(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageSideEffect
 
         data class ShowSnackBar(val message: String) : ModifyMotivationMessageSideEffect
+
+        data object PopBackStack: ModifyMotivationMessageSideEffect
     }
 }

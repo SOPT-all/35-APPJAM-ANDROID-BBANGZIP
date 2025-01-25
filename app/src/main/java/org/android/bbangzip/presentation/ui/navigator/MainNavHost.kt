@@ -123,12 +123,14 @@ fun MainNavHost(
             )
 
             modifySubjectNameNavGraph(
+                popBackStack = { navigator.popBackStackIfNotSubject() },
                 navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
             )
 
             modifyMotivationMessageNavGraph(
                 navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
                 snackbarHostState = snackBarHostState,
+                popBackStack = { navigator.popBackStackIfNotSubject() }
             )
 
             addSubjectNavGraph(

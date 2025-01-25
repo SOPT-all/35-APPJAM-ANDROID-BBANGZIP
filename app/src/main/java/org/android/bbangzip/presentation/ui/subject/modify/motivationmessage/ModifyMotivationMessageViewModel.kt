@@ -34,6 +34,7 @@ class ModifyMotivationMessageViewModel
                 }
 
                 ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickBackBtn -> {
+                    setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.PopBackStack)
                 }
 
                 is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn -> {

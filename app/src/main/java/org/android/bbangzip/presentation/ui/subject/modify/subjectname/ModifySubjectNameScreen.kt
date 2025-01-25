@@ -34,6 +34,7 @@ fun ModifySubjectNameScreen(
     onTextFieldFocusChanged: (Boolean) -> Unit = {},
     onModifyBtnClicked: (Int, String) -> Unit = { _, _ -> },
     onDeleteBtnClicked: () -> Unit = {},
+    onBackBtnClicked: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -43,6 +44,7 @@ fun ModifySubjectNameScreen(
         BbangZipBaseTopBar(
             title = "과목명 수정하기",
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
+            onLeadingIconClick = { onBackBtnClicked() }
         )
 
         Column(

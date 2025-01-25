@@ -21,9 +21,11 @@ fun NavController.navigateToModifySubjectName(
 
 fun NavGraphBuilder.modifySubjectNameNavGraph(
     navigateToSubjectDetail: (Int, String) -> Unit,
+    popBackStack: () -> Unit
 ) {
     composable<ModifySubjectNameRoute> {
         ModifySubjectNameRoute(
+            popBackStack = popBackStack,
             navigateToSubjectDetail = navigateToSubjectDetail,
             subjectId = it.toRoute<ModifySubjectNameRoute>().subjectId,
             subjectName = it.toRoute<ModifySubjectNameRoute>().subjectName,

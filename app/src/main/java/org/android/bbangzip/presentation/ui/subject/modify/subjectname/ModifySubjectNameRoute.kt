@@ -14,6 +14,7 @@ import timber.log.Timber
 
 @Composable
 fun ModifySubjectNameRoute(
+    popBackStack: () -> Unit,
     viewModel: ModifySubjectNameViewModel = hiltViewModel(),
     subjectId: Int,
     subjectName: String,
@@ -41,6 +42,10 @@ fun ModifySubjectNameRoute(
                 }
                 ModifySubjectNameContract.ModifySubjectNameSideEffect.ShowSnackBar -> {
                 }
+
+                is ModifySubjectNameContract.ModifySubjectNameSideEffect.PopBackStack -> {
+                    popBackStack()
+                }
             }
         }
     }
@@ -55,5 +60,6 @@ fun ModifySubjectNameRoute(
         onTextFieldFocusChanged = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField(it)) },
         onModifyBtnClicked = { id, name -> viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn(id, name)) },
         onDeleteBtnClicked = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickDeleteBtn) },
+        onBackBtnClicked = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickBackBtn)}
     )
 }
