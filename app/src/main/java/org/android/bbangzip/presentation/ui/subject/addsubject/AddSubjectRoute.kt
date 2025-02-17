@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun AddSubjectRoute(
     viewModel: AddSubjectViewModel = hiltViewModel(),
-    navigateSubjectDetail: () -> Unit,
+    navigateToSubjectDetail: () -> Unit,
 ) {
     val addSubjectState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -18,7 +18,7 @@ fun AddSubjectRoute(
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
                 AddSubjectContract.AddSubjectSideEffect.NavigateSubjectDetail -> {
-                    navigateSubjectDetail()
+                    navigateToSubjectDetail()
                 }
 
                 is AddSubjectContract.AddSubjectSideEffect.ShowSnackBar -> {}
