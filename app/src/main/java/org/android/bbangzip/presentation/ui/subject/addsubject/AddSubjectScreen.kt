@@ -26,7 +26,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun AddSubjectScreen(
     subjectName: String = "",
-    isButtonEnable: Boolean = false,
+    isButtonEnabled: Boolean = false,
     isTextFieldFocused: Boolean = false,
     textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     onSubjectNameChanged: (String) -> Unit = {},
@@ -86,7 +86,7 @@ fun AddSubjectScreen(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_add_label),
-                isEnable = isButtonEnable,
+                isEnable = isButtonEnabled,
             )
         }
     }

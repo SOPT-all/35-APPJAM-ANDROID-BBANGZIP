@@ -28,7 +28,7 @@ fun AddSubjectRoute(
 
     AddSubjectScreen(
         subjectName = addSubjectState.subjectName,
-        isButtonEnable = addSubjectState.isButtonEnable,
+        isButtonEnabled = addSubjectState.isButtonEnabled,
         isTextFieldFocused = addSubjectState.isTextFieldFocused,
         textFieldInputState = addSubjectState.subjectTextFieldState,
         onSubjectNameChanged = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnChangeSubjectName(it)) },
