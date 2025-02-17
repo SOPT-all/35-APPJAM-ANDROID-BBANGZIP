@@ -36,7 +36,7 @@ fun AddSubjectRoute(
         onSubjectNameChange = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnSubjectNameChange(it)) },
         onTextFieldFocusChange = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnTextFieldFocus(it)) },
         onAddBtnClick = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnAddBtnClick) },
-        onDeleteBtnClick = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnDeleteBtnClick) },
-        onBackButtonClick = {viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnBackBtnClick)}
+        onTextFieldDeleteIconClick = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnTextFieldDeleteIconClick) },
+        onBackIconClick = {viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnBackIconClick)}
     )
 }

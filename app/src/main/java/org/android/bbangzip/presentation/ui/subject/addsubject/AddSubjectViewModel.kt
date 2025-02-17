@@ -28,7 +28,7 @@ class AddSubjectViewModel
 
         override fun handleEvent(event: AddSubjectContract.AddSubjectEvent) {
             when (event) {
-                AddSubjectContract.AddSubjectEvent.OnBackBtnClick -> {
+                AddSubjectContract.AddSubjectEvent.OnBackIconClick -> {
                     setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateToBack)
                 }
 
@@ -38,7 +38,7 @@ class AddSubjectViewModel
                     }
                 }
 
-                AddSubjectContract.AddSubjectEvent.OnDeleteBtnClick -> {
+                AddSubjectContract.AddSubjectEvent.OnTextFieldDeleteIconClick -> {
                     updateState(AddSubjectContract.AddSubjectReduce.ResetSubjectName)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)

@@ -21,11 +21,11 @@ class AddSubjectContract {
 
         data class OnSubjectNameChange(val subjectName: String) : AddSubjectEvent
 
-        data object OnBackBtnClick : AddSubjectEvent
-
         data object OnAddBtnClick : AddSubjectEvent
 
-        data object OnDeleteBtnClick : AddSubjectEvent
+        data object OnBackIconClick : AddSubjectEvent
+
+        data object OnTextFieldDeleteIconClick : AddSubjectEvent
     }
 
     sealed interface AddSubjectReduce : BaseContract.Reduce {

@@ -33,8 +33,8 @@ fun AddSubjectScreen(
     onSubjectNameChange: (String) -> Unit = {},
     onTextFieldFocusChange: (Boolean) -> Unit = {},
     onAddBtnClick: () -> Unit = {},
-    onDeleteBtnClick: () -> Unit = {},
-    onBackButtonClick: () -> Unit = {}
+    onTextFieldDeleteIconClick: () -> Unit = {},
+    onBackIconClick: () -> Unit = {}
 ) {
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundNormal_FFFFFF.toArgb()
 
@@ -49,7 +49,7 @@ fun AddSubjectScreen(
         BbangZipBaseTopBar(
             title = stringResource(R.string.add_subject_title),
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = onBackButtonClick
+            onLeadingIconClick = onBackIconClick
         )
 
         Column(
@@ -76,7 +76,7 @@ fun AddSubjectScreen(
                 bbangZipTextFieldInputState = state.subjectTextFieldInputState,
                 onValueChange = onSubjectNameChange,
                 onFocusChange = onTextFieldFocusChange,
-                onDeleteButtonClick = onDeleteBtnClick,
+                onDeleteButtonClick = onTextFieldDeleteIconClick,
                 maxCharacter = TEXT_FIELD_MAX_CHARACTER,
                 focusManager = focusManager,
             )
