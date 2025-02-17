@@ -30,14 +30,14 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun AddSubjectScreen(
     state: AddSubjectContract.AddSubjectState,
-    onSubjectNameChanged: (String) -> Unit = {},
-    onTextFieldFocusChanged: (Boolean) -> Unit = {},
-    onAddBtnClicked: () -> Unit = {},
-    onDeleteBtnClicked: () -> Unit = {},
+    onSubjectNameChange: (String) -> Unit = {},
+    onTextFieldFocusChange: (Boolean) -> Unit = {},
+    onAddBtnClick: () -> Unit = {},
+    onDeleteBtnClick: () -> Unit = {},
 ) {
-    val focusManager = LocalFocusManager.current
-
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundNormal_FFFFFF.toArgb()
+
+    val focusManager = LocalFocusManager.current
 
     Column(
         modifier =
@@ -72,9 +72,9 @@ fun AddSubjectScreen(
                 value = state.subjectName,
                 modifier = Modifier.fillMaxWidth(),
                 bbangZipTextFieldInputState = state.subjectTextFieldInputState,
-                onValueChange = onSubjectNameChanged,
-                onFocusChange = onTextFieldFocusChanged,
-                onDeleteButtonClick = onDeleteBtnClicked,
+                onValueChange = onSubjectNameChange,
+                onFocusChange = onTextFieldFocusChange,
+                onDeleteButtonClick = onDeleteBtnClick,
                 maxCharacter = 10,
                 focusManager = focusManager,
             )
@@ -85,7 +85,7 @@ fun AddSubjectScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    onAddBtnClicked()
+                    onAddBtnClick()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_add_label),

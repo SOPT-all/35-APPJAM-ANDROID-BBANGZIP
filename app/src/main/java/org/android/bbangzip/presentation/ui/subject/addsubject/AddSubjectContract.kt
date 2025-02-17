@@ -17,15 +17,15 @@ class AddSubjectContract {
     }
 
     sealed interface AddSubjectEvent : BaseContract.Event {
-        data class OnFocusTextField(val isTextFieldFocused: Boolean) : AddSubjectEvent
+        data class OnTextFieldFocus(val isTextFieldFocused: Boolean) : AddSubjectEvent
 
-        data class OnChangeSubjectName(val subjectName: String) : AddSubjectEvent
+        data class OnSubjectNameChange(val subjectName: String) : AddSubjectEvent
 
-        data object OnClickBackBtn : AddSubjectEvent
+        data object OnBackBtnClick : AddSubjectEvent
 
-        data object OnClickAddBtn : AddSubjectEvent
+        data object OnAddBtnClick : AddSubjectEvent
 
-        data object OnClickDeleteBtn : AddSubjectEvent
+        data object OnDeleteBtnClick : AddSubjectEvent
     }
 
     sealed interface AddSubjectReduce : BaseContract.Reduce {

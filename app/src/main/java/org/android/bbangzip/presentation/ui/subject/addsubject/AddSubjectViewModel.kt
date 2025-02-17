@@ -27,29 +27,29 @@ class AddSubjectViewModel
 
         override fun handleEvent(event: AddSubjectContract.AddSubjectEvent) {
             when (event) {
-                is AddSubjectContract.AddSubjectEvent.OnChangeSubjectName -> {
+                is AddSubjectContract.AddSubjectEvent.OnSubjectNameChange -> {
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectName(subjectName = event.subjectName))
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
                 }
 
-                AddSubjectContract.AddSubjectEvent.OnClickBackBtn -> {
+                AddSubjectContract.AddSubjectEvent.OnBackBtnClick -> {
                     setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateToSubject)
                 }
 
-                AddSubjectContract.AddSubjectEvent.OnClickAddBtn -> {
+                AddSubjectContract.AddSubjectEvent.OnAddBtnClick -> {
                     viewModelScope.launch {
                         putMotivationMessage()
                     }
                 }
 
-                is AddSubjectContract.AddSubjectEvent.OnFocusTextField -> {
+                is AddSubjectContract.AddSubjectEvent.OnTextFieldFocus -> {
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
                 }
 
-                AddSubjectContract.AddSubjectEvent.OnClickDeleteBtn -> {
+                AddSubjectContract.AddSubjectEvent.OnDeleteBtnClick -> {
                     updateState(AddSubjectContract.AddSubjectReduce.ResetSubjectName)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)

@@ -28,9 +28,9 @@ fun AddSubjectRoute(
 
     AddSubjectScreen(
         state = addSubjectState,
-        onSubjectNameChanged = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnChangeSubjectName(it)) },
-        onTextFieldFocusChanged = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnFocusTextField(it)) },
-        onAddBtnClicked = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnClickAddBtn) },
-        onDeleteBtnClicked = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnClickDeleteBtn) },
+        onSubjectNameChange = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnSubjectNameChange(it)) },
+        onTextFieldFocusChange = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnTextFieldFocus(it)) },
+        onAddBtnClick = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnAddBtnClick) },
+        onDeleteBtnClick = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnDeleteBtnClick) },
     )
 }
