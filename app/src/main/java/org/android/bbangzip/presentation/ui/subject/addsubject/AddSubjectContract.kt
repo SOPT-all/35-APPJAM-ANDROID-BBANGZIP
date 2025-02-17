@@ -11,7 +11,7 @@ class AddSubjectContract {
         val subjectName: String = "",
         val isTextFieldFocused: Boolean = false,
         val isButtonEnabled: Boolean = false,
-        val subjectTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
+        val subjectTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }

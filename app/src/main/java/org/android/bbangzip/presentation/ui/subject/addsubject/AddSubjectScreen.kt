@@ -20,15 +20,13 @@ import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
+import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyContract
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun AddSubjectScreen(
-    subjectName: String = "",
-    isButtonEnabled: Boolean = false,
-    isTextFieldFocused: Boolean = false,
-    textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
+    state: AddSubjectContract.AddSubjectState,
     onSubjectNameChanged: (String) -> Unit = {},
     onTextFieldFocusChanged: (Boolean) -> Unit = {},
     onAddBtnClicked: () -> Unit = {},
@@ -66,9 +64,9 @@ fun AddSubjectScreen(
                 leadingIcon = R.drawable.ic_book_default_24,
                 placeholder = R.string.modify_subject_name_placeholder,
                 guideline = R.string.modify_subject_name_guideline,
-                value = subjectName,
+                value = state.subjectName,
                 modifier = Modifier.fillMaxWidth(),
-                bbangZipTextFieldInputState = textFieldInputState,
+                bbangZipTextFieldInputState = state.subjectTextFieldInputState,
                 onValueChange = onSubjectNameChanged,
                 onFocusChange = onTextFieldFocusChanged,
                 onDeleteButtonClick = onDeleteBtnClicked,
@@ -86,7 +84,7 @@ fun AddSubjectScreen(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_add_label),
-                isEnable = isButtonEnabled,
+                isEnable = state.isButtonEnabled,
             )
         }
     }
@@ -96,7 +94,6 @@ fun AddSubjectScreen(
 @Composable
 private fun AddSubjectScreenPreview() {
     AddSubjectScreen(
-        "Preview",
-        false,
+        state = AddSubjectContract.AddSubjectState(),
     )
 }
