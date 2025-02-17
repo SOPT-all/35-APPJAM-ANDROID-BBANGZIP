@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun AddSubjectRoute(
-    viewModel: AddSubjectViewModel = hiltViewModel(),
-    navigateToBack:()->Unit ={},
+    navigateToBack:() -> Unit,
     navigateToSubject: () -> Unit,
+    viewModel: AddSubjectViewModel = hiltViewModel(),
 ) {
     val addSubjectState by viewModel.uiState.collectAsStateWithLifecycle()
 
@@ -22,11 +22,11 @@ fun AddSubjectRoute(
                     navigateToSubject()
                 }
 
-                is AddSubjectContract.AddSubjectSideEffect.ShowSnackBar -> {}
-
                 AddSubjectContract.AddSubjectSideEffect.NavigateToBack -> {
                     navigateToBack()
                 }
+
+                is AddSubjectContract.AddSubjectSideEffect.ShowSnackBar -> {}
             }
         }
     }

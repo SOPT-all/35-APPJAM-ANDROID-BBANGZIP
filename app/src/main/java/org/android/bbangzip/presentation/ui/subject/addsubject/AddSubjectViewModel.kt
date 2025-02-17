@@ -28,12 +28,6 @@ class AddSubjectViewModel
 
         override fun handleEvent(event: AddSubjectContract.AddSubjectEvent) {
             when (event) {
-                is AddSubjectContract.AddSubjectEvent.OnSubjectNameChange -> {
-                    updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectName(subjectName = event.subjectName))
-                    updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
-                    updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
-                }
-
                 AddSubjectContract.AddSubjectEvent.OnBackBtnClick -> {
                     setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateToBack)
                 }
@@ -44,14 +38,20 @@ class AddSubjectViewModel
                     }
                 }
 
-                is AddSubjectContract.AddSubjectEvent.OnTextFieldFocus -> {
-                    updateState(AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
+                AddSubjectContract.AddSubjectEvent.OnDeleteBtnClick -> {
+                    updateState(AddSubjectContract.AddSubjectReduce.ResetSubjectName)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
                 }
 
-                AddSubjectContract.AddSubjectEvent.OnDeleteBtnClick -> {
-                    updateState(AddSubjectContract.AddSubjectReduce.ResetSubjectName)
+                is AddSubjectContract.AddSubjectEvent.OnSubjectNameChange -> {
+                    updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectName(subjectName = event.subjectName))
+                    updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
+                    updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
+                }
+
+                is AddSubjectContract.AddSubjectEvent.OnTextFieldFocus -> {
+                    updateState(AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
                 }
@@ -68,16 +68,7 @@ class AddSubjectViewModel
                         isButtonEnabled = state.subjectName.isNotEmpty() && state.subjectTextFieldInputState != BbangZipTextFieldInputState.Alert,
                     )
                 }
-                is AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused -> {
-                    state.copy(
-                        isTextFieldFocused = reduce.isTextFieldFocused,
-                    )
-                }
-                is AddSubjectContract.AddSubjectReduce.UpdateSubjectName -> {
-                    state.copy(
-                        subjectName = reduce.subjectName,
-                    )
-                }
+
                 AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState -> {
                     state.copy(
                         subjectTextFieldInputState =
@@ -91,6 +82,18 @@ class AddSubjectViewModel
                 AddSubjectContract.AddSubjectReduce.ResetSubjectName -> {
                     state.copy(
                         subjectName = "",
+                    )
+                }
+
+                is AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused -> {
+                    state.copy(
+                        isTextFieldFocused = reduce.isTextFieldFocused,
+                    )
+                }
+
+                is AddSubjectContract.AddSubjectReduce.UpdateSubjectName -> {
+                    state.copy(
+                        subjectName = reduce.subjectName,
                     )
                 }
             }

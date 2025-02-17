@@ -29,11 +29,11 @@ class AddSubjectContract {
     }
 
     sealed interface AddSubjectReduce : BaseContract.Reduce {
-        data class UpdateSubjectName(val subjectName: String) : AddSubjectReduce
-
         data object UpdateIsButtonEnabled : AddSubjectReduce
 
         data object UpdateSubjectInputState : AddSubjectReduce
+
+        data class UpdateSubjectName(val subjectName: String) : AddSubjectReduce
 
         data class UpdateIsTextFieldFocused(val isTextFieldFocused: Boolean) : AddSubjectReduce
 
@@ -43,8 +43,8 @@ class AddSubjectContract {
     sealed interface AddSubjectSideEffect : BaseContract.SideEffect {
         data object NavigateToSubject : AddSubjectSideEffect
 
-        data class ShowSnackBar(val message: String) : AddSubjectSideEffect
-
         data object NavigateToBack : AddSubjectSideEffect
+
+        data class ShowSnackBar(val message: String) : AddSubjectSideEffect
     }
 }
