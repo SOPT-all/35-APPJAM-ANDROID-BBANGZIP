@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.collectLatest
 @Composable
 fun AddSubjectRoute(
     viewModel: AddSubjectViewModel = hiltViewModel(),
+    navigateToBack:()->Unit ={},
     navigateToSubject: () -> Unit,
 ) {
     val addSubjectState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -22,6 +23,10 @@ fun AddSubjectRoute(
                 }
 
                 is AddSubjectContract.AddSubjectSideEffect.ShowSnackBar -> {}
+
+                AddSubjectContract.AddSubjectSideEffect.NavigateToBack -> {
+                    navigateToBack()
+                }
             }
         }
     }
@@ -32,5 +37,6 @@ fun AddSubjectRoute(
         onTextFieldFocusChange = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnTextFieldFocus(it)) },
         onAddBtnClick = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnAddBtnClick) },
         onDeleteBtnClick = { viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnDeleteBtnClick) },
+        onBackButtonClick = {viewModel.setEvent(AddSubjectContract.AddSubjectEvent.OnBackBtnClick)}
     )
 }

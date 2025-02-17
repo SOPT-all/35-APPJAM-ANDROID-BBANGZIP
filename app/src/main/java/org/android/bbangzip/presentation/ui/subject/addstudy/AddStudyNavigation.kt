@@ -2,6 +2,7 @@ package org.android.bbangzip.presentation.ui.subject.addstudy
 
 import android.os.Bundle
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
@@ -24,6 +25,7 @@ fun NavController.navigateAddStudy(
 
 fun NavGraphBuilder.addStudyNavGraph(
     padding: PaddingValues,
+    snackBarHostState: SnackbarHostState,
     popBackStack: () -> Unit,
     navigateSplitStudy: (AddStudyData) -> Unit,
     navigateSubjectDetail: (Int, String) -> Unit,
@@ -33,6 +35,7 @@ fun NavGraphBuilder.addStudyNavGraph(
     ) {
         AddStudyRoute(
             padding = padding,
+            snackBarHostState = snackBarHostState,
             popBackStack = popBackStack,
             navigateSplitStudy = navigateSplitStudy,
             navigateSubjectDetail = navigateSubjectDetail,

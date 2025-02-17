@@ -12,10 +12,12 @@ fun NavController.navigateToAddSubject() {
 }
 
 fun NavGraphBuilder.addSubjectNavGraph(
+    navigateToBack:()->Unit,
     navigateToSubject: () -> Unit,
 ) {
     composable<AddSubjectRoute> {
         AddSubjectRoute(
+            navigateToBack = navigateToBack,
             navigateToSubject = navigateToSubject,
         )
     }

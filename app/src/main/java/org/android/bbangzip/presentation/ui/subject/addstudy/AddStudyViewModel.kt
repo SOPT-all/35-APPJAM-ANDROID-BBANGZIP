@@ -184,6 +184,7 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdatePieceList)
                     Timber.tag("김재민").d("자고싶당 : $currentUiState")
                     postAddStudy()
+                    setSideEffect(AddStudyContract.AddStudySideEffect.ShowSnackBar("공부 추가 완료!미룬이 탈출이 코앞이에요"))
                 }
             }
         }

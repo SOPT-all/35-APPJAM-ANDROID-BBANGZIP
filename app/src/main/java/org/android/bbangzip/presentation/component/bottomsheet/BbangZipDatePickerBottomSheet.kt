@@ -1,6 +1,7 @@
 package org.android.bbangzip.presentation.component.bottomsheet
 
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -64,6 +65,7 @@ fun BbangZipDatePickerBottomSheet(
                 onClick = onClickInputButton,
                 label = "시험 일자 입력하기",
                 isEnable = true,
+                modifier = Modifier.fillMaxWidth()
             )
             Spacer(modifier = Modifier.height(16.dp))
         },

@@ -37,11 +37,11 @@ data class SubjectListInfo(
             subjectId = subjectId,
             subjectName = subjectName,
             studyList =
-                studyList.filter { data ->
-                    data.examDday < 0
-                }.map {
-                    it.toSubjectCardDetailTodoInfoEntity()
-                },
+            studyList.filter { data ->
+                data.examName == "중간고사"
+            }.map {
+                it.toSubjectCardDetailTodoInfoEntity()
+            },
         )
 }
 

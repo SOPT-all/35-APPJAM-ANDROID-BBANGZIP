@@ -695,18 +695,14 @@ private fun EmptySubjectCardView(
     onClickAddStudy: (SplitStudyData) -> Unit = {},
 ) {
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
-        Box(
+        Image(
+            painter = painterResource(id = R.drawable.img_empty_view),
+            contentDescription = null,
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(328.dp)
-                    .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
-            contentAlignment = Alignment.Center,
-        ) {
-            Text(
-                text = stringResource(R.string.empty_view_text),
-            )
-        }
+            Modifier
+                .fillMaxWidth()
+                .aspectRatio(16f / 15f),
+        )
 
         Spacer(modifier = Modifier.height(16.dp))
 
