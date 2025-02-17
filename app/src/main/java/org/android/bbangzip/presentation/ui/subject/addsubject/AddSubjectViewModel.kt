@@ -64,7 +64,7 @@ class AddSubjectViewModel
             return when (reduce) {
                 AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled -> {
                     state.copy(
-                        isButtonEnable = state.subjectName.isNotEmpty() && state.subjectTextFieldState != BbangZipTextFieldInputState.Alert,
+                        isButtonEnabled = state.subjectName.isNotEmpty() && state.subjectTextFieldState != BbangZipTextFieldInputState.Alert,
                     )
                 }
                 is AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused -> {
