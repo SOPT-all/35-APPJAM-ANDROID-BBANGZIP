@@ -46,7 +46,7 @@ fun AddSubjectScreen(
                 .addFocusCleaner(focusManager = focusManager),
     ) {
         BbangZipBaseTopBar(
-            title = "과목 추가하기",
+            title = stringResource(R.string.add_subject_title),
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
         )
 
@@ -58,7 +58,7 @@ fun AddSubjectScreen(
                     .padding(top = 48.dp, bottom = 20.dp),
         ) {
             Text(
-                text = "과목명",
+                text = stringResource(R.string.add_subject_textfield_label),
                 style = BbangZipTheme.typography.headline1Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
             )

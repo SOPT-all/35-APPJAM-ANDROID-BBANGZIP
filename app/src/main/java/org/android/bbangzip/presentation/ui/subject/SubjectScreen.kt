@@ -181,7 +181,7 @@ private fun DefaultCardView(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
-                text = stringResource(R.string.add_subject_title),
+                text = stringResource(R.string.subject_select_subject_title),
                 style = BbangZipTheme.typography.headline2Bold,
                 color = BbangZipTheme.colors.labelAlternative_282119_61,
             )
