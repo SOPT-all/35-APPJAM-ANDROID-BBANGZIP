@@ -45,6 +45,6 @@ class AddSubjectContract {
 
         data object NavigateToBack : AddSubjectSideEffect
 
-        data class ShowSnackBar(val message: String) : AddSubjectSideEffect
+        data class ShowSuccessAddSubjectSnackBar(val message: String) : AddSubjectSideEffect
     }
 }
