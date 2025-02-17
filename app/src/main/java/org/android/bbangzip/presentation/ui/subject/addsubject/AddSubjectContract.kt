@@ -41,7 +41,7 @@ class AddSubjectContract {
     }
 
     sealed interface AddSubjectSideEffect : BaseContract.SideEffect {
-        data object NavigateSubjectDetail : AddSubjectSideEffect
+        data object NavigateToSubject : AddSubjectSideEffect
 
         data class ShowSnackBar(val message: String) : AddSubjectSideEffect
     }

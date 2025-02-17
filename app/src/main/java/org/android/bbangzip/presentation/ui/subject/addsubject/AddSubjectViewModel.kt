@@ -34,7 +34,7 @@ class AddSubjectViewModel
                 }
 
                 AddSubjectContract.AddSubjectEvent.OnClickBackBtn -> {
-                    setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateSubjectDetail)
+                    setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateToSubject)
                 }
 
                 AddSubjectContract.AddSubjectEvent.OnClickAddBtn -> {
@@ -118,7 +118,7 @@ class AddSubjectViewModel
                     ),
             ).onSuccess {
                 Timber.tag("motivate").d("과목명 저장")
-                setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateSubjectDetail)
+                setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateToSubject)
             }.onFailure { error ->
                 Timber.tag("motivate").d(error)
             }

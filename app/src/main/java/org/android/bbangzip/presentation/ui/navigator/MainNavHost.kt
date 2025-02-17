@@ -132,7 +132,7 @@ fun MainNavHost(
             )
 
             addSubjectNavGraph(
-                navigateSubject = { navigator.navigateToSubject() },
+                navigateToSubject = { navigator.navigateToSubject() },
             )
 
             splitStudyNavGraph(
