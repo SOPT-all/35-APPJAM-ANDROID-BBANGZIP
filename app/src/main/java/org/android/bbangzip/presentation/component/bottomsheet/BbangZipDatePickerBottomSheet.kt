@@ -65,7 +65,7 @@ fun BbangZipDatePickerBottomSheet(
                 onClick = onClickInputButton,
                 label = "시험 일자 입력하기",
                 isEnable = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
             Spacer(modifier = Modifier.height(16.dp))
         },
