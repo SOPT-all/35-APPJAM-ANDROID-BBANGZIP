@@ -20,7 +20,6 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.textfield.BbangZipBasicTextField
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
-import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
