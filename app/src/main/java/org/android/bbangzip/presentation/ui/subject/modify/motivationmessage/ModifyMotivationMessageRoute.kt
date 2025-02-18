@@ -56,12 +56,7 @@ fun ModifyMotivationMessageRoute(
     }
 
     ModifyMotivationMessageScreen(
-        motivationMessage = modifyMotivationMessageState.motivationMessage,
-        isButtonEnable = modifyMotivationMessageState.isButtonEnable,
-        isTextFieldFocused = modifyMotivationMessageState.isTextFieldFocused,
-        textFieldInputState = modifyMotivationMessageState.motivationMessageTextFieldState,
-        subjectId = modifyMotivationMessageState.subjectId,
-        subjectName = modifyMotivationMessageState.subjectName,
+        state = modifyMotivationMessageState,
         onMotivationMessageChange = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnMotivationMessageChange(it)) },
         onTextFieldFocusChange = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnTextFieldFocusChange(it)) },
         onModifyBtnClick = { id, name -> viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnModifyBtnClick(id, name)) },

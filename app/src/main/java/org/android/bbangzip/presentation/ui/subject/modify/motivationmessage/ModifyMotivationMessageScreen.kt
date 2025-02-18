@@ -27,12 +27,7 @@ private const val TEXT_FIELD_MAX_CHARACTER = 25
 
 @Composable
 fun ModifyMotivationMessageScreen(
-    motivationMessage: String = "",
-    isButtonEnable: Boolean = false,
-    isTextFieldFocused: Boolean = false,
-    subjectId: Int,
-    subjectName: String,
-    textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
+    state: ModifyMotivationMessageContract.ModifyMotivationMessageState,
     onMotivationMessageChange: (String) -> Unit = {},
     onTextFieldFocusChange: (Boolean) -> Unit = {},
     onModifyBtnClick: (Int, String) -> Unit = { _, _ -> },
@@ -72,9 +67,9 @@ fun ModifyMotivationMessageScreen(
                 leadingIcon = R.drawable.ic_search_large_24,
                 placeholder = R.string.modify_motivation_message_placeholder,
                 guideline = R.string.modify_motivation_message_guideline,
-                value = motivationMessage,
+                value = state.motivationMessage,
                 modifier = Modifier.fillMaxWidth(),
-                bbangZipTextFieldInputState = textFieldInputState,
+                bbangZipTextFieldInputState = state.motivationMessageTextFieldState,
                 onValueChange = onMotivationMessageChange,
                 onFocusChange = onTextFieldFocusChange,
                 onDeleteButtonClick = onTextFieldDeleteIconClick,
@@ -88,11 +83,11 @@ fun ModifyMotivationMessageScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    onModifyBtnClick(subjectId, subjectName)
+                    onModifyBtnClick(state.subjectId, state.subjectName)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),
-                isEnable = isButtonEnable,
+                isEnable = state.isButtonEnable,
             )
         }
     }
@@ -102,7 +97,6 @@ fun ModifyMotivationMessageScreen(
 @Composable
 private fun ModifyMotivationMessageScreenPreview() {
     ModifyMotivationMessageScreen(
-        subjectId = 0,
-        subjectName = "",
+        state = ModifyMotivationMessageContract.ModifyMotivationMessageState()
     )
 }
