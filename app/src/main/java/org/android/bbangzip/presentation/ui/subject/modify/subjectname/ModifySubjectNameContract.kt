@@ -10,7 +10,7 @@ class ModifySubjectNameContract {
     data class ModifySubjectNameState(
         val subjectName: String = "",
         val isTextFieldFocused: Boolean = false,
-        val isButtonEnable: Boolean = false,
+        val isButtonEnabled: Boolean = false,
         val subjectId: Int = 0,
         val textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     ) : BaseContract.State, Parcelable {

@@ -65,7 +65,7 @@ class ModifySubjectNameViewModel
             return when (reduce) {
                 ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled -> {
                     state.copy(
-                        isButtonEnable = state.subjectName.isNotEmpty() && state.textFieldInputState != BbangZipTextFieldInputState.Alert,
+                        isButtonEnabled = state.subjectName.isNotEmpty() && state.textFieldInputState != BbangZipTextFieldInputState.Alert,
                     )
                 }
                 is ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsTextFieldFocused -> {
