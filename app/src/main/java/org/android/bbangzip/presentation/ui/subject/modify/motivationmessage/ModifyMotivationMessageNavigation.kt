@@ -19,14 +19,14 @@ fun NavController.navigateToModifyMotivationMessage(
 fun NavGraphBuilder.modifyMotivationMessageNavGraph(
     navigateToSubjectDetail: (Int, String) -> Unit,
     popBackStack: () -> Unit,
-    snackbarHostState: SnackbarHostState,
+    snackBarHostState: SnackbarHostState,
 ) {
     composable<ModifyMotivationMessageRoute> {
         ModifyMotivationMessageRoute(
             subjectId = it.toRoute<ModifyMotivationMessageRoute>().subjectId,
             subjectName = it.toRoute<ModifyMotivationMessageRoute>().subjectName,
             navigateToSubjectDetail = navigateToSubjectDetail,
-            snackbarHostState = snackbarHostState,
+            snackBarHostState = snackBarHostState,
             popBackStack = popBackStack
         )
     }

@@ -41,7 +41,7 @@ class ModifyMotivationMessageContract {
 
         data class UpdateIsTextFieldFocused(val isTextFieldFocused: Boolean) : ModifyMotivationMessageReduce
 
-        data object ResetSubjectNamge : ModifyMotivationMessageReduce
+        data object ResetSubjectName : ModifyMotivationMessageReduce
 
         data class UpdateSubjectInfo(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageReduce
     }

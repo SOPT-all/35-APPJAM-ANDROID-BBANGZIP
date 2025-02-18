@@ -51,7 +51,7 @@ class ModifyMotivationMessageViewModel
                 }
 
                 ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnTextFieldDeleteIconClick -> {
-                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectNamge)
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectName)
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
                 }
@@ -68,7 +68,7 @@ class ModifyMotivationMessageViewModel
             return when (reduce) {
                 ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled -> {
                     state.copy(
-                        isButtonEnable = state.motivationMessage.isNotEmpty() && state.motivationMessageTextFieldState != BbangZipTextFieldInputState.Alert,
+                        isButtonEnabled = state.motivationMessage.isNotEmpty() && state.motivationMessageTextFieldState != BbangZipTextFieldInputState.Alert,
                     )
                 }
 
@@ -94,7 +94,7 @@ class ModifyMotivationMessageViewModel
                     )
                 }
 
-                ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectNamge -> {
+                ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectName -> {
                     state.copy(
                         motivationMessage = "",
                     )
