@@ -42,7 +42,7 @@ class ModifySubjectNameContract {
 
         data class UpdateSubjectData(val subjectId: Int, val subjectName: String) : ModifySubjectNameReduce
 
-        data object ResetSubjectNamge : ModifySubjectNameReduce
+        data object ResetSubjectName : ModifySubjectNameReduce
     }
 
     sealed interface ModifySubjectNameSideEffect : BaseContract.SideEffect {

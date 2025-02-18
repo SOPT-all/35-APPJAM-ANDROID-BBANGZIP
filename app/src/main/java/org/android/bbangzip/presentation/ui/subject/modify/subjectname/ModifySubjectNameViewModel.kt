@@ -51,7 +51,7 @@ class ModifySubjectNameViewModel
                 }
 
                 ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldDeleteIconClick-> {
-                    updateState(ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectNamge)
+                    updateState(ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectName)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
                 }
@@ -88,7 +88,7 @@ class ModifySubjectNameViewModel
                     )
                 }
 
-                ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectNamge -> {
+                ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectName -> {
                     state.copy(
                         subjectName = "",
                     )
