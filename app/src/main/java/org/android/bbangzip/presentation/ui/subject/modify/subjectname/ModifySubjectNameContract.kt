@@ -52,10 +52,10 @@ class ModifySubjectNameContract {
         ) : ModifySubjectNameSideEffect
 
         // 과목명 수정 완료!
-        data object ShowSnackBar : ModifySubjectNameSideEffect
+        data object ShowSuccessModifySubjectNameSnackBar : ModifySubjectNameSideEffect
 
         // 이미 등록된 과목이에요
-        data object RedundantSnackBar : ModifySubjectNameSideEffect
+        data object ShowRedundantSubjectNameSnackBar : ModifySubjectNameSideEffect
 
         data object NavigateToBack: ModifySubjectNameSideEffect
     }

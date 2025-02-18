@@ -38,9 +38,9 @@ fun ModifySubjectNameRoute(
                     navigateToSubjectDetail(effect.subjectId, effect.subjectName)
                 }
 
-                ModifySubjectNameContract.ModifySubjectNameSideEffect.RedundantSnackBar -> {
+                ModifySubjectNameContract.ModifySubjectNameSideEffect.ShowRedundantSubjectNameSnackBar -> {
                 }
-                ModifySubjectNameContract.ModifySubjectNameSideEffect.ShowSnackBar -> {
+                ModifySubjectNameContract.ModifySubjectNameSideEffect.ShowSuccessModifySubjectNameSnackBar -> {
                 }
 
                 is ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigateToBack -> {
