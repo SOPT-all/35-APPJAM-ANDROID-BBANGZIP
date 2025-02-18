@@ -19,15 +19,15 @@ class ModifyMotivationMessageContract {
     }
 
     sealed interface ModifyMotivationMessageEvent : BaseContract.Event {
-        data class OnFocusTextField(val isTextFieldFocused: Boolean) : ModifyMotivationMessageEvent
+        data class OnTextFieldFocusChange(val isTextFieldFocused: Boolean) : ModifyMotivationMessageEvent
 
-        data class OnChangeMotivationMessage(val motivationMessage: String) : ModifyMotivationMessageEvent
+        data class OnMotivationMessageChange(val motivationMessage: String) : ModifyMotivationMessageEvent
 
-        data object OnClickBackBtn : ModifyMotivationMessageEvent
+        data object OnBackIconClick : ModifyMotivationMessageEvent
 
-        data class OnClickModifyBtn(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageEvent
+        data class OnModifyBtnClick(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageEvent
 
-        data object OnClickDeleteBtn : ModifyMotivationMessageEvent
+        data object OnTextFieldDeleteIconClick : ModifyMotivationMessageEvent
 
         data class Initialize(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageEvent
     }

@@ -33,11 +33,11 @@ fun ModifyMotivationMessageScreen(
     subjectId: Int,
     subjectName: String,
     textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-    onMotivationMessageChanged: (String) -> Unit = {},
-    onTextFieldFocusChanged: (Boolean) -> Unit = {},
-    onModifyBtnClicked: (Int, String) -> Unit = { _, _ -> },
-    onDeleteBtnClicked: () -> Unit = {},
-    onBackBtnClicked: () -> Unit = {}
+    onMotivationMessageChange: (String) -> Unit = {},
+    onTextFieldFocusChange: (Boolean) -> Unit = {},
+    onModifyBtnClick: (Int, String) -> Unit = { _, _ -> },
+    onTextFieldDeleteIconClick: () -> Unit = {},
+    onBackIconClick: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -50,7 +50,7 @@ fun ModifyMotivationMessageScreen(
         BbangZipBaseTopBar(
             title = stringResource(R.string.modify_motivation_message_title),
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = { onBackBtnClicked() }
+            onLeadingIconClick = { onBackIconClick() }
         )
 
         Column(
@@ -75,9 +75,9 @@ fun ModifyMotivationMessageScreen(
                 value = motivationMessage,
                 modifier = Modifier.fillMaxWidth(),
                 bbangZipTextFieldInputState = textFieldInputState,
-                onValueChange = onMotivationMessageChanged,
-                onFocusChange = onTextFieldFocusChanged,
-                onDeleteButtonClick = onDeleteBtnClicked,
+                onValueChange = onMotivationMessageChange,
+                onFocusChange = onTextFieldFocusChange,
+                onDeleteButtonClick = onTextFieldDeleteIconClick,
                 maxCharacter = TEXT_FIELD_MAX_CHARACTER,
                 focusManager = focusManager,
             )
@@ -88,7 +88,7 @@ fun ModifyMotivationMessageScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    onModifyBtnClicked(subjectId, subjectName)
+                    onModifyBtnClick(subjectId, subjectName)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),

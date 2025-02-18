@@ -28,29 +28,29 @@ class ModifyMotivationMessageViewModel
 
         override fun handleEvent(event: ModifyMotivationMessageContract.ModifyMotivationMessageEvent) {
             when (event) {
-                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnChangeMotivationMessage -> {
+                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnMotivationMessageChange -> {
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessage(motivationMessage = event.motivationMessage))
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
                 }
 
-                ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickBackBtn -> {
+                ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnBackIconClick -> {
                     setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.PopBackStack)
                 }
 
-                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn -> {
+                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnModifyBtnClick -> {
                     viewModelScope.launch {
                         putMotivationMessage(event.subjectId, event.subjectName)
                     }
                 }
 
-                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField -> {
+                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnTextFieldFocusChange -> {
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
                 }
 
-                ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn -> {
+                ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnTextFieldDeleteIconClick -> {
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectNamge)
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
