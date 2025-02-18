@@ -34,7 +34,7 @@ fun ModifyMotivationMessageScreen(
     onTextFieldFocusChange: (Boolean) -> Unit = {},
     onModifyBtnClick: (Int, String) -> Unit = { _, _ -> },
     onTextFieldDeleteIconClick: () -> Unit = {},
-    onBackIconClick: () -> Unit = {}
+    onBackIconClick: () -> Unit = {},
 ) {
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundNormal_FFFFFF.toArgb()
 
@@ -42,22 +42,22 @@ fun ModifyMotivationMessageScreen(
 
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .addFocusCleaner(focusManager = focusManager),
+            Modifier
+                .fillMaxSize()
+                .addFocusCleaner(focusManager = focusManager),
     ) {
         BbangZipBaseTopBar(
             title = stringResource(R.string.modify_motivation_message_title),
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = { onBackIconClick() }
+            onLeadingIconClick = { onBackIconClick() },
         )
 
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .padding(top = 48.dp, bottom = 20.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 48.dp, bottom = 20.dp),
         ) {
             Text(
                 text = stringResource(R.string.modify_motivation_message_text_field_label),
@@ -101,6 +101,6 @@ fun ModifyMotivationMessageScreen(
 @Composable
 private fun ModifyMotivationMessageScreenPreview() {
     ModifyMotivationMessageScreen(
-        state = ModifyMotivationMessageContract.ModifyMotivationMessageState()
+        state = ModifyMotivationMessageContract.ModifyMotivationMessageState(),
     )
 }

@@ -56,6 +56,6 @@ fun ModifyMotivationMessageRoute(
         onTextFieldFocusChange = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnTextFieldFocusChange(it)) },
         onModifyBtnClick = { id, name -> viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnModifyBtnClick(id, name)) },
         onTextFieldDeleteIconClick = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnTextFieldDeleteIconClick) },
-        onBackIconClick = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnBackIconClick)}
+        onBackIconClick = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnBackIconClick) },
     )
 }

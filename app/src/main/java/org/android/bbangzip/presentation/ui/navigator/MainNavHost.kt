@@ -39,10 +39,10 @@ fun MainNavHost(
 ) {
     Box(
         modifier =
-        modifier
-            .padding(top = padding.calculateTopPadding())
-            .fillMaxSize()
-            .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
+            modifier
+                .padding(top = padding.calculateTopPadding())
+                .fillMaxSize()
+                .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         NavHost(
             navController = navigator.navHostController,
@@ -127,12 +127,12 @@ fun MainNavHost(
             modifyMotivationMessageNavGraph(
                 navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
                 snackBarHostState = snackBarHostState,
-                navigateToBack = { navigator.popBackStackIfNotSubject() }
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
             )
 
             addSubjectNavGraph(
                 navigateSubject = { navigator.navigateToSubject() },
-                navigateToBack = { navigator.popBackStackIfNotSubject() }
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
             )
 
             splitStudyNavGraph(

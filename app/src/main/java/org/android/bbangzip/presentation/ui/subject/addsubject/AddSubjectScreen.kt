@@ -33,28 +33,28 @@ fun AddSubjectScreen(
     onTextFieldFocusChanged: (Boolean) -> Unit = {},
     onAddBtnClicked: () -> Unit = {},
     onDeleteBtnClicked: () -> Unit = {},
-    onBackButtonClicked: () -> Unit = {}
+    onBackButtonClicked: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .addFocusCleaner(focusManager = focusManager),
+            Modifier
+                .fillMaxSize()
+                .addFocusCleaner(focusManager = focusManager),
     ) {
         BbangZipBaseTopBar(
             title = "과목 추가하기",
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = onBackButtonClicked
+            onLeadingIconClick = onBackButtonClicked,
         )
 
         Column(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp)
-                .padding(top = 48.dp, bottom = 20.dp),
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp)
+                    .padding(top = 48.dp, bottom = 20.dp),
         ) {
             Text(
                 text = "과목명",
