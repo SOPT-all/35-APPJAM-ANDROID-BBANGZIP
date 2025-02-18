@@ -20,8 +20,8 @@ fun ModifyMotivationMessageRoute(
     subjectName: String,
     viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
     navigateToSubjectDetail: (Int, String) -> Unit,
-    snackBarHostState: SnackbarHostState,
-    popBackStack: () -> Unit
+    navigateToBack: () -> Unit,
+    snackBarHostState: SnackbarHostState
 ) {
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
     val view = LocalView.current
@@ -39,8 +39,8 @@ fun ModifyMotivationMessageRoute(
                 is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail -> {
                     navigateToSubjectDetail(effect.subjectId, effect.subjectName)
                 }
-                is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.PopBackStack -> {
-                    popBackStack()
+                is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateToBack -> {
+                    navigateToBack()
                 }
                 is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar -> {
                     val job =

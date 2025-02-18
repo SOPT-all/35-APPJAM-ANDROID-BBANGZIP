@@ -49,8 +49,8 @@ class ModifyMotivationMessageContract {
     sealed interface ModifyMotivationMessageSideEffect : BaseContract.SideEffect {
         data class NavigateSubjectDetail(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageSideEffect
 
-        data class ShowSnackBar(val message: String) : ModifyMotivationMessageSideEffect
+        data object NavigateToBack: ModifyMotivationMessageSideEffect
 
-        data object PopBackStack: ModifyMotivationMessageSideEffect
+        data class ShowSnackBar(val message: String) : ModifyMotivationMessageSideEffect
     }
 }
