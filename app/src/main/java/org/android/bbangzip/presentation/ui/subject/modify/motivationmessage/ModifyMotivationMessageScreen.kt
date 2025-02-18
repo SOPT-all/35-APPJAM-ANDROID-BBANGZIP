@@ -43,25 +43,25 @@ fun ModifyMotivationMessageScreen(
 
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .addFocusCleaner(focusManager = focusManager),
+        Modifier
+            .fillMaxSize()
+            .addFocusCleaner(focusManager = focusManager),
     ) {
         BbangZipBaseTopBar(
-            title = "각오 한 마디 작성하기",
+            title = stringResource(R.string.modify_motivation_message_title),
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
             onLeadingIconClick = { onBackBtnClicked() }
         )
 
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .padding(top = 48.dp, bottom = 20.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .padding(top = 48.dp, bottom = 20.dp),
         ) {
             Text(
-                text = "사장님의 각오 한 마디를\n작성해 보세요",
+                text = stringResource(R.string.modify_motivation_message_text_field_label),
                 style = BbangZipTheme.typography.headline1Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
             )
