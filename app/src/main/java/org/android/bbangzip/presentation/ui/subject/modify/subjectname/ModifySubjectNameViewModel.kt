@@ -31,26 +31,26 @@ class ModifySubjectNameViewModel
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectData(subjectId = event.subjectId, subjectName = event.subjectName))
                 }
 
-                is ModifySubjectNameContract.ModifySubjectNameEvent.OnChangeSubjectName -> {
+                is ModifySubjectNameContract.ModifySubjectNameEvent.OnSubjectNameChange -> {
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectName(subjectName = event.subjectName))
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
                 }
-                ModifySubjectNameContract.ModifySubjectNameEvent.OnClickBackBtn -> {
+                ModifySubjectNameContract.ModifySubjectNameEvent.OnBackIconClick -> {
                     setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.PopBackStack)
                 }
-                is ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn -> {
+                is ModifySubjectNameContract.ModifySubjectNameEvent.OnModifyBtnClick -> {
                     viewModelScope.launch {
                         putModifySubjectName(currentUiState.subjectId, currentUiState.subjectName)
                     }
                 }
-                is ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField -> {
+                is ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldFocusChange -> {
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
                 }
 
-                ModifySubjectNameContract.ModifySubjectNameEvent.OnClickDeleteBtn -> {
+                ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldDeleteIconClick-> {
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectNamge)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)

@@ -56,10 +56,10 @@ fun ModifySubjectNameRoute(
         isTextFieldFocused = modifySubjectNameState.isTextFieldFocused,
         textFieldInputState = modifySubjectNameState.subjectNameTextFieldState,
         subjectId = modifySubjectNameState.subjectId,
-        onSubjectNameChanged = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnChangeSubjectName(it)) },
-        onTextFieldFocusChanged = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField(it)) },
-        onModifyBtnClicked = { id, name -> viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn(id, name)) },
-        onDeleteBtnClicked = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickDeleteBtn) },
-        onBackBtnClicked = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnClickBackBtn)}
+        onSubjectNameChange = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnSubjectNameChange(it)) },
+        onTextFieldFocusChange = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldFocusChange(it)) },
+        onModifyBtnClick = { id, name -> viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnModifyBtnClick(id, name)) },
+        onTextFieldDeleteIconClick = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldDeleteIconClick) },
+        onBackIconClick = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnBackIconClick)}
     )
 }

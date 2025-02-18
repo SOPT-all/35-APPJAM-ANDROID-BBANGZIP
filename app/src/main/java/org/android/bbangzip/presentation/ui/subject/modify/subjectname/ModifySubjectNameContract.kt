@@ -20,15 +20,15 @@ class ModifySubjectNameContract {
     sealed interface ModifySubjectNameEvent : BaseContract.Event {
         data class Initialize(val subjectId: Int, val subjectName: String) : ModifySubjectNameEvent
 
-        data class OnFocusTextField(val isTextFieldFocused: Boolean) : ModifySubjectNameEvent
+        data class OnTextFieldFocusChange(val isTextFieldFocused: Boolean) : ModifySubjectNameEvent
 
-        data class OnChangeSubjectName(val subjectName: String) : ModifySubjectNameEvent
+        data class OnSubjectNameChange(val subjectName: String) : ModifySubjectNameEvent
 
-        data object OnClickBackBtn : ModifySubjectNameEvent
+        data object OnBackIconClick : ModifySubjectNameEvent
 
-        data class OnClickModifyBtn(val subjectId: Int, val subjectName: String) : ModifySubjectNameEvent
+        data class OnModifyBtnClick(val subjectId: Int, val subjectName: String) : ModifySubjectNameEvent
 
-        data object OnClickDeleteBtn : ModifySubjectNameEvent
+        data object OnTextFieldDeleteIconClick : ModifySubjectNameEvent
     }
 
     sealed interface ModifySubjectNameReduce : BaseContract.Reduce {

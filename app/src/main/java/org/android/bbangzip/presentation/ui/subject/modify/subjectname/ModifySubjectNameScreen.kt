@@ -30,11 +30,11 @@ fun ModifySubjectNameScreen(
     subjectId: Int,
     isTextFieldFocused: Boolean = false,
     textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-    onSubjectNameChanged: (String) -> Unit = {},
-    onTextFieldFocusChanged: (Boolean) -> Unit = {},
-    onModifyBtnClicked: (Int, String) -> Unit = { _, _ -> },
-    onDeleteBtnClicked: () -> Unit = {},
-    onBackBtnClicked: () -> Unit = {}
+    onSubjectNameChange: (String) -> Unit = {},
+    onTextFieldFocusChange: (Boolean) -> Unit = {},
+    onModifyBtnClick: (Int, String) -> Unit = { _, _ -> },
+    onTextFieldDeleteIconClick: () -> Unit = {},
+    onBackIconClick: () -> Unit = {}
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -44,7 +44,7 @@ fun ModifySubjectNameScreen(
         BbangZipBaseTopBar(
             title = "과목명 수정하기",
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = { onBackBtnClicked() }
+            onLeadingIconClick = { onBackIconClick() }
         )
 
         Column(
@@ -69,9 +69,9 @@ fun ModifySubjectNameScreen(
                 value = subjectName,
                 modifier = Modifier.fillMaxWidth(),
                 bbangZipTextFieldInputState = textFieldInputState,
-                onValueChange = onSubjectNameChanged,
-                onFocusChange = onTextFieldFocusChanged,
-                onDeleteButtonClick = onDeleteBtnClicked,
+                onValueChange = onSubjectNameChange,
+                onFocusChange = onTextFieldFocusChange,
+                onDeleteButtonClick = onTextFieldDeleteIconClick,
                 maxCharacter = 10,
                 focusManager = focusManager,
             )
@@ -82,7 +82,7 @@ fun ModifySubjectNameScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    onModifyBtnClicked(subjectId, subjectName)
+                    onModifyBtnClick(subjectId, subjectName)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),
