@@ -39,23 +39,25 @@ fun ModifySubjectNameScreen(
     val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier.fillMaxSize().addFocusCleaner(focusManager = focusManager),
+        modifier = Modifier
+            .fillMaxSize()
+            .addFocusCleaner(focusManager = focusManager),
     ) {
         BbangZipBaseTopBar(
-            title = "과목명 수정하기",
+            title = stringResource(R.string.modify_subject_name_title),
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
             onLeadingIconClick = { onBackIconClick() }
         )
 
         Column(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp)
-                    .padding(top = 48.dp, bottom = 20.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp)
+                .padding(top = 48.dp, bottom = 20.dp),
         ) {
             Text(
-                text = "과목명",
+                text = stringResource(R.string.modify_subject_name_text_field_label),
                 style = BbangZipTheme.typography.body1Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
             )
