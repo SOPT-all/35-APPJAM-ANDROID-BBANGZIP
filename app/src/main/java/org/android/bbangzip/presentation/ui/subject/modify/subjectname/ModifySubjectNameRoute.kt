@@ -51,11 +51,7 @@ fun ModifySubjectNameRoute(
     }
 
     ModifySubjectNameScreen(
-        subjectName = modifySubjectNameState.subjectName,
-        isButtonEnable = modifySubjectNameState.isButtonEnable,
-        isTextFieldFocused = modifySubjectNameState.isTextFieldFocused,
-        textFieldInputState = modifySubjectNameState.subjectNameTextFieldState,
-        subjectId = modifySubjectNameState.subjectId,
+        state = modifySubjectNameState,
         onSubjectNameChange = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnSubjectNameChange(it)) },
         onTextFieldFocusChange = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldFocusChange(it)) },
         onModifyBtnClick = { id, name -> viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnModifyBtnClick(id, name)) },

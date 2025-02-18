@@ -17,7 +17,6 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.textfield.BbangZipBasicTextField
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
-import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
@@ -25,11 +24,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun ModifySubjectNameScreen(
-    subjectName: String = "",
-    isButtonEnable: Boolean = false,
-    subjectId: Int,
-    isTextFieldFocused: Boolean = false,
-    textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
+    state: ModifySubjectNameContract.ModifySubjectNameState,
     onSubjectNameChange: (String) -> Unit = {},
     onTextFieldFocusChange: (Boolean) -> Unit = {},
     onModifyBtnClick: (Int, String) -> Unit = { _, _ -> },
@@ -66,9 +61,9 @@ fun ModifySubjectNameScreen(
                 leadingIcon = R.drawable.ic_book_default_24,
                 placeholder = R.string.modify_subject_name_placeholder,
                 guideline = R.string.modify_subject_name_guideline,
-                value = subjectName,
+                value = state.subjectName,
                 modifier = Modifier.fillMaxWidth(),
-                bbangZipTextFieldInputState = textFieldInputState,
+                bbangZipTextFieldInputState = state.textFieldInputState,
                 onValueChange = onSubjectNameChange,
                 onFocusChange = onTextFieldFocusChange,
                 onDeleteButtonClick = onTextFieldDeleteIconClick,
@@ -82,11 +77,11 @@ fun ModifySubjectNameScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    onModifyBtnClick(subjectId, subjectName)
+                    onModifyBtnClick(state.subjectId, state.subjectName)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),
-                isEnable = isButtonEnable,
+                isEnable = state.isButtonEnable,
             )
         }
     }
@@ -95,5 +90,5 @@ fun ModifySubjectNameScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ModifySubjectNameScreenPreview() {
-    ModifySubjectNameScreen(subjectId = 0)
+    ModifySubjectNameScreen(state = ModifySubjectNameContract.ModifySubjectNameState())
 }
