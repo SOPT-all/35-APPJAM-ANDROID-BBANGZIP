@@ -14,11 +14,11 @@ import timber.log.Timber
 
 @Composable
 fun ModifySubjectNameRoute(
-    popBackStack: () -> Unit,
-    viewModel: ModifySubjectNameViewModel = hiltViewModel(),
     subjectId: Int,
     subjectName: String,
+    navigateToBack: () -> Unit,
     navigateToSubjectDetail: (Int, String) -> Unit,
+    viewModel: ModifySubjectNameViewModel = hiltViewModel(),
 ) {
     val modifySubjectNameState by viewModel.uiState.collectAsStateWithLifecycle()
     val view = LocalView.current
@@ -43,8 +43,8 @@ fun ModifySubjectNameRoute(
                 ModifySubjectNameContract.ModifySubjectNameSideEffect.ShowSnackBar -> {
                 }
 
-                is ModifySubjectNameContract.ModifySubjectNameSideEffect.PopBackStack -> {
-                    popBackStack()
+                is ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigateToBack -> {
+                    navigateToBack()
                 }
             }
         }
