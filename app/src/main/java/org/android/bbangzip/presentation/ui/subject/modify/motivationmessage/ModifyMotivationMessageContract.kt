@@ -10,7 +10,7 @@ class ModifyMotivationMessageContract {
     data class ModifyMotivationMessageState(
         val motivationMessage: String = "",
         val isTextFieldFocused: Boolean = false,
-        val isButtonEnable: Boolean = false,
+        val isButtonEnabled: Boolean = false,
         val subjectId: Int = 0,
         val subjectName: String = "",
         val motivationMessageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,

@@ -87,7 +87,7 @@ fun ModifyMotivationMessageScreen(
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),
-                isEnable = state.isButtonEnable,
+                isEnable = state.isButtonEnabled,
             )
         }
     }
