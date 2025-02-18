@@ -24,10 +24,6 @@ fun ModifyMotivationMessageRoute(
     snackBarHostState: SnackbarHostState
 ) {
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
-    val view = LocalView.current
-    val activity = view.context as Activity
-
-    activity.window.statusBarColor = BbangZipTheme.colors.staticWhite_FFFFFF.toArgb()
 
     LaunchedEffect(Unit) {
         viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.Initialize(subjectId, subjectName))
