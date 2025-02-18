@@ -21,10 +21,6 @@ fun ModifySubjectNameRoute(
     viewModel: ModifySubjectNameViewModel = hiltViewModel(),
 ) {
     val modifySubjectNameState by viewModel.uiState.collectAsStateWithLifecycle()
-    val view = LocalView.current
-    val activity = view.context as Activity
-
-    activity.window.statusBarColor = BbangZipTheme.colors.staticWhite_FFFFFF.toArgb()
 
     LaunchedEffect(Unit) {
         Timber.tag("initnitnitnit").d("subjectId: $subjectId, subjectName: $subjectName")
