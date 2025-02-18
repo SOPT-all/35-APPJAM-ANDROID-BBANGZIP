@@ -169,4 +169,5 @@
     <string name="modify_motivation_message_guideline">한글/영문/숫자/기호 조합으로 최대25자까지 입력 가능해요</string>
     <string name="modify_motivation_message_title">각오 한 마디 작성하기</string>
     <string name="modify_motivation_message_text_field_label">사장님의 각오 한 마디를\n작성해 보세요</string>
+    <string name="modify_motivation_message_success_modify_motivation_message_snackbar">각오 한 마디 작성 완료!</string>
 </resources>

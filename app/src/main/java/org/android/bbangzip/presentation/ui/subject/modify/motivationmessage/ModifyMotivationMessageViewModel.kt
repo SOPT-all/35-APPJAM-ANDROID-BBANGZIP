@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.android.bbangzip.R
 import org.android.bbangzip.data.dto.request.RequestSubjectOptions
 import org.android.bbangzip.domain.usecase.PutSubjectOptionsUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
@@ -137,7 +138,7 @@ class ModifyMotivationMessageViewModel
             ).onSuccess {
                 Timber.tag("motivate").d("각오 한 마디 저장")
                 setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail(subjectId = subjectId, subjectName = subjectName))
-                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSuccessModifyMotivationMessageSnackBar("각오 한 마디 작성 완료!"))
+                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSuccessModifyMotivationMessageSnackBar(R.string.modify_motivation_message_success_modify_motivation_message_snackbar))
             }.onFailure { error ->
                 Timber.tag("motivate").d(error)
             }

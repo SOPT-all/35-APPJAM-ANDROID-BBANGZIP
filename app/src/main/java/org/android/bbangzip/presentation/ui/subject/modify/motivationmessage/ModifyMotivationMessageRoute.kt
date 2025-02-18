@@ -6,7 +6,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.res.stringResource
+import androidx.core.content.ContextCompat.getString
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
@@ -25,6 +28,8 @@ fun ModifyMotivationMessageRoute(
 ) {
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
 
+    val context = LocalContext.current
+
     LaunchedEffect(Unit) {
         viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.Initialize(subjectId, subjectName))
     }
@@ -42,7 +47,7 @@ fun ModifyMotivationMessageRoute(
                     val job =
                         launch {
                             snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar(effect.message)
+                            snackBarHostState.showSnackbar(context.getString(effect.message))
                         }
                     delay(2000)
                     job.cancel()

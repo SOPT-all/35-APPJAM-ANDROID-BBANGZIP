@@ -51,6 +51,6 @@ class ModifyMotivationMessageContract {
 
         data object NavigateToBack: ModifyMotivationMessageSideEffect
 
-        data class ShowSuccessModifyMotivationMessageSnackBar(val message: String) : ModifyMotivationMessageSideEffect
+        data class ShowSuccessModifyMotivationMessageSnackBar(val message: Int) : ModifyMotivationMessageSideEffect
     }
 }
