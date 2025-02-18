@@ -25,6 +25,8 @@ import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
+private const val TEXT_FIELD_MAX_CHARACTER = 10
+
 @Composable
 fun ModifySubjectNameScreen(
     state: ModifySubjectNameContract.ModifySubjectNameState,
@@ -74,7 +76,7 @@ fun ModifySubjectNameScreen(
                 onValueChange = onSubjectNameChange,
                 onFocusChange = onTextFieldFocusChange,
                 onDeleteButtonClick = onTextFieldDeleteIconClick,
-                maxCharacter = 10,
+                maxCharacter = TEXT_FIELD_MAX_CHARACTER,
                 focusManager = focusManager,
             )
 
