@@ -42,7 +42,7 @@ fun ModifyMotivationMessageRoute(
                 is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateToBack -> {
                     navigateToBack()
                 }
-                is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar -> {
+                is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSuccessModifyMotivationMessageSnackBar -> {
                     val job =
                         launch {
                             snackBarHostState.currentSnackbarData?.dismiss()

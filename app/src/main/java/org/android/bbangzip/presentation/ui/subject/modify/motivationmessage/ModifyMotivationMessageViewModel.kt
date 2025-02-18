@@ -136,7 +136,7 @@ class ModifyMotivationMessageViewModel
             ).onSuccess {
                 Timber.tag("motivate").d("각오 한 마디 저장")
                 setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail(subjectId = subjectId, subjectName = subjectName))
-                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar("각오 한 마디 작성 완료!"))
+                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSuccessModifyMotivationMessageSnackBar("각오 한 마디 작성 완료!"))
             }.onFailure { error ->
                 Timber.tag("motivate").d(error)
             }
