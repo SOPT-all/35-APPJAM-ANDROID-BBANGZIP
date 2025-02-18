@@ -48,6 +48,6 @@ fun ModifySubjectNameRoute(
         onTextFieldFocusChange = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldFocusChange(it)) },
         onModifyBtnClick = { id, name -> viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnModifyBtnClick(id, name)) },
         onTextFieldDeleteIconClick = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldDeleteIconClick) },
-        onBackIconClick = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnBackIconClick)}
+        onBackIconClick = { viewModel.setEvent(ModifySubjectNameContract.ModifySubjectNameEvent.OnBackIconClick) },
     )
 }

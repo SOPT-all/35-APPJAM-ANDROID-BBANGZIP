@@ -52,7 +52,7 @@ class ModifySubjectNameViewModel
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
                 }
 
-                ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldDeleteIconClick-> {
+                ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldDeleteIconClick -> {
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectName)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
