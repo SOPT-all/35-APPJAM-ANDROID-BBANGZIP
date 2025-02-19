@@ -20,7 +20,7 @@ fun NavGraphBuilder.todoNavGraph(
     snackBarHostState: SnackbarHostState,
     bottomPadding: PaddingValues,
     navigateToAddToDo: () -> Unit,
-    navigateToAddPendingToDo: () -> Unit ,
+    navigateToAddPendingToDo: () -> Unit,
 ) {
     composable<BottomNavigationRoute.Todo> {
         TodoRoute(

@@ -27,7 +27,7 @@ fun NavGraphBuilder.modifyMotivationMessageNavGraph(
             subjectName = it.toRoute<ModifyMotivationMessageRoute>().subjectName,
             navigateToSubjectDetail = navigateToSubjectDetail,
             snackbarHostState = snackbarHostState,
-            popBackStack = popBackStack
+            popBackStack = popBackStack,
         )
     }
 }
