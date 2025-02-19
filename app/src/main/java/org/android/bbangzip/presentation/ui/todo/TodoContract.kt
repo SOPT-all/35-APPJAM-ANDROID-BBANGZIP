@@ -12,119 +12,7 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class TodoContract {
     @Parcelize
     data class TodoState(
-        val todoList: List<ToDoCardModel> =
-            listOf(
-                ToDoCardModel(
-                    pieceId = 1,
-                    subjectName = "Math",
-                    examName = "Algebra Exam",
-                    studyContents = "Review Chapters 1-3",
-                    startPage = 1,
-                    finishPage = 50,
-                    deadline = "2025-01-20",
-                    remainingDays = 2,
-                    cardState = BbangZipCardState.DEFAULT,
-                ),
-                ToDoCardModel(
-                    pieceId = 2,
-                    subjectName = "History",
-                    examName = "World War II Quiz",
-                    studyContents = "Notes on WWII",
-                    startPage = 5,
-                    finishPage = 30,
-                    deadline = "2025-01-22",
-                    remainingDays = -3,
-                    cardState = BbangZipCardState.COMPLETE,
-                ),
-                ToDoCardModel(
-                    pieceId = 3,
-                    subjectName = "Science",
-                    examName = "Physics Midterm",
-                    studyContents = "Kinematics and Dynamics",
-                    startPage = 20,
-                    finishPage = 80,
-                    deadline = "2025-01-25",
-                    remainingDays = 7,
-                    cardState = BbangZipCardState.DEFAULT,
-                ),
-                ToDoCardModel(
-                    pieceId = 4,
-                    subjectName = "Art",
-                    examName = "Painting Project",
-                    studyContents = "Complete abstract art piece",
-                    startPage = 0,
-                    finishPage = 0,
-                    deadline = "2025-01-28",
-                    remainingDays = -2,
-                    cardState = BbangZipCardState.COMPLETE,
-                ),
-                ToDoCardModel(
-                    pieceId = 5,
-                    subjectName = "History",
-                    examName = "World War II Quiz",
-                    studyContents = "Notes on WWII",
-                    startPage = 5,
-                    finishPage = 30,
-                    deadline = "2025-01-22",
-                    remainingDays = 4,
-                    cardState = BbangZipCardState.DEFAULT,
-                ),
-                ToDoCardModel(
-                    pieceId = 6,
-                    subjectName = "Science",
-                    examName = "Physics Midterm",
-                    studyContents = "Kinematics and Dynamics",
-                    startPage = 20,
-                    finishPage = 80,
-                    deadline = "2025-01-25",
-                    remainingDays = -1,
-                    cardState = BbangZipCardState.COMPLETE,
-                ),
-                ToDoCardModel(
-                    pieceId = 7,
-                    subjectName = "Art",
-                    examName = "Painting Project",
-                    studyContents = "Complete abstract art piece",
-                    startPage = 0,
-                    finishPage = 0,
-                    deadline = "2025-01-28",
-                    remainingDays = 5,
-                    cardState = BbangZipCardState.DEFAULT,
-                ),
-                ToDoCardModel(
-                    pieceId = 8,
-                    subjectName = "History",
-                    examName = "World War II Quiz",
-                    studyContents = "Notes on WWII",
-                    startPage = 5,
-                    finishPage = 30,
-                    deadline = "2025-01-22",
-                    remainingDays = -4,
-                    cardState = BbangZipCardState.COMPLETE,
-                ),
-                ToDoCardModel(
-                    pieceId = 9,
-                    subjectName = "Science",
-                    examName = "Physics Midterm",
-                    studyContents = "Kinematics and Dynamics",
-                    startPage = 20,
-                    finishPage = 80,
-                    deadline = "2025-01-25",
-                    remainingDays = 3,
-                    cardState = BbangZipCardState.DEFAULT,
-                ),
-                ToDoCardModel(
-                    pieceId = 10,
-                    subjectName = "Art",
-                    examName = "Painting Project",
-                    studyContents = "Complete abstract art piece",
-                    startPage = 0,
-                    finishPage = 0,
-                    deadline = "2025-01-28",
-                    remainingDays = -5,
-                    cardState = BbangZipCardState.COMPLETE,
-                ),
-            ),
+        val todoList: List<ToDoCardModel> = emptyList(),
         val pendingCount: Int = 1,
         val remainingStudyCount: Int = 5,
         val completeCount: Int = 5,
@@ -142,25 +30,25 @@ class TodoContract {
     sealed interface TodoEvent : BaseContract.Event {
         data object Initialize : TodoEvent
 
-        data object OnAddPendingStudyButtonClicked : TodoEvent
+        data object OnAddPendingStudyBtnClick : TodoEvent
 
-        data object OnAddStudyButtonClicked : TodoEvent
+        data object OnAddStudyBtnClick : TodoEvent
 
-        data object OnRevertCompleteBottomSheetDismissButtonClicked : TodoEvent
+        data object OnRevertCompleteBottomSheetDismissBtnClick : TodoEvent
 
         data object OnFilterBottomSheetDismissRequest : TodoEvent
 
         data object OnRevertCompleteBottomSheetDismissRequest : TodoEvent
 
-        data object OnFilterIconClicked : TodoEvent
+        data object OnFilterIconClick : TodoEvent
 
-        data object OnDeleteIconClicked : TodoEvent
+        data object OnDeleteIconClick : TodoEvent
 
-        data object OnCloseIconClicked : TodoEvent
+        data object OnCloseIconClick : TodoEvent
 
-        data object OnItemDeleteButtonClicked : TodoEvent
+        data object OnItemDeleteBtnClick : TodoEvent
 
-        data class OnRevertCompleteBottomSheetApproveButtonClicked(
+        data class OnRevertCompleteBottomSheetApproveBtnClick(
             val pieceId: Int,
         ) : TodoEvent
 
@@ -172,22 +60,22 @@ class TodoContract {
             val screenType: ToDoScreenType,
         ) : TodoEvent
 
-        data class OnFilterBottomSheetItemClicked(
+        data class OnFilterBottomSheetItemClick(
             val selectedFilterItem: ToDoFilterType,
         ) : TodoEvent
 
-        data class OnDeleteScreenCardClicked(
+        data class OnDeleteScreenCardClick(
             val pieceId: Int,
             val cardState: BbangZipCardState,
         ) :
             TodoEvent
 
-        data class OnDefaultScreenCardClicked(
+        data class OnDefaultScreenCardClick(
             val pieceId: Int,
             val cardState: BbangZipCardState,
         ) : TodoEvent
 
-        data object OnClickGetBadgeBottomSheetCloseBtn : TodoEvent
+        data object OnGetBadgeBottomSheetCloseBtnClick : TodoEvent
     }
 
     sealed interface TodoReduce : BaseContract.Reduce {
