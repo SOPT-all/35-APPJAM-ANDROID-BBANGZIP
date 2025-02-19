@@ -75,57 +75,57 @@ fun TodoRoute(
                 todayDate = todayDate,
                 bottomPadding = bottomPadding,
                 onAddPendingStudyButtonClicked = {
-                    viewModel.setEvent(TodoContract.TodoEvent.OnAddPendingStudyButtonClicked)
+                    viewModel.setEvent(TodoContract.TodoEvent.OnAddPendingStudyBtnClick)
                 },
                 onAddStudyButtonClicked = {
-                    viewModel.setEvent(TodoContract.TodoEvent.OnAddStudyButtonClicked)
+                    viewModel.setEvent(TodoContract.TodoEvent.OnAddStudyBtnClick)
                 },
                 onRevertCompleteBottomSheetDismissButtonClicked = {
-                    viewModel.setEvent(TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissButtonClicked)
+                    viewModel.setEvent(TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissBtnClick)
                 },
                 onRevertCompleteBottomSheetApproveButtonClicked = { pieceId ->
                     viewModel.setEvent(
-                        TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveButtonClicked(pieceId = pieceId),
+                        TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveBtnClick(pieceId = pieceId),
                     )
                 },
                 onRevertCompleteBottomSheetDismissRequest = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissRequest)
                 },
                 onFilterIconClicked = {
-                    viewModel.setEvent(TodoContract.TodoEvent.OnFilterIconClicked)
+                    viewModel.setEvent(TodoContract.TodoEvent.OnFilterIconClick)
                 },
                 onFilterBottomSheetItemClicked = { selectedFilter ->
-                    viewModel.setEvent(TodoContract.TodoEvent.OnFilterBottomSheetItemClicked(selectedFilterItem = selectedFilter))
+                    viewModel.setEvent(TodoContract.TodoEvent.OnFilterBottomSheetItemClick(selectedFilterItem = selectedFilter))
                 },
                 onFilterBottomSheetDismissRequest = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest)
                 },
                 onDeleteIconClicked = {
-                    viewModel.setEvent(TodoContract.TodoEvent.OnDeleteIconClicked)
+                    viewModel.setEvent(TodoContract.TodoEvent.OnDeleteIconClick)
                 },
                 onCloseIconClicked = {
-                    viewModel.setEvent(TodoContract.TodoEvent.OnCloseIconClicked)
+                    viewModel.setEvent(TodoContract.TodoEvent.OnCloseIconClick)
                 },
                 onItemDeleteButtonClicked = {
-                    viewModel.setEvent(TodoContract.TodoEvent.OnItemDeleteButtonClicked)
+                    viewModel.setEvent(TodoContract.TodoEvent.OnItemDeleteBtnClick)
                 },
                 onDeleteScreenCardClicked = { pieceId, cardState ->
-                    viewModel.setEvent(TodoContract.TodoEvent.OnDeleteScreenCardClicked(pieceId = pieceId, cardState = cardState))
+                    viewModel.setEvent(TodoContract.TodoEvent.OnDeleteScreenCardClick(pieceId = pieceId, cardState = cardState))
                 },
                 onDefaultScreenCardClicked = { pieceId, cardState ->
-                    viewModel.setEvent(TodoContract.TodoEvent.OnDefaultScreenCardClicked(pieceId = pieceId, cardState = cardState))
+                    viewModel.setEvent(TodoContract.TodoEvent.OnDefaultScreenCardClick(pieceId = pieceId, cardState = cardState))
                 },
                 onClickBadgeCloseBtn = {
-                    viewModel.setEvent(TodoContract.TodoEvent.OnClickGetBadgeBottomSheetCloseBtn)
+                    viewModel.setEvent(TodoContract.TodoEvent.OnGetBadgeBottomSheetCloseBtnClick)
                 },
             )
 
         false ->
             Box(
                 modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+                Modifier
+                    .fillMaxSize()
+                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
                 contentAlignment = Alignment.Center,
             ) {
                 CircularProgressIndicator(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)
