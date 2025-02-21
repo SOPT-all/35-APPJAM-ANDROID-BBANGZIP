@@ -9,13 +9,11 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
-import org.android.bbangzip.presentation.ui.onboarding.OnboardingContract
-import org.android.bbangzip.presentation.ui.onboarding.OnboardingViewModel
 import timber.log.Timber
 
 @Composable
 fun OnboardingRoute(
-    popBackStack: () -> Unit,
+    navigateToBack: () -> Unit,
     navigateToOnboardingEnd: () -> Unit,
     viewModel: OnboardingViewModel = hiltViewModel(),
 ) {
@@ -30,7 +28,7 @@ fun OnboardingRoute(
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest {
             when (it) {
-                is OnboardingContract.OnboardingSideEffect.PopBackStack -> popBackStack()
+                is OnboardingContract.OnboardingSideEffect.NavigateToBack -> navigateToBack()
                 is OnboardingContract.OnboardingSideEffect.NavigateToOnboardingEnd -> navigateToOnboardingEnd()
                 else -> Unit
             }

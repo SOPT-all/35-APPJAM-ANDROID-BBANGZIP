@@ -1,6 +1,8 @@
-package org.android.bbangzip.presentation.ui.onboarding
+package org.android.bbangzip.presentation.ui.onboarding.onboarding
 
 import android.os.Parcelable
+import androidx.compose.foundation.pager.PagerState
+import androidx.compose.foundation.pager.rememberPagerState
 import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.model.Semester
@@ -46,13 +48,7 @@ class OnboardingContract {
 
         data object OnClickBackBtn : OnboardingEvent
 
-        data object OnClickBackFromEndBtn : OnboardingEvent
-
         data object OnClickNextBtn : OnboardingEvent
-
-        data object OnClickOnboardingNextBtn : OnboardingEvent
-
-        data object OnClickFinishBtn : OnboardingEvent
     }
 
     sealed interface OnboardingReduce : BaseContract.Reduce {
@@ -82,14 +78,8 @@ class OnboardingContract {
     }
 
     sealed interface OnboardingSideEffect : BaseContract.SideEffect {
-        data object PopBackStack : OnboardingSideEffect
-
-        data object NavigateToOnboardingStart : OnboardingSideEffect
-
-        data object NavigateToOnboarding : OnboardingSideEffect
+        data object NavigateToBack : OnboardingSideEffect
 
         data object NavigateToOnboardingEnd : OnboardingSideEffect
-
-        data object NavigateToSubject : OnboardingSideEffect
     }
 }

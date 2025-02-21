@@ -67,7 +67,7 @@ fun MainNavHost(
 
             onboardingNavGraph(
                 navigateToOnboardingEnd = { navigator.navigateToOnboardingEnd() },
-                popBackStack = { navigator.popBackStackIfNotSubject() },
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
             )
 
             onboardingEndNavGraph(
