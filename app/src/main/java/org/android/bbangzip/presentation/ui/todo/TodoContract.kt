@@ -16,13 +16,13 @@ class TodoContract {
         val pendingCount: Int = 1,
         val remainingStudyCount: Int = 5,
         val completeCount: Int = 5,
-        val todoFilterBottomSheetState: Boolean = false,
+        val isTodoFilterBottomSheetVisible: Boolean = false,
         val selectedFilterItem: ToDoFilterType = ToDoFilterType.RECENT,
         val selectedItemList: List<Int> = listOf(),
-        val revertCompleteBottomSheetState: Boolean = false,
+        val isRevertCompleteBottomSheetVisible: Boolean = false,
         val screenType: ToDoScreenType = ToDoScreenType.DEFAULT,
         val badgeList: List<Badge> = emptyList(),
-        val getBadgeBottomSheetState: Boolean = false,
+        val isGetBadgeBottomSheetVisible: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -89,10 +89,10 @@ class TodoContract {
 
         data object DeleteToDoListItems : TodoReduce
 
-        data class UpdateToDoFilterBottomSheetState(val todoFilterBottomSheetState: Boolean) :
+        data class UpdateToDoFilterBottomSheetState(val isTodoFilterBottomSheetVisible: Boolean) :
             TodoReduce
 
-        data class UpdateRevertCompleteBottomSheetState(val revertCompleteBottomSheetState: Boolean) :
+        data class UpdateRevertCompleteBottomSheetState(val isRevertCompleteBottomSheetVisible: Boolean) :
             TodoReduce
 
         data class UpdateToDoCount(val completeCount: Int, val remainingStudyCount: Int) :
@@ -124,7 +124,7 @@ class TodoContract {
 
         data class UpdateGetBadgeList(val badgeList: List<Badge>) : TodoReduce
 
-        data class UpdateGetBadgeBottomSheetState(val getBadgeBottomSheetState: Boolean) : TodoReduce
+        data class UpdateGetBadgeBottomSheetState(val isGetBadgeBottomSheetVisible: Boolean) : TodoReduce
     }
 
     sealed interface TodoSideEffect : BaseContract.SideEffect {
