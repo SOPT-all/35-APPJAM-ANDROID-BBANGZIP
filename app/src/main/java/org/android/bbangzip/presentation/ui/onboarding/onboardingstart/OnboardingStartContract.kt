@@ -7,7 +7,7 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class OnboardingStartContract {
     @Parcelize
     data class OnboardingStartState(
-        val state: Boolean = true
+        val state: Boolean = true,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }

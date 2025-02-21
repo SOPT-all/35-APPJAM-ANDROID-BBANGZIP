@@ -3,7 +3,6 @@ package org.android.bbangzip.presentation.ui.onboarding.onboardingstart
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth

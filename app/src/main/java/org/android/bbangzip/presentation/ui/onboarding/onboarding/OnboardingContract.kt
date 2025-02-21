@@ -1,8 +1,6 @@
 package org.android.bbangzip.presentation.ui.onboarding.onboarding
 
 import android.os.Parcelable
-import androidx.compose.foundation.pager.PagerState
-import androidx.compose.foundation.pager.rememberPagerState
 import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.model.Semester
