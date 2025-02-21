@@ -95,6 +95,7 @@
     <string name="todo_complete_remaining_nothing_text">사장님 퇴근 준비 완료</string>
     <string name="todo_delete_screen_text">삭제할 오늘의 공부를 \n선택해 주세요</string>
     <string name="todo_delete_screen_delete_button_text">%s개 삭제하기</string>
+    <string name="todo_revert_complete_bottom_sheet_title">미완료 상태로 되돌릴까요?</string>
 
     <!-- empty view -->
     <string name="empty_view_text">Empty View</string>
