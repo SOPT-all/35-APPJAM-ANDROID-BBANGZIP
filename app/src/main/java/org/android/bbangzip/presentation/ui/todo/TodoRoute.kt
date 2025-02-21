@@ -74,16 +74,16 @@ fun TodoRoute(
                 todoState = todoState,
                 todayDate = todayDate,
                 bottomPadding = bottomPadding,
-                onAddPendingStudyButtonClicked = {
+                onAddPendingStudyBtnClick = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnAddPendingStudyBtnClick)
                 },
-                onAddStudyButtonClicked = {
+                onAddStudyBtnClick = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnAddStudyBtnClick)
                 },
-                onRevertCompleteBottomSheetDismissButtonClicked = {
+                onRevertCompleteBottomSheetDismissBtnClick = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissBtnClick)
                 },
-                onRevertCompleteBottomSheetApproveButtonClicked = { pieceId ->
+                onRevertCompleteBottomSheetApproveBtnClick = { pieceId ->
                     viewModel.setEvent(
                         TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveBtnClick(pieceId = pieceId),
                     )
@@ -94,28 +94,28 @@ fun TodoRoute(
                 onFilterIconClicked = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnFilterIconClick)
                 },
-                onFilterBottomSheetItemClicked = { selectedFilter ->
+                onFilterBottomSheetItemClick = { selectedFilter ->
                     viewModel.setEvent(TodoContract.TodoEvent.OnFilterBottomSheetItemClick(selectedFilterItem = selectedFilter))
                 },
                 onFilterBottomSheetDismissRequest = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest)
                 },
-                onDeleteIconClicked = {
+                onDeleteIconClick = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnDeleteIconClick)
                 },
-                onCloseIconClicked = {
+                onCloseIconClick = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnCloseIconClick)
                 },
-                onItemDeleteButtonClicked = {
+                onItemDeleteBtnClick = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnItemDeleteBtnClick)
                 },
-                onDeleteScreenCardClicked = { pieceId, cardState ->
+                onDeleteScreenCardClick = { pieceId, cardState ->
                     viewModel.setEvent(TodoContract.TodoEvent.OnDeleteScreenCardClick(pieceId = pieceId, cardState = cardState))
                 },
-                onDefaultScreenCardClicked = { pieceId, cardState ->
+                onDefaultScreenCardClick = { pieceId, cardState ->
                     viewModel.setEvent(TodoContract.TodoEvent.OnDefaultScreenCardClick(pieceId = pieceId, cardState = cardState))
                 },
-                onClickBadgeCloseBtn = {
+                onBadgeCloseBtnClick = {
                     viewModel.setEvent(TodoContract.TodoEvent.OnGetBadgeBottomSheetCloseBtnClick)
                 },
             )

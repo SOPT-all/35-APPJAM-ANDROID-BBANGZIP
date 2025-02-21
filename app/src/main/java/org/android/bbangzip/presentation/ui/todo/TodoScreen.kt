@@ -58,34 +58,34 @@ fun TodoScreen(
     todayDate: List<String>,
     bottomPadding: PaddingValues,
     modifier: Modifier = Modifier,
-    onAddPendingStudyButtonClicked: () -> Unit = {},
-    onAddStudyButtonClicked: () -> Unit = {},
-    onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
-    onRevertCompleteBottomSheetApproveButtonClicked: (Int) -> Unit = {},
+    onAddPendingStudyBtnClick: () -> Unit = {},
+    onAddStudyBtnClick: () -> Unit = {},
+    onRevertCompleteBottomSheetDismissBtnClick: () -> Unit = {},
+    onRevertCompleteBottomSheetApproveBtnClick: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
     onFilterIconClicked: () -> Unit = {},
-    onFilterBottomSheetItemClicked: (ToDoFilterType) -> Unit = {},
+    onFilterBottomSheetItemClick: (ToDoFilterType) -> Unit = {},
     onFilterBottomSheetDismissRequest: () -> Unit = {},
-    onDeleteIconClicked: () -> Unit = {},
-    onCloseIconClicked: () -> Unit = {},
-    onItemDeleteButtonClicked: () -> Unit = {},
-    onDeleteScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
-    onDefaultScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
-    onClickBadgeCloseBtn: () -> Unit,
+    onDeleteIconClick: () -> Unit = {},
+    onCloseIconClick: () -> Unit = {},
+    onItemDeleteBtnClick: () -> Unit = {},
+    onDeleteScreenCardClick: (Int, BbangZipCardState) -> Unit = { _, _ -> },
+    onDefaultScreenCardClick: (Int, BbangZipCardState) -> Unit = { _, _ -> },
+    onBadgeCloseBtnClick: () -> Unit,
 ) {
     Box(
         modifier =
-            modifier
-                .fillMaxSize()
-                .padding(bottom = bottomPadding.calculateBottomPadding())
-                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+        modifier
+            .fillMaxSize()
+            .padding(bottom = bottomPadding.calculateBottomPadding())
+            .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
     ) {
         LazyColumn {
             item {
                 DateMessageCard(
                     todayDate = todayDate,
                     pendingCount = todoState.pendingCount,
-                    onAddPendingStudyButtonClicked = onAddPendingStudyButtonClicked,
+                    onAddPendingStudyButtonClicked = onAddPendingStudyBtnClick,
                 )
 
                 Spacer(Modifier.height(48.dp))
@@ -98,9 +98,9 @@ fun TodoScreen(
                             painter = painterResource(id = R.drawable.img_empty_view),
                             contentDescription = null,
                             modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .aspectRatio(16f / 15f),
+                            Modifier
+                                .fillMaxWidth()
+                                .aspectRatio(16f / 15f),
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -108,7 +108,7 @@ fun TodoScreen(
                         BbangZipButton(
                             bbangZipButtonType = BbangZipButtonType.Solid,
                             bbangZipButtonSize = BbangZipButtonSize.Large,
-                            onClick = { onAddStudyButtonClicked() },
+                            onClick = onAddStudyBtnClick,
                             label = stringResource(R.string.btn_add_todo_label),
                             modifier = Modifier.fillMaxWidth(),
                             trailingIcon = R.drawable.ic_plus_thick_24,
@@ -127,7 +127,7 @@ fun TodoScreen(
                     Spacer(Modifier.height(8.dp))
 
                     DeleteAndFilterIcons(
-                        onDeleteIconClicked = onDeleteIconClicked,
+                        onDeleteIconClicked = onDeleteIconClick,
                         onFilterIconClicked = onFilterIconClicked,
                     )
 
@@ -139,10 +139,10 @@ fun TodoScreen(
                 item {
                     Box(
                         modifier =
-                            Modifier
-                                .padding(start = 24.dp)
-                                .fillMaxWidth()
-                                .height(58.dp),
+                        Modifier
+                            .padding(start = 24.dp)
+                            .fillMaxWidth()
+                            .height(58.dp),
                         contentAlignment = Alignment.CenterStart,
                     ) {
                         Text(
@@ -156,18 +156,18 @@ fun TodoScreen(
 
                     Row(
                         modifier =
-                            Modifier
-                                .padding(horizontal = 16.dp)
-                                .fillMaxWidth(),
+                        Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Spacer(modifier = Modifier.weight(1f))
 
                         Box(
                             modifier =
-                                Modifier
-                                    .clip(CircleShape)
-                                    .clickable { onCloseIconClicked() },
+                            Modifier
+                                .clip(CircleShape)
+                                .clickable { onCloseIconClick() },
                             contentAlignment = Alignment.Center,
                         ) {
                             Icon(
@@ -195,31 +195,31 @@ fun TodoScreen(
                         onClick = {
                             when {
                                 (todoState.screenType == ToDoScreenType.DEFAULT) && (todoState.todoList[index].cardState == BbangZipCardState.DEFAULT) ->
-                                    onDefaultScreenCardClicked(
+                                    onDefaultScreenCardClick(
                                         todoState.todoList[index].pieceId,
                                         BbangZipCardState.COMPLETE,
                                     )
 
                                 (todoState.screenType == ToDoScreenType.DEFAULT) && (todoState.todoList[index].cardState == BbangZipCardState.COMPLETE) ->
-                                    onDefaultScreenCardClicked(
+                                    onDefaultScreenCardClick(
                                         todoState.todoList[index].pieceId,
                                         BbangZipCardState.DEFAULT,
                                     )
 
                                 (todoState.screenType == ToDoScreenType.DELETE) && (todoState.todoList[index].cardState == BbangZipCardState.CHECKED) ->
-                                    onDeleteScreenCardClicked(
+                                    onDeleteScreenCardClick(
                                         todoState.todoList[index].pieceId,
                                         BbangZipCardState.CHECKABLE,
                                     )
 
                                 (todoState.screenType == ToDoScreenType.DELETE) && (todoState.todoList[index].cardState == BbangZipCardState.CHECKABLE) ->
-                                    onDeleteScreenCardClicked(
+                                    onDeleteScreenCardClick(
                                         todoState.todoList[index].pieceId,
                                         BbangZipCardState.CHECKED,
                                     )
 
                                 else ->
-                                    onDeleteScreenCardClicked(
+                                    onDeleteScreenCardClick(
                                         todoState.todoList[index].pieceId,
                                         BbangZipCardState.COMPLETE,
                                     )
@@ -243,41 +243,41 @@ fun TodoScreen(
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
-                onClick = { onItemDeleteButtonClicked() },
+                onClick = onItemDeleteBtnClick,
                 label = stringResource(R.string.todo_delete_screen_delete_button_text, todoState.selectedItemList.size),
                 modifier =
-                    Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth()
-                        .align(Alignment.BottomCenter)
-                        .padding(bottom = 16.dp),
+                Modifier
+                    .padding(horizontal = 16.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(bottom = 16.dp),
                 isEnable = todoState.selectedItemList.isNotEmpty(),
                 trailingIcon = R.drawable.ic_trash_default_24,
             )
         }
 
         RevertCompleteBottomSheet(
-            isBottomSheetVisible = todoState.revertCompleteBottomSheetState,
+            isBottomSheetVisible = todoState.isRevertCompleteBottomSheetVisible,
             selectedItemPieceId = todoState.selectedItemList,
             bottomSheetTitle = "미완료 상태로 되돌릴까요?",
             onDismissRequest = onRevertCompleteBottomSheetDismissRequest,
-            onClickInteractButton = onRevertCompleteBottomSheetApproveButtonClicked,
-            onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
+            onClickInteractButton = onRevertCompleteBottomSheetApproveBtnClick,
+            onClickCancelButton = onRevertCompleteBottomSheetDismissBtnClick,
         )
 
         BbangZipToDoFilterPickerBottomSheet(
-            isBottomSheetVisible = todoState.todoFilterBottomSheetState,
+            isBottomSheetVisible = todoState.isTodoFilterBottomSheetVisible,
             selectedItem = todoState.selectedFilterItem,
-            onSelectedItemChanged = onFilterBottomSheetItemClicked,
+            onSelectedItemChanged = onFilterBottomSheetItemClick,
             onDismissRequest = onFilterBottomSheetDismissRequest,
         )
 
         if (todoState.badgeList.isNotEmpty()) {
             BbangZipGetBadgeBottomSheet(
                 badgeList = todoState.badgeList,
-                isBottomSheetVisible = todoState.getBadgeBottomSheetState,
-                onDismissRequest = { onClickBadgeCloseBtn() },
-                onClickCancelButton = { onClickBadgeCloseBtn() },
+                isBottomSheetVisible = todoState.isGetBadgeBottomSheetVisible,
+                onDismissRequest = onBadgeCloseBtnClick,
+                onClickCancelButton = onBadgeCloseBtnClick,
             )
         }
     }
@@ -292,8 +292,8 @@ fun DateMessageCard(
 ) {
     Box(
         modifier =
-            modifier
-                .fillMaxWidth(),
+        modifier
+            .fillMaxWidth(),
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
             Box(
@@ -307,19 +307,19 @@ fun DateMessageCard(
                         painter = painterResource(R.drawable.img_pending_study_zero),
                         contentDescription = null,
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(360f / 172f)
-                                .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp)),
+                        Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(360f / 172f)
+                            .clip(RoundedCornerShape(bottomEnd = 32.dp, bottomStart = 32.dp)),
                     )
                 } else {
                     Image(
                         painter = painterResource(R.drawable.img_no_peding_study),
                         contentDescription = null,
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .aspectRatio(360f / 172f),
+                        Modifier
+                            .fillMaxWidth()
+                            .aspectRatio(360f / 172f),
                     )
                 }
                 Column(
@@ -418,35 +418,35 @@ fun StudyCountText(
 ) {
     Box(
         modifier =
-            modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth()
-                .height(58.dp),
+        modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .height(58.dp),
         contentAlignment = Alignment.CenterStart,
     ) {
         Column(
             modifier =
-                Modifier
-                    .padding(start = 8.dp),
+            Modifier
+                .padding(start = 8.dp),
         ) {
             Text(
                 text =
-                    when {
-                        completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
-                        remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
-                        else -> stringResource(R.string.todo_complete_nothing_text)
-                    },
+                when {
+                    completeCount > 0 && remainingCount != 0 -> stringResource(R.string.todo_complete_count_text, completeCount)
+                    remainingCount == 0 -> stringResource(R.string.todo_complete_remaining_nothing_text)
+                    else -> stringResource(R.string.todo_complete_nothing_text)
+                },
                 style = BbangZipTheme.typography.label1Bold,
                 color = BbangZipTheme.colors.labelAlternative_282119_61,
             )
 
             Text(
                 text =
-                    if (remainingCount != 0) {
-                        stringResource(R.string.todo_remaing_count_text, remainingCount)
-                    } else {
-                        stringResource(R.string.todo_remaining_nothing_text)
-                    },
+                if (remainingCount != 0) {
+                    stringResource(R.string.todo_remaing_count_text, remainingCount)
+                } else {
+                    stringResource(R.string.todo_remaining_nothing_text)
+                },
                 style = BbangZipTheme.typography.title3Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
             )
@@ -462,18 +462,18 @@ fun DeleteAndFilterIcons(
 ) {
     Row(
         modifier =
-            modifier
-                .padding(horizontal = 16.dp)
-                .fillMaxWidth(),
+        modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(modifier = Modifier.weight(1f))
 
         Box(
             modifier =
-                Modifier
-                    .clip(CircleShape)
-                    .clickable { onDeleteIconClicked() },
+            Modifier
+                .clip(CircleShape)
+                .clickable { onDeleteIconClicked() },
             contentAlignment = Alignment.Center,
         ) {
             Icon(
@@ -486,9 +486,9 @@ fun DeleteAndFilterIcons(
 
         Box(
             modifier =
-                Modifier
-                    .clip(CircleShape)
-                    .clickable { onFilterIconClicked() },
+            Modifier
+                .clip(CircleShape)
+                .clickable { onFilterIconClicked() },
             contentAlignment = Alignment.Center,
         ) {
             Icon(
@@ -529,14 +529,14 @@ fun BbangZipToDoFilterPickerBottomSheet(
                     Text(
                         text = item.filter,
                         modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .applyFilterOnClick { onSelectedItemChanged(item) }
-                                .background(
-                                    color = if (item != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
-                                    shape = RoundedCornerShape(16.dp),
-                                )
-                                .padding(vertical = 8.dp),
+                        Modifier
+                            .fillMaxWidth()
+                            .applyFilterOnClick { onSelectedItemChanged(item) }
+                            .background(
+                                color = if (item != selectedItem) BbangZipTheme.colors.staticWhite_FFFFFF else BbangZipTheme.colors.fillStrong_68645E_16,
+                                shape = RoundedCornerShape(16.dp),
+                            )
+                            .padding(vertical = 8.dp),
                         textAlign = TextAlign.Center,
                         style = BbangZipTheme.typography.body1Bold,
                         color = BbangZipTheme.colors.labelNormal_282119,
@@ -566,9 +566,9 @@ fun RevertCompleteBottomSheet(
             Text(
                 text = bottomSheetTitle,
                 modifier =
-                    Modifier
-                        .align(Alignment.CenterHorizontally)
-                        .padding(vertical = 15.dp),
+                Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .padding(vertical = 15.dp),
                 style = BbangZipTheme.typography.headline1Bold,
                 color = BbangZipTheme.colors.labelNeutral_282119_88,
             )
@@ -777,6 +777,6 @@ fun TodoScreenMockPreview() {
         todoState = mockTodoStates[2],
         todayDate = listOf("2025", "01", "18"),
         bottomPadding = PaddingValues(),
-        onClickBadgeCloseBtn = {},
+        onBadgeCloseBtnClick = {},
     )
 }
