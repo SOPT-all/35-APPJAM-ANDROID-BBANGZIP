@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.android.bbangzip.R
 import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
 import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
@@ -99,7 +100,7 @@ class TodoViewModel
                         ),
                     )
                     updateState(TodoContract.TodoReduce.ResetSelectedItemList)
-                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("미완료 상태로 되돌렸어요!"))
+                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackbar(R.string.todo_snackbar_revert_to_uncomplete_))
                 }
 
                 TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissBtnClick -> {
@@ -144,7 +145,7 @@ class TodoViewModel
                         }
 
                         else -> {
-                            setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("이미 완료한 일은 삭제할 수 없어요!"))
+                            setSideEffect(TodoContract.TodoSideEffect.ShowSnackbar(R.string.todo_snackbar_delete_not_allowed))
                         }
                     }
                 }
@@ -166,7 +167,7 @@ class TodoViewModel
 
                         postCompleteCardId(pieceId = event.pieceId)
 
-                        setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("공부완료! 오늘의 빵 굽기 성공!"))
+                        setSideEffect(TodoContract.TodoSideEffect.ShowSnackbar(R.string.todo_snackbar_study_complete_success))
                     } else {
                         updateState(
                             TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
@@ -196,7 +197,7 @@ class TodoViewModel
                         updateState(TodoContract.TodoReduce.UpdateScreenType(screenType = ToDoScreenType.EMPTY))
                     }
                     updateState(TodoContract.TodoReduce.ResetSelectedItemList)
-                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("오늘 할 공부를 삭제했어요"))
+                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackbar(R.string.todo_snackbar_study_deleted))
                 }
 //  통과
                 TodoContract.TodoEvent.OnCloseIconClick -> {
@@ -407,7 +408,7 @@ class TodoViewModel
                             isTodoFilterBottomSheetVisible = false,
                         ),
                     )
-                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("${selectedFilterItem.filter}으로 정렬했어요"))
+                    setSideEffect(TodoContract.TodoSideEffect.ShowFormattedSnackbar(R.string.todo_snackbar_sorted_by_filter, selectedFilterItem.filter))
                 }.onFailure { error ->
                     Timber.tag("todayOrders").d(error)
                 }

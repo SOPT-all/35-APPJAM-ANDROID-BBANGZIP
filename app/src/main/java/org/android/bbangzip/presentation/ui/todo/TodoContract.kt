@@ -1,6 +1,7 @@
 package org.android.bbangzip.presentation.ui.todo
 
 import android.os.Parcelable
+import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.Badge
@@ -132,6 +133,13 @@ class TodoContract {
 
         data object NavigateToAddPendingToDo : TodoSideEffect
 
-        data class ShowSnackBar(val message: String) : TodoSideEffect
+        data class ShowSnackbar(
+            @StringRes val message: Int,
+        ) : TodoSideEffect
+
+        data class ShowFormattedSnackbar(
+            @StringRes val message: Int,
+            val formatArg: String,
+        ) : TodoSideEffect
     }
 }

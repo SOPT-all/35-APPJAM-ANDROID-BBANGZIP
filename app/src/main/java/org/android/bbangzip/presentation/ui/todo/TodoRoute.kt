@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
@@ -39,6 +40,7 @@ fun TodoRoute(
     val todayDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-E").withLocale(Locale.forLanguageTag("ko"))).split("-")
     val view = LocalView.current
     val activity = view.context as Activity
+    val context = LocalContext.current
 
     activity.window.statusBarColor = BbangZipTheme.colors.backgroundAccent_FFDAA0.toArgb()
 
@@ -51,11 +53,21 @@ fun TodoRoute(
                 TodoContract.TodoSideEffect.NavigateToAddToDo ->
                     navigateToAddToDo()
 
-                is TodoContract.TodoSideEffect.ShowSnackBar -> {
+                is TodoContract.TodoSideEffect.ShowSnackbar -> {
                     val job =
                         launch {
                             snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar(effect.message)
+                            snackBarHostState.showSnackbar(context.getString(effect.message))
+                        }
+                    delay(2000)
+                    job.cancel()
+                }
+
+                is TodoContract.TodoSideEffect.ShowFormattedSnackbar -> {
+                    val job =
+                        launch {
+                            snackBarHostState.currentSnackbarData?.dismiss()
+                            snackBarHostState.showSnackbar(context.getString(effect.message, effect.formatArg))
                         }
                     delay(2000)
                     job.cancel()
