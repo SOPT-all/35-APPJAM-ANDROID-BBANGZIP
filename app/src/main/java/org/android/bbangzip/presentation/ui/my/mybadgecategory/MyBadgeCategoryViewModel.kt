@@ -55,7 +55,7 @@ class MyBadgeCategoryViewModel
                     setSideEffect(MyBadgeCategoryContract.MyBadgeCategorySideEffect.NavigateToBack)
 
                 is MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClick -> {
-                    viewModelScope.launch { getBadgeDetail(event.badgeName) }
+                   getBadgeDetail(event.badgeName)
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
                             isBadgeDetailBottomSheetVisible = true,
@@ -155,12 +155,13 @@ class MyBadgeCategoryViewModel
                 }
         }
 
-        private suspend fun getBadgeDetail(badgeName: String) {
-            getBadgeDetailUseCase(badgeName)
-                .onSuccess { data ->
-                    updateState(
-                        MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetail(
-                            badgeDetail =
+        private fun getBadgeDetail(badgeName: String) {
+            viewModelScope.launch {
+                getBadgeDetailUseCase(badgeName)
+                    .onSuccess { data ->
+                        updateState(
+                            MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetail(
+                                badgeDetail =
                                 BadgeDetail(
                                     categoryName = data.badgeName,
                                     imageUrl = data.badgeImage,
@@ -169,17 +170,18 @@ class MyBadgeCategoryViewModel
                                     reward = data.reward,
                                     isLocked = data.badgeIsLocked,
                                 ),
-                        ),
-                    )
-                    updateState(
-                        MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
-                            isBadgeDetailBottomSheetVisible = true,
-                        ),
-                    )
-                }
-                .onFailure { error ->
-                    Timber.tag("badges").e(error)
-                }
+                            ),
+                        )
+                        updateState(
+                            MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
+                                isBadgeDetailBottomSheetVisible = true,
+                            ),
+                        )
+                    }
+                    .onFailure { error ->
+                        Timber.tag("badges").e(error)
+                    }
+            }
         }
 
         private suspend fun getInitialInOnboardingPreferences() = userPreferencesFlow.first().onboardingInfo.userName
