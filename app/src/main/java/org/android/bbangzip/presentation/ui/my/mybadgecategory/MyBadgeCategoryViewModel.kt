@@ -55,7 +55,7 @@ class MyBadgeCategoryViewModel
                     setSideEffect(MyBadgeCategoryContract.MyBadgeCategorySideEffect.NavigateToBack)
 
                 is MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClick -> {
-                   getBadgeDetail(event.badgeName)
+                   getBadgeDetail(event.badgeName) 
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
                             isBadgeDetailBottomSheetVisible = true,
