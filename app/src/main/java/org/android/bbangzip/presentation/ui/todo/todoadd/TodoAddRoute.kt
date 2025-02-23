@@ -98,9 +98,9 @@ fun TodoAddRoute(
         false ->
             Box(
                 modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+                    Modifier
+                        .fillMaxSize()
+                        .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
                 contentAlignment = Alignment.Center,
             ) {
                 CircularProgressIndicator(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)

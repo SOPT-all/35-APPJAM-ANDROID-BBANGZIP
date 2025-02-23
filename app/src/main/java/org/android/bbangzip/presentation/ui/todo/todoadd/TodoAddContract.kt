@@ -69,8 +69,13 @@ class TodoAddContract {
 
         data object NavigateToBack : TodoAddSideEffect
 
-        data class ShowSnackBar(@StringRes val message: Int) : TodoAddSideEffect
+        data class ShowSnackBar(
+            @StringRes val message: Int,
+        ) : TodoAddSideEffect
 
-        data class ShowTodoAddSnackBar(@StringRes val message: Int, val formatArg: String = "") : TodoAddSideEffect
+        data class ShowTodoAddSnackBar(
+            @StringRes val message: Int,
+            val formatArg: String = "",
+        ) : TodoAddSideEffect
     }
 }
