@@ -17,7 +17,7 @@ fun NavController.navigateTodo(navOptions: NavOptions) {
 }
 
 fun NavGraphBuilder.todoNavGraph(
-    snackBarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState,
     bottomPadding: PaddingValues,
     navigateToAddToDo: () -> Unit,
     navigateToAddPendingToDo: () -> Unit,
@@ -25,7 +25,7 @@ fun NavGraphBuilder.todoNavGraph(
     composable<BottomNavigationRoute.Todo> {
         TodoRoute(
             bottomPadding = bottomPadding,
-            snackBarHostState = snackBarHostState,
+            snackbarHostState = snackbarHostState,
             navigateToAddToDo = navigateToAddToDo,
             navigateToAddPendingToDo = navigateToAddPendingToDo,
         )

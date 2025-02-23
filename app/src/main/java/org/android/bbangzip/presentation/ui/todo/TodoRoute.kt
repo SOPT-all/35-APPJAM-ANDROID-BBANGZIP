@@ -29,7 +29,7 @@ import java.util.Locale
 
 @Composable
 fun TodoRoute(
-    snackBarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState,
     bottomPadding: PaddingValues,
     navigateToAddToDo: () -> Unit = {},
     navigateToAddPendingToDo: () -> Unit = {},
@@ -56,8 +56,8 @@ fun TodoRoute(
                 is TodoContract.TodoSideEffect.ShowSnackbar -> {
                     val job =
                         launch {
-                            snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar(context.getString(effect.message))
+                            snackbarHostState.currentSnackbarData?.dismiss()
+                            snackbarHostState.showSnackbar(context.getString(effect.message))
                         }
                     delay(2000)
                     job.cancel()
@@ -66,8 +66,8 @@ fun TodoRoute(
                 is TodoContract.TodoSideEffect.ShowFormattedSnackbar -> {
                     val job =
                         launch {
-                            snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar(context.getString(effect.message, effect.formatArg))
+                            snackbarHostState.currentSnackbarData?.dismiss()
+                            snackbarHostState.showSnackbar(context.getString(effect.message, effect.formatArg))
                         }
                     delay(2000)
                     job.cancel()

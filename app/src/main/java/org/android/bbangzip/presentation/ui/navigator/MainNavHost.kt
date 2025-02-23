@@ -39,10 +39,10 @@ fun MainNavHost(
 ) {
     Box(
         modifier =
-            modifier
-                .padding(top = padding.calculateTopPadding())
-                .fillMaxSize()
-                .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
+        modifier
+            .padding(top = padding.calculateTopPadding())
+            .fillMaxSize()
+            .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         NavHost(
             navController = navigator.navHostController,
@@ -141,7 +141,7 @@ fun MainNavHost(
             )
 
             todoNavGraph(
-                snackBarHostState = snackBarHostState,
+                snackbarHostState = snackBarHostState,
                 bottomPadding = padding,
                 navigateToAddToDo = { navigator.navigateToToDoAdd() },
                 navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
@@ -154,13 +154,6 @@ fun MainNavHost(
                 navigateToModifyMotivation = { id, name -> navigator.navigateToModifyMotivationMessage(id, name) },
                 navigateToModifySubjectName = { id, name -> navigator.navigateToModifySubjectName(id, name) },
                 navigateToAddStudy = { splitStudyData -> navigator.navigateToAddStudy(splitStudyData) },
-            )
-
-            todoNavGraph(
-                snackBarHostState = snackBarHostState,
-                bottomPadding = padding,
-                navigateToAddToDo = { navigator.navigateToToDoAdd() },
-                navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
             )
         }
     }
