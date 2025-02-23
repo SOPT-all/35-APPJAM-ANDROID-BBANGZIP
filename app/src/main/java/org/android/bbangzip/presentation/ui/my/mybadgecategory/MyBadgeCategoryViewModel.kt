@@ -51,29 +51,29 @@ class MyBadgeCategoryViewModel
                         )
                     }
 
-                MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBackIconClicked ->
+                MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBackIconClick ->
                     setSideEffect(MyBadgeCategoryContract.MyBadgeCategorySideEffect.NavigateToBack)
 
-                is MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClicked -> {
+                is MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClick -> {
                     viewModelScope.launch { getBadgeDetail(event.badgeName) }
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
-                            badgeDetailBottomSheetState = true,
+                            isBadgeDetailBottomSheetVisible = true,
                         ),
                     )
                 }
 
-                MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissButtonClicked ->
+                MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissBtnClick ->
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
-                            badgeDetailBottomSheetState = false,
+                            isBadgeDetailBottomSheetVisible = false,
                         ),
                     )
 
                 MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissRequest ->
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
-                            badgeDetailBottomSheetState = false,
+                            isBadgeDetailBottomSheetVisible = false,
                         ),
                     )
             }
@@ -99,7 +99,7 @@ class MyBadgeCategoryViewModel
 
                 is MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState ->
                     state.copy(
-                        badgeDetailBottomSheetState = reduce.badgeDetailBottomSheetState,
+                        isBadgeDetailBottomSheetVisible = reduce.isBadgeDetailBottomSheetVisible,
                     )
 
                 is MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateNickName ->
@@ -173,7 +173,7 @@ class MyBadgeCategoryViewModel
                     )
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
-                            badgeDetailBottomSheetState = true,
+                            isBadgeDetailBottomSheetVisible = true,
                         ),
                     )
                 }
@@ -183,15 +183,4 @@ class MyBadgeCategoryViewModel
         }
 
         private suspend fun getInitialInOnboardingPreferences() = userPreferencesFlow.first().onboardingInfo.userName
-
-        private suspend fun clearDataStore() {
-            with(userLocalRepository) {
-                clearAccessToken()
-                clearRefreshToken()
-                setIsLogin(false)
-                clearOnboardingInfo()
-                setIsOnOnboardingDone(false)
-                setIsBadgeAvailable(false)
-            }
-        }
     }

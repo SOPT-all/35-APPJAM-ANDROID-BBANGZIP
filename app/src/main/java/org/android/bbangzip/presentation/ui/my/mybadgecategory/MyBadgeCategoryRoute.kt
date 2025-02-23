@@ -37,12 +37,12 @@ fun MyBadgeCategoryRoute(
         true ->
             MyBadgeCategoryScreen(
                 badgeCategoryState = badgeCategoryState,
-                onBackIconClicked = {
-                    viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBackIconClicked)
+                onBackIconClick = {
+                    viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBackIconClick)
                 },
-                onBadgeCardClicked = { badgeName ->
+                onBadgeCardClick = { badgeName ->
                     viewModel.setEvent(
-                        MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClicked(
+                        MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClick(
                             badgeName = badgeName,
                         ),
                     )
@@ -50,8 +50,8 @@ fun MyBadgeCategoryRoute(
                 onBadgeDetailBottomSheetDismissRequest = {
                     viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissRequest)
                 },
-                onBadgeDetailBottomSheetDismissButtonClicked = {
-                    viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissButtonClicked)
+                onBadgeDetailBottomSheetDismissBtnClick = {
+                    viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissBtnClick)
                 },
             )
 

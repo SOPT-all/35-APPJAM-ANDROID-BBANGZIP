@@ -46,10 +46,10 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun MyBadgeCategoryScreen(
     badgeCategoryState: MyBadgeCategoryContract.MyBadgeCategoryState,
     modifier: Modifier = Modifier,
-    onBackIconClicked: () -> Unit = {},
-    onBadgeCardClicked: (String) -> Unit = {},
+    onBackIconClick: () -> Unit = {},
+    onBadgeCardClick: (String) -> Unit = {},
     onBadgeDetailBottomSheetDismissRequest: () -> Unit = {},
-    onBadgeDetailBottomSheetDismissButtonClicked: () -> Unit = {},
+    onBadgeDetailBottomSheetDismissBtnClick: () -> Unit = {},
 ) {
     val scrollState = rememberLazyListState()
     val isShadowed by remember {
@@ -68,7 +68,7 @@ fun MyBadgeCategoryScreen(
             BbangZipBaseTopBar(
                 title = stringResource(R.string.badge_category_top_bar_title),
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-                onLeadingIconClick = onBackIconClicked,
+                onLeadingIconClick = onBackIconClick,
                 backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
                 isShadowed = isShadowed,
             )
@@ -115,7 +115,7 @@ fun MyBadgeCategoryScreen(
             BadgeCategoryGridList(
                 badgeCategoryList = badgeCategoryState.badgeCategoryList1,
                 categoryDescription = "이번 학기 빵점 탈출 내가 해냄!",
-                onBadgeCardClicked = onBadgeCardClicked,
+                onBadgeCardClicked = onBadgeCardClick,
             )
 
             Spacer(Modifier.height(64.dp))
@@ -125,7 +125,7 @@ fun MyBadgeCategoryScreen(
             BadgeCategoryGridList(
                 badgeCategoryList = badgeCategoryState.badgeCategoryList2.reversed(),
                 categoryDescription = "지금 바로 시작하면 미룬이 탈출 가능!",
-                onBadgeCardClicked = onBadgeCardClicked,
+                onBadgeCardClicked = onBadgeCardClick,
             )
 
             Spacer(Modifier.height(64.dp))
@@ -135,7 +135,7 @@ fun MyBadgeCategoryScreen(
             BadgeCategoryGridList(
                 badgeCategoryList = badgeCategoryState.badgeCategoryList3,
                 categoryDescription = "지금부터 시작해도 반은 한거에요!",
-                onBadgeCardClicked = onBadgeCardClicked,
+                onBadgeCardClicked = onBadgeCardClick,
             )
 
             Spacer(Modifier.height(64.dp))
@@ -145,7 +145,7 @@ fun MyBadgeCategoryScreen(
             BadgeCategoryGridList(
                 badgeCategoryList = badgeCategoryState.badgeCategoryList4,
                 categoryDescription = "빵 한쪽도 나눠 먹는 사이!",
-                onBadgeCardClicked = onBadgeCardClicked,
+                onBadgeCardClicked = onBadgeCardClick,
             )
 
             Spacer(Modifier.height(16.dp))
@@ -154,10 +154,10 @@ fun MyBadgeCategoryScreen(
 
     BbangZipBadgeDetailBottomSheet(
         badgeDetail = badgeCategoryState.badgeDetail,
-        isBottomSheetVisible = badgeCategoryState.badgeDetailBottomSheetState,
+        isBottomSheetVisible = badgeCategoryState.isBadgeDetailBottomSheetVisible,
         cancelButtonText = "닫기",
         onDismissRequest = onBadgeDetailBottomSheetDismissRequest,
-        onClickCancelButton = onBadgeDetailBottomSheetDismissButtonClicked,
+        onClickCancelButton = onBadgeDetailBottomSheetDismissBtnClick,
     )
 }
 
@@ -284,15 +284,15 @@ private fun MyBadgeCategoryScreenPreview() {
         MyBadgeCategoryContract.MyBadgeCategoryState(
             badgeCategoryList1 = sampleBadgeCategoryList1,
             badgeCategoryList2 = sampleBadgeCategoryList2,
-            badgeDetailBottomSheetState = false,
+            isBadgeDetailBottomSheetVisible = false,
             badgeDetail = BadgeDetail(),
         )
 
     MyBadgeCategoryScreen(
         badgeCategoryState = sampleState,
-        onBackIconClicked = { println("Back icon clicked") },
-        onBadgeCardClicked = { badgeName -> println("Badge clicked: $badgeName") },
+        onBackIconClick = { println("Back icon clicked") },
+        onBadgeCardClick = { badgeName -> println("Badge clicked: $badgeName") },
         onBadgeDetailBottomSheetDismissRequest = { println("BottomSheet dismissed") },
-        onBadgeDetailBottomSheetDismissButtonClicked = { println("Dismiss button clicked") },
+        onBadgeDetailBottomSheetDismissBtnClick = { println("Dismiss button clicked") },
     )
 }
