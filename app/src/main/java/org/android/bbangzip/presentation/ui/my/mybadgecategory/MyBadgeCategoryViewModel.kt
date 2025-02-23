@@ -55,7 +55,7 @@ class MyBadgeCategoryViewModel
                     setSideEffect(MyBadgeCategoryContract.MyBadgeCategorySideEffect.NavigateToBack)
 
                 is MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClick -> {
-                   getBadgeDetail(event.badgeName) 
+                    getBadgeDetail(event.badgeName)
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
                             isBadgeDetailBottomSheetVisible = true,
@@ -162,14 +162,14 @@ class MyBadgeCategoryViewModel
                         updateState(
                             MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetail(
                                 badgeDetail =
-                                BadgeDetail(
-                                    categoryName = data.badgeName,
-                                    imageUrl = data.badgeImage,
-                                    hashTags = data.hashTags,
-                                    achievementCondition = data.achievementCondition,
-                                    reward = data.reward,
-                                    isLocked = data.badgeIsLocked,
-                                ),
+                                    BadgeDetail(
+                                        categoryName = data.badgeName,
+                                        imageUrl = data.badgeImage,
+                                        hashTags = data.hashTags,
+                                        achievementCondition = data.achievementCondition,
+                                        reward = data.reward,
+                                        isLocked = data.badgeIsLocked,
+                                    ),
                             ),
                         )
                         updateState(

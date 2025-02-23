@@ -21,7 +21,7 @@ fun ModifyMotivationMessageRoute(
     viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
     navigateToSubjectDetail: (Int, String) -> Unit,
     snackbarHostState: SnackbarHostState,
-    popBackStack: () -> Unit
+    popBackStack: () -> Unit,
 ) {
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
     val view = LocalView.current
@@ -66,6 +66,6 @@ fun ModifyMotivationMessageRoute(
         onTextFieldFocusChanged = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField(it)) },
         onModifyBtnClicked = { id, name -> viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn(id, name)) },
         onDeleteBtnClicked = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn) },
-        onBackBtnClicked = {viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickBackBtn)}
+        onBackBtnClicked = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickBackBtn) },
     )
 }

@@ -35,7 +35,7 @@ fun ModifyMotivationMessageScreen(
     onTextFieldFocusChanged: (Boolean) -> Unit = {},
     onModifyBtnClicked: (Int, String) -> Unit = { _, _ -> },
     onDeleteBtnClicked: () -> Unit = {},
-    onBackBtnClicked: () -> Unit = {}
+    onBackBtnClicked: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
 
@@ -48,7 +48,7 @@ fun ModifyMotivationMessageScreen(
         BbangZipBaseTopBar(
             title = "각오 한 마디 작성하기",
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = { onBackBtnClicked() }
+            onLeadingIconClick = { onBackBtnClicked() },
         )
 
         Column(
