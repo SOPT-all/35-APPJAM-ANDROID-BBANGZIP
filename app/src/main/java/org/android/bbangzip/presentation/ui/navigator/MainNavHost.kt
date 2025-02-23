@@ -143,8 +143,8 @@ fun MainNavHost(
             todoNavGraph(
                 snackbarHostState = snackbarHostState,
                 bottomPadding = padding,
-                navigateToAddToDo = { navigator.navigateToToDoAdd() },
-                navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
+                navigateToAddToDo = navigator::navigateToToDoAdd,
+                navigateToAddPendingToDo = navigator::navigateToToDoAddPending,
             )
 
             subjectDetailNavGraph(
