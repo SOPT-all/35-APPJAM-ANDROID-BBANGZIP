@@ -95,14 +95,18 @@
     <string name="todo_complete_remaining_nothing_text">사장님 퇴근 준비 완료</string>
     <string name="todo_delete_screen_text">삭제할 오늘의 공부를 \n선택해 주세요</string>
     <string name="todo_delete_screen_delete_button_text">%s개 삭제하기</string>
+    <string name="todo_revert_bottomsheet_approve_text">되돌리기</string>
 
     <!-- empty view -->
     <string name="empty_view_text">Empty View</string>
 
-    <!-- login -->
-    <string name="todo_revert_bottomsheet_approve_text">되돌리기</string>
+    <!-- todoPendingAdd -->
     <string name="todo_pending_add_title1">이제는 미룰 수 없다!</string>
     <string name="todo_pending_add_title2">아직 늦지 않았어요!\n밀린 공부를 시작해봐요</string>
+    <string name="todo_pending_add_plus_study">오늘 할 공부를 추가했어요!</string>
+    <string name="todo_pending_add_sorted_by_filter">%1$s으로 정렬했어요</string>
+
+    <!-- todoAdd -->
     <string name="todo_add_title1">시작이 빵이다!</string>
     <string name="todo_add_title2">오늘부터 하나씩!\n공부할 내용을 선택해 보세요</string>
     <string name="todo_add_count">개 / 총 %s개</string>
@@ -153,7 +157,7 @@
     <string name="my_bbangzip">내 제과제빵점</string>
     <string name="my_bbangzip_lock">열심히 포인트를 모아서\n멋진 빵집을 차려봐요!</string>
 
-    <!-- component- bottom sheet -->
+    <!-- component - bottom sheet -->
     <string name="logout_title">로그아웃 하시겠어요?</string>
     <string name="logout_confirm">로그아웃 하기</string>
     <string name="cancel">취소</string>
