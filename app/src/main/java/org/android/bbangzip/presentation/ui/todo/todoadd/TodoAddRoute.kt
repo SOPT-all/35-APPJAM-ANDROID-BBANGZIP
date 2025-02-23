@@ -13,6 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -32,6 +33,7 @@ fun TodoAddRoute(
     val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
     val todoAddsSnackBarHostState = remember { SnackbarHostState() }
     val view = LocalView.current
+    val context = LocalContext.current
     val activity = view.context as Activity
 
     activity.window.statusBarColor = BbangZipTheme.colors.staticWhite_FFFFFF.toArgb()
@@ -49,7 +51,7 @@ fun TodoAddRoute(
                     val job =
                         launch {
                             snackbarHostState.currentSnackbarData?.dismiss()
-                            snackbarHostState.showSnackbar(effect.message)
+                            snackbarHostState.showSnackbar(context.getString(effect.message))
                         }
                     delay(2000)
                     job.cancel()
@@ -59,7 +61,7 @@ fun TodoAddRoute(
                     val job =
                         launch {
                             todoAddsSnackBarHostState.currentSnackbarData?.dismiss()
-                            todoAddsSnackBarHostState.showSnackbar(effect.message)
+                            todoAddsSnackBarHostState.showSnackbar(context.getString(effect.message, effect.formatArg))
                         }
                     delay(3000)
                     job.cancel()
@@ -96,9 +98,9 @@ fun TodoAddRoute(
         false ->
             Box(
                 modifier =
-                    Modifier
-                        .fillMaxSize()
-                        .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+                Modifier
+                    .fillMaxSize()
+                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
                 contentAlignment = Alignment.Center,
             ) {
                 CircularProgressIndicator(color = BbangZipTheme.colors.backgroundAccent_FFDAA0)

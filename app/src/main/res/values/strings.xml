@@ -111,6 +111,8 @@
     <string name="todo_add_title2">오늘부터 하나씩!\n공부할 내용을 선택해 보세요</string>
     <string name="todo_add_count">개 / 총 %s개</string>
     <string name="todo_add_plus_button_label">오늘 할 공부 추가하기</string>
+    <string name="todo_add_plus_study">오늘 할 공부를 추가했어요!</string>
+    <string name="todo_add_sorted_by_filter">%1$s으로 정렬했어요</string>
 
     <!-- badge -->
     <string name="badge_category_title">%s 사장님이\n열심히 모은 배지에요</string>

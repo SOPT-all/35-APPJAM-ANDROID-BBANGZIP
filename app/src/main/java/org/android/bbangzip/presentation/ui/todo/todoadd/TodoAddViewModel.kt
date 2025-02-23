@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.android.bbangzip.R
 import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.usecase.GetAddTodoListUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
@@ -64,7 +65,7 @@ constructor(
                 postAddTodoItemList(selectedItemList = currentUiState.selectedItemList)
 
                 setSideEffect(TodoAddContract.TodoAddSideEffect.NavigateToToDo)
-                setSideEffect(TodoAddContract.TodoAddSideEffect.ShowSnackBar("오늘 할 공부를 추가했어요!"))
+                setSideEffect(TodoAddContract.TodoAddSideEffect.ShowSnackBar(R.string.todo_add_plus_study))
             }
 
             is TodoAddContract.TodoAddEvent.OnToDoCardClick -> {
@@ -210,7 +211,7 @@ constructor(
                             isTodoFilterBottomSheetVisible = false,
                         ),
                     )
-                    setSideEffect(TodoAddContract.TodoAddSideEffect.ShowTodoAddSnackBar("${selectedFilterItem.filter}으로 정렬했어요"))
+                    setSideEffect(TodoAddContract.TodoAddSideEffect.ShowTodoAddSnackBar(R.string.todo_add_sorted_by_filter, selectedFilterItem.filter))
                 }
                 .onFailure { error ->
                     Timber.tag("todo").d(error)

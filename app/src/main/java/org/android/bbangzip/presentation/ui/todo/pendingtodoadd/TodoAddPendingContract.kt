@@ -75,7 +75,7 @@ class TodoAddPendingContract {
 
         data class ShowTodoAddSnackbar(
             @StringRes val message: Int,
-            val formatArg: String,
+            val formatArg: String = "",
         ) : TodoAddPendingSideEffect
     }
 }

@@ -1,6 +1,7 @@
 package org.android.bbangzip.presentation.ui.todo.todoadd
 
 import android.os.Parcelable
+import androidx.annotation.StringRes
 import kotlinx.parcelize.Parcelize
 import org.android.bbangzip.presentation.component.card.BbangZipCardState
 import org.android.bbangzip.presentation.model.card.ToDoCardModel
@@ -10,7 +11,7 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class TodoAddContract {
     @Parcelize
     data class TodoAddState(
-        val todoList: List<ToDoCardModel> =emptyList(),
+        val todoList: List<ToDoCardModel> = emptyList(),
         val isTodoFilterBottomSheetVisible: Boolean = false,
         val selectedFilter: ToDoFilterType = ToDoFilterType.RECENT,
         val selectedItemList: List<Int> = listOf(),
@@ -68,8 +69,8 @@ class TodoAddContract {
 
         data object NavigateToBack : TodoAddSideEffect
 
-        data class ShowSnackBar(val message: String) : TodoAddSideEffect
+        data class ShowSnackBar(@StringRes val message: Int) : TodoAddSideEffect
 
-        data class ShowTodoAddSnackBar(val message: String) : TodoAddSideEffect
+        data class ShowTodoAddSnackBar(@StringRes val message: Int, val formatArg: String = "") : TodoAddSideEffect
     }
 }
