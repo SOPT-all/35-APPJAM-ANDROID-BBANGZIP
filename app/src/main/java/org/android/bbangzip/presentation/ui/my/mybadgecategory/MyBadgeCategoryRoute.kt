@@ -14,7 +14,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun MyBadgeCategoryRoute(
-    popBackStack: () -> Unit = {},
+    navigateToBack: () -> Unit = {},
     viewModel: MyBadgeCategoryViewModel = hiltViewModel(),
 ) {
     val badgeCategoryState by viewModel.uiState.collectAsStateWithLifecycle()
@@ -28,7 +28,7 @@ fun MyBadgeCategoryRoute(
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
                 MyBadgeCategoryContract.MyBadgeCategorySideEffect.NavigateToBack ->
-                    popBackStack()
+                    navigateToBack()
             }
         }
     }
