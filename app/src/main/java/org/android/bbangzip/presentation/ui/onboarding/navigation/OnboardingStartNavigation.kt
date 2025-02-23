@@ -10,7 +10,7 @@ import org.android.bbangzip.presentation.ui.onboarding.onboardingstart.Onboardin
 fun NavController.navigateOnboardingStart(navOptions: NavOptions) {
     navigate(
         route = OnboardingStartRoute,
-        navOptions = navOptions
+        navOptions = navOptions,
     )
 }
 

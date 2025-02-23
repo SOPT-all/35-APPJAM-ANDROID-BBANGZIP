@@ -61,7 +61,7 @@ fun TodoAddPendingRoute(
                     val job =
                         launch {
                             todoAddsSnackbarHostState.currentSnackbarData?.dismiss()
-                            todoAddsSnackbarHostState.showSnackbar(context.getString(effect.message,effect.formatArg))
+                            todoAddsSnackbarHostState.showSnackbar(context.getString(effect.message, effect.formatArg))
                         }
                     delay(3000)
                     job.cancel()
@@ -87,7 +87,7 @@ fun TodoAddPendingRoute(
                 onFilterBottomSheetItemClick = { filter ->
                     viewModel.setEvent(TodoAddPendingContract.TodoAddPendingEvent.OnFilterBottomSheetItemClick(selectedFilterItem = filter))
                 },
-                onItemPlusBtnClick= {
+                onItemPlusBtnClick = {
                     viewModel.setEvent(TodoAddPendingContract.TodoAddPendingEvent.OnItemPlusBtnClick)
                 },
                 onToDoCardClick = { pieceId, cardState ->

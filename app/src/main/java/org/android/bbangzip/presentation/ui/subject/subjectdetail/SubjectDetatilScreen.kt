@@ -699,9 +699,9 @@ private fun EmptySubjectCardView(
             painter = painterResource(id = R.drawable.img_empty_view),
             contentDescription = null,
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .aspectRatio(16f / 15f),
+                Modifier
+                    .fillMaxWidth()
+                    .aspectRatio(16f / 15f),
         )
 
         Spacer(modifier = Modifier.height(16.dp))

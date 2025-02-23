@@ -51,6 +51,6 @@ class ModifyMotivationMessageContract {
 
         data class ShowSnackBar(val message: String) : ModifyMotivationMessageSideEffect
 
-        data object PopBackStack: ModifyMotivationMessageSideEffect
+        data object PopBackStack : ModifyMotivationMessageSideEffect
     }
 }

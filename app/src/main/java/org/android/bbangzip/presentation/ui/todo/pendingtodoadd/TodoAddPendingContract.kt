@@ -69,8 +69,13 @@ class TodoAddPendingContract {
 
         data object NavigateToBack : TodoAddPendingSideEffect
 
-        data class ShowSnackbar(@StringRes val message: Int) : TodoAddPendingSideEffect
+        data class ShowSnackbar(
+            @StringRes val message: Int,
+        ) : TodoAddPendingSideEffect
 
-        data class ShowTodoAddSnackbar(@StringRes val message: Int,val formatArg : String) : TodoAddPendingSideEffect
+        data class ShowTodoAddSnackbar(
+            @StringRes val message: Int,
+            val formatArg: String,
+        ) : TodoAddPendingSideEffect
     }
 }
