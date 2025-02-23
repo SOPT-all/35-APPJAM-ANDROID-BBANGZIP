@@ -23,7 +23,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun TodoAddRoute(
-    snackBarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState,
     navigateToToDo: () -> Unit = {},
     navigateToBack: () -> Unit = {},
     viewModel: TodoAddViewModel = hiltViewModel(),
@@ -48,8 +48,8 @@ fun TodoAddRoute(
                 is TodoAddContract.TodoAddSideEffect.ShowSnackBar -> {
                     val job =
                         launch {
-                            snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar(effect.message)
+                            snackbarHostState.currentSnackbarData?.dismiss()
+                            snackbarHostState.showSnackbar(effect.message)
                         }
                     delay(2000)
                     job.cancel()
