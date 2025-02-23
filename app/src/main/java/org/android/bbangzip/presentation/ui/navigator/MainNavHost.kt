@@ -39,10 +39,10 @@ fun MainNavHost(
 ) {
     Box(
         modifier =
-        modifier
-            .padding(top = padding.calculateTopPadding())
-            .fillMaxSize()
-            .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
+            modifier
+                .padding(top = padding.calculateTopPadding())
+                .fillMaxSize()
+                .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         NavHost(
             navController = navigator.navHostController,
