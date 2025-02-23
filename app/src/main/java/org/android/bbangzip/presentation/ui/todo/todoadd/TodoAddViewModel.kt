@@ -37,7 +37,7 @@ class TodoAddViewModel
             when (event) {
                 TodoAddContract.TodoAddEvent.Initialize -> launch { initDataLoad() }
 
-                TodoAddContract.TodoAddEvent.OnBackIconClicked -> {
+                TodoAddContract.TodoAddEvent.OnBackIconClick -> {
                     updateState(TodoAddContract.TodoAddReduce.ResetSelectedItemList)
                     setSideEffect(TodoAddContract.TodoAddSideEffect.NavigateToBack)
                 }
@@ -45,24 +45,24 @@ class TodoAddViewModel
                 TodoAddContract.TodoAddEvent.OnFilterBottomSheetDismissRequest ->
                     updateState(
                         TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = false,
+                            isTodoFilterBottomSheetVisible = false,
                         ),
                     )
 
-                TodoAddContract.TodoAddEvent.OnFilterIconClicked ->
+                TodoAddContract.TodoAddEvent.OnFilterIconClick ->
                     updateState(
                         TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = true,
+                            isTodoFilterBottomSheetVisible = true,
                         ),
                     )
 
-                is TodoAddContract.TodoAddEvent.OnFilterBottomSheetItemClicked -> {
+                is TodoAddContract.TodoAddEvent.OnFilterBottomSheetItemClick -> {
                     viewModelScope.launch {
                         getFilteredAddToDoInfo(selectedFilterItem = event.selectedFilterItem)
                     }
                 }
 
-                TodoAddContract.TodoAddEvent.OnItemPlusButtonClicked -> {
+                TodoAddContract.TodoAddEvent.OnItemPlusBtnClick -> {
                     viewModelScope.launch {
                         postAddTodoItemList(selectedItemList = currentUiState.selectedItemList)
                     }
@@ -70,7 +70,7 @@ class TodoAddViewModel
                     setSideEffect(TodoAddContract.TodoAddSideEffect.ShowSnackBar("오늘 할 공부를 추가했어요!"))
                 }
 
-                is TodoAddContract.TodoAddEvent.OnToDoCardClicked -> {
+                is TodoAddContract.TodoAddEvent.OnToDoCardClick -> {
                     if (event.cardState == BbangZipCardState.CHECKED) {
                         updateState(TodoAddContract.TodoAddReduce.UpdateSelectedItemList(pieceId = event.pieceId))
                         updateState(
@@ -122,7 +122,7 @@ class TodoAddViewModel
 
                 is TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState ->
                     state.copy(
-                        todoFilterBottomSheetState = reduce.todoFilterBottomSheetState,
+                        isTodoFilterBottomSheetVisible = reduce.isTodoFilterBottomSheetVisible,
                     )
 
                 is TodoAddContract.TodoAddReduce.DeleteSelectedItemList ->
@@ -209,7 +209,7 @@ class TodoAddViewModel
                     updateState(TodoAddContract.TodoAddReduce.UpdateFilterType(selectedFilter = selectedFilterItem))
                     updateState(
                         TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = false,
+                            isTodoFilterBottomSheetVisible = false,
                         ),
                     )
                     setSideEffect(TodoAddContract.TodoAddSideEffect.ShowTodoAddSnackBar("${selectedFilterItem.filter}으로 정렬했어요"))

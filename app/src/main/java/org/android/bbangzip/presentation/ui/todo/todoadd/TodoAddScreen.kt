@@ -45,12 +45,12 @@ fun TodoAddScreen(
     todoAddState: TodoAddContract.TodoAddState,
     todoAddSnackBarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
-    onBackIconClicked: () -> Unit,
+    onBackIconClick: () -> Unit,
     onFilterBottomSheetDismissRequest: () -> Unit,
-    onFilterIconClicked: () -> Unit,
-    onFilterBottomSheetItemClicked: (ToDoFilterType) -> Unit,
-    onItemPlusButtonClicked: () -> Unit,
-    onToDoCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
+    onFilterIconClick: () -> Unit,
+    onFilterBottomSheetItemClick: (ToDoFilterType) -> Unit,
+    onItemPlusBtnClick: () -> Unit,
+    onToDoCardClick: (Int, BbangZipCardState) -> Unit = { _, _ -> },
 ) {
     Box(
         modifier =
@@ -68,7 +68,7 @@ fun TodoAddScreen(
             BbangZipBaseTopBar(
                 isShadowed = isShadowed,
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-                onLeadingIconClick = onBackIconClicked,
+                onLeadingIconClick = onBackIconClick,
             )
 
             LazyColumn(
@@ -125,7 +125,7 @@ fun TodoAddScreen(
                             modifier =
                                 Modifier
                                     .clip(CircleShape)
-                                    .clickable { onFilterIconClicked() },
+                                    .clickable { onFilterIconClick() },
                             contentAlignment = Alignment.Center,
                         ) {
                             Icon(
@@ -151,13 +151,13 @@ fun TodoAddScreen(
                         modifier = Modifier.padding(vertical = 6.dp),
                         onClick = {
                             if (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKED) {
-                                onToDoCardClicked(
+                                onToDoCardClick(
                                     todoAddState.todoList[index].pieceId,
                                     BbangZipCardState.CHECKABLE,
                                 )
                             } else {
                                 (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKABLE)
-                                onToDoCardClicked(
+                                onToDoCardClick(
                                     todoAddState.todoList[index].pieceId,
                                     BbangZipCardState.CHECKED,
                                 )
@@ -181,7 +181,7 @@ fun TodoAddScreen(
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
-                    onClick = { onItemPlusButtonClicked() },
+                    onClick = onItemPlusBtnClick,
                     label = stringResource(R.string.todo_add_plus_button_label),
                     modifier =
                         Modifier
@@ -195,9 +195,9 @@ fun TodoAddScreen(
         }
     }
     ToDoFilterPickerBottomSheet(
-        isBottomSheetVisible = todoAddState.todoFilterBottomSheetState,
+        isBottomSheetVisible = todoAddState.isTodoFilterBottomSheetVisible,
         selectedItem = todoAddState.selectedFilter,
-        onSelectedItemChanged = onFilterBottomSheetItemClicked,
+        onSelectedItemChanged = onFilterBottomSheetItemClick,
         onDismissRequest = onFilterBottomSheetDismissRequest,
     )
 }

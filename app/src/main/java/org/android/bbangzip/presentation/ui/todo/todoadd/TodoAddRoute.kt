@@ -73,23 +73,23 @@ fun TodoAddRoute(
             TodoAddScreen(
                 todoAddState = todoAddState,
                 todoAddSnackBarHostState = todoAddsSnackBarHostState,
-                onBackIconClicked = {
-                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnBackIconClicked)
+                onBackIconClick = {
+                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnBackIconClick)
                 },
                 onFilterBottomSheetDismissRequest = {
                     viewModel.setEvent(TodoAddContract.TodoAddEvent.OnFilterBottomSheetDismissRequest)
                 },
-                onFilterIconClicked = {
-                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnFilterIconClicked)
+                onFilterIconClick = {
+                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnFilterIconClick)
                 },
-                onFilterBottomSheetItemClicked = { filter ->
-                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnFilterBottomSheetItemClicked(selectedFilterItem = filter))
+                onFilterBottomSheetItemClick = { filter ->
+                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnFilterBottomSheetItemClick(selectedFilterItem = filter))
                 },
-                onItemPlusButtonClicked = {
-                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnItemPlusButtonClicked)
+                onItemPlusBtnClick = {
+                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnItemPlusBtnClick)
                 },
-                onToDoCardClicked = { pieceId, cardState ->
-                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnToDoCardClicked(pieceId = pieceId, cardState = cardState))
+                onToDoCardClick = { pieceId, cardState ->
+                    viewModel.setEvent(TodoAddContract.TodoAddEvent.OnToDoCardClick(pieceId = pieceId, cardState = cardState))
                 },
             )
 
