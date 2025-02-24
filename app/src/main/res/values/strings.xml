@@ -96,6 +96,12 @@
     <string name="todo_delete_screen_text">삭제할 오늘의 공부를 \n선택해 주세요</string>
     <string name="todo_delete_screen_delete_button_text">%s개 삭제하기</string>
     <string name="todo_revert_bottomsheet_approve_text">되돌리기</string>
+    <string name="todo_revert_complete_bottom_sheet_title">미완료 상태로 되돌릴까요?</string>
+    <string name="todo_snackbar_revert_to_uncomplete_">미완료 상태로 되돌렸어요!</string>
+    <string name="todo_snackbar_delete_not_allowed">이미 완료한 일은 삭제할 수 없어요!</string>
+    <string name="todo_snackbar_study_complete_success">공부완료! 오늘의 빵 굽기 성공!</string>
+    <string name="todo_snackbar_study_deleted">오늘 할 공부를 삭제했어요</string>
+    <string name="todo_snackbar_sorted_by_filter">%1$s으로 정렬했어요</string>
 
     <!-- empty view -->
     <string name="empty_view_text">Empty View</string>
