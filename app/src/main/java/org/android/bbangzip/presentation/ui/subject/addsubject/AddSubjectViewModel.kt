@@ -10,7 +10,6 @@ import org.android.bbangzip.domain.usecase.PostAddSubjectNameUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.cache.RegexCache
-import org.android.bbangzip.presentation.util.constant.RegexConstants.NON_KOREAN_ENGLISH_NUMERIC_REGEX
 import timber.log.Timber
 import javax.inject.Inject
 
