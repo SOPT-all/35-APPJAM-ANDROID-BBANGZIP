@@ -26,7 +26,7 @@ fun AddSubjectRoute(
                     navigateToBack()
                 }
 
-                is AddSubjectContract.AddSubjectSideEffect.ShowSuccessAddSubjectSnackBar -> {}
+                is AddSubjectContract.AddSubjectSideEffect.ShowSnackbar -> {}
             }
         }
     }
