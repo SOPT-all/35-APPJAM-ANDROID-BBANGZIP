@@ -9,7 +9,7 @@ import org.android.bbangzip.data.dto.request.RequestAddSubjectsDto
 import org.android.bbangzip.domain.usecase.PostAddSubjectNameUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.util.base.BaseViewModel
-import org.android.bbangzip.presentation.util.cache.RegexCache
+import org.android.bbangzip.presentation.util.cache.RegexCaches
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -106,7 +106,7 @@ class AddSubjectViewModel
             return when {
                 text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
                 text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
-                text.contains(RegexCache.NON_KOREAN_ENGLISH_NUMERIC_REGEX) -> BbangZipTextFieldInputState.Alert
+                text.contains(RegexCaches.NON_KOREAN_ENGLISH_NUMERIC_REGEX) -> BbangZipTextFieldInputState.Alert
                 text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
                 else -> BbangZipTextFieldInputState.Field
             }
