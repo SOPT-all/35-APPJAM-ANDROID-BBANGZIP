@@ -1,14 +1,11 @@
 package org.android.bbangzip.presentation.ui.todo
 
-import android.app.Activity
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
@@ -17,7 +14,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import org.android.bbangzip.presentation.component.indicator.BbangZipLoadingIndicator
-import org.android.bbangzip.ui.theme.BbangZipTheme
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.Locale
@@ -33,11 +29,7 @@ fun TodoRoute(
     val todoState by viewModel.uiState.collectAsStateWithLifecycle()
     val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
     val todayDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM-dd-E").withLocale(Locale.forLanguageTag("ko"))).split("-")
-    val view = LocalView.current
-    val activity = view.context as Activity
     val context = LocalContext.current
-
-    activity.window.statusBarColor = BbangZipTheme.colors.backgroundAccent_FFDAA0.toArgb()
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
