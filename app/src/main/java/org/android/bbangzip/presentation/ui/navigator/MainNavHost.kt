@@ -7,8 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.NavHost
 import org.android.bbangzip.presentation.ui.friend.navigation.friendNavGraph
@@ -21,11 +19,9 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavG
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
 import org.android.bbangzip.presentation.ui.splash.navigation.splashNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
-import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
-import org.android.bbangzip.presentation.ui.subject.addsubject.addSubjectNavGraph
+import org.android.bbangzip.presentation.ui.subject.addsubject.navigation.addSubjectNavGraph
 import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.modifyMotivationMessageNavGraph
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.modifySubjectNameNavGraph
-import org.android.bbangzip.presentation.ui.subject.splitstudy.navigateSplitStudy
 import org.android.bbangzip.presentation.ui.subject.splitstudy.splitStudyNavGraph
 import org.android.bbangzip.presentation.ui.subject.subjectNavGraph
 import org.android.bbangzip.presentation.ui.subject.subjectdetail.subjectDetailNavGraph
