@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.todo
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -29,8 +30,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -58,21 +61,23 @@ fun TodoScreen(
     todayDate: List<String>,
     bottomPadding: PaddingValues,
     modifier: Modifier = Modifier,
-    onAddPendingStudyButtonClicked: () -> Unit = {},
-    onAddStudyButtonClicked: () -> Unit = {},
-    onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
-    onRevertCompleteBottomSheetApproveButtonClicked: (Int) -> Unit = {},
+    onAddPendingStudyBtnClick: () -> Unit = {},
+    onAddStudyBtnClick: () -> Unit = {},
+    onRevertCompleteBottomSheetDismissBtnClick: () -> Unit = {},
+    onRevertCompleteBottomSheetApproveBtnClick: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
     onFilterIconClicked: () -> Unit = {},
-    onFilterBottomSheetItemClicked: (ToDoFilterType) -> Unit = {},
+    onFilterBottomSheetItemClick: (ToDoFilterType) -> Unit = {},
     onFilterBottomSheetDismissRequest: () -> Unit = {},
-    onDeleteIconClicked: () -> Unit = {},
-    onCloseIconClicked: () -> Unit = {},
-    onItemDeleteButtonClicked: () -> Unit = {},
-    onDeleteScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
-    onDefaultScreenCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
-    onClickBadgeCloseBtn: () -> Unit,
+    onDeleteIconClick: () -> Unit = {},
+    onCloseIconClick: () -> Unit = {},
+    onItemDeleteBtnClick: () -> Unit = {},
+    onDeleteScreenCardClick: (Int, BbangZipCardState) -> Unit = { _, _ -> },
+    onDefaultScreenCardClick: (Int, BbangZipCardState) -> Unit = { _, _ -> },
+    onBadgeCloseBtnClick: () -> Unit,
 ) {
+    (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundNormal_FFFFFF.toArgb()
+
     Box(
         modifier =
             modifier
@@ -85,7 +90,7 @@ fun TodoScreen(
                 DateMessageCard(
                     todayDate = todayDate,
                     pendingCount = todoState.pendingCount,
-                    onAddPendingStudyButtonClicked = onAddPendingStudyButtonClicked,
+                    onAddPendingStudyButtonClicked = onAddPendingStudyBtnClick,
                 )
 
                 Spacer(Modifier.height(48.dp))
@@ -108,7 +113,7 @@ fun TodoScreen(
                         BbangZipButton(
                             bbangZipButtonType = BbangZipButtonType.Solid,
                             bbangZipButtonSize = BbangZipButtonSize.Large,
-                            onClick = { onAddStudyButtonClicked() },
+                            onClick = onAddStudyBtnClick,
                             label = stringResource(R.string.btn_add_todo_label),
                             modifier = Modifier.fillMaxWidth(),
                             trailingIcon = R.drawable.ic_plus_thick_24,
@@ -127,7 +132,7 @@ fun TodoScreen(
                     Spacer(Modifier.height(8.dp))
 
                     DeleteAndFilterIcons(
-                        onDeleteIconClicked = onDeleteIconClicked,
+                        onDeleteIconClicked = onDeleteIconClick,
                         onFilterIconClicked = onFilterIconClicked,
                     )
 
@@ -167,7 +172,7 @@ fun TodoScreen(
                             modifier =
                                 Modifier
                                     .clip(CircleShape)
-                                    .clickable { onCloseIconClicked() },
+                                    .clickable { onCloseIconClick() },
                             contentAlignment = Alignment.Center,
                         ) {
                             Icon(
@@ -195,31 +200,31 @@ fun TodoScreen(
                         onClick = {
                             when {
                                 (todoState.screenType == ToDoScreenType.DEFAULT) && (todoState.todoList[index].cardState == BbangZipCardState.DEFAULT) ->
-                                    onDefaultScreenCardClicked(
+                                    onDefaultScreenCardClick(
                                         todoState.todoList[index].pieceId,
                                         BbangZipCardState.COMPLETE,
                                     )
 
                                 (todoState.screenType == ToDoScreenType.DEFAULT) && (todoState.todoList[index].cardState == BbangZipCardState.COMPLETE) ->
-                                    onDefaultScreenCardClicked(
+                                    onDefaultScreenCardClick(
                                         todoState.todoList[index].pieceId,
                                         BbangZipCardState.DEFAULT,
                                     )
 
                                 (todoState.screenType == ToDoScreenType.DELETE) && (todoState.todoList[index].cardState == BbangZipCardState.CHECKED) ->
-                                    onDeleteScreenCardClicked(
+                                    onDeleteScreenCardClick(
                                         todoState.todoList[index].pieceId,
                                         BbangZipCardState.CHECKABLE,
                                     )
 
                                 (todoState.screenType == ToDoScreenType.DELETE) && (todoState.todoList[index].cardState == BbangZipCardState.CHECKABLE) ->
-                                    onDeleteScreenCardClicked(
+                                    onDeleteScreenCardClick(
                                         todoState.todoList[index].pieceId,
                                         BbangZipCardState.CHECKED,
                                     )
 
                                 else ->
-                                    onDeleteScreenCardClicked(
+                                    onDeleteScreenCardClick(
                                         todoState.todoList[index].pieceId,
                                         BbangZipCardState.COMPLETE,
                                     )
@@ -243,7 +248,7 @@ fun TodoScreen(
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
-                onClick = { onItemDeleteButtonClicked() },
+                onClick = onItemDeleteBtnClick,
                 label = stringResource(R.string.todo_delete_screen_delete_button_text, todoState.selectedItemList.size),
                 modifier =
                     Modifier
@@ -257,27 +262,27 @@ fun TodoScreen(
         }
 
         RevertCompleteBottomSheet(
-            isBottomSheetVisible = todoState.revertCompleteBottomSheetState,
+            isBottomSheetVisible = todoState.isRevertCompleteBottomSheetVisible,
             selectedItemPieceId = todoState.selectedItemList,
-            bottomSheetTitle = "미완료 상태로 되돌릴까요?",
+            bottomSheetTitle = stringResource(R.string.todo_revert_complete_bottom_sheet_title),
             onDismissRequest = onRevertCompleteBottomSheetDismissRequest,
-            onClickInteractButton = onRevertCompleteBottomSheetApproveButtonClicked,
-            onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
+            onClickInteractButton = onRevertCompleteBottomSheetApproveBtnClick,
+            onClickCancelButton = onRevertCompleteBottomSheetDismissBtnClick,
         )
 
         BbangZipToDoFilterPickerBottomSheet(
-            isBottomSheetVisible = todoState.todoFilterBottomSheetState,
+            isBottomSheetVisible = todoState.isTodoFilterBottomSheetVisible,
             selectedItem = todoState.selectedFilterItem,
-            onSelectedItemChanged = onFilterBottomSheetItemClicked,
+            onSelectedItemChanged = onFilterBottomSheetItemClick,
             onDismissRequest = onFilterBottomSheetDismissRequest,
         )
 
         if (todoState.badgeList.isNotEmpty()) {
             BbangZipGetBadgeBottomSheet(
                 badgeList = todoState.badgeList,
-                isBottomSheetVisible = todoState.getBadgeBottomSheetState,
-                onDismissRequest = { onClickBadgeCloseBtn() },
-                onClickCancelButton = { onClickBadgeCloseBtn() },
+                isBottomSheetVisible = todoState.isGetBadgeBottomSheetVisible,
+                onDismissRequest = onBadgeCloseBtnClick,
+                onClickCancelButton = onBadgeCloseBtnClick,
             )
         }
     }
@@ -777,6 +782,6 @@ fun TodoScreenMockPreview() {
         todoState = mockTodoStates[2],
         todayDate = listOf("2025", "01", "18"),
         bottomPadding = PaddingValues(),
-        onClickBadgeCloseBtn = {},
+        onBadgeCloseBtnClick = {},
     )
 }

@@ -35,14 +35,14 @@ fun MainNavHost(
     modifier: Modifier = Modifier,
     navigator: MainNavigator,
     padding: PaddingValues,
-    snackBarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState,
 ) {
     Box(
         modifier =
-        modifier
-            .padding(top = padding.calculateTopPadding())
-            .fillMaxSize()
-            .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
+            modifier
+                .padding(top = padding.calculateTopPadding())
+                .fillMaxSize()
+                .background(BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         NavHost(
             navController = navigator.navHostController,
@@ -76,13 +76,13 @@ fun MainNavHost(
             )
 
             todoAddNavGraph(
-                snackBarHostState = snackBarHostState,
+                snackBarHostState = snackbarHostState,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
                 navigateToToDo = { navigator.popBackStackIfNotSubject() },
             )
 
             todoAddPendingNavGraph(
-                snackBarHostState = snackBarHostState,
+                snackBarHostState = snackbarHostState,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
                 navigateToToDo = { navigator.popBackStackIfNotSubject() },
             )
@@ -113,7 +113,7 @@ fun MainNavHost(
 
             addStudyNavGraph(
                 padding = padding,
-                snackBarHostState = snackBarHostState,
+                snackBarHostState = snackbarHostState,
                 popBackStack = { navigator.popBackStackIfNotSubject() },
                 navigateSplitStudy = { navigator.navigateToSplitStudy(it) },
                 navigateSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(subjectId = id, subjectName = name) },
@@ -126,13 +126,13 @@ fun MainNavHost(
 
             modifyMotivationMessageNavGraph(
                 navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
-                snackbarHostState = snackBarHostState,
-                popBackStack = { navigator.popBackStackIfNotSubject() }
+                snackbarHostState = snackbarHostState,
+                popBackStack = { navigator.popBackStackIfNotSubject() },
             )
 
             addSubjectNavGraph(
                 navigateSubject = { navigator.navigateToSubject() },
-                navigateToBack = { navigator.popBackStackIfNotSubject() }
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
             )
 
             splitStudyNavGraph(
@@ -141,10 +141,10 @@ fun MainNavHost(
             )
 
             todoNavGraph(
-                snackBarHostState = snackBarHostState,
+                snackbarHostState = snackbarHostState,
                 bottomPadding = padding,
-                navigateToAddToDo = { navigator.navigateToToDoAdd() },
-                navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
+                navigateToAddToDo = navigator::navigateToToDoAdd,
+                navigateToAddPendingToDo = navigator::navigateToToDoAddPending,
             )
 
             subjectDetailNavGraph(
@@ -154,13 +154,6 @@ fun MainNavHost(
                 navigateToModifyMotivation = { id, name -> navigator.navigateToModifyMotivationMessage(id, name) },
                 navigateToModifySubjectName = { id, name -> navigator.navigateToModifySubjectName(id, name) },
                 navigateToAddStudy = { splitStudyData -> navigator.navigateToAddStudy(splitStudyData) },
-            )
-
-            todoNavGraph(
-                snackBarHostState = snackBarHostState,
-                bottomPadding = padding,
-                navigateToAddToDo = { navigator.navigateToToDoAdd() },
-                navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
             )
         }
     }

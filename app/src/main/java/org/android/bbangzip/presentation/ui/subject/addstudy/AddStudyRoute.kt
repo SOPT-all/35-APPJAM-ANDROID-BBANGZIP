@@ -36,7 +36,7 @@ fun AddStudyRoute(
                 is AddStudyContract.AddStudySideEffect.PopBackStack -> popBackStack()
                 is AddStudyContract.AddStudySideEffect.NavigateSubjectDetail -> navigateSubjectDetail(it.subjectId, it.subjectName)
 
-                is AddStudyContract.AddStudySideEffect.ShowSnackBar ->{
+                is AddStudyContract.AddStudySideEffect.ShowSnackBar -> {
                     val job =
                         launch {
                             snackBarHostState.currentSnackbarData?.dismiss()
