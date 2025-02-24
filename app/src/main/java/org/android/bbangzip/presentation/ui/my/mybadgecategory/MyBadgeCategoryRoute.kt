@@ -1,16 +1,12 @@
 package org.android.bbangzip.presentation.ui.my.mybadgecategory
 
-import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.android.bbangzip.presentation.component.indicator.BbangZipLoadingIndicator
-import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun MyBadgeCategoryRoute(
@@ -19,10 +15,6 @@ fun MyBadgeCategoryRoute(
 ) {
     val badgeCategoryState by viewModel.uiState.collectAsStateWithLifecycle()
     val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
-    val view = LocalView.current
-    val activity = view.context as Activity
-
-    activity.window.statusBarColor = BbangZipTheme.colors.backgroundAccent_FFDAA0.toArgb()
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
