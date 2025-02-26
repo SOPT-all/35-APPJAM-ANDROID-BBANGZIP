@@ -9,14 +9,14 @@
 ## _**👐🏻 Contributors**_
 | 하지은(Lead) <br> [@HAJIEUN02](https://github.com/HAJIEUN02) | 김재민 <br> [@kamja0510](https://github.com/kamja0510) | 이승범 <br>[@beom84](https://github.com/beom84) | 이준희 <br> [@l2zh](https://github.com/l2zh)
 |:---:| :---: | :---: | :---: |
-| <img width="250" src="https://avatars.githubusercontent.com/u/83916472?v=4"/> | <img width="250" src="https://avatars.githubusercontent.com/u/89302303?v=4"/> | <img width="250" src="https://avatars.githubusercontent.com/u/127933902?v=4"/> | <img width="250" src="https://avatars.githubusercontent.com/u/113578158?v=4"/> |
+| <img width="250" src="https://github.com/user-attachments/assets/71d899b6-8b98-410b-95cf-6d98f9289b1e"/> | <img width="250" src="https://github.com/user-attachments/assets/62da2180-1e3e-4215-8374-d5cdf1c8e3d4"/> | <img width="250" src="https://github.com/user-attachments/assets/3498d8d1-53b3-4e42-8ed6-2210d0054361"/> | <img width="250" src="https://github.com/user-attachments/assets/1a6fe183-dd26-4d42-aac7-09ef4d676a33"/> |
 | `로그인 및 온보딩`, `마이페이지` |`과목 관리` |`오늘 할 일`, `마이페이지`| `명예오비` |
 
 <br>
 
 ## 📸 _**ScreenShot**_
 
-
+_수정 예정_
 | <img width="200" src="https://github.com/user-attachments/assets/578b43c4-4f82-4003-86ae-3d5a1c47f786"/> | <img width="200" src="https://github.com/user-attachments/assets/b1185d3d-bc5a-4b89-9017-93a2b55f26fa"/> | <img width="200" src="https://github.com/user-attachments/assets/e5e73816-6de1-48e8-bb0f-5f9a2b71be68"/> | <img width="200" src="https://github.com/user-attachments/assets/fb129aaa-6bcd-444d-9327-e1e4b90c13ce"/> | <img width="200" src="https://github.com/user-attachments/assets/812cb0b6-c673-476b-8dbf-89a1fcd507e6"/> |
 | :---: | :---: | :---: |:------------------------------------------------------------------------------------------------------------------------------:| :---:|
 |`스플래쉬`|`과목관리` | `오늘 할 일`|`마이페이지`|`로그아웃`|
@@ -99,10 +99,10 @@
 
 <br>
 
-##  _📂 FOLDERING _
+##  📂 FOLDERING 
 
 ```
-## ✅ 전체 패키지 구조
+✅ 전체 패키지 구조
 📂 org.android.bbangzip
 ┣ 📂 data
 ┃ ┣ 📂 datasource
@@ -125,7 +125,7 @@
 ┃ ┣ 📂 component
 ┃ ┣ 📂 util
 
-## ✅ **ui 패키지 내부**
+✅ **ui 패키지 내부**
 📂 dummyui
 ┣ 📂 component
 ┣ 📂 navigation
@@ -134,7 +134,10 @@
 ┃ DummyViewModel
 ```
 
-<b>Technology</b>
+<br>
+
+## 👨🏻‍🔧 Technology
+
 | Category | Content | 선정 이유 |
 | --- | --- | --- |
 | Architecture | SAA(Single Activity Architecture), Clean Architecture(+ UseCase), MVI | 각 layer의 명확한 분리를 통해 가독성과 유지보수성을 높이고, Jetpack Navigation과의 통합을 통해 화면 간 상태 관리를 효율적으로 처리합니다. 단방향 데이터 흐름을 통해 상태를 예측 가능하게 관리합니다. |
