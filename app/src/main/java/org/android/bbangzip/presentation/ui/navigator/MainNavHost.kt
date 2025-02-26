@@ -19,7 +19,7 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavG
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
 import org.android.bbangzip.presentation.ui.splash.navigation.splashNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
-import org.android.bbangzip.presentation.ui.subject.addsubject.addSubjectNavGraph
+import org.android.bbangzip.presentation.ui.subject.addsubject.navigation.addSubjectNavGraph
 import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.modifyMotivationMessageNavGraph
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.modifySubjectNameNavGraph
 import org.android.bbangzip.presentation.ui.subject.splitstudy.splitStudyNavGraph
@@ -131,8 +131,8 @@ fun MainNavHost(
             )
 
             addSubjectNavGraph(
-                navigateSubject = { navigator.navigateToSubject() },
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToSubject = { navigator.navigateToSubject() },
             )
 
             splitStudyNavGraph(
@@ -154,6 +154,13 @@ fun MainNavHost(
                 navigateToModifyMotivation = { id, name -> navigator.navigateToModifyMotivationMessage(id, name) },
                 navigateToModifySubjectName = { id, name -> navigator.navigateToModifySubjectName(id, name) },
                 navigateToAddStudy = { splitStudyData -> navigator.navigateToAddStudy(splitStudyData) },
+            )
+
+            todoNavGraph(
+                snackbarHostState = snackbarHostState,
+                bottomPadding = padding,
+                navigateToAddToDo = { navigator.navigateToToDoAdd() },
+                navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
             )
         }
     }
