@@ -51,11 +51,7 @@ class ModifySubjectNameContract {
             val subjectName: String,
         ) : ModifySubjectNameSideEffect
 
-        // 과목명 수정 완료!
-        data object ShowSuccessModifySubjectNameSnackBar : ModifySubjectNameSideEffect
-
-        // 이미 등록된 과목이에요
-        data object ShowRedundantSubjectNameSnackBar : ModifySubjectNameSideEffect
+        data object ShowSnackbar : ModifySubjectNameSideEffect
 
         data object NavigateToBack : ModifySubjectNameSideEffect
     }
