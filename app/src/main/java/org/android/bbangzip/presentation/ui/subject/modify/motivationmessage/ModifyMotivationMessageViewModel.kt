@@ -11,6 +11,7 @@ import org.android.bbangzip.domain.usecase.PutSubjectOptionsUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.ModifyApiType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import org.android.bbangzip.presentation.util.cache.RegexCaches
 import org.android.bbangzip.presentation.util.constant.RegexConstants.EMOJI_AND_UNASSIGNED_REGEX
 import timber.log.Timber
 import javax.inject.Inject
@@ -118,7 +119,7 @@ class ModifyMotivationMessageViewModel
             return when {
                 text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
                 text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
-                text.contains(Regex(EMOJI_AND_UNASSIGNED_REGEX)) -> BbangZipTextFieldInputState.Alert
+                text.contains(RegexCaches.EMOJI_AND_UNASSIGNED_REGEX) -> BbangZipTextFieldInputState.Alert
                 text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
                 else -> BbangZipTextFieldInputState.Field
             }
