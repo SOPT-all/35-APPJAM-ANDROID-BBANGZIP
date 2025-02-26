@@ -6,14 +6,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -42,6 +40,7 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.chip.BbangZipChip
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
 import org.android.bbangzip.presentation.model.BbangZip
+import org.android.bbangzip.presentation.util.graphic.Gap
 import org.android.bbangzip.ui.theme.BbangZipTheme
 import timber.log.Timber
 
@@ -152,7 +151,7 @@ private fun BbangZipPager(
                         text = "Lv " + bbangZipList[page].level,
                     )
 
-                    Spacer(modifier = Modifier.width(8.dp))
+                    Gap(width = 8)
 
                     Text(
                         text = bbangZipList[page].name,
@@ -162,7 +161,7 @@ private fun BbangZipPager(
                 }
 
                 if (!bbangZipList[page].isLocked) {
-                    Spacer(modifier = Modifier.height(78.dp))
+                    Gap(height = 78)
 
                     Text(
                         text = bbangZipList[page].description,
@@ -171,7 +170,7 @@ private fun BbangZipPager(
                         textAlign = TextAlign.Center,
                     )
                 } else {
-                    Spacer(modifier = Modifier.height(62.dp))
+                    Gap(height = 62)
 
                     Box(
                         modifier = Modifier.fillMaxWidth(),
