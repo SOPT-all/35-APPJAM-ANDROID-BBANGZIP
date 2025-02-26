@@ -120,7 +120,7 @@ fun MainNavHost(
             )
 
             modifySubjectNameNavGraph(
-                popBackStack = { navigator.popBackStackIfNotSubject() },
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
                 navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
             )
 
