@@ -39,14 +39,14 @@ fun MyRoute(
             MyScreen(
                 padding = padding,
                 state = state,
-                onClickBbangZip = { viewModel.setEvent(MyContract.MyEvent.OnClickBbangZip) },
-                onClickBadgeCount = { viewModel.setEvent(MyContract.MyEvent.OnClickMyBadgeCount) },
-                onClickLogoutBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutBtn) },
-                onClickWithdrawBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawBtn) },
-                onClickLogoutConfirmBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutConfirmBtn) },
-                onClickWithdrawConfirmBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawConfirmBtn) },
-                onClickLogoutCancelBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickLogoutCancelBtn) },
-                onClickWithdrawCancelBtn = { viewModel.setEvent(MyContract.MyEvent.OnClickWithdrawCancelBtn) },
+                onClickBbangZip = { viewModel.setEvent(MyContract.MyEvent.OnBbangZipClick) },
+                onClickBadgeCount = { viewModel.setEvent(MyContract.MyEvent.OnMyBadgeCountClick) },
+                onClickLogoutBtn = { viewModel.setEvent(MyContract.MyEvent.OnLogoutBtnClick) },
+                onClickWithdrawBtn = { viewModel.setEvent(MyContract.MyEvent.OnWithdrawBtnClick) },
+                onClickLogoutConfirmBtn = { viewModel.setEvent(MyContract.MyEvent.OnLogoutConfirmBtnClick) },
+                onClickWithdrawConfirmBtn = { viewModel.setEvent(MyContract.MyEvent.OnWithdrawConfirmBtnClick) },
+                onClickLogoutCancelBtn = { viewModel.setEvent(MyContract.MyEvent.OnLogoutCancelBtnClick) },
+                onClickWithdrawCancelBtn = { viewModel.setEvent(MyContract.MyEvent.OnWithdrawCancelBtnClick) },
             )
 
         else -> {
