@@ -39,6 +39,7 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.bottomsheet.BbangZipTwoButtonBottomSheet
 import org.android.bbangzip.presentation.type.BbangZipShadowType
 import org.android.bbangzip.presentation.ui.my.component.BbangZipLevelProgressBar
+import org.android.bbangzip.presentation.util.graphic.Gap
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
@@ -95,7 +96,7 @@ fun MyScreen(
         }
 
         item {
-            Spacer(modifier = Modifier.height(88.dp))
+            Gap(height = 88)
         }
 
         item {
@@ -104,11 +105,11 @@ fun MyScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Gap(height = 16)
 
             MyHorizontalDivider()
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Gap(height = 16)
         }
 
         item {
@@ -117,7 +118,7 @@ fun MyScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Gap(height = 8)
         }
 
         item {
@@ -126,7 +127,7 @@ fun MyScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Gap(height = 8)
         }
 
         item {
@@ -135,11 +136,11 @@ fun MyScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Gap(height = 16)
 
             MyHorizontalDivider()
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Gap(height = 16)
         }
 
         item {
@@ -149,7 +150,7 @@ fun MyScreen(
                 onClickMenu = { onClickLogoutBtn() },
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Gap(height = 8)
         }
 
         item {
@@ -161,8 +162,9 @@ fun MyScreen(
         }
 
         item {
-            Spacer(modifier = Modifier.height(padding.calculateBottomPadding()))
-            Spacer(modifier = Modifier.height(16.dp))
+            Gap(height = padding.calculateBottomPadding().value.toInt())
+
+            Gap(height = 16)
         }
     }
 
@@ -274,7 +276,7 @@ private fun MyBadgeInfo(
                 )
             }
 
-            Spacer(modifier = Modifier.height(6.dp))
+            Gap(height = 6)
 
             Text(
                 text = stringResource(R.string.my_badge_setting),
@@ -288,7 +290,7 @@ private fun MyBadgeInfo(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.height(21.dp))
+            Gap(height = 21)
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -299,7 +301,7 @@ private fun MyBadgeInfo(
                     color = BbangZipTheme.colors.labelNormal_282119,
                 )
 
-                Spacer(modifier = Modifier.width(1.dp))
+                Gap(width = 1)
 
                 Text(
                     text = stringResource(R.string.my_badge_book_count),
@@ -307,7 +309,7 @@ private fun MyBadgeInfo(
                     color = BbangZipTheme.colors.labelNormal_282119,
                 )
 
-                Spacer(modifier = Modifier.width(2.dp))
+                Gap(width = 2)
 
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_chevronright_tight_thick_small_24),
@@ -316,7 +318,7 @@ private fun MyBadgeInfo(
                 )
             }
 
-            Spacer(modifier = Modifier.height(27.dp))
+            Gap(height = 27)
 
             Text(
                 text = stringResource(R.string.my_badge_book),
