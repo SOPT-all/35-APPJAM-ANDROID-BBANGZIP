@@ -131,9 +131,10 @@ private fun BbangZipPager(
 
                     BbangZipPagerIndicator(
                         pagerState = pagerState,
-                        modifier = Modifier
-                            .align(Alignment.BottomCenter)
-                            .padding(bottom = 24.dp),
+                        modifier =
+                            Modifier
+                                .align(Alignment.BottomCenter)
+                                .padding(bottom = 24.dp),
                     )
                 }
             }
@@ -147,7 +148,7 @@ private fun BbangZipPager(
             ) {
                 BbangZipLevelTitle(
                     bbangZipList = bbangZipList,
-                    page = page
+                    page = page,
                 )
 
                 if (!bbangZipList[page].isLocked) {
@@ -170,10 +171,11 @@ private fun BbangZipPager(
                             imageVector = ImageVector.vectorResource(R.drawable.ic_lock_default_28),
                             contentDescription = null,
                             tint = BbangZipTheme.colors.lineStrong_68645E_52,
-                            modifier = Modifier
-                                .height(70.dp)
-                                .aspectRatio(0.714f)
-                                .alpha(0.2f),
+                            modifier =
+                                Modifier
+                                    .height(70.dp)
+                                    .aspectRatio(0.714f)
+                                    .alpha(0.2f),
                         )
 
                         Text(
@@ -193,7 +195,7 @@ private fun BbangZipPager(
 private fun BbangZipLevelTitle(
     bbangZipList: List<BbangZip>,
     page: Int,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
