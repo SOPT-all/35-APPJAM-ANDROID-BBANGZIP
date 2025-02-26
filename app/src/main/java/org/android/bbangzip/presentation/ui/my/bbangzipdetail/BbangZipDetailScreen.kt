@@ -131,34 +131,24 @@ private fun BbangZipPager(
 
                     BbangZipPagerIndicator(
                         pagerState = pagerState,
-                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp),
+                        modifier = Modifier
+                            .align(Alignment.BottomCenter)
+                            .padding(bottom = 24.dp),
                     )
                 }
             }
 
             Column(
                 modifier =
-                    Modifier.fillMaxWidth()
+                    Modifier
+                        .fillMaxWidth()
                         .padding(top = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    BbangZipChip(
-                        backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                        text = "Lv " + bbangZipList[page].level,
-                    )
-
-                    Gap(width = 8)
-
-                    Text(
-                        text = bbangZipList[page].name,
-                        style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
-                    )
-                }
+                BbangZipLevelTitle(
+                    bbangZipList = bbangZipList,
+                    page = page
+                )
 
                 if (!bbangZipList[page].isLocked) {
                     Gap(height = 78)
@@ -180,7 +170,10 @@ private fun BbangZipPager(
                             imageVector = ImageVector.vectorResource(R.drawable.ic_lock_default_28),
                             contentDescription = null,
                             tint = BbangZipTheme.colors.lineStrong_68645E_52,
-                            modifier = Modifier.height(70.dp).aspectRatio(0.714f).alpha(0.2f),
+                            modifier = Modifier
+                                .height(70.dp)
+                                .aspectRatio(0.714f)
+                                .alpha(0.2f),
                         )
 
                         Text(
@@ -193,6 +186,32 @@ private fun BbangZipPager(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun BbangZipLevelTitle(
+    bbangZipList: List<BbangZip>,
+    page: Int,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        BbangZipChip(
+            backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
+            text = stringResource(R.string.my_bbangzip_level) + bbangZipList[page].level,
+        )
+
+        Gap(width = 8)
+
+        Text(
+            text = bbangZipList[page].name,
+            style = BbangZipTheme.typography.body1Bold,
+            color = BbangZipTheme.colors.labelNormal_282119,
+        )
     }
 }
 
