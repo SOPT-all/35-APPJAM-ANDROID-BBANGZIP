@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject.addsubject
 
+import android.app.Activity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,24 +20,23 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.textfield.BbangZipBasicTextField
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
-import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
+import org.android.bbangzip.presentation.util.constant.TextFieldMaxCharacterConstants
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun AddSubjectScreen(
-    subjectName: String = "",
-    isButtonEnable: Boolean = false,
-    isTextFieldFocused: Boolean = false,
-    textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-    onSubjectNameChanged: (String) -> Unit = {},
-    onTextFieldFocusChanged: (Boolean) -> Unit = {},
-    onAddBtnClicked: () -> Unit = {},
-    onDeleteBtnClicked: () -> Unit = {},
-    onBackButtonClicked: () -> Unit = {},
+    state: AddSubjectContract.AddSubjectState,
+    onSubjectNameChange: (String) -> Unit = {},
+    onTextFieldFocusChange: (Boolean) -> Unit = {},
+    onAddBtnClick: () -> Unit = {},
+    onTextFieldDeleteIconClick: () -> Unit = {},
+    onBackIconClick: () -> Unit = {},
 ) {
+    (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundNormal_FFFFFF.toArgb()
+
     val focusManager = LocalFocusManager.current
 
     Column(
@@ -44,9 +46,9 @@ fun AddSubjectScreen(
                 .addFocusCleaner(focusManager = focusManager),
     ) {
         BbangZipBaseTopBar(
-            title = "과목 추가하기",
+            title = stringResource(R.string.add_subject_title),
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = onBackButtonClicked,
+            onLeadingIconClick = onBackIconClick,
         )
 
         Column(
@@ -57,7 +59,7 @@ fun AddSubjectScreen(
                     .padding(top = 48.dp, bottom = 20.dp),
         ) {
             Text(
-                text = "과목명",
+                text = stringResource(R.string.add_subject_textfield_label),
                 style = BbangZipTheme.typography.headline1Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
             )
@@ -68,13 +70,13 @@ fun AddSubjectScreen(
                 leadingIcon = R.drawable.ic_book_default_24,
                 placeholder = R.string.modify_subject_name_placeholder,
                 guideline = R.string.modify_subject_name_guideline,
-                value = subjectName,
+                value = state.subjectName,
                 modifier = Modifier.fillMaxWidth(),
-                bbangZipTextFieldInputState = textFieldInputState,
-                onValueChange = onSubjectNameChanged,
-                onFocusChange = onTextFieldFocusChanged,
-                onDeleteButtonClick = onDeleteBtnClicked,
-                maxCharacter = 10,
+                bbangZipTextFieldInputState = state.subjectTextFieldInputState,
+                onValueChange = onSubjectNameChange,
+                onFocusChange = onTextFieldFocusChange,
+                onDeleteButtonClick = onTextFieldDeleteIconClick,
+                maxCharacter = TextFieldMaxCharacterConstants.SUBJECT_NAME,
                 focusManager = focusManager,
             )
 
@@ -84,11 +86,11 @@ fun AddSubjectScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    onAddBtnClicked()
+                    onAddBtnClick()
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_add_label),
-                isEnable = isButtonEnable,
+                isEnable = state.isButtonEnabled,
             )
         }
     }
@@ -98,7 +100,6 @@ fun AddSubjectScreen(
 @Composable
 private fun AddSubjectScreenPreview() {
     AddSubjectScreen(
-        "Preview",
-        false,
+        state = AddSubjectContract.AddSubjectState(),
     )
 }

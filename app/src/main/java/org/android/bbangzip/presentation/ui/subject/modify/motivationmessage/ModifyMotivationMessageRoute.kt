@@ -1,33 +1,28 @@
 package org.android.bbangzip.presentation.ui.subject.modify.motivationmessage
 
-import android.app.Activity
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
+import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun ModifyMotivationMessageRoute(
     subjectId: Int,
     subjectName: String,
-    viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
     navigateToSubjectDetail: (Int, String) -> Unit,
+    navigateToBack: () -> Unit,
     snackbarHostState: SnackbarHostState,
-    popBackStack: () -> Unit,
+    viewModel: ModifyMotivationMessageViewModel = hiltViewModel(),
 ) {
     val modifyMotivationMessageState by viewModel.uiState.collectAsStateWithLifecycle()
-    val view = LocalView.current
-    val activity = view.context as Activity
 
-    activity.window.statusBarColor = BbangZipTheme.colors.staticWhite_FFFFFF.toArgb()
+    val context = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.Initialize(subjectId, subjectName))
@@ -39,14 +34,14 @@ fun ModifyMotivationMessageRoute(
                 is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail -> {
                     navigateToSubjectDetail(effect.subjectId, effect.subjectName)
                 }
-                is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.PopBackStack -> {
-                    popBackStack()
+                is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateToBack -> {
+                    navigateToBack()
                 }
-                is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar -> {
+                is ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackbar -> {
                     val job =
                         launch {
                             snackbarHostState.currentSnackbarData?.dismiss()
-                            snackbarHostState.showSnackbar(effect.message)
+                            snackbarHostState.showSnackbar(context.getString(effect.message))
                         }
                     delay(2000)
                     job.cancel()
@@ -56,16 +51,11 @@ fun ModifyMotivationMessageRoute(
     }
 
     ModifyMotivationMessageScreen(
-        motivationMessage = modifyMotivationMessageState.motivationMessage,
-        isButtonEnable = modifyMotivationMessageState.isButtonEnable,
-        isTextFieldFocused = modifyMotivationMessageState.isTextFieldFocused,
-        textFieldInputState = modifyMotivationMessageState.motivationMessageTextFieldState,
-        subjectId = modifyMotivationMessageState.subjectId,
-        subjectName = modifyMotivationMessageState.subjectName,
-        onMotivationMessageChanged = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnChangeMotivationMessage(it)) },
-        onTextFieldFocusChanged = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField(it)) },
-        onModifyBtnClicked = { id, name -> viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn(id, name)) },
-        onDeleteBtnClicked = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn) },
-        onBackBtnClicked = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickBackBtn) },
+        state = modifyMotivationMessageState,
+        onMotivationMessageChange = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnMotivationMessageChange(it)) },
+        onTextFieldFocusChange = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnTextFieldFocusChange(it)) },
+        onModifyBtnClick = { id, name -> viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnModifyBtnClick(id, name)) },
+        onTextFieldDeleteIconClick = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnTextFieldDeleteIconClick) },
+        onBackIconClick = { viewModel.setEvent(ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnBackIconClick) },
     )
 }
