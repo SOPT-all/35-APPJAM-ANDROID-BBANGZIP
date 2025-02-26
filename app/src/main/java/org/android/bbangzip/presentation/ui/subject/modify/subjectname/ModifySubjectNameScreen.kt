@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject.modify.subjectname
 
+import android.app.Activity
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,7 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -17,34 +20,35 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.textfield.BbangZipBasicTextField
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
-import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
+import org.android.bbangzip.presentation.util.constant.TextFieldMaxCharacterConstants
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun ModifySubjectNameScreen(
-    subjectName: String = "",
-    isButtonEnable: Boolean = false,
-    subjectId: Int,
-    isTextFieldFocused: Boolean = false,
-    textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-    onSubjectNameChanged: (String) -> Unit = {},
-    onTextFieldFocusChanged: (Boolean) -> Unit = {},
-    onModifyBtnClicked: (Int, String) -> Unit = { _, _ -> },
-    onDeleteBtnClicked: () -> Unit = {},
-    onBackBtnClicked: () -> Unit = {},
+    state: ModifySubjectNameContract.ModifySubjectNameState,
+    onSubjectNameChange: (String) -> Unit = {},
+    onTextFieldFocusChange: (Boolean) -> Unit = {},
+    onModifyBtnClick: (Int, String) -> Unit = { _, _ -> },
+    onTextFieldDeleteIconClick: () -> Unit = {},
+    onBackIconClick: () -> Unit = {},
 ) {
+    (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundNormal_FFFFFF.toArgb()
+
     val focusManager = LocalFocusManager.current
 
     Column(
-        modifier = Modifier.fillMaxSize().addFocusCleaner(focusManager = focusManager),
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .addFocusCleaner(focusManager = focusManager),
     ) {
         BbangZipBaseTopBar(
-            title = "과목명 수정하기",
+            title = stringResource(R.string.modify_subject_name_title),
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = { onBackBtnClicked() },
+            onLeadingIconClick = { onBackIconClick() },
         )
 
         Column(
@@ -55,7 +59,7 @@ fun ModifySubjectNameScreen(
                     .padding(top = 48.dp, bottom = 20.dp),
         ) {
             Text(
-                text = "과목명",
+                text = stringResource(R.string.modify_subject_name_text_field_label),
                 style = BbangZipTheme.typography.body1Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
             )
@@ -66,13 +70,13 @@ fun ModifySubjectNameScreen(
                 leadingIcon = R.drawable.ic_book_default_24,
                 placeholder = R.string.modify_subject_name_placeholder,
                 guideline = R.string.modify_subject_name_guideline,
-                value = subjectName,
+                value = state.subjectName,
                 modifier = Modifier.fillMaxWidth(),
-                bbangZipTextFieldInputState = textFieldInputState,
-                onValueChange = onSubjectNameChanged,
-                onFocusChange = onTextFieldFocusChanged,
-                onDeleteButtonClick = onDeleteBtnClicked,
-                maxCharacter = 10,
+                bbangZipTextFieldInputState = state.textFieldInputState,
+                onValueChange = onSubjectNameChange,
+                onFocusChange = onTextFieldFocusChange,
+                onDeleteButtonClick = onTextFieldDeleteIconClick,
+                maxCharacter = TextFieldMaxCharacterConstants.SUBJECT_NAME,
                 focusManager = focusManager,
             )
 
@@ -82,11 +86,11 @@ fun ModifySubjectNameScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    onModifyBtnClicked(subjectId, subjectName)
+                    onModifyBtnClick(state.subjectId, state.subjectName)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_modify_label),
-                isEnable = isButtonEnable,
+                isEnable = state.isButtonEnabled,
             )
         }
     }
@@ -95,5 +99,5 @@ fun ModifySubjectNameScreen(
 @Preview(showBackground = true, showSystemUi = true)
 @Composable
 private fun ModifySubjectNameScreenPreview() {
-    ModifySubjectNameScreen(subjectId = 0)
+    ModifySubjectNameScreen(state = ModifySubjectNameContract.ModifySubjectNameState())
 }

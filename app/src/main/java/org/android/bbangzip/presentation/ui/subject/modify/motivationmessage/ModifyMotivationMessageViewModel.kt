@@ -5,10 +5,13 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.android.bbangzip.R
 import org.android.bbangzip.data.dto.request.RequestSubjectOptions
 import org.android.bbangzip.domain.usecase.PutSubjectOptionsUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
+import org.android.bbangzip.presentation.type.ModifyApiType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import org.android.bbangzip.presentation.util.cache.RegexCaches
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,30 +30,30 @@ class ModifyMotivationMessageViewModel
 
         override fun handleEvent(event: ModifyMotivationMessageContract.ModifyMotivationMessageEvent) {
             when (event) {
-                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnChangeMotivationMessage -> {
+                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnMotivationMessageChange -> {
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessage(motivationMessage = event.motivationMessage))
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
                 }
 
-                ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickBackBtn -> {
-                    setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.PopBackStack)
+                ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnBackIconClick -> {
+                    setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateToBack)
                 }
 
-                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickModifyBtn -> {
+                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnModifyBtnClick -> {
                     viewModelScope.launch {
                         putMotivationMessage(event.subjectId, event.subjectName)
                     }
                 }
 
-                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnFocusTextField -> {
+                is ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnTextFieldFocusChange -> {
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
                 }
 
-                ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnClickDeleteBtn -> {
-                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectNamge)
+                ModifyMotivationMessageContract.ModifyMotivationMessageEvent.OnTextFieldDeleteIconClick -> {
+                    updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectName)
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateMotivationMessageInputState)
                     updateState(ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled)
                 }
@@ -67,7 +70,7 @@ class ModifyMotivationMessageViewModel
             return when (reduce) {
                 ModifyMotivationMessageContract.ModifyMotivationMessageReduce.UpdateIsButtonEnabled -> {
                     state.copy(
-                        isButtonEnable = state.motivationMessage.isNotEmpty() && state.motivationMessageTextFieldState != BbangZipTextFieldInputState.Alert,
+                        isButtonEnabled = state.motivationMessage.isNotEmpty() && state.motivationMessageTextFieldState != BbangZipTextFieldInputState.Alert,
                     )
                 }
 
@@ -93,7 +96,7 @@ class ModifyMotivationMessageViewModel
                     )
                 }
 
-                ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectNamge -> {
+                ModifyMotivationMessageContract.ModifyMotivationMessageReduce.ResetSubjectName -> {
                     state.copy(
                         motivationMessage = "",
                     )
@@ -115,7 +118,7 @@ class ModifyMotivationMessageViewModel
             return when {
                 text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
                 text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
-                text.contains(Regex("[\\p{So}\\p{Cn}]+")) -> BbangZipTextFieldInputState.Alert
+                text.contains(RegexCaches.EMOJI_AND_UNASSIGNED_REGEX) -> BbangZipTextFieldInputState.Alert
                 text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
                 else -> BbangZipTextFieldInputState.Field
             }
@@ -127,7 +130,7 @@ class ModifyMotivationMessageViewModel
         ) {
             putSubjectOptionsUseCase(
                 subjectId = subjectId,
-                options = "motivationMessage",
+                options = ModifyApiType.MOTIVATION_MESSAGE.key,
                 requestSubjectOptions =
                     RequestSubjectOptions(
                         value = currentUiState.motivationMessage,
@@ -135,7 +138,7 @@ class ModifyMotivationMessageViewModel
             ).onSuccess {
                 Timber.tag("motivate").d("각오 한 마디 저장")
                 setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.NavigateSubjectDetail(subjectId = subjectId, subjectName = subjectName))
-                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackBar("각오 한 마디 작성 완료!"))
+                setSideEffect(ModifyMotivationMessageContract.ModifyMotivationMessageSideEffect.ShowSnackbar(R.string.modify_motivation_message_success_modify_motivation_message_snackbar))
             }.onFailure { error ->
                 Timber.tag("motivate").d(error)
             }
