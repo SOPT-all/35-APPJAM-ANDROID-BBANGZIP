@@ -10,30 +10,30 @@ class AddSubjectContract {
     data class AddSubjectState(
         val subjectName: String = "",
         val isTextFieldFocused: Boolean = false,
-        val isButtonEnable: Boolean = false,
-        val subjectTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
+        val isButtonEnabled: Boolean = false,
+        val subjectTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
 
     sealed interface AddSubjectEvent : BaseContract.Event {
-        data class OnFocusTextField(val isTextFieldFocused: Boolean) : AddSubjectEvent
+        data class OnTextFieldFocus(val isTextFieldFocused: Boolean) : AddSubjectEvent
 
-        data class OnChangeSubjectName(val subjectName: String) : AddSubjectEvent
+        data class OnSubjectNameChange(val subjectName: String) : AddSubjectEvent
 
-        data object OnClickBackBtn : AddSubjectEvent
+        data object OnAddBtnClick : AddSubjectEvent
 
-        data object OnClickAddBtn : AddSubjectEvent
+        data object OnBackIconClick : AddSubjectEvent
 
-        data object OnClickDeleteBtn : AddSubjectEvent
+        data object OnTextFieldDeleteIconClick : AddSubjectEvent
     }
 
     sealed interface AddSubjectReduce : BaseContract.Reduce {
-        data class UpdateSubjectName(val subjectName: String) : AddSubjectReduce
-
         data object UpdateIsButtonEnabled : AddSubjectReduce
 
         data object UpdateSubjectInputState : AddSubjectReduce
+
+        data class UpdateSubjectName(val subjectName: String) : AddSubjectReduce
 
         data class UpdateIsTextFieldFocused(val isTextFieldFocused: Boolean) : AddSubjectReduce
 
@@ -41,11 +41,10 @@ class AddSubjectContract {
     }
 
     sealed interface AddSubjectSideEffect : BaseContract.SideEffect {
-        data object NavigateSubjectDetail : AddSubjectSideEffect
-
-        // 공부 추가 완료! 미룬이 탈출이 코앞이에요
-        data class ShowSnackBar(val message: String) : AddSubjectSideEffect
+        data object NavigateToSubject : AddSubjectSideEffect
 
         data object NavigateToBack : AddSubjectSideEffect
+
+        data class ShowSnackbar(val message: Int) : AddSubjectSideEffect
     }
 }
