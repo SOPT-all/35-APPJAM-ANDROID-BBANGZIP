@@ -12,7 +12,6 @@ import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.ModifyApiType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.cache.RegexCaches
-import org.android.bbangzip.presentation.util.constant.RegexConstants.EMOJI_AND_UNASSIGNED_REGEX
 import timber.log.Timber
 import javax.inject.Inject
 
