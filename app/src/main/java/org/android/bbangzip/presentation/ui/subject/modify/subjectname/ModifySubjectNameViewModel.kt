@@ -9,10 +9,8 @@ import org.android.bbangzip.data.dto.request.RequestSubjectOptions
 import org.android.bbangzip.domain.usecase.PutSubjectOptionsUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.ModifyApiType
-import org.android.bbangzip.presentation.ui.subject.modify.ModifyApiOptions
 import org.android.bbangzip.presentation.util.base.BaseViewModel
 import org.android.bbangzip.presentation.util.cache.RegexCaches
-import org.android.bbangzip.presentation.util.constant.RegexConstants.NON_KOREAN_ENGLISH_NUMERIC_REGEX
 import timber.log.Timber
 import javax.inject.Inject
 
