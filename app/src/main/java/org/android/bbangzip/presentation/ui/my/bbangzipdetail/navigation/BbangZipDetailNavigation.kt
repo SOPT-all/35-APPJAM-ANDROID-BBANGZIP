@@ -15,11 +15,11 @@ fun NavController.navigateBbangZipDetail() {
 }
 
 fun NavGraphBuilder.bbangZipDetailNavGraph(
-    popBackStack: () -> Unit,
+    navigateToBack: () -> Unit,
 ) {
     composable<BbangZipDetailRoute> {
         BbangZipDetailRoute(
-            popBackStack = popBackStack,
+            navigateToBack = navigateToBack,
         )
     }
 }

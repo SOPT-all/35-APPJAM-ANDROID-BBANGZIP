@@ -12,7 +12,7 @@ import org.android.bbangzip.presentation.component.indicator.BbangZipLoadingIndi
 
 @Composable
 fun BbangZipDetailRoute(
-    popBackStack: () -> Unit,
+    navigateToBack: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BbangZipDetailViewModel = hiltViewModel(),
 ) {
@@ -23,7 +23,7 @@ fun BbangZipDetailRoute(
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
-                is BbangZipDetailContract.BbangZipDetailSideEffect.PopBackStack -> popBackStack()
+                is BbangZipDetailContract.BbangZipDetailSideEffect.NavigateToBack -> navigateToBack()
             }
         }
     }
@@ -34,7 +34,7 @@ fun BbangZipDetailRoute(
                 modifier = modifier,
                 state = state,
                 pagerState = pagerState,
-                popBackStack = popBackStack,
+                popBackStack = navigateToBack,
             )
 
         else -> BbangZipLoadingIndicator()

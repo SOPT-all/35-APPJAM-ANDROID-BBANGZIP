@@ -28,7 +28,7 @@ class BbangZipDetailViewModel
         override fun handleEvent(event: BbangZipDetailContract.BbangZipDetailEvent) {
             when (event) {
                 is BbangZipDetailContract.BbangZipDetailEvent.Initialize -> launch { initDataLoad() }
-                is BbangZipDetailContract.BbangZipDetailEvent.OnClickBackBtn -> setSideEffect(BbangZipDetailContract.BbangZipDetailSideEffect.PopBackStack)
+                is BbangZipDetailContract.BbangZipDetailEvent.OnBackIconClick -> setSideEffect(BbangZipDetailContract.BbangZipDetailSideEffect.NavigateToBack)
             }
         }
 
