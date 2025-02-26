@@ -9,6 +9,7 @@ import org.android.bbangzip.data.dto.request.RequestAddSubjectsDto
 import org.android.bbangzip.domain.usecase.PostAddSubjectNameUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import org.android.bbangzip.presentation.util.cache.RegexCaches
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -27,30 +28,30 @@ class AddSubjectViewModel
 
         override fun handleEvent(event: AddSubjectContract.AddSubjectEvent) {
             when (event) {
-                is AddSubjectContract.AddSubjectEvent.OnChangeSubjectName -> {
-                    updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectName(subjectName = event.subjectName))
-                    updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
-                    updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
-                }
-
-                AddSubjectContract.AddSubjectEvent.OnClickBackBtn -> {
+                AddSubjectContract.AddSubjectEvent.OnBackIconClick -> {
                     setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateToBack)
                 }
 
-                AddSubjectContract.AddSubjectEvent.OnClickAddBtn -> {
+                AddSubjectContract.AddSubjectEvent.OnAddBtnClick -> {
                     viewModelScope.launch {
                         putMotivationMessage()
                     }
                 }
 
-                is AddSubjectContract.AddSubjectEvent.OnFocusTextField -> {
-                    updateState(AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
+                AddSubjectContract.AddSubjectEvent.OnTextFieldDeleteIconClick -> {
+                    updateState(AddSubjectContract.AddSubjectReduce.ResetSubjectName)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
                 }
 
-                AddSubjectContract.AddSubjectEvent.OnClickDeleteBtn -> {
-                    updateState(AddSubjectContract.AddSubjectReduce.ResetSubjectName)
+                is AddSubjectContract.AddSubjectEvent.OnSubjectNameChange -> {
+                    updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectName(subjectName = event.subjectName))
+                    updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
+                    updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
+                }
+
+                is AddSubjectContract.AddSubjectEvent.OnTextFieldFocus -> {
+                    updateState(AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState)
                     updateState(AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled)
                 }
@@ -64,22 +65,13 @@ class AddSubjectViewModel
             return when (reduce) {
                 AddSubjectContract.AddSubjectReduce.UpdateIsButtonEnabled -> {
                     state.copy(
-                        isButtonEnable = state.subjectName.isNotEmpty() && state.subjectTextFieldState != BbangZipTextFieldInputState.Alert,
+                        isButtonEnabled = state.subjectName.isNotEmpty() && state.subjectTextFieldInputState != BbangZipTextFieldInputState.Alert,
                     )
                 }
-                is AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused -> {
-                    state.copy(
-                        isTextFieldFocused = reduce.isTextFieldFocused,
-                    )
-                }
-                is AddSubjectContract.AddSubjectReduce.UpdateSubjectName -> {
-                    state.copy(
-                        subjectName = reduce.subjectName,
-                    )
-                }
+
                 AddSubjectContract.AddSubjectReduce.UpdateSubjectInputState -> {
                     state.copy(
-                        subjectTextFieldState =
+                        subjectTextFieldInputState =
                             determineTextFieldType(
                                 state.subjectName,
                                 state.isTextFieldFocused,
@@ -92,6 +84,18 @@ class AddSubjectViewModel
                         subjectName = "",
                     )
                 }
+
+                is AddSubjectContract.AddSubjectReduce.UpdateIsTextFieldFocused -> {
+                    state.copy(
+                        isTextFieldFocused = reduce.isTextFieldFocused,
+                    )
+                }
+
+                is AddSubjectContract.AddSubjectReduce.UpdateSubjectName -> {
+                    state.copy(
+                        subjectName = reduce.subjectName,
+                    )
+                }
             }
         }
 
@@ -102,7 +106,7 @@ class AddSubjectViewModel
             return when {
                 text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
                 text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
-                text.contains(Regex("[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]")) -> BbangZipTextFieldInputState.Alert
+                text.contains(RegexCaches.NON_KOREAN_ENGLISH_NUMERIC_REGEX) -> BbangZipTextFieldInputState.Alert
                 text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
                 else -> BbangZipTextFieldInputState.Field
             }
@@ -118,7 +122,7 @@ class AddSubjectViewModel
                     ),
             ).onSuccess {
                 Timber.tag("motivate").d("과목명 저장")
-                setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateSubjectDetail)
+                setSideEffect(AddSubjectContract.AddSubjectSideEffect.NavigateToSubject)
             }.onFailure { error ->
                 Timber.tag("motivate").d(error)
             }
