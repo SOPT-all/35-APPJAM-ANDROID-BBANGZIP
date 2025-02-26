@@ -10,7 +10,7 @@ class ModifyMotivationMessageContract {
     data class ModifyMotivationMessageState(
         val motivationMessage: String = "",
         val isTextFieldFocused: Boolean = false,
-        val isButtonEnable: Boolean = false,
+        val isButtonEnabled: Boolean = false,
         val subjectId: Int = 0,
         val subjectName: String = "",
         val motivationMessageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
@@ -19,15 +19,15 @@ class ModifyMotivationMessageContract {
     }
 
     sealed interface ModifyMotivationMessageEvent : BaseContract.Event {
-        data class OnFocusTextField(val isTextFieldFocused: Boolean) : ModifyMotivationMessageEvent
+        data class OnTextFieldFocusChange(val isTextFieldFocused: Boolean) : ModifyMotivationMessageEvent
 
-        data class OnChangeMotivationMessage(val motivationMessage: String) : ModifyMotivationMessageEvent
+        data class OnMotivationMessageChange(val motivationMessage: String) : ModifyMotivationMessageEvent
 
-        data object OnClickBackBtn : ModifyMotivationMessageEvent
+        data object OnBackIconClick : ModifyMotivationMessageEvent
 
-        data class OnClickModifyBtn(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageEvent
+        data class OnModifyBtnClick(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageEvent
 
-        data object OnClickDeleteBtn : ModifyMotivationMessageEvent
+        data object OnTextFieldDeleteIconClick : ModifyMotivationMessageEvent
 
         data class Initialize(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageEvent
     }
@@ -41,7 +41,7 @@ class ModifyMotivationMessageContract {
 
         data class UpdateIsTextFieldFocused(val isTextFieldFocused: Boolean) : ModifyMotivationMessageReduce
 
-        data object ResetSubjectNamge : ModifyMotivationMessageReduce
+        data object ResetSubjectName : ModifyMotivationMessageReduce
 
         data class UpdateSubjectInfo(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageReduce
     }
@@ -49,8 +49,8 @@ class ModifyMotivationMessageContract {
     sealed interface ModifyMotivationMessageSideEffect : BaseContract.SideEffect {
         data class NavigateSubjectDetail(val subjectId: Int, val subjectName: String) : ModifyMotivationMessageSideEffect
 
-        data class ShowSnackBar(val message: String) : ModifyMotivationMessageSideEffect
+        data object NavigateToBack : ModifyMotivationMessageSideEffect
 
-        data object PopBackStack : ModifyMotivationMessageSideEffect
+        data class ShowSnackbar(val message: Int) : ModifyMotivationMessageSideEffect
     }
 }

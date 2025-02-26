@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.android.bbangzip.R
 import org.android.bbangzip.data.dto.request.RequestMarkDoneDto
 import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
@@ -42,7 +43,6 @@ class TodoViewModel
 
         override fun handleEvent(event: TodoContract.TodoEvent) {
             when (event) {
-                // ToDoInfo Fetch
                 is TodoContract.TodoEvent.FetchToDoInfo ->
                     updateState(
                         TodoContract.TodoReduce.UpdateToDoInfo(
@@ -57,34 +57,31 @@ class TodoViewModel
                 TodoContract.TodoEvent.Initialize -> launch { initDataLoad() }
 
                 // Filter BottomSheet
-                is TodoContract.TodoEvent.OnFilterBottomSheetItemClicked -> {
-                    viewModelScope.launch {
-                        getFilteredToDoInfo(
-                            selectedFilterItem = event.selectedFilterItem,
-                        )
-                    }
+                is TodoContract.TodoEvent.OnFilterBottomSheetItemClick -> {
+                    getFilteredToDoInfo(
+                        selectedFilterItem = event.selectedFilterItem,
+                    )
                 }
 
                 TodoContract.TodoEvent.OnFilterBottomSheetDismissRequest ->
                     updateState(
                         TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = false,
+                            isTodoFilterBottomSheetVisible = false,
                         ),
                     )
 
-                TodoContract.TodoEvent.OnFilterIconClicked -> {
+                TodoContract.TodoEvent.OnFilterIconClick -> {
                     updateState(
                         TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = true,
+                            isTodoFilterBottomSheetVisible = true,
                         ),
                     )
                 }
 
                 // revertComplete BottomSheet
-                is TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveButtonClicked -> {
-                    viewModelScope.launch {
-                        postUnCompleteCardId(event.pieceId)
-                    }
+                is TodoContract.TodoEvent.OnRevertCompleteBottomSheetApproveBtnClick -> {
+                    postUnCompleteCardId(event.pieceId)
+
                     updateState(
                         TodoContract.TodoReduce.UpdateCardState(
                             pieceId = event.pieceId,
@@ -93,7 +90,7 @@ class TodoViewModel
                     )
                     updateState(
                         TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
-                            revertCompleteBottomSheetState = false,
+                            isRevertCompleteBottomSheetVisible = false,
                         ),
                     )
                     updateState(
@@ -103,13 +100,13 @@ class TodoViewModel
                         ),
                     )
                     updateState(TodoContract.TodoReduce.ResetSelectedItemList)
-                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("미완료 상태로 되돌렸어요!"))
+                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackbar(R.string.todo_snackbar_revert_to_uncomplete_))
                 }
 
-                TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> {
+                TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissBtnClick -> {
                     updateState(
                         TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
-                            revertCompleteBottomSheetState = false,
+                            isRevertCompleteBottomSheetVisible = false,
                         ),
                     )
                     updateState(TodoContract.TodoReduce.ResetSelectedItemList)
@@ -118,14 +115,14 @@ class TodoViewModel
                 TodoContract.TodoEvent.OnRevertCompleteBottomSheetDismissRequest -> {
                     updateState(
                         TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
-                            revertCompleteBottomSheetState = false,
+                            isRevertCompleteBottomSheetVisible = false,
                         ),
                     )
                     updateState(TodoContract.TodoReduce.ResetSelectedItemList)
                 }
 
                 // Delete
-                is TodoContract.TodoEvent.OnDeleteScreenCardClicked -> {
+                is TodoContract.TodoEvent.OnDeleteScreenCardClick -> {
                     when (event.cardState) {
                         BbangZipCardState.CHECKED -> {
                             updateState(TodoContract.TodoReduce.UpdateSelectedItemList(pieceId = event.pieceId))
@@ -148,12 +145,12 @@ class TodoViewModel
                         }
 
                         else -> {
-                            setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("이미 완료한 일은 삭제할 수 없어요!"))
+                            setSideEffect(TodoContract.TodoSideEffect.ShowSnackbar(R.string.todo_snackbar_delete_not_allowed))
                         }
                     }
                 }
                 // Default
-                is TodoContract.TodoEvent.OnDefaultScreenCardClicked -> {
+                is TodoContract.TodoEvent.OnDefaultScreenCardClick -> {
                     if (event.cardState == BbangZipCardState.COMPLETE) {
                         updateState(
                             TodoContract.TodoReduce.UpdateCardState(
@@ -167,21 +164,21 @@ class TodoViewModel
                                 remainingStudyCount = currentUiState.remainingStudyCount - 1,
                             ),
                         )
-                        viewModelScope.launch {
-                            postCompleteCardId(pieceId = event.pieceId)
-                        }
-                        setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("공부완료! 오늘의 빵 굽기 성공!"))
+
+                        postCompleteCardId(pieceId = event.pieceId)
+
+                        setSideEffect(TodoContract.TodoSideEffect.ShowSnackbar(R.string.todo_snackbar_study_complete_success))
                     } else {
                         updateState(
                             TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState(
-                                revertCompleteBottomSheetState = true,
+                                isRevertCompleteBottomSheetVisible = true,
                             ),
                         )
                         updateState(TodoContract.TodoReduce.UpdateSelectedItemList(pieceId = event.pieceId))
                     }
                 }
 
-                TodoContract.TodoEvent.OnDeleteIconClicked -> {
+                TodoContract.TodoEvent.OnDeleteIconClick -> {
                     updateState(TodoContract.TodoReduce.UpdateScreenType(screenType = ToDoScreenType.DELETE))
                     updateState(
                         TodoContract.TodoReduce.UpdateToDoListCardState(
@@ -191,7 +188,7 @@ class TodoViewModel
                     )
                 }
 
-                TodoContract.TodoEvent.OnItemDeleteButtonClicked -> {
+                TodoContract.TodoEvent.OnItemDeleteBtnClick -> {
                     viewModelScope.launch {
                         postDeletedItemList(selectedItemList = currentUiState.selectedItemList)
                         initDataLoad()
@@ -200,10 +197,10 @@ class TodoViewModel
                         updateState(TodoContract.TodoReduce.UpdateScreenType(screenType = ToDoScreenType.EMPTY))
                     }
                     updateState(TodoContract.TodoReduce.ResetSelectedItemList)
-                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("오늘 할 공부를 삭제했어요"))
+                    setSideEffect(TodoContract.TodoSideEffect.ShowSnackbar(R.string.todo_snackbar_study_deleted))
                 }
 //  통과
-                TodoContract.TodoEvent.OnCloseIconClicked -> {
+                TodoContract.TodoEvent.OnCloseIconClick -> {
                     updateState(
                         TodoContract.TodoReduce.UpdateToDoListCardState(
                             previousCardState = BbangZipCardState.CHECKABLE,
@@ -221,10 +218,10 @@ class TodoViewModel
                 }
 
                 // 화면 이동
-                TodoContract.TodoEvent.OnAddStudyButtonClicked -> setSideEffect(TodoContract.TodoSideEffect.NavigateToAddToDo)
-                TodoContract.TodoEvent.OnAddPendingStudyButtonClicked -> setSideEffect(TodoContract.TodoSideEffect.NavigateToAddPendingToDo)
-                is TodoContract.TodoEvent.OnClickGetBadgeBottomSheetCloseBtn ->
-                    updateState(TodoContract.TodoReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = false))
+                TodoContract.TodoEvent.OnAddStudyBtnClick -> setSideEffect(TodoContract.TodoSideEffect.NavigateToAddToDo)
+                TodoContract.TodoEvent.OnAddPendingStudyBtnClick -> setSideEffect(TodoContract.TodoSideEffect.NavigateToAddPendingToDo)
+                is TodoContract.TodoEvent.OnGetBadgeBottomSheetCloseBtnClick ->
+                    updateState(TodoContract.TodoReduce.UpdateGetBadgeBottomSheetState(isGetBadgeBottomSheetVisible = false))
             }
         }
 
@@ -277,7 +274,7 @@ class TodoViewModel
                 // Revert BottomSheet
                 is TodoContract.TodoReduce.UpdateRevertCompleteBottomSheetState ->
                     state.copy(
-                        revertCompleteBottomSheetState = reduce.revertCompleteBottomSheetState,
+                        isRevertCompleteBottomSheetVisible = reduce.isRevertCompleteBottomSheetVisible,
                     )
 
                 is TodoContract.TodoReduce.UpdateSelectedItemList ->
@@ -293,7 +290,7 @@ class TodoViewModel
                 // Filter BottomSheet
                 is TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState ->
                     state.copy(
-                        todoFilterBottomSheetState = reduce.todoFilterBottomSheetState,
+                        isTodoFilterBottomSheetVisible = reduce.isTodoFilterBottomSheetVisible,
                     )
 
                 is TodoContract.TodoReduce.UpdateFilterType ->
@@ -332,7 +329,7 @@ class TodoViewModel
 
                 is TodoContract.TodoReduce.UpdateGetBadgeBottomSheetState ->
                     state.copy(
-                        getBadgeBottomSheetState = !currentUiState.getBadgeBottomSheetState,
+                        isGetBadgeBottomSheetVisible = !currentUiState.isGetBadgeBottomSheetVisible,
                     )
             }
         }
@@ -372,47 +369,49 @@ class TodoViewModel
             }
         }
 
-        private suspend fun getFilteredToDoInfo(
+        private fun getFilteredToDoInfo(
             selectedFilterItem: ToDoFilterType,
         ) {
-            getToDoInfo(
-                area = ToDoConstants.TODO,
-                year = 2025,
-                semester = "1학기",
-                sortOption = selectedFilterItem.id,
-            ).onSuccess { data ->
-                Timber.tag("todayOrders").d("server viewmodel")
-                updateState(
-                    TodoContract.TodoReduce.UpdateToDoInfo(
-                        todoList =
-                            data.todoList.map { item ->
-                                ToDoCardModel(
-                                    pieceId = item.pieceId,
-                                    subjectName = item.subjectName,
-                                    examName = item.examName,
-                                    studyContents = item.studyContents,
-                                    startPage = item.startPage,
-                                    finishPage = item.finishPage,
-                                    deadline = item.deadline,
-                                    remainingDays = item.remainingDays,
-                                    cardState = if (item.isFinished) BbangZipCardState.COMPLETE else BbangZipCardState.DEFAULT,
-                                )
-                            },
-                        pendingCount = data.pendingCount,
-                        remainingStudyCount = data.remainingStudyCount,
-                        completeCount = data.completeCount,
-                        screenType = if (data.todoList.isEmpty()) ToDoScreenType.EMPTY else ToDoScreenType.DEFAULT,
-                    ),
-                )
-                updateState(TodoContract.TodoReduce.UpdateFilterType(selectedFilter = selectedFilterItem))
-                updateState(
-                    TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
-                        todoFilterBottomSheetState = false,
-                    ),
-                )
-                setSideEffect(TodoContract.TodoSideEffect.ShowSnackBar("${selectedFilterItem.filter}으로 정렬했어요"))
-            }.onFailure { error ->
-                Timber.tag("todayOrders").d(error)
+            viewModelScope.launch {
+                getToDoInfo(
+                    area = ToDoConstants.TODO,
+                    year = 2025,
+                    semester = "1학기",
+                    sortOption = selectedFilterItem.id,
+                ).onSuccess { data ->
+                    Timber.tag("todayOrders").d("server viewmodel")
+                    updateState(
+                        TodoContract.TodoReduce.UpdateToDoInfo(
+                            todoList =
+                                data.todoList.map { item ->
+                                    ToDoCardModel(
+                                        pieceId = item.pieceId,
+                                        subjectName = item.subjectName,
+                                        examName = item.examName,
+                                        studyContents = item.studyContents,
+                                        startPage = item.startPage,
+                                        finishPage = item.finishPage,
+                                        deadline = item.deadline,
+                                        remainingDays = item.remainingDays,
+                                        cardState = if (item.isFinished) BbangZipCardState.COMPLETE else BbangZipCardState.DEFAULT,
+                                    )
+                                },
+                            pendingCount = data.pendingCount,
+                            remainingStudyCount = data.remainingStudyCount,
+                            completeCount = data.completeCount,
+                            screenType = if (data.todoList.isEmpty()) ToDoScreenType.EMPTY else ToDoScreenType.DEFAULT,
+                        ),
+                    )
+                    updateState(TodoContract.TodoReduce.UpdateFilterType(selectedFilter = selectedFilterItem))
+                    updateState(
+                        TodoContract.TodoReduce.UpdateToDoFilterBottomSheetState(
+                            isTodoFilterBottomSheetVisible = false,
+                        ),
+                    )
+                    setSideEffect(TodoContract.TodoSideEffect.ShowFormattedSnackbar(R.string.todo_snackbar_sorted_by_filter, selectedFilterItem.filter))
+                }.onFailure { error ->
+                    Timber.tag("todayOrders").d(error)
+                }
             }
         }
 
@@ -428,45 +427,51 @@ class TodoViewModel
             sortOption = sortOption,
         )
 
-        private suspend fun postDeletedItemList(
+        private fun postDeletedItemList(
             selectedItemList: List<Int>,
         ) {
-            postDeletedItemListUseCase(
-                requestPieceIdDto = RequestPieceIdDto(pieceIds = selectedItemList),
-            ).onSuccess {
-                Timber.tag("hide").e("삭제 성공!")
-            }.onFailure {
-                Timber.tag("hide").e("삭제 성공!")
+            viewModelScope.launch {
+                postDeletedItemListUseCase(
+                    requestPieceIdDto = RequestPieceIdDto(pieceIds = selectedItemList),
+                ).onSuccess {
+                    Timber.tag("hide").e("삭제 성공!")
+                }.onFailure {
+                    Timber.tag("hide").e("삭제 성공!")
+                }
             }
         }
 
-        private suspend fun postCompleteCardId(
+        private fun postCompleteCardId(
             pieceId: Int,
         ) {
-            postCompleteCardIdUseCase(
-                pieceId = pieceId,
-                requestMarkDoneDto = RequestMarkDoneDto(isFinished = true),
-            ).onSuccess { data ->
-                updateState(
-                    TodoContract.TodoReduce.UpdateGetBadgeList(badgeList = data.badgeCardList.map { it.toBadge() }),
-                )
-                updateState(TodoContract.TodoReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = true))
-                Timber.tag("markDone").e("완료 성공!")
-            }.onFailure { error ->
-                Timber.tag("markDone").e(error)
+            viewModelScope.launch {
+                postCompleteCardIdUseCase(
+                    pieceId = pieceId,
+                    requestMarkDoneDto = RequestMarkDoneDto(isFinished = true),
+                ).onSuccess { data ->
+                    updateState(
+                        TodoContract.TodoReduce.UpdateGetBadgeList(badgeList = data.badgeCardList.map { it.toBadge() }),
+                    )
+                    updateState(TodoContract.TodoReduce.UpdateGetBadgeBottomSheetState(isGetBadgeBottomSheetVisible = true))
+                    Timber.tag("markDone").e("완료 성공!")
+                }.onFailure { error ->
+                    Timber.tag("markDone").e(error)
+                }
             }
         }
 
-        private suspend fun postUnCompleteCardId(
+        private fun postUnCompleteCardId(
             pieceId: Int,
         ) {
-            postUnCompleteCardIdUseCase(
-                pieceId = pieceId,
-                requestMarkDoneDto = RequestMarkDoneDto(isFinished = false),
-            ).onSuccess {
-                Timber.tag("markDone").e("완료 성공!")
-            }.onFailure { error ->
-                Timber.tag("markDone").e(error)
+            viewModelScope.launch {
+                postUnCompleteCardIdUseCase(
+                    pieceId = pieceId,
+                    requestMarkDoneDto = RequestMarkDoneDto(isFinished = false),
+                ).onSuccess {
+                    Timber.tag("markDone").e("완료 성공!")
+                }.onFailure { error ->
+                    Timber.tag("markDone").e(error)
+                }
             }
         }
     }

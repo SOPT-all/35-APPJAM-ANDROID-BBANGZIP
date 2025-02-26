@@ -10,9 +10,9 @@ class ModifySubjectNameContract {
     data class ModifySubjectNameState(
         val subjectName: String = "",
         val isTextFieldFocused: Boolean = false,
-        val isButtonEnable: Boolean = false,
+        val isButtonEnabled: Boolean = false,
         val subjectId: Int = 0,
-        val subjectNameTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
+        val textFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -20,15 +20,15 @@ class ModifySubjectNameContract {
     sealed interface ModifySubjectNameEvent : BaseContract.Event {
         data class Initialize(val subjectId: Int, val subjectName: String) : ModifySubjectNameEvent
 
-        data class OnFocusTextField(val isTextFieldFocused: Boolean) : ModifySubjectNameEvent
+        data class OnTextFieldFocusChange(val isTextFieldFocused: Boolean) : ModifySubjectNameEvent
 
-        data class OnChangeSubjectName(val subjectName: String) : ModifySubjectNameEvent
+        data class OnSubjectNameChange(val subjectName: String) : ModifySubjectNameEvent
 
-        data object OnClickBackBtn : ModifySubjectNameEvent
+        data object OnBackIconClick : ModifySubjectNameEvent
 
-        data class OnClickModifyBtn(val subjectId: Int, val subjectName: String) : ModifySubjectNameEvent
+        data class OnModifyBtnClick(val subjectId: Int, val subjectName: String) : ModifySubjectNameEvent
 
-        data object OnClickDeleteBtn : ModifySubjectNameEvent
+        data object OnTextFieldDeleteIconClick : ModifySubjectNameEvent
     }
 
     sealed interface ModifySubjectNameReduce : BaseContract.Reduce {
@@ -42,7 +42,7 @@ class ModifySubjectNameContract {
 
         data class UpdateSubjectData(val subjectId: Int, val subjectName: String) : ModifySubjectNameReduce
 
-        data object ResetSubjectNamge : ModifySubjectNameReduce
+        data object ResetSubjectName : ModifySubjectNameReduce
     }
 
     sealed interface ModifySubjectNameSideEffect : BaseContract.SideEffect {
@@ -51,12 +51,8 @@ class ModifySubjectNameContract {
             val subjectName: String,
         ) : ModifySubjectNameSideEffect
 
-        // 과목명 수정 완료!
-        data object ShowSnackBar : ModifySubjectNameSideEffect
+        data object ShowSnackbar : ModifySubjectNameSideEffect
 
-        // 이미 등록된 과목이에요
-        data object RedundantSnackBar : ModifySubjectNameSideEffect
-
-        data object PopBackStack : ModifySubjectNameSideEffect
+        data object NavigateToBack : ModifySubjectNameSideEffect
     }
 }

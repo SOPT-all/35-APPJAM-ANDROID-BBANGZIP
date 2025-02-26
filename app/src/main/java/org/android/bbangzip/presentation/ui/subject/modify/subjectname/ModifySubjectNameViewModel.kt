@@ -8,7 +8,9 @@ import kotlinx.coroutines.launch
 import org.android.bbangzip.data.dto.request.RequestSubjectOptions
 import org.android.bbangzip.domain.usecase.PutSubjectOptionsUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
+import org.android.bbangzip.presentation.type.ModifyApiType
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import org.android.bbangzip.presentation.util.cache.RegexCaches
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -31,27 +33,27 @@ class ModifySubjectNameViewModel
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectData(subjectId = event.subjectId, subjectName = event.subjectName))
                 }
 
-                is ModifySubjectNameContract.ModifySubjectNameEvent.OnChangeSubjectName -> {
+                is ModifySubjectNameContract.ModifySubjectNameEvent.OnSubjectNameChange -> {
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectName(subjectName = event.subjectName))
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
                 }
-                ModifySubjectNameContract.ModifySubjectNameEvent.OnClickBackBtn -> {
-                    setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.PopBackStack)
+                ModifySubjectNameContract.ModifySubjectNameEvent.OnBackIconClick -> {
+                    setSideEffect(ModifySubjectNameContract.ModifySubjectNameSideEffect.NavigateToBack)
                 }
-                is ModifySubjectNameContract.ModifySubjectNameEvent.OnClickModifyBtn -> {
+                is ModifySubjectNameContract.ModifySubjectNameEvent.OnModifyBtnClick -> {
                     viewModelScope.launch {
                         putModifySubjectName(currentUiState.subjectId, currentUiState.subjectName)
                     }
                 }
-                is ModifySubjectNameContract.ModifySubjectNameEvent.OnFocusTextField -> {
+                is ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldFocusChange -> {
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsTextFieldFocused(event.isTextFieldFocused))
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
                 }
 
-                ModifySubjectNameContract.ModifySubjectNameEvent.OnClickDeleteBtn -> {
-                    updateState(ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectNamge)
+                ModifySubjectNameContract.ModifySubjectNameEvent.OnTextFieldDeleteIconClick -> {
+                    updateState(ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectName)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState)
                     updateState(ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled)
                 }
@@ -65,7 +67,7 @@ class ModifySubjectNameViewModel
             return when (reduce) {
                 ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsButtonEnabled -> {
                     state.copy(
-                        isButtonEnable = state.subjectName.isNotEmpty() && state.subjectNameTextFieldState != BbangZipTextFieldInputState.Alert,
+                        isButtonEnabled = state.subjectName.isNotEmpty() && state.textFieldInputState != BbangZipTextFieldInputState.Alert,
                     )
                 }
                 is ModifySubjectNameContract.ModifySubjectNameReduce.UpdateIsTextFieldFocused -> {
@@ -80,7 +82,7 @@ class ModifySubjectNameViewModel
                 }
                 ModifySubjectNameContract.ModifySubjectNameReduce.UpdateSubjectNameInputState -> {
                     state.copy(
-                        subjectNameTextFieldState =
+                        textFieldInputState =
                             determineTextFieldType(
                                 state.subjectName,
                                 state.isTextFieldFocused,
@@ -88,7 +90,7 @@ class ModifySubjectNameViewModel
                     )
                 }
 
-                ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectNamge -> {
+                ModifySubjectNameContract.ModifySubjectNameReduce.ResetSubjectName -> {
                     state.copy(
                         subjectName = "",
                     )
@@ -110,7 +112,7 @@ class ModifySubjectNameViewModel
             return when {
                 text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
                 text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
-                text.contains(Regex("[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]")) -> BbangZipTextFieldInputState.Alert
+                text.contains(RegexCaches.NON_KOREAN_ENGLISH_NUMERIC_REGEX) -> BbangZipTextFieldInputState.Alert
                 text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
                 else -> BbangZipTextFieldInputState.Field
             }
@@ -122,7 +124,7 @@ class ModifySubjectNameViewModel
         ) {
             putSubjectOptionsUseCase(
                 subjectId = subjectId,
-                options = "subjectName",
+                options = ModifyApiType.SUBJECT_NAME.key,
                 requestSubjectOptions =
                     RequestSubjectOptions(
                         value = subjectName,

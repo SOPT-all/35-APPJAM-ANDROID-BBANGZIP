@@ -19,7 +19,7 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingNavG
 import org.android.bbangzip.presentation.ui.onboarding.navigation.onboardingStartNavGraph
 import org.android.bbangzip.presentation.ui.splash.navigation.splashNavGraph
 import org.android.bbangzip.presentation.ui.subject.addstudy.addStudyNavGraph
-import org.android.bbangzip.presentation.ui.subject.addsubject.addSubjectNavGraph
+import org.android.bbangzip.presentation.ui.subject.addsubject.navigation.addSubjectNavGraph
 import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.modifyMotivationMessageNavGraph
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.modifySubjectNameNavGraph
 import org.android.bbangzip.presentation.ui.subject.splitstudy.splitStudyNavGraph
@@ -35,7 +35,7 @@ fun MainNavHost(
     modifier: Modifier = Modifier,
     navigator: MainNavigator,
     padding: PaddingValues,
-    snackBarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState,
 ) {
     Box(
         modifier =
@@ -76,13 +76,13 @@ fun MainNavHost(
             )
 
             todoAddNavGraph(
-                snackBarHostState = snackBarHostState,
+                snackBarHostState = snackbarHostState,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
                 navigateToToDo = { navigator.popBackStackIfNotSubject() },
             )
 
             todoAddPendingNavGraph(
-                snackBarHostState = snackBarHostState,
+                snackBarHostState = snackbarHostState,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
                 navigateToToDo = { navigator.popBackStackIfNotSubject() },
             )
@@ -113,26 +113,26 @@ fun MainNavHost(
 
             addStudyNavGraph(
                 padding = padding,
-                snackBarHostState = snackBarHostState,
+                snackBarHostState = snackbarHostState,
                 popBackStack = { navigator.popBackStackIfNotSubject() },
                 navigateSplitStudy = { navigator.navigateToSplitStudy(it) },
                 navigateSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(subjectId = id, subjectName = name) },
             )
 
             modifySubjectNameNavGraph(
-                popBackStack = { navigator.popBackStackIfNotSubject() },
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
                 navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
             )
 
             modifyMotivationMessageNavGraph(
                 navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(id, name) },
-                snackbarHostState = snackBarHostState,
-                popBackStack = { navigator.popBackStackIfNotSubject() },
+                snackbarHostState = snackbarHostState,
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
             )
 
             addSubjectNavGraph(
-                navigateSubject = { navigator.navigateToSubject() },
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToSubject = { navigator.navigateToSubject() },
             )
 
             splitStudyNavGraph(
@@ -141,10 +141,10 @@ fun MainNavHost(
             )
 
             todoNavGraph(
-                snackBarHostState = snackBarHostState,
+                snackbarHostState = snackbarHostState,
                 bottomPadding = padding,
-                navigateToAddToDo = { navigator.navigateToToDoAdd() },
-                navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
+                navigateToAddToDo = navigator::navigateToToDoAdd,
+                navigateToAddPendingToDo = navigator::navigateToToDoAddPending,
             )
 
             subjectDetailNavGraph(
@@ -157,7 +157,7 @@ fun MainNavHost(
             )
 
             todoNavGraph(
-                snackBarHostState = snackBarHostState,
+                snackbarHostState = snackbarHostState,
                 bottomPadding = padding,
                 navigateToAddToDo = { navigator.navigateToToDoAdd() },
                 navigateToAddPendingToDo = { navigator.navigateToToDoAddPending() },
