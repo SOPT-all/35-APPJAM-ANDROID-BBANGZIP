@@ -58,12 +58,12 @@ fun SubjectRoute(
         true ->
             SubjectScreen(
                 padding = padding,
-                onClickDeleteModeCard = { id, name -> viewModel.setEvent(SubjectContract.SubjectEvent.OnClickDeleteModeCard(id)) },
-                onClickTrashBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickTrashIcon) },
-                onClickStudyCard = { id, name -> viewModel.setEvent(SubjectContract.SubjectEvent.OnClickStudyCard(id, name)) },
-                onClickCancleBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickCancleIcon) },
-                onClickAddSubject = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickAddSubject) },
-                onClickDeleteBtn = { viewModel.setEvent(SubjectContract.SubjectEvent.OnClickDeleteButton) },
+                onDeleteModeSubjectCardClick = { id, name -> viewModel.setEvent(SubjectContract.SubjectEvent.OnDeleteModeSubjectCardClick(id)) },
+                onTrashIconClick = { viewModel.setEvent(SubjectContract.SubjectEvent.OnTrashIconClick) },
+                onDefaultModeSubjectCardClick = { id, name -> viewModel.setEvent(SubjectContract.SubjectEvent.OnDefaultModeSubjectCardClick(id, name)) },
+                onCancleIconClick = { viewModel.setEvent(SubjectContract.SubjectEvent.OnCancleIconClick) },
+                onAddSubjectCardClick = { viewModel.setEvent(SubjectContract.SubjectEvent.OnAddSubjectCardClick) },
+                onDeleteBtnClick = { viewModel.setEvent(SubjectContract.SubjectEvent.OnDeleteButtonClick) },
                 subjects = subjectState.subjectList,
                 cardViewType = subjectState.cardViewType,
                 deletedSet = subjectState.subjectSetToDelete,

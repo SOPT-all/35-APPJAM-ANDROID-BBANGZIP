@@ -37,30 +37,30 @@ class SubjectViewModel
             when (event) {
                 is SubjectContract.SubjectEvent.Initialize -> launch { getSubjectInfo() }
 
-                is SubjectContract.SubjectEvent.OnClickDeleteButton -> {
+                is SubjectContract.SubjectEvent.OnDeleteButtonClick -> {
                     viewModelScope.launch {
                         deleteSubjects()
                     }
                 }
 
-                is SubjectContract.SubjectEvent.OnClickDeleteModeCard -> {
+                is SubjectContract.SubjectEvent.OnDeleteModeSubjectCardClick -> {
                     updateState(SubjectContract.SubjectReduce.UpdateSubjectCard(event.subjectId))
                     updateState(SubjectContract.SubjectReduce.UpdateDeletedSet(event.subjectId))
                 }
 
-                is SubjectContract.SubjectEvent.OnClickTrashIcon -> {
+                SubjectContract.SubjectEvent.OnTrashIconClick -> {
                     updateState(SubjectContract.SubjectReduce.UpdateToDeleteMode)
                 }
 
-                is SubjectContract.SubjectEvent.OnClickCancleIcon -> {
+                SubjectContract.SubjectEvent.OnCancleIconClick -> {
                     updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
                 }
 
-                is SubjectContract.SubjectEvent.OnClickStudyCard -> {
+                is SubjectContract.SubjectEvent.OnDefaultModeSubjectCardClick -> {
                     setSideEffect(SubjectContract.SubjectSideEffect.NavigateToSubjectDetail(event.subjectId, event.subjectName))
                 }
 
-                is SubjectContract.SubjectEvent.OnClickAddSubject -> {
+                SubjectContract.SubjectEvent.OnAddSubjectCardClick -> {
                     setSideEffect(SubjectContract.SubjectSideEffect.NavigateToAddSubject)
                 }
             }

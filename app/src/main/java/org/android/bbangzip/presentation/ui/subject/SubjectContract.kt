@@ -19,20 +19,20 @@ class SubjectContract {
     sealed interface SubjectEvent : BaseContract.Event {
         data object Initialize : SubjectEvent
 
-        data object OnClickTrashIcon : SubjectEvent
+        data object OnTrashIconClick : SubjectEvent
 
-        data object OnClickCancleIcon : SubjectEvent
+        data object OnCancleIconClick : SubjectEvent
 
-        data class OnClickStudyCard(
+        data class OnDefaultModeSubjectCardClick(
             val subjectId: Int,
             val subjectName: String,
         ) : SubjectEvent
 
-        data object OnClickAddSubject : SubjectEvent
+        data object OnAddSubjectCardClick : SubjectEvent
 
-        data class OnClickDeleteModeCard(val subjectId: Int) : SubjectEvent
+        data class OnDeleteModeSubjectCardClick(val subjectId: Int) : SubjectEvent
 
-        data object OnClickDeleteButton : SubjectEvent
+        data object OnDeleteButtonClick : SubjectEvent
     }
 
     sealed interface SubjectReduce : BaseContract.Reduce {

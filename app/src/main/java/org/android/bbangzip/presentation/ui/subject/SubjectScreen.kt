@@ -51,12 +51,12 @@ fun SubjectScreen(
     subjects: List<SubjectCardModel>,
     cardViewType: CardViewType,
     deletedSet: Set<Int>,
-    onClickTrashBtn: () -> Unit = {},
-    onClickCancleBtn: () -> Unit = {},
-    onClickDeleteModeCard: (Int, String) -> Unit = { _, _ -> },
-    onClickStudyCard: (Int, String) -> Unit = { _, _ -> },
-    onClickAddSubject: () -> Unit = {},
-    onClickDeleteBtn: () -> Unit = {},
+    onTrashIconClick: () -> Unit = {},
+    onCancleIconClick: () -> Unit = {},
+    onDeleteModeSubjectCardClick: (Int, String) -> Unit = { _, _ -> },
+    onDefaultModeSubjectCardClick: (Int, String) -> Unit = { _, _ -> },
+    onAddSubjectCardClick: () -> Unit = {},
+    onDeleteBtnClick: () -> Unit = {},
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     val configuration = LocalConfiguration.current
@@ -128,17 +128,17 @@ fun SubjectScreen(
                         DefaultCardView(
                             modifier = modifier,
                             subjects = subjects,
-                            onTrashIconClick = onClickTrashBtn,
-                            onClickStudyCard = onClickStudyCard,
-                            onClickAddSubject = onClickAddSubject,
+                            onTrashIconClick = onTrashIconClick,
+                            onDefaultModeSubjectCardClick = onDefaultModeSubjectCardClick,
+                            onAddSubjectCardClick = onAddSubjectCardClick,
                         )
 
                     CardViewType.DELETE ->
                         DeleteCardView(
                             modifier = modifier,
                             subjects = subjects,
-                            onDeleteModeCardClick = onClickDeleteModeCard,
-                            onCancleClick = onClickCancleBtn,
+                            onDeleteModeSubjectCardClick = onDeleteModeSubjectCardClick,
+                            onCancleIconClick = onCancleIconClick,
                             bottomPadding = bottomBarPadding,
                         )
 
@@ -156,7 +156,7 @@ fun SubjectScreen(
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
-                    onClick = { onClickDeleteBtn() },
+                    onClick = { onDeleteBtnClick() },
                     modifier = Modifier.fillMaxWidth(),
                     label = if (deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
                     trailingIcon = R.drawable.ic_trash_default_24,
@@ -172,8 +172,8 @@ private fun DefaultCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     onTrashIconClick: () -> Unit = {},
-    onClickStudyCard: (Int, String) -> Unit = { _, _ -> },
-    onClickAddSubject: () -> Unit = {},
+    onDefaultModeSubjectCardClick: (Int, String) -> Unit = { _, _ -> },
+    onAddSubjectCardClick: () -> Unit = {},
 ) {
     Column {
         Row(
@@ -221,10 +221,10 @@ private fun DefaultCardView(
                     ) {
                         SubjectCard(
                             data = subjects.last(),
-                            onClick = onClickStudyCard,
+                            onClick = onDefaultModeSubjectCardClick,
                         )
                         AddSubjectCard(
-                            onClick = onClickAddSubject,
+                            onClick = onAddSubjectCardClick,
                         )
                     }
                 } else {
@@ -242,7 +242,7 @@ private fun DefaultCardView(
                         for (j in i * 2 until (i + 1) * 2) {
                             SubjectCard(
                                 data = subjects[j],
-                                onClick = onClickStudyCard,
+                                onClick = onDefaultModeSubjectCardClick,
                             )
                         }
                     }
@@ -262,7 +262,7 @@ private fun DefaultCardView(
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
                         AddSubjectCard(
-                            onClick = onClickAddSubject,
+                            onClick = onAddSubjectCardClick,
                         )
                     }
                 } else {
@@ -280,7 +280,7 @@ private fun DefaultCardView(
                         for (j in i * 2 until (i + 1) * 2) {
                             SubjectCard(
                                 data = subjects[j],
-                                onClick = { subjectId, subjectName -> onClickStudyCard(subjectId, subjectName) },
+                                onClick = { subjectId, subjectName -> onDefaultModeSubjectCardClick(subjectId, subjectName) },
                             )
                         }
                     }
@@ -296,8 +296,8 @@ private fun DeleteCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     bottomPadding: Dp,
-    onDeleteModeCardClick: (Int, String) -> Unit = { _, _ -> },
-    onCancleClick: () -> Unit = {},
+    onDeleteModeSubjectCardClick: (Int, String) -> Unit = { _, _ -> },
+    onCancleIconClick: () -> Unit = {},
 ) {
     Box {
         Column {
@@ -322,7 +322,7 @@ private fun DeleteCardView(
                                 radius = 20.dp,
                                 isDisabled = false,
                             ) {
-                                onCancleClick()
+                                onCancleIconClick()
                             }
                             .padding(8.dp),
                     tint = BbangZipTheme.colors.labelAlternative_282119_61,
@@ -347,7 +347,7 @@ private fun DeleteCardView(
                             SubjectCard(
                                 data = subjects.last(),
                                 onClick = { index, subjectName ->
-                                    onDeleteModeCardClick(index, subjectName)
+                                    onDeleteModeSubjectCardClick(index, subjectName)
                                 },
                             )
                         }
@@ -367,7 +367,7 @@ private fun DeleteCardView(
                                 SubjectCard(
                                     data = subjects[j],
                                     onClick = { index, subjectName ->
-                                        onDeleteModeCardClick(index, subjectName)
+                                        onDeleteModeSubjectCardClick(index, subjectName)
                                     },
                                 )
                             }
@@ -391,7 +391,7 @@ private fun DeleteCardView(
                             SubjectCard(
                                 data = subjects[j],
                                 onClick = { index, subjectName ->
-                                    onDeleteModeCardClick(index, subjectName)
+                                    onDeleteModeSubjectCardClick(index, subjectName)
                                 },
                             )
                         }
@@ -409,7 +409,7 @@ private fun DeleteCardView(
 @Composable
 private fun EmptySubjectCardView(
     modifier: Modifier = Modifier,
-    onAddSubjectButtonClicked: () -> Unit = {},
+    onAddSubjectCardClick: () -> Unit = {},
 ) {
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
         Box(
@@ -428,7 +428,7 @@ private fun EmptySubjectCardView(
         BbangZipButton(
             bbangZipButtonType = BbangZipButtonType.Solid,
             bbangZipButtonSize = BbangZipButtonSize.Large,
-            onClick = { onAddSubjectButtonClicked() },
+            onClick = { onAddSubjectCardClick() },
             label = stringResource(R.string.btn_add_subject_label),
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = R.drawable.ic_plus_thick_24,
