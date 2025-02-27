@@ -49,11 +49,9 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun SubjectScreen(
+    state : SubjectContract.SubjectState,
     padding: PaddingValues,
     modifier: Modifier = Modifier,
-    subjects: List<SubjectCardModel>,
-    cardViewType: CardViewType,
-    deletedSet: Set<Int>,
     onTrashIconClick: () -> Unit = {},
     onCancleIconClick: () -> Unit = {},
     onDeleteModeSubjectCardClick: (Int, String) -> Unit = { _, _ -> },
@@ -127,11 +125,11 @@ fun SubjectScreen(
             }
 
             item {
-                when (cardViewType) {
+                when (state.subjectCardViewType) {
                     CardViewType.DEFAULT ->
                         DefaultCardView(
                             modifier = modifier,
-                            subjects = subjects,
+                            subjects = state.subjectCardList,
                             onTrashIconClick = onTrashIconClick,
                             onDefaultModeSubjectCardClick = onDefaultModeSubjectCardClick,
                             onAddSubjectCardClick = onAddSubjectCardClick,
@@ -140,7 +138,7 @@ fun SubjectScreen(
                     CardViewType.DELETE ->
                         DeleteCardView(
                             modifier = modifier,
-                            subjects = subjects,
+                            subjects = state.subjectCardList,
                             onDeleteModeSubjectCardClick = onDeleteModeSubjectCardClick,
                             onCancleIconClick = onCancleIconClick,
                             bottomPadding = bottomBarPadding,
@@ -150,7 +148,7 @@ fun SubjectScreen(
                 }
             }
         }
-        if (cardViewType == CardViewType.DELETE) {
+        if (state.subjectCardViewType == CardViewType.DELETE) {
             Box(
                 modifier =
                     Modifier
@@ -162,9 +160,9 @@ fun SubjectScreen(
                     bbangZipButtonSize = BbangZipButtonSize.Large,
                     onClick = { onDeleteBtnClick() },
                     modifier = Modifier.fillMaxWidth(),
-                    label = if (deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
+                    label = if (state.subjectIdSetToDelete.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), state.subjectIdSetToDelete.size),
                     trailingIcon = R.drawable.ic_trash_default_24,
-                    isEnable = deletedSet.isNotEmpty(),
+                    isEnable = state.subjectIdSetToDelete.isNotEmpty(),
                 )
             }
         }
@@ -445,52 +443,8 @@ private fun EmptySubjectCardView(
 private fun SubjectScreenPreview() {
     BBANGZIPTheme {
         SubjectScreen(
-            subjects =
-                immutableListOf(
-                    SubjectCardModel(
-                        subjectName = "경제통계학",
-                        examName = "",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 1,
-                        examRemainingDays = 1,
-                    ),
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 2,
-                        examRemainingDays = 1,
-                    ),
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 3,
-                        examRemainingDays = 1,
-                    ),
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 4,
-                        examRemainingDays = 1,
-                    ),
-                    SubjectCardModel(
-                        subjectName = "[경영] 경제통계학",
-                        examName = "중간고사",
-                        pendingCount = 0,
-                        inProgressCount = 6,
-                        subjectId = 5,
-                        examRemainingDays = 1,
-                    ),
-                ),
-            cardViewType = CardViewType.DEFAULT,
-            deletedSet = setOf(),
             padding = PaddingValues(64.dp),
+            state = SubjectContract.SubjectState(),
         )
     }
 }
