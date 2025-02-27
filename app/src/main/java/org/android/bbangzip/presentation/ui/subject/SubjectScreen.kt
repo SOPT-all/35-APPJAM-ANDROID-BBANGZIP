@@ -60,7 +60,6 @@ fun SubjectScreen(
     onDefaultModeSubjectCardClick: (Int, String) -> Unit = { _, _ -> },
     onAddSubjectCardClick: () -> Unit = {},
     onDeleteBtnClick: () -> Unit = {},
-    navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundNormal_FFFFFF.toArgb()
 
@@ -492,7 +491,6 @@ private fun SubjectScreenPreview() {
             cardViewType = CardViewType.DEFAULT,
             deletedSet = setOf(),
             padding = PaddingValues(64.dp),
-            navigateAddStudy = {},
         )
     }
 }

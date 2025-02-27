@@ -24,7 +24,6 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun SubjectRoute(
     padding: PaddingValues,
-    navigateAddStudy: (SplitStudyData) -> Unit,
     navigateToSubjectDetail: (Int, String) -> Unit = { _, _ -> },
     navigateToAddSubject: () -> Unit = {},
     viewModel: SubjectViewModel = hiltViewModel(),
@@ -35,7 +34,6 @@ fun SubjectRoute(
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
-                SubjectContract.SubjectSideEffect.NavigateToAddStudy -> {}
                 SubjectContract.SubjectSideEffect.NavigateToAddSubject -> {
                     navigateToAddSubject()
                 }
@@ -62,7 +60,6 @@ fun SubjectRoute(
                 subjects = subjectState.subjectCardList,
                 cardViewType = subjectState.subjectCardViewType,
                 deletedSet = subjectState.subjectIdSetToDelete,
-                navigateAddStudy = navigateAddStudy,
             )
 
         false ->

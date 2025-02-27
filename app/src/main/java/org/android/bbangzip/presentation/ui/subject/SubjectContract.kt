@@ -52,8 +52,6 @@ class SubjectContract {
     sealed interface SubjectSideEffect : BaseContract.SideEffect {
         data object NavigateToAddSubject : SubjectSideEffect
 
-        data object NavigateToAddStudy : SubjectSideEffect
-
         data class NavigateToSubjectDetail(
             val subjectId: Int,
             val subjectName: String,
