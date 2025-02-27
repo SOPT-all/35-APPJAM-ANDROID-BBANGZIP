@@ -135,7 +135,7 @@ class SubjectViewModel
                     )
                 }
 
-                SubjectContract.SubjectReduce.RestoreDeletedSet -> {
+                SubjectContract.SubjectReduce.ResetSubjectIdSetToDelete -> {
                     state.copy(
                         subjectIdSetToDelete = setOf(),
                     )
@@ -185,7 +185,7 @@ class SubjectViewModel
             )
                 .onSuccess {
                     updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
-                    updateState(SubjectContract.SubjectReduce.RestoreDeletedSet)
+                    updateState(SubjectContract.SubjectReduce.ResetSubjectIdSetToDelete)
                     getSubjectInfo()
                 }
                 .onFailure { error ->
