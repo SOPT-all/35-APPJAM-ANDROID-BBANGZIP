@@ -10,7 +10,7 @@ class SubjectContract {
     @Parcelize
     data class SubjectState(
         val subjectList: List<SubjectCardModel> = listOf(),
-        val subjectSetToDelete: Set<Int> = setOf(),
+        val subjectIdSetToDelete: Set<Int> = setOf(),
         val cardViewType: CardViewType = CardViewType.DEFAULT,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this

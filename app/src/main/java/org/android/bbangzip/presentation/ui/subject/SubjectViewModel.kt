@@ -103,26 +103,26 @@ class SubjectViewModel
                                 it.copy(state = BbangZipCardState.DEFAULT)
                             },
                         cardViewType = CardViewType.DEFAULT,
-                        subjectSetToDelete = setOf(),
+                        subjectIdSetToDelete = setOf(),
                     )
                 }
 
                 is SubjectContract.SubjectReduce.UpdateDeletedSet -> {
                     state.copy(
-                        subjectSetToDelete =
+                        subjectIdSetToDelete =
                             run {
                                 val targetSubject = state.subjectList.find { it.subjectId == reduce.subjectId }
                                 when (targetSubject?.state) {
                                     BbangZipCardState.CHECKED -> {
-                                        state.subjectSetToDelete.plus(targetSubject.subjectId)
+                                        state.subjectIdSetToDelete.plus(targetSubject.subjectId)
                                     }
 
                                     BbangZipCardState.CHECKABLE -> {
-                                        state.subjectSetToDelete.minus(targetSubject.subjectId)
+                                        state.subjectIdSetToDelete.minus(targetSubject.subjectId)
                                     }
 
                                     else -> {
-                                        state.subjectSetToDelete
+                                        state.subjectIdSetToDelete
                                     }
                                 }
                             },
@@ -137,7 +137,7 @@ class SubjectViewModel
 
                 is SubjectContract.SubjectReduce.RestoreDeletedSet -> {
                     state.copy(
-                        subjectSetToDelete = setOf(),
+                        subjectIdSetToDelete = setOf(),
                     )
                 }
             }
@@ -179,7 +179,7 @@ class SubjectViewModel
         private suspend fun deleteSubjects() {
             deleteSubjectsUseCase(
                 RequestDeleteSubjectsDto(
-                    subjectIds = currentUiState.subjectSetToDelete.toList(),
+                    subjectIds = currentUiState.subjectIdSetToDelete.toList(),
                     year = 2025,
                     semester = "1학기",
                 ),
