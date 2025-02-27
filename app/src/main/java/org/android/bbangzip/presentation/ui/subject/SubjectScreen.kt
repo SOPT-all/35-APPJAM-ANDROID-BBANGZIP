@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject
 
+import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -21,8 +22,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
@@ -59,6 +62,8 @@ fun SubjectScreen(
     onDeleteBtnClick: () -> Unit = {},
     navigateAddStudy: (SplitStudyData) -> Unit,
 ) {
+    (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundNormal_FFFFFF.toArgb()
+
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
     val bottomBarPadding = padding.calculateBottomPadding()
