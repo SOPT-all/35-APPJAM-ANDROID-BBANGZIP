@@ -92,7 +92,7 @@ class SubjectViewModel
                             state.subjectList.map {
                                 it.copy(state = BbangZipCardState.CHECKABLE)
                             },
-                        cardViewType = CardViewType.DELETE,
+                        subjectCardViewType = CardViewType.DELETE,
                     )
                 }
 
@@ -102,7 +102,7 @@ class SubjectViewModel
                             state.subjectList.map {
                                 it.copy(state = BbangZipCardState.DEFAULT)
                             },
-                        cardViewType = CardViewType.DEFAULT,
+                        subjectCardViewType = CardViewType.DEFAULT,
                         subjectIdSetToDelete = setOf(),
                     )
                 }
