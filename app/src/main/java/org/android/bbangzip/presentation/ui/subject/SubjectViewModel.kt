@@ -146,10 +146,9 @@ class SubjectViewModel
         private suspend fun getSubjectInfo() {
             getSubjectInfoUseCase()
                 .onSuccess { data ->
-                    Timber.tag("이승범").d(data.toString())
                     val subjectCardList =
                         data.subjectList.map {
-                            val firstStudy = it.studyList.firstOrNull() // 첫 번째 요소를 안전하게 가져옴
+                            val firstStudy = it.studyList.firstOrNull()
                             if (firstStudy == null) {
                                 SubjectCardModel(
                                     subjectName = it.subjectName,
@@ -185,8 +184,6 @@ class SubjectViewModel
                 ),
             )
                 .onSuccess {
-                    Timber.tag("delete").d("성공")
-
                     updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
                     updateState(SubjectContract.SubjectReduce.RestoreDeletedSet)
                     getSubjectInfo()

@@ -494,4 +494,3 @@ private fun SubjectScreenPreview() {
         )
     }
 }
-// 위에 코드는 클릭마다 스낵바가뜨고 2초후에 사라지게 만든 코드입니다
