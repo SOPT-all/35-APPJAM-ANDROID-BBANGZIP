@@ -35,9 +35,9 @@ class SubjectViewModel
 
         override fun handleEvent(event: SubjectContract.SubjectEvent) {
             when (event) {
-                is SubjectContract.SubjectEvent.Initialize -> launch { getSubjectInfo() }
+                SubjectContract.SubjectEvent.Initialize -> launch { getSubjectInfo() }
 
-                is SubjectContract.SubjectEvent.OnDeleteButtonClick -> {
+                SubjectContract.SubjectEvent.OnDeleteButtonClick -> {
                     viewModelScope.launch {
                         deleteSubjects()
                     }
@@ -86,7 +86,7 @@ class SubjectViewModel
                     )
                 }
 
-                is SubjectContract.SubjectReduce.UpdateToDeleteMode -> {
+                SubjectContract.SubjectReduce.UpdateToDeleteMode -> {
                     state.copy(
                         subjectCardList =
                             state.subjectCardList.map {
@@ -96,7 +96,7 @@ class SubjectViewModel
                     )
                 }
 
-                is SubjectContract.SubjectReduce.UpdateToDefaultMode -> {
+                SubjectContract.SubjectReduce.UpdateToDefaultMode -> {
                     state.copy(
                         subjectCardList =
                             state.subjectCardList.map {
@@ -135,7 +135,7 @@ class SubjectViewModel
                     )
                 }
 
-                is SubjectContract.SubjectReduce.RestoreDeletedSet -> {
+                SubjectContract.SubjectReduce.RestoreDeletedSet -> {
                     state.copy(
                         subjectIdSetToDelete = setOf(),
                     )
