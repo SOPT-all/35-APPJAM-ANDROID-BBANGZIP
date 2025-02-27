@@ -40,7 +40,7 @@ fun SubjectRoute(
                     navigateToAddSubject()
                 }
                 is SubjectContract.SubjectSideEffect.NavigateToSubjectDetail -> navigateToSubjectDetail(effect.subjectId, effect.subjectName)
-                SubjectContract.SubjectSideEffect.ShowDeleteSuccessSnackBar -> TODO()
+                SubjectContract.SubjectSideEffect.ShowSnackbar -> TODO()
             }
         }
     }

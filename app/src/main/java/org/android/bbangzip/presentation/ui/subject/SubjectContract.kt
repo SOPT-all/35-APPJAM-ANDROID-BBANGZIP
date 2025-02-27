@@ -59,6 +59,6 @@ class SubjectContract {
             val subjectName: String,
         ) : SubjectSideEffect
 
-        data object ShowDeleteSuccessSnackBar : SubjectSideEffect
+        data object ShowSnackbar : SubjectSideEffect
     }
 }
