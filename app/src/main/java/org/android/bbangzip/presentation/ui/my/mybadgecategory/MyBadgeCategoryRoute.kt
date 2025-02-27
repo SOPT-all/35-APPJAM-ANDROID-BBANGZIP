@@ -1,34 +1,26 @@
 package org.android.bbangzip.presentation.ui.my.mybadgecategory
 
-import android.app.Activity
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
 import org.android.bbangzip.presentation.component.indicator.BbangZipLoadingIndicator
-import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun MyBadgeCategoryRoute(
-    popBackStack: () -> Unit = {},
+    navigateToBack: () -> Unit = {},
     viewModel: MyBadgeCategoryViewModel = hiltViewModel(),
 ) {
     val badgeCategoryState by viewModel.uiState.collectAsStateWithLifecycle()
     val success by viewModel.success.collectAsStateWithLifecycle(initialValue = false)
-    val view = LocalView.current
-    val activity = view.context as Activity
-
-    activity.window.statusBarColor = BbangZipTheme.colors.backgroundAccent_FFDAA0.toArgb()
 
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
                 MyBadgeCategoryContract.MyBadgeCategorySideEffect.NavigateToBack ->
-                    popBackStack()
+                    navigateToBack()
             }
         }
     }
@@ -37,12 +29,12 @@ fun MyBadgeCategoryRoute(
         true ->
             MyBadgeCategoryScreen(
                 badgeCategoryState = badgeCategoryState,
-                onBackIconClicked = {
-                    viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBackIconClicked)
+                onBackIconClick = {
+                    viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBackIconClick)
                 },
-                onBadgeCardClicked = { badgeName ->
+                onBadgeCardClick = { badgeName ->
                     viewModel.setEvent(
-                        MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClicked(
+                        MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClick(
                             badgeName = badgeName,
                         ),
                     )
@@ -50,8 +42,8 @@ fun MyBadgeCategoryRoute(
                 onBadgeDetailBottomSheetDismissRequest = {
                     viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissRequest)
                 },
-                onBadgeDetailBottomSheetDismissButtonClicked = {
-                    viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissButtonClicked)
+                onBadgeDetailBottomSheetDismissBtnClick = {
+                    viewModel.setEvent(MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissBtnClick)
                 },
             )
 

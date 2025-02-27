@@ -10,14 +10,14 @@ class MyBadgeCategoryContract {
     @Parcelize
     data class MyBadgeCategoryState(
         val badgeCategoryList1: List<BadgeCategory> =
-            listOf(),
+            emptyList(),
         val badgeCategoryList2: List<BadgeCategory> =
-            listOf(),
+            emptyList(),
         val badgeCategoryList3: List<BadgeCategory> =
-            listOf(),
+            emptyList(),
         val badgeCategoryList4: List<BadgeCategory> =
-            listOf(),
-        val badgeDetailBottomSheetState: Boolean = false,
+            emptyList(),
+        val isBadgeDetailBottomSheetVisible: Boolean = false,
         val badgeDetail: BadgeDetail = BadgeDetail(),
         val nickname: String = "",
     ) : BaseContract.State, Parcelable {
@@ -27,13 +27,13 @@ class MyBadgeCategoryContract {
     sealed interface MyBadgeCategoryEvent : BaseContract.Event {
         data object Initialize : MyBadgeCategoryEvent
 
-        data object OnBackIconClicked : MyBadgeCategoryEvent
+        data object OnBackIconClick : MyBadgeCategoryEvent
 
-        data object OnBadgeDetailBottomSheetDismissButtonClicked : MyBadgeCategoryEvent
+        data object OnBadgeDetailBottomSheetDismissBtnClick : MyBadgeCategoryEvent
 
         data object OnBadgeDetailBottomSheetDismissRequest : MyBadgeCategoryEvent
 
-        data class OnBadgeCardClicked(val badgeName: String) : MyBadgeCategoryEvent
+        data class OnBadgeCardClick(val badgeName: String) : MyBadgeCategoryEvent
     }
 
     sealed interface MyBadgeCategoryReduce : BaseContract.Reduce {
@@ -44,7 +44,7 @@ class MyBadgeCategoryContract {
             val badgeCategoryList4: List<BadgeCategory>,
         ) : MyBadgeCategoryReduce
 
-        data class UpdateBadgeDetailBottomSheetState(val badgeDetailBottomSheetState: Boolean) : MyBadgeCategoryReduce
+        data class UpdateBadgeDetailBottomSheetState(val isBadgeDetailBottomSheetVisible: Boolean) : MyBadgeCategoryReduce
 
         data class UpdateBadgeDetail(val badgeDetail: BadgeDetail) : MyBadgeCategoryReduce
 

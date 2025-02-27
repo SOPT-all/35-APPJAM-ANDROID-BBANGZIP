@@ -101,7 +101,7 @@ fun MainNavHost(
             )
 
             myBadgeCategoryNavGraph(
-                popBackStack = { navigator.popBackStackIfNotSubject() },
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
             )
 
             subjectNavGraph(

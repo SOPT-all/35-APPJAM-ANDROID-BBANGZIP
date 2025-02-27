@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.my.mybadgecategory
 
+import android.app.Activity
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -27,7 +28,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -46,10 +49,10 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun MyBadgeCategoryScreen(
     badgeCategoryState: MyBadgeCategoryContract.MyBadgeCategoryState,
     modifier: Modifier = Modifier,
-    onBackIconClicked: () -> Unit = {},
-    onBadgeCardClicked: (String) -> Unit = {},
+    onBackIconClick: () -> Unit = {},
+    onBadgeCardClick: (String) -> Unit = {},
     onBadgeDetailBottomSheetDismissRequest: () -> Unit = {},
-    onBadgeDetailBottomSheetDismissButtonClicked: () -> Unit = {},
+    onBadgeDetailBottomSheetDismissBtnClick: () -> Unit = {},
 ) {
     val scrollState = rememberLazyListState()
     val isShadowed by remember {
@@ -57,6 +60,9 @@ fun MyBadgeCategoryScreen(
             scrollState.firstVisibleItemScrollOffset > 0
         }
     }
+
+    (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundNormal_FFFFFF.toArgb()
+
     LazyColumn(
         modifier =
             modifier
@@ -68,7 +74,7 @@ fun MyBadgeCategoryScreen(
             BbangZipBaseTopBar(
                 title = stringResource(R.string.badge_category_top_bar_title),
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-                onLeadingIconClick = onBackIconClicked,
+                onLeadingIconClick = onBackIconClick,
                 backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
                 isShadowed = isShadowed,
             )
@@ -114,8 +120,8 @@ fun MyBadgeCategoryScreen(
         item {
             BadgeCategoryGridList(
                 badgeCategoryList = badgeCategoryState.badgeCategoryList1,
-                categoryDescription = "이번 학기 빵점 탈출 내가 해냄!",
-                onBadgeCardClicked = onBadgeCardClicked,
+                categoryDescription = stringResource(R.string.badge_category_list1_description),
+                onBadgeCardClicked = onBadgeCardClick,
             )
 
             Spacer(Modifier.height(64.dp))
@@ -124,8 +130,8 @@ fun MyBadgeCategoryScreen(
         item {
             BadgeCategoryGridList(
                 badgeCategoryList = badgeCategoryState.badgeCategoryList2.reversed(),
-                categoryDescription = "지금 바로 시작하면 미룬이 탈출 가능!",
-                onBadgeCardClicked = onBadgeCardClicked,
+                categoryDescription = stringResource(R.string.badge_category_list2_description),
+                onBadgeCardClicked = onBadgeCardClick,
             )
 
             Spacer(Modifier.height(64.dp))
@@ -134,8 +140,8 @@ fun MyBadgeCategoryScreen(
         item {
             BadgeCategoryGridList(
                 badgeCategoryList = badgeCategoryState.badgeCategoryList3,
-                categoryDescription = "지금부터 시작해도 반은 한거에요!",
-                onBadgeCardClicked = onBadgeCardClicked,
+                categoryDescription = stringResource(R.string.badge_category_list3_description),
+                onBadgeCardClicked = onBadgeCardClick,
             )
 
             Spacer(Modifier.height(64.dp))
@@ -144,8 +150,8 @@ fun MyBadgeCategoryScreen(
         item {
             BadgeCategoryGridList(
                 badgeCategoryList = badgeCategoryState.badgeCategoryList4,
-                categoryDescription = "빵 한쪽도 나눠 먹는 사이!",
-                onBadgeCardClicked = onBadgeCardClicked,
+                categoryDescription = stringResource(R.string.badge_category_list4_description),
+                onBadgeCardClicked = onBadgeCardClick,
             )
 
             Spacer(Modifier.height(16.dp))
@@ -154,10 +160,10 @@ fun MyBadgeCategoryScreen(
 
     BbangZipBadgeDetailBottomSheet(
         badgeDetail = badgeCategoryState.badgeDetail,
-        isBottomSheetVisible = badgeCategoryState.badgeDetailBottomSheetState,
-        cancelButtonText = "닫기",
+        isBottomSheetVisible = badgeCategoryState.isBadgeDetailBottomSheetVisible,
+        cancelButtonText = stringResource(R.string.badge_category_close),
         onDismissRequest = onBadgeDetailBottomSheetDismissRequest,
-        onClickCancelButton = onBadgeDetailBottomSheetDismissButtonClicked,
+        onClickCancelButton = onBadgeDetailBottomSheetDismissBtnClick,
     )
 }
 
@@ -284,15 +290,15 @@ private fun MyBadgeCategoryScreenPreview() {
         MyBadgeCategoryContract.MyBadgeCategoryState(
             badgeCategoryList1 = sampleBadgeCategoryList1,
             badgeCategoryList2 = sampleBadgeCategoryList2,
-            badgeDetailBottomSheetState = false,
+            isBadgeDetailBottomSheetVisible = false,
             badgeDetail = BadgeDetail(),
         )
 
     MyBadgeCategoryScreen(
         badgeCategoryState = sampleState,
-        onBackIconClicked = { println("Back icon clicked") },
-        onBadgeCardClicked = { badgeName -> println("Badge clicked: $badgeName") },
+        onBackIconClick = { println("Back icon clicked") },
+        onBadgeCardClick = { badgeName -> println("Badge clicked: $badgeName") },
         onBadgeDetailBottomSheetDismissRequest = { println("BottomSheet dismissed") },
-        onBadgeDetailBottomSheetDismissButtonClicked = { println("Dismiss button clicked") },
+        onBadgeDetailBottomSheetDismissBtnClick = { println("Dismiss button clicked") },
     )
 }

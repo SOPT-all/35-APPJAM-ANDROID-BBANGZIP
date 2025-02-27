@@ -51,29 +51,29 @@ class MyBadgeCategoryViewModel
                         )
                     }
 
-                MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBackIconClicked ->
+                MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBackIconClick ->
                     setSideEffect(MyBadgeCategoryContract.MyBadgeCategorySideEffect.NavigateToBack)
 
-                is MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClicked -> {
-                    viewModelScope.launch { getBadgeDetail(event.badgeName) }
+                is MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeCardClick -> {
+                    getBadgeDetail(event.badgeName)
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
-                            badgeDetailBottomSheetState = true,
+                            isBadgeDetailBottomSheetVisible = true,
                         ),
                     )
                 }
 
-                MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissButtonClicked ->
+                MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissBtnClick ->
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
-                            badgeDetailBottomSheetState = false,
+                            isBadgeDetailBottomSheetVisible = false,
                         ),
                     )
 
                 MyBadgeCategoryContract.MyBadgeCategoryEvent.OnBadgeDetailBottomSheetDismissRequest ->
                     updateState(
                         MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
-                            badgeDetailBottomSheetState = false,
+                            isBadgeDetailBottomSheetVisible = false,
                         ),
                     )
             }
@@ -99,7 +99,7 @@ class MyBadgeCategoryViewModel
 
                 is MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState ->
                     state.copy(
-                        badgeDetailBottomSheetState = reduce.badgeDetailBottomSheetState,
+                        isBadgeDetailBottomSheetVisible = reduce.isBadgeDetailBottomSheetVisible,
                     )
 
                 is MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateNickName ->
@@ -155,43 +155,34 @@ class MyBadgeCategoryViewModel
                 }
         }
 
-        private suspend fun getBadgeDetail(badgeName: String) {
-            getBadgeDetailUseCase(badgeName)
-                .onSuccess { data ->
-                    updateState(
-                        MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetail(
-                            badgeDetail =
-                                BadgeDetail(
-                                    categoryName = data.badgeName,
-                                    imageUrl = data.badgeImage,
-                                    hashTags = data.hashTags,
-                                    achievementCondition = data.achievementCondition,
-                                    reward = data.reward,
-                                    isLocked = data.badgeIsLocked,
-                                ),
-                        ),
-                    )
-                    updateState(
-                        MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
-                            badgeDetailBottomSheetState = true,
-                        ),
-                    )
-                }
-                .onFailure { error ->
-                    Timber.tag("badges").e(error)
-                }
+        private fun getBadgeDetail(badgeName: String) {
+            viewModelScope.launch {
+                getBadgeDetailUseCase(badgeName)
+                    .onSuccess { data ->
+                        updateState(
+                            MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetail(
+                                badgeDetail =
+                                    BadgeDetail(
+                                        categoryName = data.badgeName,
+                                        imageUrl = data.badgeImage,
+                                        hashTags = data.hashTags,
+                                        achievementCondition = data.achievementCondition,
+                                        reward = data.reward,
+                                        isLocked = data.badgeIsLocked,
+                                    ),
+                            ),
+                        )
+                        updateState(
+                            MyBadgeCategoryContract.MyBadgeCategoryReduce.UpdateBadgeDetailBottomSheetState(
+                                isBadgeDetailBottomSheetVisible = true,
+                            ),
+                        )
+                    }
+                    .onFailure { error ->
+                        Timber.tag("badges").e(error)
+                    }
+            }
         }
 
         private suspend fun getInitialInOnboardingPreferences() = userPreferencesFlow.first().onboardingInfo.userName
-
-        private suspend fun clearDataStore() {
-            with(userLocalRepository) {
-                clearAccessToken()
-                clearRefreshToken()
-                setIsLogin(false)
-                clearOnboardingInfo()
-                setIsOnOnboardingDone(false)
-                setIsBadgeAvailable(false)
-            }
-        }
     }

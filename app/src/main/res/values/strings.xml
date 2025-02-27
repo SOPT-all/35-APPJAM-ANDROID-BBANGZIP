@@ -116,6 +116,11 @@
 
     <!-- badge -->
     <string name="badge_category_title">%s 사장님이\n열심히 모은 배지에요</string>
+    <string name="badge_category_list1_description">이번 학기 빵점 탈출 내가 해냄!</string>
+    <string name="badge_category_list2_description">지금 바로 시작하면 미룬이 탈출 가능!</string>
+    <string name="badge_category_list3_description">지금부터 시작해도 반은 한거에요!</string>
+    <string name="badge_category_list4_description">빵 한쪽도 나눠 먹는 사이!</string>
+    <string name="badge_category_close">닫기</string>
     <string name="badge_detail_achievement">달성 조건</string>
     <string name="badge_detail_reward">리워드</string>
     <string name="badge_category_top_bar_title">배지 도감</string>
