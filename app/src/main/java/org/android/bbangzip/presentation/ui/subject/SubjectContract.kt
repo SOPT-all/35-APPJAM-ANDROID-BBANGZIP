@@ -32,7 +32,7 @@ class SubjectContract {
 
         data class OnDeleteModeSubjectCardClick(val subjectId: Int) : SubjectEvent
 
-        data object OnDeleteButtonClick : SubjectEvent
+        data object OnDeleteBtnClick : SubjectEvent
     }
 
     sealed interface SubjectReduce : BaseContract.Reduce {

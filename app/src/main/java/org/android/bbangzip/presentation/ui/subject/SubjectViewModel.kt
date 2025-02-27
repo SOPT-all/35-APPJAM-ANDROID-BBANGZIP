@@ -37,7 +37,7 @@ class SubjectViewModel
             when (event) {
                 SubjectContract.SubjectEvent.Initialize -> launch { getSubjectInfo() }
 
-                SubjectContract.SubjectEvent.OnDeleteButtonClick -> {
+                SubjectContract.SubjectEvent.OnDeleteBtnClick -> {
                     viewModelScope.launch {
                         deleteSubjects()
                     }
