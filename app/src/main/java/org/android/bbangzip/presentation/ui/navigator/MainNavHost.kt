@@ -76,13 +76,13 @@ fun MainNavHost(
             )
 
             todoAddNavGraph(
-                snackBarHostState = snackbarHostState,
+                snackbarHostState = snackbarHostState,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
                 navigateToToDo = { navigator.popBackStackIfNotSubject() },
             )
 
             todoAddPendingNavGraph(
-                snackBarHostState = snackbarHostState,
+                snackbarHostState = snackbarHostState,
                 navigateToBack = { navigator.popBackStackIfNotSubject() },
                 navigateToToDo = { navigator.popBackStackIfNotSubject() },
             )

@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.android.bbangzip.R
 import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.usecase.GetAddTodoListUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
@@ -37,7 +38,7 @@ class TodoAddViewModel
             when (event) {
                 TodoAddContract.TodoAddEvent.Initialize -> launch { initDataLoad() }
 
-                TodoAddContract.TodoAddEvent.OnBackIconClicked -> {
+                TodoAddContract.TodoAddEvent.OnBackIconClick -> {
                     updateState(TodoAddContract.TodoAddReduce.ResetSelectedItemList)
                     setSideEffect(TodoAddContract.TodoAddSideEffect.NavigateToBack)
                 }
@@ -45,32 +46,28 @@ class TodoAddViewModel
                 TodoAddContract.TodoAddEvent.OnFilterBottomSheetDismissRequest ->
                     updateState(
                         TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = false,
+                            isTodoFilterBottomSheetVisible = false,
                         ),
                     )
 
-                TodoAddContract.TodoAddEvent.OnFilterIconClicked ->
+                TodoAddContract.TodoAddEvent.OnFilterIconClick ->
                     updateState(
                         TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = true,
+                            isTodoFilterBottomSheetVisible = true,
                         ),
                     )
 
-                is TodoAddContract.TodoAddEvent.OnFilterBottomSheetItemClicked -> {
-                    viewModelScope.launch {
-                        getFilteredAddToDoInfo(selectedFilterItem = event.selectedFilterItem)
-                    }
-                }
+                is TodoAddContract.TodoAddEvent.OnFilterBottomSheetItemClick ->
+                    getFilteredAddToDoInfo(selectedFilterItem = event.selectedFilterItem)
 
-                TodoAddContract.TodoAddEvent.OnItemPlusButtonClicked -> {
-                    viewModelScope.launch {
-                        postAddTodoItemList(selectedItemList = currentUiState.selectedItemList)
-                    }
+                TodoAddContract.TodoAddEvent.OnItemPlusBtnClick -> {
+                    postAddTodoItemList(selectedItemList = currentUiState.selectedItemList)
+
                     setSideEffect(TodoAddContract.TodoAddSideEffect.NavigateToToDo)
-                    setSideEffect(TodoAddContract.TodoAddSideEffect.ShowSnackBar("오늘 할 공부를 추가했어요!"))
+                    setSideEffect(TodoAddContract.TodoAddSideEffect.ShowSnackBar(R.string.todo_add_plus_study))
                 }
 
-                is TodoAddContract.TodoAddEvent.OnToDoCardClicked -> {
+                is TodoAddContract.TodoAddEvent.OnToDoCardClick -> {
                     if (event.cardState == BbangZipCardState.CHECKED) {
                         updateState(TodoAddContract.TodoAddReduce.UpdateSelectedItemList(pieceId = event.pieceId))
                         updateState(
@@ -122,7 +119,7 @@ class TodoAddViewModel
 
                 is TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState ->
                     state.copy(
-                        todoFilterBottomSheetState = reduce.todoFilterBottomSheetState,
+                        isTodoFilterBottomSheetVisible = reduce.isTodoFilterBottomSheetVisible,
                     )
 
                 is TodoAddContract.TodoAddReduce.DeleteSelectedItemList ->
@@ -173,50 +170,52 @@ class TodoAddViewModel
                 }
         }
 
-        private suspend fun getFilteredAddToDoInfo(
+        private fun getFilteredAddToDoInfo(
             selectedFilterItem: ToDoFilterType,
         ) {
-            getAddTodoList(selectedFilterItem)
-                .onSuccess { data ->
-                    Timber.tag("todo").d("server viewmodel")
-                    Timber.tag("todo").d(selectedFilterItem.id)
+            viewModelScope.launch {
+                getAddTodoList(selectedFilterItem)
+                    .onSuccess { data ->
+                        Timber.tag("todo").d("server viewmodel")
+                        Timber.tag("todo").d(selectedFilterItem.id)
 
-                    updateState(
-                        TodoAddContract.TodoAddReduce.UpdateToDoList(
-                            todoList =
-                                data.todoList.map { item ->
-                                    ToDoCardModel(
-                                        pieceId = item.pieceId,
-                                        subjectName = item.subjectName,
-                                        examName = item.examName,
-                                        studyContents = item.studyContents,
-                                        startPage = item.startPage,
-                                        finishPage = item.finishPage,
-                                        deadline = item.deadline,
-                                        remainingDays = item.remainingDays,
-                                        cardState =
-                                            if (currentUiState.selectedItemList.toSet()
-                                                    .contains(item.pieceId)
-                                            ) {
-                                                BbangZipCardState.CHECKED
-                                            } else {
-                                                BbangZipCardState.CHECKABLE
-                                            },
-                                    )
-                                },
-                        ),
-                    )
-                    updateState(TodoAddContract.TodoAddReduce.UpdateFilterType(selectedFilter = selectedFilterItem))
-                    updateState(
-                        TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = false,
-                        ),
-                    )
-                    setSideEffect(TodoAddContract.TodoAddSideEffect.ShowTodoAddSnackBar("${selectedFilterItem.filter}으로 정렬했어요"))
-                }
-                .onFailure { error ->
-                    Timber.tag("todo").d(error)
-                }
+                        updateState(
+                            TodoAddContract.TodoAddReduce.UpdateToDoList(
+                                todoList =
+                                    data.todoList.map { item ->
+                                        ToDoCardModel(
+                                            pieceId = item.pieceId,
+                                            subjectName = item.subjectName,
+                                            examName = item.examName,
+                                            studyContents = item.studyContents,
+                                            startPage = item.startPage,
+                                            finishPage = item.finishPage,
+                                            deadline = item.deadline,
+                                            remainingDays = item.remainingDays,
+                                            cardState =
+                                                if (currentUiState.selectedItemList.toSet()
+                                                        .contains(item.pieceId)
+                                                ) {
+                                                    BbangZipCardState.CHECKED
+                                                } else {
+                                                    BbangZipCardState.CHECKABLE
+                                                },
+                                        )
+                                    },
+                            ),
+                        )
+                        updateState(TodoAddContract.TodoAddReduce.UpdateFilterType(selectedFilter = selectedFilterItem))
+                        updateState(
+                            TodoAddContract.TodoAddReduce.UpdateToDoFilterBottomSheetState(
+                                isTodoFilterBottomSheetVisible = false,
+                            ),
+                        )
+                        setSideEffect(TodoAddContract.TodoAddSideEffect.ShowTodoAddSnackBar(R.string.todo_add_sorted_by_filter, selectedFilterItem.filter))
+                    }
+                    .onFailure { error ->
+                        Timber.tag("todo").d(error)
+                    }
+            }
         }
 
         private suspend fun getAddTodoList(selectedFilterItem: ToDoFilterType) =
@@ -226,15 +225,17 @@ class TodoAddViewModel
                 sortOption = selectedFilterItem.id,
             )
 
-        private suspend fun postAddTodoItemList(
+        private fun postAddTodoItemList(
             selectedItemList: List<Int>,
         ) {
-            postAddTodoItemListUseCase(
-                requestPieceIdDto = RequestPieceIdDto(pieceIds = selectedItemList),
-            ).onSuccess {
-                Timber.tag("assignToToday").d("server viewmodel")
-            }.onFailure { error ->
-                Timber.tag("assignToToday").d(error)
+            viewModelScope.launch {
+                postAddTodoItemListUseCase(
+                    requestPieceIdDto = RequestPieceIdDto(pieceIds = selectedItemList),
+                ).onSuccess {
+                    Timber.tag("assignToToday").d("server viewmodel")
+                }.onFailure { error ->
+                    Timber.tag("assignToToday").d(error)
+                }
             }
         }
     }

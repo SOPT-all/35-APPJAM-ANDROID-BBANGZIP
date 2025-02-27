@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import org.android.bbangzip.R
 import org.android.bbangzip.data.dto.request.RequestPieceIdDto
 import org.android.bbangzip.domain.usecase.GetToInfoUseCase
 import org.android.bbangzip.domain.usecase.PostAddTodoItemListUseCase
@@ -39,7 +40,7 @@ class TodoAddPendingViewModel
             when (event) {
                 TodoAddPendingContract.TodoAddPendingEvent.Initialize -> launch { initDataLoad() }
 
-                TodoAddPendingContract.TodoAddPendingEvent.OnBackIconClicked -> {
+                TodoAddPendingContract.TodoAddPendingEvent.OnBackIconClick -> {
                     updateState(TodoAddPendingContract.TodoAddPendingReduce.ResetSelectedItemList)
                     setSideEffect(TodoAddPendingContract.TodoAddPendingSideEffect.NavigateToBack)
                 }
@@ -47,34 +48,31 @@ class TodoAddPendingViewModel
                 TodoAddPendingContract.TodoAddPendingEvent.OnFilterBottomSheetDismissRequest ->
                     updateState(
                         TodoAddPendingContract.TodoAddPendingReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = false,
+                            isTodoFilterBottomSheetVisible = false,
                         ),
                     )
 
-                TodoAddPendingContract.TodoAddPendingEvent.OnFilterIconClicked ->
+                TodoAddPendingContract.TodoAddPendingEvent.OnFilterIconClick ->
                     updateState(
                         TodoAddPendingContract.TodoAddPendingReduce.UpdateToDoFilterBottomSheetState(
-                            todoFilterBottomSheetState = true,
+                            isTodoFilterBottomSheetVisible = true,
                         ),
                     )
 
-                is TodoAddPendingContract.TodoAddPendingEvent.OnFilterBottomSheetItemClicked -> {
-                    viewModelScope.launch {
-                        getFilteredToDoInfo(
-                            selectedFilter = event.selectedFilterItem,
-                        )
-                    }
+                is TodoAddPendingContract.TodoAddPendingEvent.OnFilterBottomSheetItemClick -> {
+                    getFilteredToDoInfo(
+                        selectedFilter = event.selectedFilterItem,
+                    )
                 }
 
-                TodoAddPendingContract.TodoAddPendingEvent.OnItemPlusButtonClicked -> {
-                    viewModelScope.launch {
-                        postAddTodoItemList(selectedItemList = currentUiState.selectedItemList)
-                    }
+                TodoAddPendingContract.TodoAddPendingEvent.OnItemPlusBtnClick -> {
+                    postAddTodoItemList(selectedItemList = currentUiState.selectedItemList)
+
                     setSideEffect(TodoAddPendingContract.TodoAddPendingSideEffect.NavigateToToDo)
-                    setSideEffect(TodoAddPendingContract.TodoAddPendingSideEffect.ShowSnackBar("오늘 할 공부를 추가했어요!"))
+                    setSideEffect(TodoAddPendingContract.TodoAddPendingSideEffect.ShowSnackbar(R.string.todo_pending_add_plus_study))
                 }
 
-                is TodoAddPendingContract.TodoAddPendingEvent.OnToDoCardClicked -> {
+                is TodoAddPendingContract.TodoAddPendingEvent.OnToDoCardClick -> {
                     if (event.cardState == BbangZipCardState.CHECKED) {
                         updateState(
                             TodoAddPendingContract.TodoAddPendingReduce.UpdateSelectedItemList(
@@ -135,7 +133,7 @@ class TodoAddPendingViewModel
 
                 is TodoAddPendingContract.TodoAddPendingReduce.UpdateToDoFilterBottomSheetState ->
                     state.copy(
-                        todoFilterBottomSheetState = reduce.todoFilterBottomSheetState,
+                        isTodoFilterBottomSheetVisible = reduce.isTodoFilterBottomSheetVisible,
                     )
 
                 is TodoAddPendingContract.TodoAddPendingReduce.DeleteSelectedItemList ->
@@ -181,53 +179,55 @@ class TodoAddPendingViewModel
             }
         }
 
-        private suspend fun getFilteredToDoInfo(selectedFilter: ToDoFilterType) {
-            getToDoInfo(
-                area = ToDoConstants.PENDING,
-                year = 2025,
-                semester = "1학기",
-                sortOption = selectedFilter.id,
-            ).onSuccess { data ->
-                Timber.tag("todayOrders").d("${currentUiState.selectedItemList}")
-                updateState(
-                    TodoAddPendingContract.TodoAddPendingReduce.UpdateToDoList(
-                        todoList =
-                            data.todoList.map { item ->
-                                ToDoCardModel(
-                                    pieceId = item.pieceId,
-                                    subjectName = item.subjectName,
-                                    examName = item.examName,
-                                    studyContents = item.studyContents,
-                                    startPage = item.startPage,
-                                    finishPage = item.finishPage,
-                                    deadline = item.deadline,
-                                    remainingDays = item.remainingDays,
-                                    cardState =
-                                        if (currentUiState.selectedItemList.toSet()
-                                                .contains(item.pieceId)
-                                        ) {
-                                            BbangZipCardState.CHECKED
-                                        } else {
-                                            BbangZipCardState.CHECKABLE
-                                        },
-                                )
-                            },
-                    ),
-                )
-                updateState(
-                    TodoAddPendingContract.TodoAddPendingReduce.UpdateFilterType(
-                        selectedFilter = selectedFilter,
-                    ),
-                )
-                updateState(
-                    TodoAddPendingContract.TodoAddPendingReduce.UpdateToDoFilterBottomSheetState(
-                        todoFilterBottomSheetState = false,
-                    ),
-                )
+        private fun getFilteredToDoInfo(selectedFilter: ToDoFilterType) {
+            viewModelScope.launch {
+                getToDoInfo(
+                    area = ToDoConstants.PENDING,
+                    year = 2025,
+                    semester = "1학기",
+                    sortOption = selectedFilter.id,
+                ).onSuccess { data ->
+                    Timber.tag("todayOrders").d("${currentUiState.selectedItemList}")
+                    updateState(
+                        TodoAddPendingContract.TodoAddPendingReduce.UpdateToDoList(
+                            todoList =
+                                data.todoList.map { item ->
+                                    ToDoCardModel(
+                                        pieceId = item.pieceId,
+                                        subjectName = item.subjectName,
+                                        examName = item.examName,
+                                        studyContents = item.studyContents,
+                                        startPage = item.startPage,
+                                        finishPage = item.finishPage,
+                                        deadline = item.deadline,
+                                        remainingDays = item.remainingDays,
+                                        cardState =
+                                            if (currentUiState.selectedItemList.toSet()
+                                                    .contains(item.pieceId)
+                                            ) {
+                                                BbangZipCardState.CHECKED
+                                            } else {
+                                                BbangZipCardState.CHECKABLE
+                                            },
+                                    )
+                                },
+                        ),
+                    )
+                    updateState(
+                        TodoAddPendingContract.TodoAddPendingReduce.UpdateFilterType(
+                            selectedFilter = selectedFilter,
+                        ),
+                    )
+                    updateState(
+                        TodoAddPendingContract.TodoAddPendingReduce.UpdateToDoFilterBottomSheetState(
+                            isTodoFilterBottomSheetVisible = false,
+                        ),
+                    )
 
-                setSideEffect(TodoAddPendingContract.TodoAddPendingSideEffect.ShowTodoAddSnackBar("${selectedFilter.filter}으로 정렬했어요"))
-            }.onFailure { error ->
-                Timber.tag("todayOrders").e(error)
+                    setSideEffect(TodoAddPendingContract.TodoAddPendingSideEffect.ShowTodoAddSnackbar(R.string.todo_pending_add_sorted_by_filter, selectedFilter.filter))
+                }.onFailure { error ->
+                    Timber.tag("todayOrders").e(error)
+                }
             }
         }
 
@@ -244,15 +244,17 @@ class TodoAddPendingViewModel
                 sortOption = sortOption,
             )
 
-        private suspend fun postAddTodoItemList(
+        private fun postAddTodoItemList(
             selectedItemList: List<Int>,
         ) {
-            postAddTodoItemListUseCase(
-                requestPieceIdDto = RequestPieceIdDto(pieceIds = selectedItemList),
-            ).onSuccess {
-                Timber.tag("postAdd").d("성공")
-            }.onFailure { error ->
-                Timber.tag("postAdd").d(error)
+            viewModelScope.launch {
+                postAddTodoItemListUseCase(
+                    requestPieceIdDto = RequestPieceIdDto(pieceIds = selectedItemList),
+                ).onSuccess {
+                    Timber.tag("postAdd").d("성공")
+                }.onFailure { error ->
+                    Timber.tag("postAdd").d(error)
+                }
             }
         }
     }

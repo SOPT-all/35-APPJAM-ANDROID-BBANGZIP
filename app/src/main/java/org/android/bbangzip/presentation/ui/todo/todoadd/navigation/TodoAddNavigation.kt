@@ -17,13 +17,13 @@ fun NavController.navigateTodoAdd() {
 }
 
 fun NavGraphBuilder.todoAddNavGraph(
-    snackBarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState,
     navigateToToDo: () -> Unit,
     navigateToBack: () -> Unit,
 ) {
     composable<TodoAddRoute> {
         TodoAddRoute(
-            snackBarHostState = snackBarHostState,
+            snackbarHostState = snackbarHostState,
             navigateToToDo = navigateToToDo,
             navigateToBack = navigateToBack,
         )

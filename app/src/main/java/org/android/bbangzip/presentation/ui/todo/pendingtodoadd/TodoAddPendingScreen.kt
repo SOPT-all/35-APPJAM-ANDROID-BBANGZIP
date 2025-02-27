@@ -1,5 +1,6 @@
 package org.android.bbangzip.presentation.ui.todo.pendingtodoadd
 
+import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
@@ -24,7 +25,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -44,15 +47,17 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 @Composable
 fun TodoAddPendingScreen(
     todoAddState: TodoAddPendingContract.TodoAddPendingState,
-    todoAddSnackBarHostState: SnackbarHostState,
+    todoAddSnackbarHostState: SnackbarHostState,
     modifier: Modifier = Modifier,
-    onBackIconClicked: () -> Unit = {},
+    onBackIconClick: () -> Unit = {},
     onFilterBottomSheetDismissRequest: () -> Unit = {},
-    onFilterIconClicked: () -> Unit = {},
-    onFilterBottomSheetItemClicked: (ToDoFilterType) -> Unit = {},
-    onItemPlusButtonClicked: () -> Unit = {},
-    onToDoCardClicked: (Int, BbangZipCardState) -> Unit = { _, _ -> },
+    onFilterIconClick: () -> Unit = {},
+    onFilterBottomSheetItemClick: (ToDoFilterType) -> Unit = {},
+    onItemPlusBtnClick: () -> Unit = {},
+    onToDoCardClick: (Int, BbangZipCardState) -> Unit = { _, _ -> },
 ) {
+    (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundNormal_FFFFFF.toArgb()
+
     Box(
         modifier =
             modifier
@@ -70,7 +75,7 @@ fun TodoAddPendingScreen(
                 isShadowed = isShadowed,
                 title = "",
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-                onLeadingIconClick = onBackIconClicked,
+                onLeadingIconClick = onBackIconClick,
             )
 
             LazyColumn(
@@ -107,7 +112,7 @@ fun TodoAddPendingScreen(
                             modifier =
                                 Modifier
                                     .clip(CircleShape)
-                                    .clickable { onFilterIconClicked() },
+                                    .clickable { onFilterIconClick() },
                             contentAlignment = Alignment.Center,
                         ) {
                             Icon(
@@ -133,13 +138,13 @@ fun TodoAddPendingScreen(
                         modifier = Modifier.padding(vertical = 6.dp),
                         onClick = {
                             if (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKED) {
-                                onToDoCardClicked(
+                                onToDoCardClick(
                                     todoAddState.todoList[index].pieceId,
                                     BbangZipCardState.CHECKABLE,
                                 )
                             } else {
                                 (todoAddState.todoList[index].cardState == BbangZipCardState.CHECKABLE)
-                                onToDoCardClicked(
+                                onToDoCardClick(
                                     todoAddState.todoList[index].pieceId,
                                     BbangZipCardState.CHECKED,
                                 )
@@ -157,13 +162,13 @@ fun TodoAddPendingScreen(
             modifier = Modifier.align(Alignment.BottomCenter),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            BbangZipSnackBarHost(snackBarHostState = todoAddSnackBarHostState)
+            BbangZipSnackBarHost(snackBarHostState = todoAddSnackbarHostState)
 
             if (todoAddState.selectedItemList.isNotEmpty()) {
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
-                    onClick = { onItemPlusButtonClicked() },
+                    onClick = onItemPlusBtnClick,
                     label = stringResource(R.string.todo_add_plus_button_label),
                     modifier =
                         Modifier
@@ -177,9 +182,9 @@ fun TodoAddPendingScreen(
         }
     }
     ToDoFilterPickerBottomSheet(
-        isBottomSheetVisible = todoAddState.todoFilterBottomSheetState,
+        isBottomSheetVisible = todoAddState.isTodoFilterBottomSheetVisible,
         selectedItem = todoAddState.selectedFilter,
-        onSelectedItemChanged = onFilterBottomSheetItemClicked,
+        onSelectedItemChanged = onFilterBottomSheetItemClick,
         onDismissRequest = onFilterBottomSheetDismissRequest,
     )
 }
@@ -192,6 +197,6 @@ private fun PendingPreview() {
 
     TodoAddPendingScreen(
         todoAddState = mockTodoStates,
-        todoAddSnackBarHostState = remember { SnackbarHostState() },
+        todoAddSnackbarHostState = remember { SnackbarHostState() },
     )
 }
