@@ -9,7 +9,7 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class SubjectContract {
     @Parcelize
     data class SubjectState(
-        val subjectList: List<SubjectCardModel> = listOf(),
+        val subjectCardList: List<SubjectCardModel> = listOf(),
         val subjectIdSetToDelete: Set<Int> = setOf(),
         val subjectCardViewType: CardViewType = CardViewType.DEFAULT,
     ) : BaseContract.State, Parcelable {

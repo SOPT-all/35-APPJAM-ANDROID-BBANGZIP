@@ -73,8 +73,8 @@ class SubjectViewModel
             return when (reduce) {
                 is SubjectContract.SubjectReduce.UpdateSubjectCard -> {
                     state.copy(
-                        subjectList =
-                            state.subjectList.map { item ->
+                        subjectCardList =
+                            state.subjectCardList.map { item ->
                                 if (item.state == BbangZipCardState.CHECKABLE && item.subjectId == reduce.subjectId) {
                                     item.copy(state = BbangZipCardState.CHECKED)
                                 } else if (item.state == BbangZipCardState.CHECKED && item.subjectId == reduce.subjectId) {
@@ -88,8 +88,8 @@ class SubjectViewModel
 
                 is SubjectContract.SubjectReduce.UpdateToDeleteMode -> {
                     state.copy(
-                        subjectList =
-                            state.subjectList.map {
+                        subjectCardList =
+                            state.subjectCardList.map {
                                 it.copy(state = BbangZipCardState.CHECKABLE)
                             },
                         subjectCardViewType = CardViewType.DELETE,
@@ -98,8 +98,8 @@ class SubjectViewModel
 
                 is SubjectContract.SubjectReduce.UpdateToDefaultMode -> {
                     state.copy(
-                        subjectList =
-                            state.subjectList.map {
+                        subjectCardList =
+                            state.subjectCardList.map {
                                 it.copy(state = BbangZipCardState.DEFAULT)
                             },
                         subjectCardViewType = CardViewType.DEFAULT,
@@ -111,7 +111,7 @@ class SubjectViewModel
                     state.copy(
                         subjectIdSetToDelete =
                             run {
-                                val targetSubject = state.subjectList.find { it.subjectId == reduce.subjectId }
+                                val targetSubject = state.subjectCardList.find { it.subjectId == reduce.subjectId }
                                 when (targetSubject?.state) {
                                     BbangZipCardState.CHECKED -> {
                                         state.subjectIdSetToDelete.plus(targetSubject.subjectId)
@@ -131,7 +131,7 @@ class SubjectViewModel
 
                 is SubjectContract.SubjectReduce.UpdateSubjectCardList -> {
                     state.copy(
-                        subjectList = reduce.subjectList,
+                        subjectCardList = reduce.subjectList,
                     )
                 }
 
