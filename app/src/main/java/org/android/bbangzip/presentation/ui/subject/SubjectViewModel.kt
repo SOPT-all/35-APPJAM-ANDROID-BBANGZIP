@@ -131,7 +131,7 @@ class SubjectViewModel
 
                 is SubjectContract.SubjectReduce.UpdateSubjectCardList -> {
                     state.copy(
-                        subjectCardList = reduce.subjectList,
+                        subjectCardList = reduce.subjectCardList,
                     )
                 }
 
@@ -169,7 +169,7 @@ class SubjectViewModel
                                 )
                             }
                         }
-                    updateState(SubjectContract.SubjectReduce.UpdateSubjectCardList(subjectList = subjectCardList))
+                    updateState(SubjectContract.SubjectReduce.UpdateSubjectCardList(subjectCardList = subjectCardList))
                 }.onFailure { error ->
                     Timber.tag("SubjectInfo").d(error)
                 }

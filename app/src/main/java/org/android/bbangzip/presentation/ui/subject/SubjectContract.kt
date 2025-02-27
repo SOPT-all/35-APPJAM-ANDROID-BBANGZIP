@@ -42,7 +42,7 @@ class SubjectContract {
 
         data class UpdateSubjectCard(val subjectId: Int) : SubjectReduce
 
-        data class UpdateSubjectCardList(val subjectList: List<SubjectCardModel>) : SubjectReduce
+        data class UpdateSubjectCardList(val subjectCardList: List<SubjectCardModel>) : SubjectReduce
 
         data class UpdateDeletedSet(val subjectId: Int) : SubjectReduce
 
