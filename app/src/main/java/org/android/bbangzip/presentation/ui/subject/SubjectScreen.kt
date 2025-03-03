@@ -89,34 +89,7 @@ fun SubjectScreen(
                                 .fillMaxSize()
                                 .aspectRatio(360f / 220f),
                     )
-                    Row(
-                        modifier =
-                            modifier
-                                .padding(start = 4.dp, top = 18.dp)
-                                .applyFilterOnClick(
-                                    radius = 16.dp,
-                                    isDisabled = false,
-                                    onClick = { },
-                                )
-                                .padding(vertical = 8.dp, horizontal = 20.dp),
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Text(
-                            text = "2025년 1학기",
-                            style = BbangZipTheme.typography.body1Bold,
-                            color = BbangZipTheme.colors.labelNormal_282119,
-                        )
-
-                        Gap(width = 4)
-
-                        Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevrondown_small_24),
-                            contentDescription = null,
-                            modifier =
-                                Modifier
-                                    .size(size = 20.dp),
-                        )
-                    }
+                    SemesterSelectionRow()
                 }
             }
 
@@ -166,6 +139,38 @@ fun SubjectScreen(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun SemesterSelectionRow(modifier: Modifier = Modifier) {
+    Row(
+        modifier =
+        modifier
+            .padding(start = 4.dp, top = 18.dp)
+            .applyFilterOnClick(
+                radius = 16.dp,
+                isDisabled = false,
+                onClick = { },
+            )
+            .padding(vertical = 8.dp, horizontal = 20.dp),
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        Text(
+            text = "2025년 1학기",
+            style = BbangZipTheme.typography.body1Bold,
+            color = BbangZipTheme.colors.labelNormal_282119,
+        )
+
+        Gap(width = 4)
+
+        Icon(
+            imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevrondown_small_24),
+            contentDescription = null,
+            modifier =
+            Modifier
+                .size(size = 20.dp),
+        )
     }
 }
 
