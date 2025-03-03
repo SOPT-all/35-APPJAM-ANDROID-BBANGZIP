@@ -6,6 +6,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ExperimentalLayoutApi
+import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -185,6 +187,7 @@ private fun SemesterSelectionRow(modifier: Modifier = Modifier) {
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DefaultCardView(
     modifier: Modifier,
@@ -209,102 +212,36 @@ private fun DefaultCardView(
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_trash_default_24),
                 contentDescription = null,
-                modifier =
-                    modifier
-                        .applyFilterOnClick(
-                            radius = 20.dp,
-                            isDisabled = false,
-                        ) {
-                            onTrashIconClick()
-                        }
-                        .padding(8.dp),
+                modifier = modifier
+                    .applyFilterOnClick(radius = 20.dp, isDisabled = false) {
+                        onTrashIconClick()
+                    }
+                    .padding(8.dp),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
 
         Gap(24)
 
-        if (subjects.size % 2 == 1) {
-            for (i in 0 until (subjects.size + 1) / 2) {
-                if (i == (subjects.size + 1) / 2 - 1) {
-                    Row(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                ),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        SubjectCard(
-                            data = subjects.last(),
-                            onClick = onDefaultModeSubjectCardClick,
-                        )
-                        AddSubjectCard(
-                            onClick = onAddSubjectCardClick,
-                        )
-                    }
-                } else {
-                    Row(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = 16.dp,
-                                ),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        for (j in i * 2 until (i + 1) * 2) {
-                            SubjectCard(
-                                data = subjects[j],
-                                onClick = onDefaultModeSubjectCardClick,
-                            )
-                        }
-                    }
-                }
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            subjects.forEach { subject ->
+                SubjectCard(
+                    data = subject,
+                    onClick = onDefaultModeSubjectCardClick
+                )
             }
-        } else {
-            for (i in 0 until (subjects.size + 1) / 2 + 1) {
-                if (i == (subjects.size + 1) / 2) {
-                    Row(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                ),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        AddSubjectCard(
-                            onClick = onAddSubjectCardClick,
-                        )
-                    }
-                } else {
-                    Row(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = 16.dp,
-                                ),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        for (j in i * 2 until (i + 1) * 2) {
-                            SubjectCard(
-                                data = subjects[j],
-                                onClick = { subjectId, subjectName -> onDefaultModeSubjectCardClick(subjectId, subjectName) },
-                            )
-                        }
-                    }
-                }
-            }
+
+            AddSubjectCard(
+                onClick = onAddSubjectCardClick
+            )
         }
+
         Gap(height = 84)
     }
 }
