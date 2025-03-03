@@ -74,23 +74,10 @@ fun SubjectScreen(
                     .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
         ) {
             item {
-                Box(
-                    modifier =
-                        modifier
-                            .fillMaxWidth()
-                            .height(backgroundHeight.dp)
-                            .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
-                ) {
-                    Image(
-                        painter = painterResource(R.drawable.img_subject_header),
-                        contentDescription = null,
-                        modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .aspectRatio(360f / 220f),
-                    )
-                    SemesterSelectionRow()
-                }
+                SubjectTopContent(
+                    modifier = modifier,
+                    backgroundHeight = backgroundHeight
+                )
             }
 
             item {
@@ -139,6 +126,30 @@ fun SubjectScreen(
                 )
             }
         }
+    }
+}
+
+@Composable
+private fun SubjectTopContent(
+    backgroundHeight: Int,
+    modifier: Modifier = Modifier,
+) {
+    Box(
+        modifier =
+        modifier
+            .fillMaxWidth()
+            .height(backgroundHeight.dp)
+            .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
+    ) {
+        Image(
+            painter = painterResource(R.drawable.img_subject_header),
+            contentDescription = null,
+            modifier =
+            Modifier
+                .fillMaxSize()
+                .aspectRatio(360f / 220f),
+        )
+        SemesterSelectionRow()
     }
 }
 
