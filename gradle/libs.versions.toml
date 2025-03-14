@@ -36,6 +36,10 @@ ksp = "2.0.0-1.0.21"
 datastore = "1.1.2"
 protobuf = "3.24.1"
 protobufPlugin = "0.9.4"
+uiautomator = "2.3.0"
+benchmarkMacroJunit4 = "1.3.3"
+baselineprofile = "1.3.3"
+profileinstaller = "1.4.1"
 
 [libraries]
 
@@ -81,6 +85,9 @@ retrofit-kotlin-serialization-converter = { group = "com.jakewharton.retrofit", 
 kotlin-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinSerializationJson" }
 
 protobuf-protoc = { module = "com.google.protobuf:protoc", version.ref = "protobuf" }
+androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
+androidx-benchmark-macro-junit4 = { group = "androidx.benchmark", name = "benchmark-macro-junit4", version.ref = "benchmarkMacroJunit4" }
+androidx-profileinstaller = { group = "androidx.profileinstaller", name = "profileinstaller", version.ref = "profileinstaller" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -92,6 +99,8 @@ kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+android-test = { id = "com.android.test", version.ref = "agp" }
+baselineprofile = { id = "androidx.baselineprofile", version.ref = "baselineprofile" }
 
 [bundles]
 androidx = [

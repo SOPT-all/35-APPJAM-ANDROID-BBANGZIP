@@ -22,4 +22,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "BBANGZIP"
 include(":app")
- 
+include(":baselineprofile")
