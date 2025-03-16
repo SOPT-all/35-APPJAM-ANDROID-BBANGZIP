@@ -44,7 +44,7 @@ android {
 // You can specify to run the generators on a managed devices or connected devices.
 baselineProfile {
     managedDevices += "pixel3aApi34"
-    useConnectedDevices = true
+    useConnectedDevices = false
 }
 
 dependencies {
