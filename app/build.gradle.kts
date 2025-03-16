@@ -119,7 +119,7 @@ dependencies {
     // Kakao
     implementation("com.kakao.sdk:v2-user:2.10.0")
 
-    //Baseline Profile
+    // Baseline Profile
     implementation(libs.androidx.profileinstaller)
     "baselineProfile"(project(":baselineprofile"))
 }
