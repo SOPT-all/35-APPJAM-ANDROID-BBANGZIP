@@ -63,22 +63,18 @@ jobs:
       - name: Lint Check
         run: ./gradlew ktlintCheck -PcompileSdkVersion=34
 
+      - name: Run Managed Device Tests
+        run: |
+          ./gradlew nexusOneApi34DebugAndroidTest \
+            -Dorg.gradle.workers.max=1 \
+            -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" \
+            -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true \
+            --info
+            shell: bash
+
       - name: Build with Gradle
         run: ./gradlew build -PcompileSdkVersion=34
 
-      - name: Setup GMD
-        run: |
-          ./gradlew :baselineprofile:nexusOneApi34Setup --info 
-            -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true 
-            -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
-      - name: Run Managed Device Tests
-        run: |
-           ./gradlew nexusOneApi34DebugAndroidTest \
-             -Dorg.gradle.workers.max=1 \
-             -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" \
-             -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true \
-             --info
-             shell: bash
       - name: Discord Notify - PR Success
         if: ${{ success() }}
         uses: Ilshidur/action-discord@0.3.2
