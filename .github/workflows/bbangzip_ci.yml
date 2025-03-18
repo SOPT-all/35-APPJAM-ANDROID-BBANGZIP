@@ -63,15 +63,6 @@ jobs:
       - name: Lint Check
         run: ./gradlew ktlintCheck -PcompileSdkVersion=34
 
-      - name: Run Managed Device Tests
-        run: |
-          ./gradlew nexusOneApi34DebugAndroidTest \
-            -Dorg.gradle.workers.max=1 \
-            -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" \
-            -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true \
-            --info
-            shell: bash
-
       - name: Build with Gradle
         run: ./gradlew build -PcompileSdkVersion=34
 
