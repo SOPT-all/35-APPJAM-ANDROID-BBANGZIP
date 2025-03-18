@@ -31,19 +31,27 @@ android {
     // This code creates the gradle managed device used to generate baseline profiles.
     // To use GMD please invoke generation through the command line:
     // ./gradlew :app:generateBaselineProfile
-    testOptions.managedDevices.devices {
-        create<ManagedVirtualDevice>("pixel6Api34") {
-            device = "Pixel 6"
-            apiLevel = 34
-            systemImageSource = "aosp"
+
+    testOptions {
+        managedDevices {
+            devices {
+                // run with ../gradlew  nexusOneApi30DebugAndroidTest
+                create<ManagedVirtualDevice>("nexusOneApi34") {
+                    // A lower resolution device is used here for better emulator performance
+                    device = "Pixel 6"
+                    apiLevel = 34
+                    systemImageSource = "google"
+                }
+            }
         }
     }
+
 }
 
 // This is the configuration block for the Baseline Profile plugin.
 // You can specify to run the generators on a managed devices or connected devices.
 baselineProfile {
-    managedDevices += "pixel6Api34"
+    managedDevices += "nexusOneApi34"
     useConnectedDevices = false
 }
 

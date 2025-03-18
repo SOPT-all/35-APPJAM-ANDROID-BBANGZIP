@@ -16,6 +16,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Enable KVM group perms
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v2
+
       - name: Gradle cache
         uses: actions/cache@v4
         with:
@@ -59,9 +68,17 @@ jobs:
 
       - name: Setup GMD
         run: |
-          ./gradlew :baselineprofile:pixel6Api34Setup --info 
+          ./gradlew :baselineprofile:nexusOneApi34Setup --info 
             -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true 
             -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
+      - name: Run Managed Device Tests
+        run: |
+           ./gradlew nexusOneApi34DebugAndroidTest \
+             -Dorg.gradle.workers.max=1 \
+             -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect" \
+             -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true \
+             --info
+             shell: bash
       - name: Discord Notify - PR Success
         if: ${{ success() }}
         uses: Ilshidur/action-discord@0.3.2
