@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.kotlin.parcelize)
     alias(libs.plugins.dagger.hilt)
     id("com.google.protobuf") version libs.versions.protobufPlugin
+    alias(libs.plugins.baselineprofile)
 }
 
 val properties =
@@ -44,6 +45,18 @@ android {
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
             )
+        }
+    }
+
+    buildTypes {
+        getByName("release") {
+            signingConfig = signingConfigs.getByName("debug")
+        }
+
+        create("benchmark") {
+            matchingFallbacks.add("release")
+            signingConfig = signingConfigs.getByName("debug")
+            isDebuggable = false
         }
     }
 
@@ -105,6 +118,10 @@ dependencies {
 
     // Kakao
     implementation("com.kakao.sdk:v2-user:2.10.0")
+
+    // Baseline Profile
+    implementation(libs.androidx.profileinstaller)
+    "baselineProfile"(project(":baselineprofile"))
 }
 
 protobuf {
