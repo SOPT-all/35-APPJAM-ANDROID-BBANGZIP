@@ -58,9 +58,9 @@ jobs:
         run: ./gradlew build -PcompileSdkVersion=34
 
       - name: Setup GMD
-        run: ./gradlew :baselineprofile:pixel6Api34Setup
-            --info
-            -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true
+        run: |
+          ./gradlew :baselineprofile:pixel6Api34Setup --info \
+            -Pandroid.experimental.testOptions.managedDevices.emulator.showKernelLogging=true \
             -Pandroid.testoptions.manageddevices.emulator.gpu="swiftshader_indirect"
       - name: Discord Notify - PR Success
         if: ${{ success() }}
