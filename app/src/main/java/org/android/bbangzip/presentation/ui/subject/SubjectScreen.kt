@@ -80,9 +80,7 @@ fun SubjectScreen(
                     modifier = modifier,
                     backgroundHeight = backgroundHeight
                 )
-            }
 
-            item {
                 Gap(height = 40)
             }
 
@@ -110,6 +108,7 @@ fun SubjectScreen(
                 }
             }
         }
+
         if (state.subjectCardViewType == CardViewType.DELETE) {
             Box(
                 modifier =
@@ -151,6 +150,7 @@ private fun SubjectTopContent(
                 .fillMaxSize()
                 .aspectRatio(360f / 220f),
         )
+
         SemesterSelectionRow()
     }
 }
