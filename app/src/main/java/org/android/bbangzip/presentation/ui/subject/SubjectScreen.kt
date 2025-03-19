@@ -71,9 +71,9 @@ fun SubjectScreen(
     Box {
         LazyColumn(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+            Modifier
+                .fillMaxSize()
+                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
         ) {
             item {
                 SubjectTopContent(
@@ -112,16 +112,16 @@ fun SubjectScreen(
         if (state.subjectCardViewType == CardViewType.DELETE) {
             Box(
                 modifier =
-                    Modifier
-                        .align(alignment = Alignment.BottomCenter)
-                        .padding(bottom = 80.dp, start = 16.dp, end = 16.dp),
+                Modifier
+                    .align(alignment = Alignment.BottomCenter)
+                    .padding(bottom = 80.dp, start = 16.dp, end = 16.dp),
             ) {
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
                     onClick = { onDeleteBtnClick() },
                     modifier = Modifier.fillMaxWidth(),
-                    label = if (state.subjectIdSetToDelete.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), state.subjectIdSetToDelete.size),
+                    label = if (state.subjectIdSetToDelete.isEmpty()) stringResource(R.string.btn_default_delete_label) else String.format(stringResource(R.string.btn_delete_label), state.subjectIdSetToDelete.size),
                     trailingIcon = R.drawable.ic_trash_default_24,
                     isEnable = state.subjectIdSetToDelete.isNotEmpty(),
                 )
@@ -272,14 +272,14 @@ private fun DeleteCardView(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_x_small_24),
                 contentDescription = null,
                 modifier =
-                    modifier
-                        .applyFilterOnClick(
-                            radius = 20.dp,
-                            isDisabled = false,
-                        ) {
-                            onCancleIconClick()
-                        }
-                        .padding(8.dp),
+                modifier
+                    .applyFilterOnClick(
+                        radius = 20.dp,
+                        isDisabled = false,
+                    ) {
+                        onCancleIconClick()
+                    }
+                    .padding(8.dp),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
@@ -317,10 +317,10 @@ private fun EmptySubjectCardView(
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
         Box(
             modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .height(328.dp)
-                    .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
+            Modifier
+                .fillMaxWidth()
+                .height(328.dp)
+                .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
             contentAlignment = Alignment.Center,
         ) {
             Text(text = stringResource(R.string.empty_view_text))

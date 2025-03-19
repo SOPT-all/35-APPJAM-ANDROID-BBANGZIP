@@ -36,6 +36,7 @@
     <string name="btn_input_semester_label">학년/학기 입력하기</string>
     <string name="btn_next_label">다음으로</string>
     <string name="btn_cancle_label">취소</string>
+    <string name="btn_default_delete_label">삭제하기</string>
     <string name="btn_delete_label">"%d개 삭제하기"</string>
     <string name="btn_save_label">저장하기</string>
     <string name="btn_slice_study_label">쪼개서 공부하기</string>
