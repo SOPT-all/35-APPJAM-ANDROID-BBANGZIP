@@ -102,7 +102,6 @@ fun SubjectDetailScreen(
     onClickKebabOutside: () -> Unit = {},
     popBackStack: () -> Unit,
 ) {
-    Timber.tag("김재민").d("SubjectDetailScreen : $subjectName $examName")
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
     val backgroundHeight = (screenHeightDp * 0.32).toInt()
@@ -132,7 +131,6 @@ fun SubjectDetailScreen(
             addStudyViewType = AddStudyViewType.DEFAULT,
         )
 
-    Timber.d("${deletedSet.size}")
     Box(
         modifier =
             Modifier
@@ -349,7 +347,7 @@ fun SubjectDetailScreen(
         if (state.badgeList.isNotEmpty()) {
             BbangZipGetBadgeBottomSheet(
                 badgeList = state.badgeList,
-                isBottomSheetVisible = state.getBadgeBottomSheetState,
+                isBottomSheetVisible = state.isGetBadgeBottomSheetVisible,
                 onDismissRequest = { onClickBadgeCloseBtn() },
                 onClickCancelButton = { onClickBadgeCloseBtn() },
             )

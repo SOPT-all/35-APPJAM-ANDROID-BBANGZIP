@@ -12,22 +12,22 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class SubjectDetailContract {
     @Parcelize
     data class SubjectDetailState(
-        val tabIndex: Int = 0,
-        val isMenuOpen: Boolean = false,
+        val isKebabMenuOpen: Boolean = false,
         val isTopBarShadowed: Boolean = false,
+        val isRevertCompleteBottomSheetVisible: Boolean = false,
+        val isGetBadgeBottomSheetVisible: Boolean = false,
         val pieceViewType: PieceViewType = PieceViewType.DEFAULT,
-        val selectedItemSet: Set<Int> = setOf(),
-        val revertCompleteBottomSheetState: Boolean = false,
+        val tabIndex: Int = 0,
         val examDate: String = "2025년 11월 25일",
-        val examDday: Int = -14,
+        val examDDay: Int = -14,
         val motivationMessage: String = "사장님의 각오 한마디를 작성해보세요",
-        val selectedItemId: Int = -1,
+        val selectedPieceId: Int = -1,
         val subjectId: Int = 0,
         val examName: String = "중간고사",
         val subjectName: String = "",
+        val selectedPieceSet: Set<Int> = setOf(),
         val todoList: List<ToDoCardModel> = emptyList(),
         val badgeList: List<Badge> = emptyList(),
-        val getBadgeBottomSheetState: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
