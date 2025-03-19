@@ -91,7 +91,7 @@ fun SubjectScreen(
                             modifier = modifier,
                             subjects = state.subjectCardList,
                             onTrashIconClick = onTrashIconClick,
-                            onDefaultModeSubjectCardClick = onDefaultModeSubjectCardClick,
+                            onSubjectCardClick = onDefaultModeSubjectCardClick,
                             onAddSubjectCardClick = onAddSubjectCardClick,
                         )
 
@@ -99,7 +99,7 @@ fun SubjectScreen(
                         DeleteCardView(
                             modifier = modifier,
                             subjects = state.subjectCardList,
-                            onDeleteModeSubjectCardClick = onDeleteModeSubjectCardClick,
+                            onSubjectCardClick = onDeleteModeSubjectCardClick,
                             onCancleIconClick = onCancleIconClick,
                             bottomPadding = bottomBarPadding,
                         )
@@ -193,7 +193,7 @@ private fun DefaultCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     onTrashIconClick: () -> Unit = {},
-    onDefaultModeSubjectCardClick: (Int, String) -> Unit = { _, _ -> },
+    onSubjectCardClick: (Int, String) -> Unit = { _, _ -> },
     onAddSubjectCardClick: () -> Unit = {},
 ) {
     Column {
@@ -233,7 +233,7 @@ private fun DefaultCardView(
             subjects.forEach { subject ->
                 SubjectCard(
                     data = subject,
-                    onClick = onDefaultModeSubjectCardClick
+                    onClick = onSubjectCardClick
                 )
             }
 
@@ -246,118 +246,66 @@ private fun DefaultCardView(
     }
 }
 
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 private fun DeleteCardView(
     modifier: Modifier,
     subjects: List<SubjectCardModel>,
     bottomPadding: Dp,
-    onDeleteModeSubjectCardClick: (Int, String) -> Unit = { _, _ -> },
+    onSubjectCardClick: (Int, String) -> Unit = { _, _ -> },
     onCancleIconClick: () -> Unit = {},
 ) {
-    Box {
-        Column {
-            Row(
-                modifier = Modifier.padding(start = 24.dp, end = 16.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = stringResource(R.string.delete_subject_title),
-                    style = BbangZipTheme.typography.headline2Bold,
-                    color = BbangZipTheme.colors.labelAlternative_282119_61,
-                )
+    Column {
+        Row(
+            modifier = Modifier.padding(start = 24.dp, end = 16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(
+                text = stringResource(R.string.delete_subject_title),
+                style = BbangZipTheme.typography.headline2Bold,
+                color = BbangZipTheme.colors.labelAlternative_282119_61,
+            )
 
-                Gap()
+            Gap()
 
-                Icon(
-                    imageVector = ImageVector.vectorResource(R.drawable.ic_x_small_24),
-                    contentDescription = null,
-                    modifier =
-                        modifier
-                            .applyFilterOnClick(
-                                radius = 20.dp,
-                                isDisabled = false,
-                            ) {
-                                onCancleIconClick()
-                            }
-                            .padding(8.dp),
-                    tint = BbangZipTheme.colors.labelAlternative_282119_61,
-                )
-            }
-
-            Gap(24)
-
-            if (subjects.size % 2 == 1) {
-                for (i in 0 until (subjects.size + 1) / 2) {
-                    if (i == (subjects.size + 1) / 2 - 1) {
-                        Row(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = 16.dp,
-                                        end = 16.dp,
-                                    ),
-                            horizontalArrangement = Arrangement.SpaceBetween,
+            Icon(
+                imageVector = ImageVector.vectorResource(R.drawable.ic_x_small_24),
+                contentDescription = null,
+                modifier =
+                    modifier
+                        .applyFilterOnClick(
+                            radius = 20.dp,
+                            isDisabled = false,
                         ) {
-                            SubjectCard(
-                                data = subjects.last(),
-                                onClick = { index, subjectName ->
-                                    onDeleteModeSubjectCardClick(index, subjectName)
-                                },
-                            )
+                            onCancleIconClick()
                         }
-                    } else {
-                        Row(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .padding(
-                                        start = 16.dp,
-                                        end = 16.dp,
-                                        bottom = 16.dp,
-                                    ),
-                            horizontalArrangement = Arrangement.SpaceBetween,
-                        ) {
-                            for (j in i * 2 until (i + 1) * 2) {
-                                SubjectCard(
-                                    data = subjects[j],
-                                    onClick = { index, subjectName ->
-                                        onDeleteModeSubjectCardClick(index, subjectName)
-                                    },
-                                )
-                            }
-                        }
-                    }
-                }
-            } else {
-                for (i in 0 until subjects.size / 2) {
-                    Row(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(
-                                    start = 16.dp,
-                                    end = 16.dp,
-                                    bottom = 16.dp,
-                                ),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        for (j in i * 2 until (i + 1) * 2) {
-                            SubjectCard(
-                                data = subjects[j],
-                                onClick = { index, subjectName ->
-                                    onDeleteModeSubjectCardClick(index, subjectName)
-                                },
-                            )
-                        }
-                    }
-                }
-            }
-
-            Spacer(modifier = Modifier.height(bottomPadding))
-
-            Gap(height = 92)
+                        .padding(8.dp),
+                tint = BbangZipTheme.colors.labelAlternative_282119_61,
+            )
         }
+
+        Gap(24)
+
+        FlowRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            subjects.forEach { subject ->
+                SubjectCard(
+                    data = subject,
+                    onClick = onSubjectCardClick
+                )
+            }
+        }
+
+        // 삭제 버튼이 들어갈 Gap
+        Gap(height = 92)
+
+        // bottom navigation height
+        Gap(height = bottomPadding.value.toInt())
     }
 }
 
