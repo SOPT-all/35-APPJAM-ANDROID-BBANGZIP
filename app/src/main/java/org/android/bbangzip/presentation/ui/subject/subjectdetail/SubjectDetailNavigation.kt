@@ -29,7 +29,6 @@ fun NavGraphBuilder.subjectDetailNavGraph(
     popBackStack: () -> Unit = {},
     navigateToModifyMotivation: (Int, String) -> Unit = { _, _ -> },
     navigateToModifySubjectName: (Int, String) -> Unit = { _, _ -> },
-    navigateToSubject: () -> Unit = {},
     navigateToAddStudy: (SplitStudyData) -> Unit = {},
 ) {
     composable<SubjectDetailRoute> { backStackEntry ->

@@ -38,51 +38,55 @@ class SubjectDetailContract {
             val subjectName: String,
         ) : SubjectDetailEvent
 
-        data class OnPlusIconClicked(val splitStudyData: SplitStudyData) : SubjectDetailEvent
+        data class OnPlusIconClick(val splitStudyData: SplitStudyData) : SubjectDetailEvent
 
-        data object OnTrashIconClicked : SubjectDetailEvent
+        data class OnAddStudyBtnClick(val splitStudyData: SplitStudyData) : SubjectDetailEvent
 
-        data object OnCloseIconClicked : SubjectDetailEvent
+        data class OnAddStudyCardClick(val splitStudyData: SplitStudyData) : SubjectDetailEvent
 
-        data object OnDeleteButtonClicked : SubjectDetailEvent
+        data object OnTrashIconClick : SubjectDetailEvent
 
-        data class OnRevertCompleteBottomSheetApproveButtonClicked(val pieceId: Int) : SubjectDetailEvent
+        data object OnCloseIconClick : SubjectDetailEvent
 
-        data object OnRevertCompleteBottomSheetDismissButtonClicked : SubjectDetailEvent
+        data object OnDeleteBtnClick : SubjectDetailEvent
 
-        data object OnRevertCompleteBottomSheetDissmissRequest : SubjectDetailEvent
+        data class OnRevertCompleteBottomSheetApproveBtnClick(val pieceId: Int) : SubjectDetailEvent
 
-        data object OnClickKebabMenu : SubjectDetailEvent
+        data object OnRevertCompleteBottomSheetDismissBtnClick : SubjectDetailEvent
 
-        data class OnClickTab(val index: Int) : SubjectDetailEvent
+        data object OnRevertCompleteBottomSheetDismissRequest : SubjectDetailEvent
 
-        data class OnClickEnrollMotivateMessage(
+        data object OnKebabIconClick : SubjectDetailEvent
+
+        data class OnTabClick(val index: Int) : SubjectDetailEvent
+
+        data class OnEnrollMotivateMessageClick(
             val subjectId: Int,
             val subjectName: String,
         ) : SubjectDetailEvent
 
-        data class OnClickModifySubjectName(
+        data class OnModifySubjectNameClick(
             val subjectId: Int,
             val subjectName: String,
         ) : SubjectDetailEvent
 
-        data class OnDeleteModeCardClicked(
+        data class OnDeleteModePieceCardClick(
             val pieceId: Int,
         ) : SubjectDetailEvent
 
-        data class OnDefaultCardClicked(
+        data class OnDefaultModePieceCardClick(
             val pieceId: Int,
         ) : SubjectDetailEvent
 
-        data class OnCompleteCardClicked(
+        data class OnCompleteModePieceCardClick(
             val pieceId: Int,
         ) : SubjectDetailEvent
 
-        data object OnClickGetBadgeBottomSheetCloseBtn : SubjectDetailEvent
+        data object OnGetBadgeBottomSheetCloseBtnClick : SubjectDetailEvent
 
-        data object OnClickBackIconBtn : SubjectDetailEvent
+        data object OnBackIconBtnClick : SubjectDetailEvent
 
-        data object OnClickKebabOutside : SubjectDetailEvent
+        data object OnMenuDismissRequest : SubjectDetailEvent
     }
 
     sealed interface SubjectDetailReduce : BaseContract.Reduce {

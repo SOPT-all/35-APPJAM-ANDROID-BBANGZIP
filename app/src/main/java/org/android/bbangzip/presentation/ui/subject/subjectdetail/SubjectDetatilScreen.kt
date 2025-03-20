@@ -84,22 +84,24 @@ fun SubjectDetailScreen(
     examDDay: Int,
     examDate: String,
     examName: String,
-    onRevertCompleteBottomSheetDismissButtonClicked: () -> Unit = {},
-    onRevertCompleteBottomSheetApproveButtonClicked: (Int) -> Unit = {},
+    onRevertCompleteBottomSheetDismissBtnClick: () -> Unit = {},
+    onRevertCompleteBottomSheetApproveBtnClick: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
-    onTrashIconClicked: () -> Unit = {},
-    onCloseIconClicked: () -> Unit = {},
-    onDeleteModeCardClicked: (Int) -> Unit = {},
-    onClickDeleteBtn: () -> Unit = {},
-    onClickEnrollMotivationMessage: (Int, String) -> Unit = { _, _ -> },
-    onClickModifySubjectName: (Int, String) -> Unit = { _, _ -> },
-    onClickKebabMenu: () -> Unit = {},
-    onClickTab: (Int) -> Unit = {},
-    onClickAddStudy: (SplitStudyData) -> Unit = {},
-    onDefaultCardClicked: (Int) -> Unit = {},
-    onCompleteCardClicked: (Int) -> Unit = {},
-    onClickBadgeCloseBtn: () -> Unit,
-    onClickKebabOutside: () -> Unit = {},
+    onTrashIconClick: () -> Unit = {},
+    onCloseIconClick: () -> Unit = {},
+    onDeleteModePieceCardClick: (Int) -> Unit = {},
+    onDeleteBtnClick: () -> Unit = {},
+    onEnrollMotivationMessageClick: (Int, String) -> Unit = { _, _ -> },
+    onModifySubjectNameClick: (Int, String) -> Unit = { _, _ -> },
+    onKebabIconClick: () -> Unit = {},
+    onTabClick: (Int) -> Unit = {},
+    onAddStudyCardClick: (SplitStudyData) -> Unit = {},
+    onAddStudyBtnClick: (SplitStudyData) -> Unit = {},
+    onPlusIconClick: (SplitStudyData) -> Unit = {},
+    onDefaultModePieceCardClick: (Int) -> Unit = {},
+    onCompleteModePieceCardClick: (Int) -> Unit = {},
+    onGetBadgeBottomSheetCloseBtnClick: () -> Unit = {},
+    onMenuDismissRequest: () -> Unit = {},
     popBackStack: () -> Unit,
 ) {
     val configuration = LocalConfiguration.current
@@ -137,7 +139,7 @@ fun SubjectDetailScreen(
                 .fillMaxSize()
                 .pointerInput(Unit) {
                     detectTapGestures {
-                        onClickKebabOutside()
+                        onMenuDismissRequest()
                     }
                 },
     ) {
@@ -170,6 +172,7 @@ fun SubjectDetailScreen(
                                 .clip(shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
                                 .align(Alignment.BottomCenter),
                     )
+
                     TwoLineTextWithWordWrap(motivationMessage)
 
                     Box(
@@ -202,11 +205,11 @@ fun SubjectDetailScreen(
                             horizontalArrangement = Arrangement.SpaceBetween,
                         ) {
                             tabs.forEachIndexed { index, tabName ->
-                                examTab(
+                                ExamTab(
                                     text = tabName,
                                     isSelected = selectedIndex == index,
                                     onClick = {
-                                        onClickTab(index)
+                                        onTabClick(index)
                                         selectedIndex = index
                                     },
                                 )
@@ -221,28 +224,29 @@ fun SubjectDetailScreen(
                         Spacer(modifier = Modifier.height(84.dp))
                         EmptySubjectCardView(
                             splitStudyData = splitStudyData,
-                            onClickAddStudy = onClickAddStudy,
+                            onAddStudyBtnClick = onAddStudyBtnClick,
                         )
                     }
 
                     PieceViewType.DEFAULT -> {
                         DefaultPieceView(
                             todoList = todoList,
-                            onTrashIconClicked = onTrashIconClicked,
-                            onDefaultCardClicked = onDefaultCardClicked,
-                            onCompleteCardClicked = onCompleteCardClicked,
+                            onTrashIconClick = onTrashIconClick,
+                            onDefaultModePieceCardClick = onDefaultModePieceCardClick,
+                            onCompleteModePieceCardClick = onCompleteModePieceCardClick,
                             dDay = examDDay.toString(),
                             examDay = examDate,
                             splitStudyData = splitStudyData,
-                            onClickAddStudy = onClickAddStudy,
+                            onAddStudyCardClick = onAddStudyCardClick,
+                            onPlusIconClick = onPlusIconClick,
                         )
                     }
 
                     PieceViewType.DELETE -> {
                         DeletePieceView(
                             todoList = todoList,
-                            onCloseIconClicked = onCloseIconClicked,
-                            onDeleteModeCardClicked = onDeleteModeCardClicked,
+                            onCloseIconClick = onCloseIconClick,
+                            onDeleteModePieceCardClick = onDeleteModePieceCardClick,
                         )
                     }
                 }
@@ -254,7 +258,7 @@ fun SubjectDetailScreen(
                 backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 trailingIcon = R.drawable.ic_menu_kebab_default_24,
-                onTrailingIconClick = { onClickKebabMenu() },
+                onTrailingIconClick = onKebabIconClick,
                 onLeadingIconClick = popBackStack,
                 title = subjectName,
             )
@@ -290,7 +294,7 @@ fun SubjectDetailScreen(
                                         radius = 16.dp,
                                         isDisabled = false,
                                     ) {
-                                        onClickEnrollMotivationMessage(subjectId, subjectName)
+                                        onEnrollMotivationMessageClick(subjectId, subjectName)
                                     }
                                     .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
                         )
@@ -305,7 +309,7 @@ fun SubjectDetailScreen(
                                     .applyFilterOnClick(
                                         radius = 16.dp,
                                         isDisabled = false,
-                                    ) { onClickModifySubjectName(subjectId, subjectName) }
+                                    ) { onModifySubjectNameClick(subjectId, subjectName) }
                                     .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
                         )
                     }
@@ -322,10 +326,7 @@ fun SubjectDetailScreen(
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
                     bbangZipButtonSize = BbangZipButtonSize.Large,
-                    onClick = {
-                        onClickDeleteBtn()
-                        Timber.tag("김재민").d("onClickDeleteBtn")
-                    },
+                    onClick = onDeleteBtnClick,
                     modifier = Modifier.fillMaxWidth(),
                     label = if (deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
                     trailingIcon = R.drawable.ic_trash_default_24,
@@ -338,18 +339,18 @@ fun SubjectDetailScreen(
             modifier = Modifier.padding(bottom = 16.dp),
             isBottomSheetVisible = revertCompleteBottomSheetState,
             bottomSheetTitle = "미완료 상태로 되돌릴까요?",
-            selectedCompleteItemId = selectedItemId,
+            selectedCompletePieceId = selectedItemId,
             onDismissRequest = onRevertCompleteBottomSheetDismissRequest,
-            onClickInteractButton = onRevertCompleteBottomSheetApproveButtonClicked,
-            onClickCancelButton = onRevertCompleteBottomSheetDismissButtonClicked,
+            onApproveBtnClick = onRevertCompleteBottomSheetApproveBtnClick,
+            onCancelBtnClick = onRevertCompleteBottomSheetDismissBtnClick,
         )
 
         if (state.badgeList.isNotEmpty()) {
             BbangZipGetBadgeBottomSheet(
                 badgeList = state.badgeList,
                 isBottomSheetVisible = state.isGetBadgeBottomSheetVisible,
-                onDismissRequest = { onClickBadgeCloseBtn() },
-                onClickCancelButton = { onClickBadgeCloseBtn() },
+                onDismissRequest = onGetBadgeBottomSheetCloseBtnClick,
+                onClickCancelButton = onGetBadgeBottomSheetCloseBtnClick,
             )
         }
     }
@@ -361,10 +362,11 @@ private fun DefaultPieceView(
     dDay: String,
     examDay: String,
     splitStudyData: SplitStudyData,
-    onTrashIconClicked: () -> Unit = {},
-    onDefaultCardClicked: (Int) -> Unit,
-    onCompleteCardClicked: (Int) -> Unit,
-    onClickAddStudy: (SplitStudyData) -> Unit = {},
+    onTrashIconClick: () -> Unit = {},
+    onDefaultModePieceCardClick: (Int) -> Unit,
+    onCompleteModePieceCardClick: (Int) -> Unit,
+    onAddStudyCardClick: (SplitStudyData) -> Unit = {},
+    onPlusIconClick: (SplitStudyData) -> Unit = {},
 ) {
     Column(
         modifier =
@@ -424,7 +426,7 @@ private fun DefaultPieceView(
                         .applyFilterOnClick(
                             radius = 20.dp,
                             isDisabled = false,
-                        ) { onTrashIconClicked() }
+                        ) { onTrashIconClick() }
                         .padding(8.dp),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
@@ -438,7 +440,7 @@ private fun DefaultPieceView(
                             radius = 20.dp,
                             isDisabled = false,
                         ) {
-                            onClickAddStudy(splitStudyData)
+                            onPlusIconClick(splitStudyData)
                         }
                         .padding(8.dp),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
@@ -451,14 +453,15 @@ private fun DefaultPieceView(
             ToDoCard(
                 data = item,
                 onClick = {
-                    onDefaultCardClicked(item.pieceId)
-                    if (item.cardState == BbangZipCardState.COMPLETE) onCompleteCardClicked(item.pieceId)
+                    onDefaultModePieceCardClick(item.pieceId)
+                    if (item.cardState == BbangZipCardState.COMPLETE) onCompleteModePieceCardClick(item.pieceId)
                 },
             )
 
             Spacer(modifier = Modifier.height(12.dp))
         }
 
+        // 공부 추가 카드
         Box(
             modifier =
                 Modifier
@@ -471,7 +474,7 @@ private fun DefaultPieceView(
                     .applyFilterOnClick(
                         radius = 24.dp,
                         isDisabled = false,
-                    ) { onClickAddStudy(splitStudyData) },
+                    ) { onAddStudyCardClick(splitStudyData) },
         ) {
             Row(
                 modifier =
@@ -516,8 +519,8 @@ private fun DefaultPieceView(
 @Composable
 private fun DeletePieceView(
     todoList: List<ToDoCardModel>,
-    onCloseIconClicked: () -> Unit,
-    onDeleteModeCardClicked: (Int) -> Unit = {},
+    onCloseIconClick: () -> Unit,
+    onDeleteModePieceCardClick: (Int) -> Unit = {},
 ) {
     Column(
         modifier =
@@ -577,7 +580,7 @@ private fun DeletePieceView(
                         .applyFilterOnClick(
                             radius = 20.dp,
                             isDisabled = false,
-                        ) { onCloseIconClicked() }
+                        ) { onCloseIconClick() }
                         .padding(8.dp),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
@@ -589,7 +592,7 @@ private fun DeletePieceView(
             ToDoCard(
                 data = item,
                 onClick = {
-                    onDeleteModeCardClicked(item.pieceId)
+                    onDeleteModePieceCardClick(item.pieceId)
                 },
             )
 
@@ -601,7 +604,7 @@ private fun DeletePieceView(
 }
 
 @Composable
-private fun examTab(
+private fun ExamTab(
     text: String,
     isSelected: Boolean,
     onClick: () -> Unit,
@@ -687,10 +690,9 @@ private fun processTextForWordWrap(
 
 @Composable
 private fun EmptySubjectCardView(
-    modifier: Modifier = Modifier,
     splitStudyData: SplitStudyData,
-    onAddSubjectButtonClicked: () -> Unit = {},
-    onClickAddStudy: (SplitStudyData) -> Unit = {},
+    modifier: Modifier = Modifier,
+    onAddStudyBtnClick: (SplitStudyData) -> Unit = {},
 ) {
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
         Image(
@@ -707,7 +709,7 @@ private fun EmptySubjectCardView(
         BbangZipButton(
             bbangZipButtonType = BbangZipButtonType.Solid,
             bbangZipButtonSize = BbangZipButtonSize.Large,
-            onClick = { onClickAddStudy(splitStudyData) },
+            onClick = { onAddStudyBtnClick(splitStudyData) },
             label = stringResource(R.string.btn_add_todo_label),
             modifier = Modifier.fillMaxWidth(),
             trailingIcon = R.drawable.ic_plus_thick_24,
@@ -720,11 +722,11 @@ private fun EmptySubjectCardView(
 fun RevertCompleteBottomSheet(
     isBottomSheetVisible: Boolean,
     bottomSheetTitle: String,
-    selectedCompleteItemId: Int,
+    selectedCompletePieceId: Int,
     modifier: Modifier = Modifier,
     onDismissRequest: () -> Unit = {},
-    onClickInteractButton: (Int) -> Unit = {},
-    onClickCancelButton: () -> Unit = {},
+    onApproveBtnClick: (Int) -> Unit = {},
+    onCancelBtnClick: () -> Unit = {},
 ) {
     BbangZipBasicModalBottomSheet(
         modifier = modifier,
@@ -747,7 +749,7 @@ fun RevertCompleteBottomSheet(
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
-                onClick = { onClickInteractButton(selectedCompleteItemId) },
+                onClick = { onApproveBtnClick(selectedCompletePieceId) },
                 label = stringResource(R.string.todo_revert_bottomsheet_approve_text),
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -758,7 +760,7 @@ fun RevertCompleteBottomSheet(
             BbangZipButton(
                 bbangZipButtonType = BbangZipButtonType.Outlined,
                 bbangZipButtonSize = BbangZipButtonSize.Large,
-                onClick = onClickCancelButton,
+                onClick = onCancelBtnClick,
                 label = stringResource(R.string.btn_cancle_label),
                 modifier = Modifier.fillMaxWidth(),
             )
@@ -787,7 +789,6 @@ private fun SubjectDetailScreenPreview() {
         examDate = "2025년 1월 1일",
         examDDay = 14,
         examName = "중간고사",
-        onClickBadgeCloseBtn = { },
         popBackStack = { },
     )
 }

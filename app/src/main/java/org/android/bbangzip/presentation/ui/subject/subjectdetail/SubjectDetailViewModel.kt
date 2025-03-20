@@ -43,20 +43,20 @@ class SubjectDetailViewModel
                         initData(event.subjectId)
                     }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnTrashIconClicked -> {
+                SubjectDetailContract.SubjectDetailEvent.OnTrashIconClick -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDeleteMode)
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnCloseIconClicked -> {
+                SubjectDetailContract.SubjectDetailEvent.OnCloseIconClick -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnDeleteModeCardClicked -> {
+                is SubjectDetailContract.SubjectDetailEvent.OnDeleteModePieceCardClick -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteModeCardState(event.pieceId))
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet(event.pieceId))
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnDefaultCardClicked -> {
+                is SubjectDetailContract.SubjectDetailEvent.OnDefaultModePieceCardClick -> {
                     viewModelScope.launch {
                         postCompleteCardId(event.pieceId)
                     }
@@ -64,12 +64,12 @@ class SubjectDetailViewModel
                     // 사이드 이펙트  스낵바 메시지
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnCompleteCardClicked -> {
+                is SubjectDetailContract.SubjectDetailEvent.OnCompleteModePieceCardClick -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSelectedId(event.pieceId))
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveButtonClicked -> {
+                is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveBtnClick -> {
                     viewModelScope.launch {
                         postUnCompleteCardId(event.pieceId)
                     }
@@ -78,49 +78,55 @@ class SubjectDetailViewModel
                     // TODO 사이드 이펙트 스낵바
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissButtonClicked -> {
+                SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissBtnClick -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDissmissRequest -> {
+                SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissRequest -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnClickEnrollMotivateMessage -> {
+                is SubjectDetailContract.SubjectDetailEvent.OnEnrollMotivateMessageClick -> {
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifyMotivation(subjectId = event.subjectId, subjectName = event.subjectName))
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnClickModifySubjectName -> {
+                is SubjectDetailContract.SubjectDetailEvent.OnModifySubjectNameClick -> {
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifySubjectName(subjectId = event.subjectId, subjectName = event.subjectName))
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClicked -> {
-                    Timber.tag("김재민").d("되나?")
+                is SubjectDetailContract.SubjectDetailEvent.OnPlusIconClick -> {
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
                 }
 
-                SubjectDetailContract.SubjectDetailEvent.OnClickKebabMenu -> {
+                is SubjectDetailContract.SubjectDetailEvent.OnAddStudyCardClick -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
+                }
+
+                is SubjectDetailContract.SubjectDetailEvent.OnAddStudyBtnClick -> {
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy(splitStudyData = event.splitStudyData))
+                }
+
+                SubjectDetailContract.SubjectDetailEvent.OnKebabIconClick -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnClickTab -> {
+                is SubjectDetailContract.SubjectDetailEvent.OnTabClick -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateExamName(event.index))
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnDeleteButtonClicked -> {
-                    Timber.tag("[과목 관리]").d("버튼 클릭")
+                SubjectDetailContract.SubjectDetailEvent.OnDeleteBtnClick -> {
                     viewModelScope.launch { deleteStudyPiece() }
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnClickGetBadgeBottomSheetCloseBtn -> {
+                SubjectDetailContract.SubjectDetailEvent.OnGetBadgeBottomSheetCloseBtnClick -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = false))
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnClickBackIconBtn -> {
+                SubjectDetailContract.SubjectDetailEvent.OnBackIconBtnClick -> {
                     setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.PopBackStack)
                 }
 
-                is SubjectDetailContract.SubjectDetailEvent.OnClickKebabOutside -> {
+                SubjectDetailContract.SubjectDetailEvent.OnMenuDismissRequest -> {
                     updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsKebabMenuOpen)
                 }
             }
