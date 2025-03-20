@@ -102,7 +102,7 @@ fun SubjectDetailScreen(
     onCompleteModePieceCardClick: (Int) -> Unit = {},
     onGetBadgeBottomSheetCloseBtnClick: () -> Unit = {},
     onMenuDismissRequest: () -> Unit = {},
-    popBackStack: () -> Unit,
+    navigateToBack: () -> Unit,
 ) {
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
@@ -259,7 +259,7 @@ fun SubjectDetailScreen(
                 leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                 trailingIcon = R.drawable.ic_menu_kebab_default_24,
                 onTrailingIconClick = onKebabIconClick,
-                onLeadingIconClick = popBackStack,
+                onLeadingIconClick = navigateToBack,
                 title = subjectName,
             )
             if (isMenuOpen) {
@@ -789,6 +789,6 @@ private fun SubjectDetailScreenPreview() {
         examDate = "2025년 1월 1일",
         examDDay = 14,
         examName = "중간고사",
-        popBackStack = { },
+        navigateToBack = { },
     )
 }

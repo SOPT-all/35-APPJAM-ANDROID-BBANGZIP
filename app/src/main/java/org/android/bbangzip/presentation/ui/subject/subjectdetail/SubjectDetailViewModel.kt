@@ -123,7 +123,7 @@ class SubjectDetailViewModel
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnBackIconBtnClick -> {
-                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.PopBackStack)
+                    setSideEffect(SubjectDetailContract.SubjectDetailSideEffect.NavigateToBack)
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnMenuDismissRequest -> {

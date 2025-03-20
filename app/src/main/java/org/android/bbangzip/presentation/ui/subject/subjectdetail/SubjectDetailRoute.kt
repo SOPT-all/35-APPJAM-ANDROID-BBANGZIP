@@ -21,8 +21,7 @@ fun SubjectDetailRoute(
     padding: PaddingValues,
     subjectId: Int,
     subjectName: String,
-    popBackStack: () -> Unit,
-    navigateToSubject: () -> Unit = {},
+    navigateToBack: () -> Unit,
     navigateToModifyMotivation: (Int, String) -> Unit,
     navigateToModifySubjectName: (Int, String) -> Unit,
     navigateToAddStudy: (SplitStudyData) -> Unit,
@@ -37,15 +36,11 @@ fun SubjectDetailRoute(
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
-                is SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddSubject -> {
-//                    navigateToModifyMotivation()
-                }
-
                 is SubjectDetailContract.SubjectDetailSideEffect.NavigateToAddStudy -> {
                     navigateToAddStudy(effect.splitStudyData)
                 }
 
-                is SubjectDetailContract.SubjectDetailSideEffect.ShowDeleteSuccessSnackBar -> {
+                is SubjectDetailContract.SubjectDetailSideEffect.ShowSnackBar -> {
                 }
 
                 is SubjectDetailContract.SubjectDetailSideEffect.NavigateToModifyMotivation -> {
@@ -56,8 +51,8 @@ fun SubjectDetailRoute(
                     navigateToModifySubjectName(effect.subjectId, effect.subjectName)
                 }
 
-                is SubjectDetailContract.SubjectDetailSideEffect.PopBackStack -> {
-                    navigateToSubject()
+                is SubjectDetailContract.SubjectDetailSideEffect.NavigateToBack -> {
+                    navigateToBack()
                 }
             }
         }
@@ -98,7 +93,7 @@ fun SubjectDetailRoute(
                 onRevertCompleteBottomSheetDismissBtnClick = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissBtnClick) },
                 onGetBadgeBottomSheetCloseBtnClick = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnGetBadgeBottomSheetCloseBtnClick) },
                 onMenuDismissRequest = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnMenuDismissRequest) },
-                popBackStack = { popBackStack() },
+                navigateToBack = { navigateToBack() },
             )
 
         false ->

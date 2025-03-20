@@ -127,17 +127,14 @@ class SubjectDetailContract {
     }
 
     sealed interface SubjectDetailSideEffect : BaseContract.SideEffect {
-        data object NavigateToAddSubject : SubjectDetailSideEffect
-
         data class NavigateToAddStudy(val splitStudyData: SplitStudyData) : SubjectDetailSideEffect
 
         data class NavigateToModifyMotivation(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
 
         data class NavigateToModifySubjectName(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
 
-        // 공부 n개가 삭제 되었어요
-        data object ShowDeleteSuccessSnackBar : SubjectDetailSideEffect
+        data object ShowSnackBar : SubjectDetailSideEffect
 
-        data object PopBackStack : SubjectDetailSideEffect
+        data object NavigateToBack : SubjectDetailSideEffect
     }
 }
