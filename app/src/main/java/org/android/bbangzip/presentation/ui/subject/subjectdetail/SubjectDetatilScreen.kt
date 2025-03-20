@@ -119,42 +119,42 @@ fun SubjectDetailScreen(
 
     Box(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .pointerInput(Unit) {
-                detectTapGestures {
-                    onMenuDismissRequest()
-                }
-            },
+            Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) {
+                    detectTapGestures {
+                        onMenuDismissRequest()
+                    }
+                },
     ) {
         LazyColumn(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+                Modifier
+                    .fillMaxSize()
+                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
             state = scrollState,
         ) {
             item {
                 Box(
                     modifier =
-                    Modifier
-                        .fillMaxWidth()
-                        .height(backgroundHeight.dp)
-                        .background(
-                            color = BbangZipTheme.colors.backgroundAccent_FFDAA0,
-                            shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp),
-                        ),
+                        Modifier
+                            .fillMaxWidth()
+                            .height(backgroundHeight.dp)
+                            .background(
+                                color = BbangZipTheme.colors.backgroundAccent_FFDAA0,
+                                shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp),
+                            ),
                 ) {
                     Image(
                         painter = painterResource(R.drawable.img_subject_detail_header),
                         contentDescription = null,
                         modifier =
-                        Modifier
-                            .padding(top = 60.dp)
-                            .fillMaxSize()
-                            .aspectRatio(360f / 172f)
-                            .clip(shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
-                            .align(Alignment.BottomCenter),
+                            Modifier
+                                .padding(top = 60.dp)
+                                .fillMaxSize()
+                                .aspectRatio(360f / 172f)
+                                .clip(shape = RoundedCornerShape(bottomStart = 40.dp, bottomEnd = 40.dp))
+                                .align(Alignment.BottomCenter),
                     )
 
                     TwoLineTextWithWordWrap(text = state.motivationMessage.ifEmpty { stringResource(R.string.subject_detail_default_motivation_message) })
@@ -163,7 +163,7 @@ fun SubjectDetailScreen(
                         modifier = Modifier.align(Alignment.BottomCenter),
                         tabs = tabs,
                         state = state,
-                        onTabClick = onTabClick
+                        onTabClick = onTabClick,
                     )
                 }
             }
@@ -221,7 +221,7 @@ fun SubjectDetailScreen(
                     modifier = Modifier.align(Alignment.End),
                     onEnrollMotivationMessageClick = onEnrollMotivationMessageClick,
                     state = state,
-                    onModifySubjectNameClick = onModifySubjectNameClick
+                    onModifySubjectNameClick = onModifySubjectNameClick,
                 )
             }
         }
@@ -289,14 +289,14 @@ private fun DefaultPieceView(
 
         PieceViewDateRow(
             dDay = dDay,
-            examDay = examDay
+            examDay = examDay,
         )
 
         Gap(height = 40)
 
         DefaultPieceViewTopBar(
             onTrashIconClick = onTrashIconClick,
-            onPlusIconClick = { onPlusIconClick(splitStudyData) }
+            onPlusIconClick = { onPlusIconClick(splitStudyData) },
         )
 
         Gap(height = 16)
@@ -305,8 +305,11 @@ private fun DefaultPieceView(
             ToDoCard(
                 data = item,
                 onClick = {
-                    if (item.cardState == BbangZipCardState.COMPLETE) onCompleteModePieceCardClick(item.pieceId)
-                    else onDefaultModePieceCardClick(item.pieceId)
+                    if (item.cardState == BbangZipCardState.COMPLETE) {
+                        onCompleteModePieceCardClick(item.pieceId)
+                    } else {
+                        onDefaultModePieceCardClick(item.pieceId)
+                    }
                 },
             )
 
@@ -338,7 +341,7 @@ private fun DeletePieceView(
 
         PieceViewDateRow(
             dDay = dDay,
-            examDay = examDay
+            examDay = examDay,
         )
 
         Gap(height = 40)
@@ -369,9 +372,9 @@ private fun DefaultPieceViewTopBar(
 ) {
     Row(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(start = 8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -386,12 +389,12 @@ private fun DefaultPieceViewTopBar(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_trash_default_24),
             contentDescription = null,
             modifier =
-            Modifier
-                .applyFilterOnClick(
-                    radius = 20.dp,
-                    isDisabled = false,
-                ) { onTrashIconClick() }
-                .padding(8.dp),
+                Modifier
+                    .applyFilterOnClick(
+                        radius = 20.dp,
+                        isDisabled = false,
+                    ) { onTrashIconClick() }
+                    .padding(8.dp),
             tint = BbangZipTheme.colors.labelAlternative_282119_61,
         )
 
@@ -399,28 +402,27 @@ private fun DefaultPieceViewTopBar(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
             contentDescription = null,
             modifier =
-            Modifier
-                .applyFilterOnClick(
-                    radius = 20.dp,
-                    isDisabled = false,
-                    onClick = onPlusIconClick
-                )
-                .padding(8.dp),
+                Modifier
+                    .applyFilterOnClick(
+                        radius = 20.dp,
+                        isDisabled = false,
+                        onClick = onPlusIconClick,
+                    )
+                    .padding(8.dp),
             tint = BbangZipTheme.colors.labelAlternative_282119_61,
         )
     }
 }
 
-
 @Composable
 private fun DeletePieceViewTopBar(
-    onCloseIconClick: () -> Unit
+    onCloseIconClick: () -> Unit,
 ) {
     Row(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .padding(start = 8.dp),
+            Modifier
+                .fillMaxWidth()
+                .padding(start = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -435,13 +437,13 @@ private fun DeletePieceViewTopBar(
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_x_small_24),
             contentDescription = null,
             modifier =
-            Modifier
-                .applyFilterOnClick(
-                    radius = 20.dp,
-                    isDisabled = false,
-                    onClick = onCloseIconClick
-                )
-                .padding(8.dp),
+                Modifier
+                    .applyFilterOnClick(
+                        radius = 20.dp,
+                        isDisabled = false,
+                        onClick = onCloseIconClick,
+                    )
+                    .padding(8.dp),
             tint = BbangZipTheme.colors.labelAlternative_282119_61,
         )
     }
@@ -451,7 +453,7 @@ private fun DeletePieceViewTopBar(
 private fun PieceViewDateRow(
     dDay: String,
     examDay: String,
-){
+) {
     Row(
         modifier = Modifier.padding(start = 8.dp),
         verticalAlignment = Alignment.CenterVertically,
@@ -461,12 +463,12 @@ private fun PieceViewDateRow(
             style = BbangZipTheme.typography.caption1Medium,
             color = BbangZipTheme.colors.staticWhite_FFFFFF,
             modifier =
-            Modifier
-                .background(
-                    color = BbangZipTheme.colors.statusPositive_3D3730,
-                    shape = RoundedCornerShape(11.dp),
-                )
-                .padding(horizontal = 12.dp, vertical = 2.dp),
+                Modifier
+                    .background(
+                        color = BbangZipTheme.colors.statusPositive_3D3730,
+                        shape = RoundedCornerShape(11.dp),
+                    )
+                    .padding(horizontal = 12.dp, vertical = 2.dp),
         )
 
         Spacer(modifier = Modifier.width(8.dp))
@@ -484,44 +486,44 @@ private fun MenuBox(
     modifier: Modifier = Modifier,
     onEnrollMotivationMessageClick: (Int, String) -> Unit,
     state: SubjectDetailContract.SubjectDetailState,
-    onModifySubjectNameClick: (Int, String) -> Unit
+    onModifySubjectNameClick: (Int, String) -> Unit,
 ) {
     Box(
         modifier =
-        modifier
-            .padding(end = 16.dp)
-            .height(128.dp)
-            .width(200.dp)
-            .applyShadows(BbangZipShadowType.HEAVY, shape = RoundedCornerShape(32.dp))
-            .offset(y = (-8).dp),
+            modifier
+                .padding(end = 16.dp)
+                .height(128.dp)
+                .width(200.dp)
+                .applyShadows(BbangZipShadowType.HEAVY, shape = RoundedCornerShape(32.dp))
+                .offset(y = (-8).dp),
     ) {
         Column(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .background(
-                    color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                    shape = RoundedCornerShape(32.dp),
-                )
-                .padding(16.dp),
+                Modifier
+                    .fillMaxSize()
+                    .background(
+                        color = BbangZipTheme.colors.staticWhite_FFFFFF,
+                        shape = RoundedCornerShape(32.dp),
+                    )
+                    .padding(16.dp),
         ) {
             Text(
                 text = stringResource(R.string.subject_detail_navigate_to_modify_motivation_message_menu_label),
                 style = BbangZipTheme.typography.body1Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .applyFilterOnClick(
-                        radius = 16.dp,
-                        isDisabled = false,
-                    ) {
-                        onEnrollMotivationMessageClick(
-                            state.subjectId,
-                            state.subjectName
-                        )
-                    }
-                    .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .applyFilterOnClick(
+                            radius = 16.dp,
+                            isDisabled = false,
+                        ) {
+                            onEnrollMotivationMessageClick(
+                                state.subjectId,
+                                state.subjectName,
+                            )
+                        }
+                        .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
             )
 
             Gap()
@@ -531,18 +533,18 @@ private fun MenuBox(
                 style = BbangZipTheme.typography.body1Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
                 modifier =
-                Modifier
-                    .fillMaxWidth()
-                    .applyFilterOnClick(
-                        radius = 16.dp,
-                        isDisabled = false,
-                    ) {
-                        onModifySubjectNameClick(
-                            state.subjectId,
-                            state.subjectName,
-                        )
-                    }
-                    .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .applyFilterOnClick(
+                            radius = 16.dp,
+                            isDisabled = false,
+                        ) {
+                            onModifySubjectNameClick(
+                                state.subjectId,
+                                state.subjectName,
+                            )
+                        }
+                        .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
             )
         }
     }
@@ -553,33 +555,33 @@ private fun ExamTabRow(
     modifier: Modifier = Modifier,
     tabs: List<String>,
     state: SubjectDetailContract.SubjectDetailState,
-    onTabClick: (Int) -> Unit
+    onTabClick: (Int) -> Unit,
 ) {
     Box(
         modifier =
-        modifier
-            .fillMaxWidth()
-            .padding(horizontal = 16.dp)
-            .offset(y = 32.dp)
-            .height(64.dp)
-            .background(
-                color = BbangZipTheme.colors.staticWhite_FFFFFF,
-                shape = RoundedCornerShape(32.dp),
-            )
-            .applyShadows(
-                BbangZipShadowType.EMPHASIZE,
-                shape = RoundedCornerShape(32.dp),
-            ),
-    ) {
-        Row(
-            modifier =
-            Modifier
-                .fillMaxSize()
+            modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .offset(y = 32.dp)
+                .height(64.dp)
                 .background(
                     color = BbangZipTheme.colors.staticWhite_FFFFFF,
                     shape = RoundedCornerShape(32.dp),
                 )
-                .padding(horizontal = 76.dp),
+                .applyShadows(
+                    BbangZipShadowType.EMPHASIZE,
+                    shape = RoundedCornerShape(32.dp),
+                ),
+    ) {
+        Row(
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .background(
+                        color = BbangZipTheme.colors.staticWhite_FFFFFF,
+                        shape = RoundedCornerShape(32.dp),
+                    )
+                    .padding(horizontal = 76.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceBetween,
         ) {
@@ -627,42 +629,42 @@ private fun ExamTab(
 @Composable
 private fun AddStudyCard(
     onClick: () -> Unit,
-){
+) {
     Row(
         modifier =
-        Modifier
-            .fillMaxWidth()
-            .border(
-                width = 2.dp,
-                color = BbangZipTheme.colors.lineAlternative_68645E_08,
-                shape = RoundedCornerShape(24.dp),
-            )
-            .applyFilterOnClick(
-                radius = 24.dp,
-                isDisabled = false,
-                onClick = onClick
-            )
-            .padding(vertical = 23.dp),
+            Modifier
+                .fillMaxWidth()
+                .border(
+                    width = 2.dp,
+                    color = BbangZipTheme.colors.lineAlternative_68645E_08,
+                    shape = RoundedCornerShape(24.dp),
+                )
+                .applyFilterOnClick(
+                    radius = 24.dp,
+                    isDisabled = false,
+                    onClick = onClick,
+                )
+                .padding(vertical = 23.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center,
     ) {
         Box(
             modifier =
-            Modifier
-                .size(40.dp)
-                .border(
-                    width = 1.dp,
-                    color = BbangZipTheme.colors.lineNormal_68645E_22,
-                    shape = CircleShape,
-                ),
+                Modifier
+                    .size(40.dp)
+                    .border(
+                        width = 1.dp,
+                        color = BbangZipTheme.colors.lineNormal_68645E_22,
+                        shape = CircleShape,
+                    ),
         ) {
             Icon(
                 imageVector = ImageVector.vectorResource(id = R.drawable.ic_plus_default_24),
                 contentDescription = null,
                 modifier =
-                Modifier
-                    .size(20.dp)
-                    .align(Alignment.Center),
+                    Modifier
+                        .size(20.dp)
+                        .align(Alignment.Center),
             )
         }
 
@@ -764,9 +766,9 @@ fun TwoLineTextWithWordWrap(
     BasicText(
         text = displayText ?: AnnotatedString(text),
         modifier =
-        Modifier
-            .width(230.dp)
-            .padding(top = 92.dp, start = 20.dp),
+            Modifier
+                .width(230.dp)
+                .padding(top = 92.dp, start = 20.dp),
         style = BbangZipTheme.typography.heading2Bold,
         onTextLayout = { textLayoutResult ->
             if (displayText == null) {
@@ -819,6 +821,6 @@ private fun processTextForWordWrap(
 @Composable
 private fun SubjectDetailScreenPreview() {
     SubjectDetailScreen(
-        state = SubjectDetailContract.SubjectDetailState()
+        state = SubjectDetailContract.SubjectDetailState(),
     )
 }

@@ -34,12 +34,10 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import okhttp3.internal.immutableListOf
 import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.component.card.AddSubjectCard
 import org.android.bbangzip.presentation.component.card.SubjectCard
-import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.presentation.model.card.SubjectCardModel
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
@@ -51,7 +49,7 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
 fun SubjectScreen(
-    state : SubjectContract.SubjectState,
+    state: SubjectContract.SubjectState,
     padding: PaddingValues,
     modifier: Modifier = Modifier,
     onTrashIconClick: () -> Unit = {},
@@ -71,14 +69,14 @@ fun SubjectScreen(
     Box {
         LazyColumn(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
+                Modifier
+                    .fillMaxSize()
+                    .background(color = BbangZipTheme.colors.staticWhite_FFFFFF),
         ) {
             item {
                 SubjectTopContent(
                     modifier = modifier,
-                    backgroundHeight = backgroundHeight
+                    backgroundHeight = backgroundHeight,
                 )
 
                 Gap(height = 40)
@@ -112,9 +110,9 @@ fun SubjectScreen(
         if (state.subjectCardViewType == CardViewType.DELETE) {
             Box(
                 modifier =
-                Modifier
-                    .align(alignment = Alignment.BottomCenter)
-                    .padding(bottom = 80.dp, start = 16.dp, end = 16.dp),
+                    Modifier
+                        .align(alignment = Alignment.BottomCenter)
+                        .padding(bottom = 80.dp, start = 16.dp, end = 16.dp),
             ) {
                 BbangZipButton(
                     bbangZipButtonType = BbangZipButtonType.Solid,
@@ -137,18 +135,18 @@ private fun SubjectTopContent(
 ) {
     Box(
         modifier =
-        modifier
-            .fillMaxWidth()
-            .height(backgroundHeight.dp)
-            .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
+            modifier
+                .fillMaxWidth()
+                .height(backgroundHeight.dp)
+                .background(color = BbangZipTheme.colors.backgroundAccent_FFDAA0, shape = RoundedCornerShape(bottomStart = 32.dp, bottomEnd = 32.dp)),
     ) {
         Image(
             painter = painterResource(R.drawable.img_subject_header),
             contentDescription = null,
             modifier =
-            Modifier
-                .fillMaxSize()
-                .aspectRatio(360f / 220f),
+                Modifier
+                    .fillMaxSize()
+                    .aspectRatio(360f / 220f),
         )
 
         SemesterSelectionRow()
@@ -159,14 +157,14 @@ private fun SubjectTopContent(
 private fun SemesterSelectionRow(modifier: Modifier = Modifier) {
     Row(
         modifier =
-        modifier
-            .padding(start = 4.dp, top = 18.dp)
-            .applyFilterOnClick(
-                radius = 16.dp,
-                isDisabled = false,
-                onClick = { },
-            )
-            .padding(vertical = 8.dp, horizontal = 20.dp),
+            modifier
+                .padding(start = 4.dp, top = 18.dp)
+                .applyFilterOnClick(
+                    radius = 16.dp,
+                    isDisabled = false,
+                    onClick = { },
+                )
+                .padding(vertical = 8.dp, horizontal = 20.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Text(
@@ -181,8 +179,8 @@ private fun SemesterSelectionRow(modifier: Modifier = Modifier) {
             imageVector = ImageVector.vectorResource(id = R.drawable.ic_chevrondown_small_24),
             contentDescription = null,
             modifier =
-            Modifier
-                .size(size = 20.dp),
+                Modifier
+                    .size(size = 20.dp),
         )
     }
 }
@@ -212,11 +210,12 @@ private fun DefaultCardView(
             Icon(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_trash_default_24),
                 contentDescription = null,
-                modifier = modifier
-                    .applyFilterOnClick(radius = 20.dp, isDisabled = false) {
-                        onTrashIconClick()
-                    }
-                    .padding(8.dp),
+                modifier =
+                    modifier
+                        .applyFilterOnClick(radius = 20.dp, isDisabled = false) {
+                            onTrashIconClick()
+                        }
+                        .padding(8.dp),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
@@ -224,21 +223,22 @@ private fun DefaultCardView(
         Gap(24)
 
         FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             subjects.forEach { subject ->
                 SubjectCard(
                     data = subject,
-                    onClick = onSubjectCardClick
+                    onClick = onSubjectCardClick,
                 )
             }
 
             AddSubjectCard(
-                onClick = onAddSubjectCardClick
+                onClick = onAddSubjectCardClick,
             )
         }
 
@@ -272,14 +272,14 @@ private fun DeleteCardView(
                 imageVector = ImageVector.vectorResource(R.drawable.ic_x_small_24),
                 contentDescription = null,
                 modifier =
-                modifier
-                    .applyFilterOnClick(
-                        radius = 20.dp,
-                        isDisabled = false,
-                    ) {
-                        onCancleIconClick()
-                    }
-                    .padding(8.dp),
+                    modifier
+                        .applyFilterOnClick(
+                            radius = 20.dp,
+                            isDisabled = false,
+                        ) {
+                            onCancleIconClick()
+                        }
+                        .padding(8.dp),
                 tint = BbangZipTheme.colors.labelAlternative_282119_61,
             )
         }
@@ -287,16 +287,17 @@ private fun DeleteCardView(
         Gap(24)
 
         FlowRow(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             subjects.forEach { subject ->
                 SubjectCard(
                     data = subject,
-                    onClick = onSubjectCardClick
+                    onClick = onSubjectCardClick,
                 )
             }
         }
@@ -317,10 +318,10 @@ private fun EmptySubjectCardView(
     Column(modifier = modifier.padding(horizontal = 16.dp)) {
         Box(
             modifier =
-            Modifier
-                .fillMaxWidth()
-                .height(328.dp)
-                .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
+                Modifier
+                    .fillMaxWidth()
+                    .height(328.dp)
+                    .background(color = BbangZipTheme.colors.backgroundAlternative_F5F5F5, shape = RoundedCornerShape(size = 32.dp)),
             contentAlignment = Alignment.Center,
         ) {
             Text(text = stringResource(R.string.empty_view_text))

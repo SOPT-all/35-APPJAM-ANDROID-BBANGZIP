@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.ui.subject
 
-import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
@@ -11,14 +10,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LifecycleEventEffect
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import kotlinx.coroutines.flow.collectLatest
-import org.android.bbangzip.presentation.model.SplitStudyData
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
 @Composable
@@ -57,7 +53,7 @@ fun SubjectRoute(
                 onDefaultModeSubjectCardClick = { id, name -> viewModel.setEvent(SubjectContract.SubjectEvent.OnDefaultModeSubjectCardClick(id, name)) },
                 onCancleIconClick = { viewModel.setEvent(SubjectContract.SubjectEvent.OnCancleIconClick) },
                 onAddSubjectCardClick = { viewModel.setEvent(SubjectContract.SubjectEvent.OnAddSubjectCardClick) },
-                onDeleteBtnClick = { viewModel.setEvent(SubjectContract.SubjectEvent.OnDeleteBtnClick) }
+                onDeleteBtnClick = { viewModel.setEvent(SubjectContract.SubjectEvent.OnDeleteBtnClick) },
             )
 
         false ->
