@@ -68,7 +68,7 @@ fun SubjectDetailRoute(
             SubjectDetailScreen(
                 padding = padding,
                 state = subjectDetailState,
-                isMenuOpen = subjectDetailState.isKebabMenuOpen,
+                isMenuOpen = subjectDetailState.isMenuOpen,
                 todoList = subjectDetailState.todoList,
                 pieceViewType = subjectDetailState.pieceViewType,
                 deletedSet = subjectDetailState.selectedPieceSet,

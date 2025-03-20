@@ -12,7 +12,7 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class SubjectDetailContract {
     @Parcelize
     data class SubjectDetailState(
-        val isKebabMenuOpen: Boolean = false,
+        val isMenuOpen: Boolean = false,
         val isTopBarShadowed: Boolean = false,
         val isRevertCompleteBottomSheetVisible: Boolean = false,
         val isGetBadgeBottomSheetVisible: Boolean = false,

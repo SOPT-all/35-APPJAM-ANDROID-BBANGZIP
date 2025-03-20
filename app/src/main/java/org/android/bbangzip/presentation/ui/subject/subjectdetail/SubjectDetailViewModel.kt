@@ -258,7 +258,7 @@ class SubjectDetailViewModel
 
                 SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
                     state.copy(
-                        isKebabMenuOpen = !state.isKebabMenuOpen,
+                        isMenuOpen = !state.isMenuOpen,
                     )
                 }
 
@@ -294,7 +294,7 @@ class SubjectDetailViewModel
 
                 is SubjectDetailContract.SubjectDetailReduce.UpdateIsKebabMenuOpen -> {
                     state.copy(
-                        isKebabMenuOpen = false,
+                        isMenuOpen = false,
                     )
                 }
             }
