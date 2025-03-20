@@ -70,20 +70,7 @@ import timber.log.Timber
 
 @Composable
 fun SubjectDetailScreen(
-    padding: PaddingValues,
     state: SubjectDetailContract.SubjectDetailState,
-    isMenuOpen: Boolean,
-    todoList: List<ToDoCardModel>,
-    pieceViewType: PieceViewType,
-    deletedSet: Set<Int>,
-    revertCompleteBottomSheetState: Boolean,
-    selectedItemId: Int,
-    subjectId: Int,
-    subjectName: String,
-    motivationMessage: String,
-    examDDay: Int,
-    examDate: String,
-    examName: String,
     onRevertCompleteBottomSheetDismissBtnClick: () -> Unit = {},
     onRevertCompleteBottomSheetApproveBtnClick: (Int) -> Unit = {},
     onRevertCompleteBottomSheetDismissRequest: () -> Unit = {},
@@ -102,7 +89,7 @@ fun SubjectDetailScreen(
     onCompleteModePieceCardClick: (Int) -> Unit = {},
     onGetBadgeBottomSheetCloseBtnClick: () -> Unit = {},
     onMenuDismissRequest: () -> Unit = {},
-    navigateToBack: () -> Unit,
+    navigateToBack: () -> Unit = {},
 ) {
     val configuration = LocalConfiguration.current
     val screenHeightDp = configuration.screenHeightDp
@@ -119,11 +106,11 @@ fun SubjectDetailScreen(
     var selectedIndex by remember { mutableIntStateOf(0) }
     val splitStudyData =
         SplitStudyData(
-            subjectId = subjectId,
-            subjectName = subjectName,
+            subjectId = state.subjectId,
+            subjectName = state.subjectName,
             pieceNumber = 0,
-            examDate = examDate.ifEmpty { "시험 일자 입력" },
-            examName = examName,
+            examDate = state.examDate.ifEmpty { "시험 일자 입력" },
+            examName = state.examName,
             studyContent = "",
             startPage = "",
             endPage = "",
@@ -173,7 +160,7 @@ fun SubjectDetailScreen(
                                 .align(Alignment.BottomCenter),
                     )
 
-                    TwoLineTextWithWordWrap(motivationMessage)
+                    TwoLineTextWithWordWrap(text = state.motivationMessage)
 
                     Box(
                         modifier =
@@ -219,7 +206,7 @@ fun SubjectDetailScreen(
                 }
             }
             item {
-                when (pieceViewType) {
+                when (state.pieceViewType) {
                     PieceViewType.EMPTY -> {
                         Spacer(modifier = Modifier.height(84.dp))
                         EmptySubjectCardView(
@@ -230,12 +217,12 @@ fun SubjectDetailScreen(
 
                     PieceViewType.DEFAULT -> {
                         DefaultPieceView(
-                            todoList = todoList,
+                            todoList = state.todoList,
                             onTrashIconClick = onTrashIconClick,
                             onDefaultModePieceCardClick = onDefaultModePieceCardClick,
                             onCompleteModePieceCardClick = onCompleteModePieceCardClick,
-                            dDay = examDDay.toString(),
-                            examDay = examDate,
+                            dDay = state.examDDay.toString(),
+                            examDay = state.examDate,
                             splitStudyData = splitStudyData,
                             onAddStudyCardClick = onAddStudyCardClick,
                             onPlusIconClick = onPlusIconClick,
@@ -244,7 +231,7 @@ fun SubjectDetailScreen(
 
                     PieceViewType.DELETE -> {
                         DeletePieceView(
-                            todoList = todoList,
+                            todoList = state.todoList,
                             onCloseIconClick = onCloseIconClick,
                             onDeleteModePieceCardClick = onDeleteModePieceCardClick,
                         )
@@ -260,9 +247,9 @@ fun SubjectDetailScreen(
                 trailingIcon = R.drawable.ic_menu_kebab_default_24,
                 onTrailingIconClick = onKebabIconClick,
                 onLeadingIconClick = navigateToBack,
-                title = subjectName,
+                title = state.subjectName,
             )
-            if (isMenuOpen) {
+            if (state.isMenuOpen) {
                 Box(
                     modifier =
                         Modifier
@@ -294,7 +281,10 @@ fun SubjectDetailScreen(
                                         radius = 16.dp,
                                         isDisabled = false,
                                     ) {
-                                        onEnrollMotivationMessageClick(subjectId, subjectName)
+                                        onEnrollMotivationMessageClick(
+                                            state.subjectId,
+                                            state.subjectName
+                                        )
                                     }
                                     .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
                         )
@@ -309,14 +299,18 @@ fun SubjectDetailScreen(
                                     .applyFilterOnClick(
                                         radius = 16.dp,
                                         isDisabled = false,
-                                    ) { onModifySubjectNameClick(subjectId, subjectName) }
+                                    ) { onModifySubjectNameClick(
+                                            state.subjectId,
+                                            state.subjectName,
+                                        )
+                                    }
                                     .padding(start = 8.dp, top = 12.dp, bottom = 12.dp),
                         )
                     }
                 }
             }
         }
-        if (pieceViewType == PieceViewType.DELETE) {
+        if (state.pieceViewType == PieceViewType.DELETE) {
             Box(
                 modifier =
                     Modifier
@@ -328,18 +322,18 @@ fun SubjectDetailScreen(
                     bbangZipButtonSize = BbangZipButtonSize.Large,
                     onClick = onDeleteBtnClick,
                     modifier = Modifier.fillMaxWidth(),
-                    label = if (deletedSet.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), deletedSet.size),
+                    label = if (state.selectedPiecesToDelete.isEmpty()) "삭제하기" else String.format(stringResource(R.string.btn_delete_label), state.selectedPiecesToDelete.size),
                     trailingIcon = R.drawable.ic_trash_default_24,
-                    isEnable = deletedSet.isNotEmpty(),
+                    isEnable = state.selectedPiecesToDelete.isNotEmpty(),
                 )
             }
         }
 
         RevertCompleteBottomSheet(
             modifier = Modifier.padding(bottom = 16.dp),
-            isBottomSheetVisible = revertCompleteBottomSheetState,
+            isBottomSheetVisible = state.isRevertCompleteBottomSheetVisible,
             bottomSheetTitle = "미완료 상태로 되돌릴까요?",
-            selectedCompletePieceId = selectedItemId,
+            selectedCompletePieceId = state.selectedPieceId,
             onDismissRequest = onRevertCompleteBottomSheetDismissRequest,
             onApproveBtnClick = onRevertCompleteBottomSheetApproveBtnClick,
             onCancelBtnClick = onRevertCompleteBottomSheetDismissBtnClick,
@@ -775,20 +769,6 @@ fun RevertCompleteBottomSheet(
 @Composable
 private fun SubjectDetailScreenPreview() {
     SubjectDetailScreen(
-        padding = PaddingValues(64.dp),
-        state = SubjectDetailContract.SubjectDetailState(),
-        todoList = emptyList(),
-        pieceViewType = PieceViewType.DEFAULT,
-        deletedSet = emptySet(),
-        isMenuOpen = false,
-        selectedItemId = 0,
-        subjectId = 0,
-        subjectName = "",
-        revertCompleteBottomSheetState = true,
-        motivationMessage = "사장님의 각오 한마디를 작성해보세요",
-        examDate = "2025년 1월 1일",
-        examDDay = 14,
-        examName = "중간고사",
-        navigateToBack = { },
+        state = SubjectDetailContract.SubjectDetailState()
     )
 }

@@ -25,7 +25,7 @@ class SubjectDetailContract {
         val subjectId: Int = 0,
         val examName: String = "중간고사",
         val subjectName: String = "",
-        val selectedPieceSet: Set<Int> = setOf(),
+        val selectedPiecesToDelete: Set<Int> = setOf(),
         val todoList: List<ToDoCardModel> = emptyList(),
         val badgeList: List<Badge> = emptyList(),
     ) : BaseContract.State, Parcelable {
@@ -113,7 +113,7 @@ class SubjectDetailContract {
 
         data class UpdateSelectedPieceId(val pieceId: Int) : SubjectDetailReduce
 
-        data object UpdateIsMenuOpen : SubjectDetailReduce
+        data class UpdateIsMenuOpen(val isMenuOpen: Boolean) : SubjectDetailReduce
 
         data class UpdateExamName(val index: Int) : SubjectDetailReduce
 

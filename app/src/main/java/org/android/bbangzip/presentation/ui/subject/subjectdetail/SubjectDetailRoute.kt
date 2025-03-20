@@ -61,20 +61,7 @@ fun SubjectDetailRoute(
     when (success) {
         true ->
             SubjectDetailScreen(
-                padding = padding,
                 state = subjectDetailState,
-                isMenuOpen = subjectDetailState.isMenuOpen,
-                todoList = subjectDetailState.todoList,
-                pieceViewType = subjectDetailState.pieceViewType,
-                deletedSet = subjectDetailState.selectedPieceSet,
-                revertCompleteBottomSheetState = subjectDetailState.isRevertCompleteBottomSheetVisible,
-                selectedItemId = subjectDetailState.selectedPieceId,
-                subjectId = subjectDetailState.subjectId,
-                subjectName = subjectDetailState.subjectName,
-                motivationMessage = if (subjectDetailState.motivationMessage == "") "사장님의 각오 한마디를 작성해보세요" else subjectDetailState.motivationMessage,
-                examDDay = subjectDetailState.examDDay,
-                examDate = subjectDetailState.examDate,
-                examName = subjectDetailState.examName,
                 onDeleteBtnClick = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnDeleteBtnClick) },
                 onTabClick = { index -> viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnTabClick(index)) },
                 onCloseIconClick = { viewModel.setEvent(SubjectDetailContract.SubjectDetailEvent.OnCloseIconClick) },

@@ -107,7 +107,7 @@ class SubjectDetailViewModel
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnKebabIconClick -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen(isMenuOpen = !currentUiState.isMenuOpen))
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnTabClick -> {
@@ -127,7 +127,7 @@ class SubjectDetailViewModel
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnMenuDismissRequest -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen(isMenuOpen = false))
                 }
             }
         }
@@ -154,27 +154,27 @@ class SubjectDetailViewModel
                                 if (it.cardState == BbangZipCardState.COMPLETE) it else it.copy(cardState = BbangZipCardState.DEFAULT)
                             },
                         pieceViewType = PieceViewType.DEFAULT,
-                        selectedPieceSet = setOf(),
+                        selectedPiecesToDelete = setOf(),
                     )
                 }
 
                 is SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet -> {
                     state.copy(
-                        selectedPieceSet =
+                        selectedPiecesToDelete =
                             run {
                                 val targetPiece = state.todoList.find { it.pieceId == reduce.pieceId }
 
                                 when (targetPiece?.cardState) {
                                     BbangZipCardState.CHECKED -> {
-                                        state.selectedPieceSet.plus(targetPiece.pieceId)
+                                        state.selectedPiecesToDelete.plus(targetPiece.pieceId)
                                     }
 
                                     BbangZipCardState.CHECKABLE -> {
-                                        state.selectedPieceSet.minus(targetPiece.pieceId)
+                                        state.selectedPiecesToDelete.minus(targetPiece.pieceId)
                                     }
 
                                     else -> {
-                                        state.selectedPieceSet
+                                        state.selectedPiecesToDelete
                                     }
                                 }
                             },
@@ -250,9 +250,9 @@ class SubjectDetailViewModel
                     )
                 }
 
-                SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
+                is SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
                     state.copy(
-                        isMenuOpen = !state.isMenuOpen,
+                        isMenuOpen = reduce.isMenuOpen,
                     )
                 }
 
@@ -366,10 +366,10 @@ class SubjectDetailViewModel
             deleteStudyPieceUseCase(
                 pieceIdEntity =
                     PieceIdEntity(
-                        piece = currentUiState.selectedPieceSet.map { it },
+                        piece = currentUiState.selectedPiecesToDelete.map { it },
                     ),
             ).onSuccess {
-                updateState(SubjectDetailContract.SubjectDetailReduce.DeleteStudyPiece(currentUiState.selectedPieceSet))
+                updateState(SubjectDetailContract.SubjectDetailReduce.DeleteStudyPiece(currentUiState.selectedPiecesToDelete))
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateToDefaultMode)
             }.onFailure {
                 Timber.tag("[과목 관리]").d("$error")
