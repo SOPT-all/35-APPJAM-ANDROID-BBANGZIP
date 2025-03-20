@@ -264,6 +264,7 @@ class SubjectDetailViewModel
 
                 is SubjectDetailContract.SubjectDetailReduce.UpdateExamName -> {
                     state.copy(
+                        tabIndex = reduce.index,
                         examName = if (reduce.index == 0) "중간고사" else "기말고사",
                     )
                 }
