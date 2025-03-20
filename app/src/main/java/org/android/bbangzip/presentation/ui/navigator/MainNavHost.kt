@@ -149,7 +149,6 @@ fun MainNavHost(
             subjectDetailNavGraph(
                 padding = padding,
                 popBackStack = { navigator.popBackStackIfNotSubject() },
-                navigateToSubject = { navigator.navigateToSubject() },
                 navigateToModifyMotivation = { id, name -> navigator.navigateToModifyMotivationMessage(id, name) },
                 navigateToModifySubjectName = { id, name -> navigator.navigateToModifySubjectName(id, name) },
                 navigateToAddStudy = { splitStudyData -> navigator.navigateToAddStudy(splitStudyData) },
