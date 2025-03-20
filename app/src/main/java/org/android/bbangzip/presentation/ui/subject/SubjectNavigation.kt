@@ -6,7 +6,6 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavOptions
 import androidx.navigation.compose.composable
 import org.android.bbangzip.presentation.model.BottomNavigationRoute
-import org.android.bbangzip.presentation.model.SplitStudyData
 
 fun NavController.navigateSubject(navOptions: NavOptions) {
     navigate(
@@ -16,14 +15,12 @@ fun NavController.navigateSubject(navOptions: NavOptions) {
 }
 
 fun NavGraphBuilder.subjectNavGraph(
-    navigateAddStudy: (SplitStudyData) -> Unit,
     navigateToSubjectDetail: (Int, String) -> Unit,
     navigateToAddSubject: () -> Unit,
     padding: PaddingValues,
 ) {
     composable<BottomNavigationRoute.Subject> {
         SubjectRoute(
-            navigateAddStudy = navigateAddStudy,
             navigateToSubjectDetail = navigateToSubjectDetail,
             navigateToAddSubject = navigateToAddSubject,
             padding = padding,

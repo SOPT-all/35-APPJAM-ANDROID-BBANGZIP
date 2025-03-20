@@ -23,6 +23,7 @@
     <string name="card_d_minus">D+</string>
     <string name="card_d_plus">D</string>
     <string name="card_chip_d_day">D-Day</string>
+    <string name="card_add_study_description">공부 추가</string>
 
 
     <!--button-->
@@ -36,6 +37,7 @@
     <string name="btn_input_semester_label">학년/학기 입력하기</string>
     <string name="btn_next_label">다음으로</string>
     <string name="btn_cancle_label">취소</string>
+    <string name="btn_default_delete_label">삭제하기</string>
     <string name="btn_delete_label">"%d개 삭제하기"</string>
     <string name="btn_save_label">저장하기</string>
     <string name="btn_slice_study_label">쪼개서 공부하기</string>
@@ -178,6 +180,16 @@
     <string name="cancel">취소</string>
     <string name="withdraw_title">정말 탈퇴하시겠어요?</string>
     <string name="withdraw_confirm">탈퇴하기</string>
+    <string name="revert_complete_bottom_sheet_title">미완료 상태로 되돌릴까요?</string>">
+
+    <!-- subject detail -->
+    <string name="subject_detail_exam_d_day">시험까지 D%s</string>
+    <string name="subject_detail_delete_view_description">삭제할 항목을 눌러서 선택해 주세요</string>
+    <string name="subject_detail_default_view_description">학습 내용</string>
+    <string name="subject_detail_default_motivation_message">삭제할 항목을 눌러서 선택해 주세요</string>
+    <string name="subject_detail_default_exam_date">삭제할 항목을 눌러서 선택해 주세요</string>
+    <string name="subject_detail_navigate_to_modify_subject_name_menu_label">과목명 수정하기</string>
+    <string name="subject_detail_navigate_to_modify_motivation_message_menu_label">각오 한 마디 작성하기</string>
 
     <!-- modify subject name -->
     <string name="modify_subject_name_placeholder">예) 거시경제학</string>
@@ -189,7 +201,7 @@
     <string name="modify_motivation_message_placeholder">예) 이번에 열심히 공부해서 빵점 탈출!</string>
     <string name="modify_motivation_message_guideline">한글/영문/숫자/기호 조합으로 최대25자까지 입력 가능해요</string>
     <string name="modify_motivation_message_title">각오 한 마디 작성하기</string>
-    <string name="modify_motivation_message_text_field_label">사장님의 각오 한 마디를\n작성해 보세요</string>
+    <string name="modify_motivation_message_text_field_label">사장님의 각오 한 마디를 작성해 보세요</string>
     <string name="modify_motivation_message_success_modify_motivation_message_snackbar">각오 한 마디 작성 완료!</string>
 
     <!-- add subject -->

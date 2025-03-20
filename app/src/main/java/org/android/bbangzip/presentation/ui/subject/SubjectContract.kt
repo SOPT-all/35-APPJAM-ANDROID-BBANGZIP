@@ -9,9 +9,9 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class SubjectContract {
     @Parcelize
     data class SubjectState(
-        val subjectList: List<SubjectCardModel> = listOf(),
-        val subjectSetToDelete: Set<Int> = setOf(),
-        val cardViewType: CardViewType = CardViewType.DEFAULT,
+        val subjectCardList: List<SubjectCardModel> = listOf(),
+        val subjectIdSetToDelete: Set<Int> = setOf(),
+        val subjectCardViewType: CardViewType = CardViewType.DEFAULT,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -19,20 +19,20 @@ class SubjectContract {
     sealed interface SubjectEvent : BaseContract.Event {
         data object Initialize : SubjectEvent
 
-        data object OnClickTrashIcon : SubjectEvent
+        data object OnTrashIconClick : SubjectEvent
 
-        data object OnClickCancleIcon : SubjectEvent
+        data object OnCancleIconClick : SubjectEvent
 
-        data class OnClickStudyCard(
+        data class OnDefaultModeSubjectCardClick(
             val subjectId: Int,
             val subjectName: String,
         ) : SubjectEvent
 
-        data object OnClickAddSubject : SubjectEvent
+        data object OnAddSubjectCardClick : SubjectEvent
 
-        data class OnClickDeleteModeCard(val subjectId: Int) : SubjectEvent
+        data class OnDeleteModeSubjectCardClick(val subjectId: Int) : SubjectEvent
 
-        data object OnClickDeleteButton : SubjectEvent
+        data object OnDeleteBtnClick : SubjectEvent
     }
 
     sealed interface SubjectReduce : BaseContract.Reduce {
@@ -42,23 +42,21 @@ class SubjectContract {
 
         data class UpdateSubjectCard(val subjectId: Int) : SubjectReduce
 
-        data class UpdateSubjectCardList(val subjectList: List<SubjectCardModel>) : SubjectReduce
+        data class UpdateSubjectCardList(val subjectCardList: List<SubjectCardModel>) : SubjectReduce
 
         data class UpdateDeletedSet(val subjectId: Int) : SubjectReduce
 
-        data object RestoreDeletedSet : SubjectReduce
+        data object ResetSubjectIdSetToDelete : SubjectReduce
     }
 
     sealed interface SubjectSideEffect : BaseContract.SideEffect {
         data object NavigateToAddSubject : SubjectSideEffect
-
-        data object NavigateToAddStudy : SubjectSideEffect
 
         data class NavigateToSubjectDetail(
             val subjectId: Int,
             val subjectName: String,
         ) : SubjectSideEffect
 
-        data object ShowDeleteSuccessSnackBar : SubjectSideEffect
+        data object ShowSnackbar : SubjectSideEffect
     }
 }

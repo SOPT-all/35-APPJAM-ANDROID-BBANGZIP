@@ -35,32 +35,32 @@ class SubjectViewModel
 
         override fun handleEvent(event: SubjectContract.SubjectEvent) {
             when (event) {
-                is SubjectContract.SubjectEvent.Initialize -> launch { getSubjectInfo() }
+                SubjectContract.SubjectEvent.Initialize -> launch { getSubjectInfo() }
 
-                is SubjectContract.SubjectEvent.OnClickDeleteButton -> {
+                SubjectContract.SubjectEvent.OnDeleteBtnClick -> {
                     viewModelScope.launch {
                         deleteSubjects()
                     }
                 }
 
-                is SubjectContract.SubjectEvent.OnClickDeleteModeCard -> {
+                is SubjectContract.SubjectEvent.OnDeleteModeSubjectCardClick -> {
                     updateState(SubjectContract.SubjectReduce.UpdateSubjectCard(event.subjectId))
                     updateState(SubjectContract.SubjectReduce.UpdateDeletedSet(event.subjectId))
                 }
 
-                is SubjectContract.SubjectEvent.OnClickTrashIcon -> {
+                SubjectContract.SubjectEvent.OnTrashIconClick -> {
                     updateState(SubjectContract.SubjectReduce.UpdateToDeleteMode)
                 }
 
-                is SubjectContract.SubjectEvent.OnClickCancleIcon -> {
+                SubjectContract.SubjectEvent.OnCancleIconClick -> {
                     updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
                 }
 
-                is SubjectContract.SubjectEvent.OnClickStudyCard -> {
+                is SubjectContract.SubjectEvent.OnDefaultModeSubjectCardClick -> {
                     setSideEffect(SubjectContract.SubjectSideEffect.NavigateToSubjectDetail(event.subjectId, event.subjectName))
                 }
 
-                is SubjectContract.SubjectEvent.OnClickAddSubject -> {
+                SubjectContract.SubjectEvent.OnAddSubjectCardClick -> {
                     setSideEffect(SubjectContract.SubjectSideEffect.NavigateToAddSubject)
                 }
             }
@@ -73,8 +73,8 @@ class SubjectViewModel
             return when (reduce) {
                 is SubjectContract.SubjectReduce.UpdateSubjectCard -> {
                     state.copy(
-                        subjectList =
-                            state.subjectList.map { item ->
+                        subjectCardList =
+                            state.subjectCardList.map { item ->
                                 if (item.state == BbangZipCardState.CHECKABLE && item.subjectId == reduce.subjectId) {
                                     item.copy(state = BbangZipCardState.CHECKED)
                                 } else if (item.state == BbangZipCardState.CHECKED && item.subjectId == reduce.subjectId) {
@@ -86,43 +86,43 @@ class SubjectViewModel
                     )
                 }
 
-                is SubjectContract.SubjectReduce.UpdateToDeleteMode -> {
+                SubjectContract.SubjectReduce.UpdateToDeleteMode -> {
                     state.copy(
-                        subjectList =
-                            state.subjectList.map {
+                        subjectCardList =
+                            state.subjectCardList.map {
                                 it.copy(state = BbangZipCardState.CHECKABLE)
                             },
-                        cardViewType = CardViewType.DELETE,
+                        subjectCardViewType = CardViewType.DELETE,
                     )
                 }
 
-                is SubjectContract.SubjectReduce.UpdateToDefaultMode -> {
+                SubjectContract.SubjectReduce.UpdateToDefaultMode -> {
                     state.copy(
-                        subjectList =
-                            state.subjectList.map {
+                        subjectCardList =
+                            state.subjectCardList.map {
                                 it.copy(state = BbangZipCardState.DEFAULT)
                             },
-                        cardViewType = CardViewType.DEFAULT,
-                        subjectSetToDelete = setOf(),
+                        subjectCardViewType = CardViewType.DEFAULT,
+                        subjectIdSetToDelete = setOf(),
                     )
                 }
 
                 is SubjectContract.SubjectReduce.UpdateDeletedSet -> {
                     state.copy(
-                        subjectSetToDelete =
+                        subjectIdSetToDelete =
                             run {
-                                val targetSubject = state.subjectList.find { it.subjectId == reduce.subjectId }
+                                val targetSubject = state.subjectCardList.find { it.subjectId == reduce.subjectId }
                                 when (targetSubject?.state) {
                                     BbangZipCardState.CHECKED -> {
-                                        state.subjectSetToDelete.plus(targetSubject.subjectId)
+                                        state.subjectIdSetToDelete.plus(targetSubject.subjectId)
                                     }
 
                                     BbangZipCardState.CHECKABLE -> {
-                                        state.subjectSetToDelete.minus(targetSubject.subjectId)
+                                        state.subjectIdSetToDelete.minus(targetSubject.subjectId)
                                     }
 
                                     else -> {
-                                        state.subjectSetToDelete
+                                        state.subjectIdSetToDelete
                                     }
                                 }
                             },
@@ -131,13 +131,13 @@ class SubjectViewModel
 
                 is SubjectContract.SubjectReduce.UpdateSubjectCardList -> {
                     state.copy(
-                        subjectList = reduce.subjectList,
+                        subjectCardList = reduce.subjectCardList,
                     )
                 }
 
-                is SubjectContract.SubjectReduce.RestoreDeletedSet -> {
+                SubjectContract.SubjectReduce.ResetSubjectIdSetToDelete -> {
                     state.copy(
-                        subjectSetToDelete = setOf(),
+                        subjectIdSetToDelete = setOf(),
                     )
                 }
             }
@@ -146,10 +146,9 @@ class SubjectViewModel
         private suspend fun getSubjectInfo() {
             getSubjectInfoUseCase()
                 .onSuccess { data ->
-                    Timber.tag("이승범").d(data.toString())
                     val subjectCardList =
                         data.subjectList.map {
-                            val firstStudy = it.studyList.firstOrNull() // 첫 번째 요소를 안전하게 가져옴
+                            val firstStudy = it.studyList.firstOrNull()
                             if (firstStudy == null) {
                                 SubjectCardModel(
                                     subjectName = it.subjectName,
@@ -170,7 +169,7 @@ class SubjectViewModel
                                 )
                             }
                         }
-                    updateState(SubjectContract.SubjectReduce.UpdateSubjectCardList(subjectList = subjectCardList))
+                    updateState(SubjectContract.SubjectReduce.UpdateSubjectCardList(subjectCardList = subjectCardList))
                 }.onFailure { error ->
                     Timber.tag("SubjectInfo").d(error)
                 }
@@ -179,16 +178,14 @@ class SubjectViewModel
         private suspend fun deleteSubjects() {
             deleteSubjectsUseCase(
                 RequestDeleteSubjectsDto(
-                    subjectIds = currentUiState.subjectSetToDelete.toList(),
+                    subjectIds = currentUiState.subjectIdSetToDelete.toList(),
                     year = 2025,
                     semester = "1학기",
                 ),
             )
                 .onSuccess {
-                    Timber.tag("delete").d("성공")
-
                     updateState(SubjectContract.SubjectReduce.UpdateToDefaultMode)
-                    updateState(SubjectContract.SubjectReduce.RestoreDeletedSet)
+                    updateState(SubjectContract.SubjectReduce.ResetSubjectIdSetToDelete)
                     getSubjectInfo()
                 }
                 .onFailure { error ->

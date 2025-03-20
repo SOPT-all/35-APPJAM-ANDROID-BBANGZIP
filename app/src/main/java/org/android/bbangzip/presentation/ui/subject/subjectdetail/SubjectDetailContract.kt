@@ -12,22 +12,22 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class SubjectDetailContract {
     @Parcelize
     data class SubjectDetailState(
-        val tabIndex: Int = 0,
         val isMenuOpen: Boolean = false,
         val isTopBarShadowed: Boolean = false,
+        val isRevertCompleteBottomSheetVisible: Boolean = false,
+        val isGetBadgeBottomSheetVisible: Boolean = false,
         val pieceViewType: PieceViewType = PieceViewType.DEFAULT,
-        val selectedItemSet: Set<Int> = setOf(),
-        val revertCompleteBottomSheetState: Boolean = false,
+        val tabIndex: Int = 0,
         val examDate: String = "2025년 11월 25일",
-        val examDday: Int = -14,
+        val examDDay: Int = -14,
         val motivationMessage: String = "사장님의 각오 한마디를 작성해보세요",
-        val selectedItemId: Int = -1,
+        val selectedPieceId: Int = -1,
         val subjectId: Int = 0,
         val examName: String = "중간고사",
         val subjectName: String = "",
+        val selectedPiecesToDelete: Set<Int> = setOf(),
         val todoList: List<ToDoCardModel> = emptyList(),
         val badgeList: List<Badge> = emptyList(),
-        val getBadgeBottomSheetState: Boolean = false,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -38,57 +38,59 @@ class SubjectDetailContract {
             val subjectName: String,
         ) : SubjectDetailEvent
 
-        data class OnPlusIconClicked(val splitStudyData: SplitStudyData) : SubjectDetailEvent
+        data class OnPlusIconClick(val splitStudyData: SplitStudyData) : SubjectDetailEvent
 
-        data object OnTrashIconClicked : SubjectDetailEvent
+        data class OnAddStudyBtnClick(val splitStudyData: SplitStudyData) : SubjectDetailEvent
 
-        data object OnCloseIconClicked : SubjectDetailEvent
+        data class OnAddStudyCardClick(val splitStudyData: SplitStudyData) : SubjectDetailEvent
 
-        data object OnDeleteButtonClicked : SubjectDetailEvent
+        data object OnTrashIconClick : SubjectDetailEvent
 
-        data class OnRevertCompleteBottomSheetApproveButtonClicked(val pieceId: Int) : SubjectDetailEvent
+        data object OnCloseIconClick : SubjectDetailEvent
 
-        data object OnRevertCompleteBottomSheetDismissButtonClicked : SubjectDetailEvent
+        data object OnDeleteBtnClick : SubjectDetailEvent
 
-        data object OnRevertCompleteBottomSheetDissmissRequest : SubjectDetailEvent
+        data class OnRevertCompleteBottomSheetApproveBtnClick(val pieceId: Int) : SubjectDetailEvent
 
-        data object OnClickKebabMenu : SubjectDetailEvent
+        data object OnRevertCompleteBottomSheetDismissBtnClick : SubjectDetailEvent
 
-        data class OnClickTab(val index: Int) : SubjectDetailEvent
+        data object OnRevertCompleteBottomSheetDismissRequest : SubjectDetailEvent
 
-        data class OnClickEnrollMotivateMessage(
+        data object OnKebabIconClick : SubjectDetailEvent
+
+        data class OnTabClick(val index: Int) : SubjectDetailEvent
+
+        data class OnEnrollMotivateMessageClick(
             val subjectId: Int,
             val subjectName: String,
         ) : SubjectDetailEvent
 
-        data class OnClickModifySubjectName(
+        data class OnModifySubjectNameClick(
             val subjectId: Int,
             val subjectName: String,
         ) : SubjectDetailEvent
 
-        data class OnDeleteModeCardClicked(
+        data class OnDeleteModePieceCardClick(
             val pieceId: Int,
         ) : SubjectDetailEvent
 
-        data class OnDefaultCardClicked(
+        data class OnDefaultModePieceCardClick(
             val pieceId: Int,
         ) : SubjectDetailEvent
 
-        data class OnCompleteCardClicked(
+        data class OnCompleteModePieceCardClick(
             val pieceId: Int,
         ) : SubjectDetailEvent
 
-        data object OnClickGetBadgeBottomSheetCloseBtn : SubjectDetailEvent
+        data object OnGetBadgeBottomSheetCloseBtnClick : SubjectDetailEvent
 
-        data object OnClickBackIconBtn : SubjectDetailEvent
+        data object OnBackIconBtnClick : SubjectDetailEvent
 
-        data object OnClickKebabOutside : SubjectDetailEvent
+        data object OnMenuDismissRequest : SubjectDetailEvent
     }
 
     sealed interface SubjectDetailReduce : BaseContract.Reduce {
         data class UpdateSubjectDetail(val subjectDetailInfo: SubjectDetailInfo) : SubjectDetailReduce
-
-        data object UpdateIsKebabMenuOpen : SubjectDetailReduce
 
         data object UpdateToDeleteMode : SubjectDetailReduce
 
@@ -96,30 +98,28 @@ class SubjectDetailContract {
 
         data class UpdateDeleteModeCardState(val pieceId: Int) : SubjectDetailReduce
 
+        data class UpdateDefaultModeCardState(val pieceId: Int) : SubjectDetailReduce
+
+        data object UpdateCompleteModeCardState : SubjectDetailReduce
+
         data class UpdateDeleteSet(val pieceId: Int) : SubjectDetailReduce
-
-        data class UpdateDefaultCardState(val pieceId: Int) : SubjectDetailReduce
-
-        data object UpdateCompleteCardState : SubjectDetailReduce
-
-        data class DeleteSelectedItemSet(val pieceId: Int) : SubjectDetailReduce
 
         data class UpdateSubjectData(
             val subjectId: Int,
             val subjectName: String,
         ) : SubjectDetailReduce
 
-        data object UpdateRevertCompleteBottomSheetState : SubjectDetailReduce
+        data object UpdateIsRevertCompleteBottomSheetVisible : SubjectDetailReduce
 
-        data class UpdateSelectedId(val pieceId: Int) : SubjectDetailReduce
+        data class UpdateSelectedPieceId(val pieceId: Int) : SubjectDetailReduce
 
-        data object UpdateIsMenuOpen : SubjectDetailReduce
+        data class UpdateIsMenuOpen(val isMenuOpen: Boolean) : SubjectDetailReduce
 
         data class UpdateExamName(val index: Int) : SubjectDetailReduce
 
         data class UpdateGetBadgeList(val badgeList: List<Badge>) : SubjectDetailReduce
 
-        data class UpdateGetBadgeBottomSheetState(val getBadgeBottomSheetState: Boolean) : SubjectDetailReduce
+        data class UpdateIsGetBadgeBottomSheetVisible(val getBadgeBottomSheetState: Boolean) : SubjectDetailReduce
 
         data object UpdateToEmptyView : SubjectDetailReduce
 
@@ -127,17 +127,14 @@ class SubjectDetailContract {
     }
 
     sealed interface SubjectDetailSideEffect : BaseContract.SideEffect {
-        data object NavigateToAddSubject : SubjectDetailSideEffect
-
         data class NavigateToAddStudy(val splitStudyData: SplitStudyData) : SubjectDetailSideEffect
 
         data class NavigateToModifyMotivation(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
 
         data class NavigateToModifySubjectName(val subjectId: Int, val subjectName: String) : SubjectDetailSideEffect
 
-        // 공부 n개가 삭제 되었어요
-        data object ShowDeleteSuccessSnackBar : SubjectDetailSideEffect
+        data object ShowSnackBar : SubjectDetailSideEffect
 
-        data object PopBackStack : SubjectDetailSideEffect
+        data object NavigateToBack : SubjectDetailSideEffect
     }
 }
