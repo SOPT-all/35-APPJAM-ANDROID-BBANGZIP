@@ -60,30 +60,30 @@ class SubjectDetailViewModel
                     viewModelScope.launch {
                         postCompleteCardId(event.pieceId)
                     }
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDefaultCardState(event.pieceId))
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateDefaultModeCardState(event.pieceId))
                     // 사이드 이펙트  스낵바 메시지
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnCompleteModePieceCardClick -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSelectedId(event.pieceId))
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateSelectedPieceId(event.pieceId))
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsRevertCompleteBottomSheetVisible)
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetApproveBtnClick -> {
                     viewModelScope.launch {
                         postUnCompleteCardId(event.pieceId)
                     }
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateCompleteCardState)
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateCompleteModeCardState)
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsRevertCompleteBottomSheetVisible)
                     // TODO 사이드 이펙트 스낵바
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissBtnClick -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsRevertCompleteBottomSheetVisible)
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnRevertCompleteBottomSheetDismissRequest -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState)
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsRevertCompleteBottomSheetVisible)
                 }
 
                 is SubjectDetailContract.SubjectDetailEvent.OnEnrollMotivateMessageClick -> {
@@ -119,7 +119,7 @@ class SubjectDetailViewModel
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnGetBadgeBottomSheetCloseBtnClick -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = false))
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsGetBadgeBottomSheetVisible(getBadgeBottomSheetState = false))
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnBackIconBtnClick -> {
@@ -127,7 +127,7 @@ class SubjectDetailViewModel
                 }
 
                 SubjectDetailContract.SubjectDetailEvent.OnMenuDismissRequest -> {
-                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsKebabMenuOpen)
+                    updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen)
                 }
             }
         }
@@ -159,8 +159,6 @@ class SubjectDetailViewModel
                 }
 
                 is SubjectDetailContract.SubjectDetailReduce.UpdateDeleteSet -> {
-                    Timber.d("[update] ${state.selectedPieceSet}")
-
                     state.copy(
                         selectedPieceSet =
                             run {
@@ -198,7 +196,7 @@ class SubjectDetailViewModel
                     )
                 }
 
-                is SubjectDetailContract.SubjectDetailReduce.UpdateDefaultCardState -> {
+                is SubjectDetailContract.SubjectDetailReduce.UpdateDefaultModeCardState -> {
                     state.copy(
                         todoList =
                             state.todoList.map { item ->
@@ -211,19 +209,19 @@ class SubjectDetailViewModel
                     )
                 }
 
-                is SubjectDetailContract.SubjectDetailReduce.UpdateRevertCompleteBottomSheetState -> {
+                is SubjectDetailContract.SubjectDetailReduce.UpdateIsRevertCompleteBottomSheetVisible -> {
                     state.copy(
                         isRevertCompleteBottomSheetVisible = !state.isRevertCompleteBottomSheetVisible,
                     )
                 }
 
-                is SubjectDetailContract.SubjectDetailReduce.UpdateSelectedId -> {
+                is SubjectDetailContract.SubjectDetailReduce.UpdateSelectedPieceId -> {
                     state.copy(
                         selectedPieceId = reduce.pieceId,
                     )
                 }
 
-                is SubjectDetailContract.SubjectDetailReduce.UpdateCompleteCardState -> {
+                is SubjectDetailContract.SubjectDetailReduce.UpdateCompleteModeCardState -> {
                     state.copy(
                         todoList =
                             state.todoList.map { item ->
@@ -252,10 +250,6 @@ class SubjectDetailViewModel
                     )
                 }
 
-                is SubjectDetailContract.SubjectDetailReduce.DeleteSelectedItemSet -> {
-                    state
-                }
-
                 SubjectDetailContract.SubjectDetailReduce.UpdateIsMenuOpen -> {
                     state.copy(
                         isMenuOpen = !state.isMenuOpen,
@@ -280,7 +274,7 @@ class SubjectDetailViewModel
                     )
                 }
 
-                is SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState -> {
+                is SubjectDetailContract.SubjectDetailReduce.UpdateIsGetBadgeBottomSheetVisible -> {
                     state.copy(
                         isGetBadgeBottomSheetVisible = !currentUiState.isGetBadgeBottomSheetVisible,
                     )
@@ -289,12 +283,6 @@ class SubjectDetailViewModel
                 is SubjectDetailContract.SubjectDetailReduce.DeleteStudyPiece -> {
                     state.copy(
                         todoList = state.todoList.filter { !reduce.studyPieceId.contains(it.pieceId) },
-                    )
-                }
-
-                is SubjectDetailContract.SubjectDetailReduce.UpdateIsKebabMenuOpen -> {
-                    state.copy(
-                        isMenuOpen = false,
                     )
                 }
             }
@@ -368,7 +356,7 @@ class SubjectDetailViewModel
                 requestMarkDoneDto = RequestMarkDoneDto(isFinished = true),
             ).onSuccess { data ->
                 updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeList(badgeList = data.badgeCardList.map { it.toBadge() }))
-                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateGetBadgeBottomSheetState(getBadgeBottomSheetState = true))
+                updateState(SubjectDetailContract.SubjectDetailReduce.UpdateIsGetBadgeBottomSheetVisible(getBadgeBottomSheetState = true))
             }.onFailure { error ->
                 Timber.tag("markDone").e(error)
             }

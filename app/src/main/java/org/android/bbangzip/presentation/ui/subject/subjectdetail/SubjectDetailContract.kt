@@ -92,30 +92,26 @@ class SubjectDetailContract {
     sealed interface SubjectDetailReduce : BaseContract.Reduce {
         data class UpdateSubjectDetail(val subjectDetailInfo: SubjectDetailInfo) : SubjectDetailReduce
 
-        data object UpdateIsKebabMenuOpen : SubjectDetailReduce
-
         data object UpdateToDeleteMode : SubjectDetailReduce
 
         data object UpdateToDefaultMode : SubjectDetailReduce
 
         data class UpdateDeleteModeCardState(val pieceId: Int) : SubjectDetailReduce
 
+        data class UpdateDefaultModeCardState(val pieceId: Int) : SubjectDetailReduce
+
+        data object UpdateCompleteModeCardState : SubjectDetailReduce
+
         data class UpdateDeleteSet(val pieceId: Int) : SubjectDetailReduce
-
-        data class UpdateDefaultCardState(val pieceId: Int) : SubjectDetailReduce
-
-        data object UpdateCompleteCardState : SubjectDetailReduce
-
-        data class DeleteSelectedItemSet(val pieceId: Int) : SubjectDetailReduce
 
         data class UpdateSubjectData(
             val subjectId: Int,
             val subjectName: String,
         ) : SubjectDetailReduce
 
-        data object UpdateRevertCompleteBottomSheetState : SubjectDetailReduce
+        data object UpdateIsRevertCompleteBottomSheetVisible : SubjectDetailReduce
 
-        data class UpdateSelectedId(val pieceId: Int) : SubjectDetailReduce
+        data class UpdateSelectedPieceId(val pieceId: Int) : SubjectDetailReduce
 
         data object UpdateIsMenuOpen : SubjectDetailReduce
 
@@ -123,7 +119,7 @@ class SubjectDetailContract {
 
         data class UpdateGetBadgeList(val badgeList: List<Badge>) : SubjectDetailReduce
 
-        data class UpdateGetBadgeBottomSheetState(val getBadgeBottomSheetState: Boolean) : SubjectDetailReduce
+        data class UpdateIsGetBadgeBottomSheetVisible(val getBadgeBottomSheetState: Boolean) : SubjectDetailReduce
 
         data object UpdateToEmptyView : SubjectDetailReduce
 
