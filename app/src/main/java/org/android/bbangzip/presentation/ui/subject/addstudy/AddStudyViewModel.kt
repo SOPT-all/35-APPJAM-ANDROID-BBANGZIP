@@ -40,15 +40,15 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateButtonEnabled)
                 }
 
-                is AddStudyContract.AddStudyEvent.OnChangeEndPage -> {
+                is AddStudyContract.AddStudyEvent.OnEndPageChange -> {
                     updateState(AddStudyReduce.UpdateEndPage(endPage = event.endPage))
                 }
 
-                is AddStudyContract.AddStudyEvent.OnChangeStartPage -> {
+                is AddStudyContract.AddStudyEvent.OnStartPageChange -> {
                     updateState(AddStudyReduce.UpdateStartPage(startPage = event.startPage))
                 }
 
-                is AddStudyContract.AddStudyEvent.OnChangeStartPageFocused -> {
+                is AddStudyContract.AddStudyEvent.OnStartPageFocusChange -> {
                     updateState(AddStudyReduce.UpdateStartPageFocusedState(startPageFocusedState = event.isStartPageFocused))
                     updateState(AddStudyReduce.UpdateStartPageToString)
                     updateState(AddStudyReduce.UpdateSplitButtonEnabled)
@@ -59,7 +59,7 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateEndPageGuideLine)
                 }
 
-                is AddStudyContract.AddStudyEvent.OnChangeEndPageFocused -> {
+                is AddStudyContract.AddStudyEvent.OnEndPageFocusChange -> {
                     updateState(AddStudyReduce.UpdateEndPageFocusedState(endPageFocusedState = event.isEndPageFocused))
                     updateState(AddStudyReduce.UpdateEndPageToString)
                     updateState(AddStudyReduce.UpdateSplitButtonEnabled)
@@ -70,42 +70,32 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateEndPageGuideLine)
                 }
 
-                is AddStudyContract.AddStudyEvent.OnChangeStudyContent -> {
+                is AddStudyContract.AddStudyEvent.OnStudyContentChange -> {
                     updateState(AddStudyReduce.UpdateStudyContent(studyContent = event.studyContent))
                     updateState(AddStudyReduce.UpdateStudyContentInputState)
                 }
 
-                is AddStudyContract.AddStudyEvent.OnChangeStudyContentFocused -> {
+                is AddStudyContract.AddStudyEvent.OnStudyContentFocusChange -> {
                     updateState(AddStudyReduce.UpdateStudyContentFocusedState(studyContentFocusedState = event.isStudyContentFocused))
                     updateState(AddStudyReduce.UpdateStudyContentInputState)
                     updateState(AddStudyReduce.UpdateButtonEnabled)
                 }
 
-                is AddStudyContract.AddStudyEvent.OnClickConfirmDateBtn -> {
+                is AddStudyContract.AddStudyEvent.OnConfirmDateBtnClick -> {
                     updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
                     updateState(AddStudyReduce.UpdateExamDate)
                     updateState(AddStudyReduce.UpdateButtonEnabled)
                 }
 
-                is AddStudyContract.AddStudyEvent.OnChangeSelectedDate -> {
+                is AddStudyContract.AddStudyEvent.OnSelectedDateChange -> {
                     updateState(AddStudyReduce.UpdateSelectedDate(date = event.selectedDate))
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickDatePicker -> {
+                AddStudyContract.AddStudyEvent.OnDatePickerClick -> {
                     updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickEnrollBtn -> {
-                }
-
-                AddStudyContract.AddStudyEvent.OnClickNextBtn -> {
-                }
-
-                AddStudyContract.AddStudyEvent.OnClickCancleIcon -> {
-                    updateState(AddStudyReduce.ResetStudyContent)
-                }
-
-                is AddStudyContract.AddStudyEvent.OnClickPieceNumber -> {
+                is AddStudyContract.AddStudyEvent.OnPieceNumberClick -> {
                     updateState(AddStudyReduce.UpdateAddStudyViewType)
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
                     updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
@@ -130,29 +120,29 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateIsSuccess)
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickBackIcon -> {
+                AddStudyContract.AddStudyEvent.OnBackIconClick -> {
                     setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickDatePicker -> {
+                AddStudyContract.AddStudyEvent.OnDatePickerClick -> {
                     updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickEnrollBtn -> {
+                AddStudyContract.AddStudyEvent.OnEnrollBtnClick -> {
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickNextBtn -> {
+                AddStudyContract.AddStudyEvent.OnNextBtnClick -> {
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickCancleIcon -> {
+                AddStudyContract.AddStudyEvent.OnCancleIconClick -> {
                     updateState(AddStudyReduce.ResetStudyContent)
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickSplitBtn -> {
+                AddStudyContract.AddStudyEvent.OnSplitBtnClick -> {
                     updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
                 }
 
-                is AddStudyContract.AddStudyEvent.OnClickAgainSplitBtn -> {
+                is AddStudyContract.AddStudyEvent.OnReSplitBtnClick -> {
                     updateState(AddStudyReduce.UpdateAddStudyViewType)
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
                     setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
@@ -175,11 +165,11 @@ class AddStudyViewModel
                     )
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickAddStudyBtn -> {
+                AddStudyContract.AddStudyEvent.OnAddStudyBtnClick -> {
                     postAddStudy()
                 }
 
-                AddStudyContract.AddStudyEvent.OnClickDirectEnrollBtn -> {
+                AddStudyContract.AddStudyEvent.OnDirectEnrollBtnClick -> {
                     updateState(AddStudyReduce.UpdatePieceList)
                     postAddStudy()
                     setSideEffect(AddStudyContract.AddStudySideEffect.ShowSnackBar("공부 추가 완료!미룬이 탈출이 코앞이에요"))

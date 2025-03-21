@@ -47,41 +47,41 @@ class AddStudyContract {
     sealed interface AddStudyEvent : BaseContract.Event {
         data class Initialize(val splitStudyData: SplitStudyData) : AddStudyEvent
 
-        data class OnChangeStudyContent(val studyContent: String) : AddStudyEvent
+        data class OnStudyContentChange(val studyContent: String) : AddStudyEvent
 
-        data class OnChangeStartPage(val startPage: String) : AddStudyEvent
+        data class OnStartPageChange(val startPage: String) : AddStudyEvent
 
-        data class OnChangeEndPage(val endPage: String) : AddStudyEvent
+        data class OnEndPageChange(val endPage: String) : AddStudyEvent
 
-        data class OnChangeStudyContentFocused(val isStudyContentFocused: Boolean) : AddStudyEvent
+        data class OnStudyContentFocusChange(val isStudyContentFocused: Boolean) : AddStudyEvent
 
-        data class OnChangeStartPageFocused(val isStartPageFocused: Boolean) : AddStudyEvent
+        data class OnStartPageFocusChange(val isStartPageFocused: Boolean) : AddStudyEvent
 
-        data class OnChangeEndPageFocused(val isEndPageFocused: Boolean) : AddStudyEvent
+        data class OnEndPageFocusChange(val isEndPageFocused: Boolean) : AddStudyEvent
 
-        data class OnChangeSelectedDate(val selectedDate: Date) : AddStudyEvent
+        data class OnSelectedDateChange(val selectedDate: Date) : AddStudyEvent
 
-        data object OnClickDatePicker : AddStudyEvent
+        data object OnDatePickerClick : AddStudyEvent
 
-        data class OnClickPieceNumber(val pieceNumber: Int) : AddStudyEvent
+        data class OnPieceNumberClick(val pieceNumber: Int) : AddStudyEvent
 
-        data object OnClickBackIcon : AddStudyEvent
+        data object OnBackIconClick : AddStudyEvent
 
-        data object OnClickCancleIcon : AddStudyEvent
+        data object OnCancleIconClick : AddStudyEvent
 
-        data object OnClickSplitBtn : AddStudyEvent
+        data object OnSplitBtnClick : AddStudyEvent
 
-        data object OnClickNextBtn : AddStudyEvent
+        data object OnNextBtnClick : AddStudyEvent
 
-        data object OnClickEnrollBtn : AddStudyEvent
+        data object OnEnrollBtnClick : AddStudyEvent
 
-        data object OnClickConfirmDateBtn : AddStudyEvent
+        data object OnConfirmDateBtnClick : AddStudyEvent
 
-        data class OnClickAgainSplitBtn(val pieceNumber: Int) : AddStudyEvent
+        data class OnReSplitBtnClick(val pieceNumber: Int) : AddStudyEvent
 
-        data object OnClickAddStudyBtn : AddStudyEvent
+        data object OnAddStudyBtnClick : AddStudyEvent
 
-        data object OnClickDirectEnrollBtn : AddStudyEvent
+        data object OnDirectEnrollBtnClick : AddStudyEvent
     }
 
     sealed interface AddStudyReduce : BaseContract.Reduce {

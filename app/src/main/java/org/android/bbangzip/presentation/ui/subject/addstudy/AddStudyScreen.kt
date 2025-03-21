@@ -68,26 +68,24 @@ fun AddStudyScreen(
     startPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     endPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
     addStudyViewType: AddStudyViewType = AddStudyViewType.DEFAULT,
-    onChangeStudyContent: (String) -> Unit = {},
-    onChangeStartPage: (String) -> Unit = {},
-    onChangeEndPage: (String) -> Unit = {},
-    onChangeSelectedDate: (Date) -> Unit = {},
-    onChangeStudyContentFocused: (Boolean) -> Unit = {},
-    onChangeStartPageFocused: (Boolean) -> Unit = {},
-    onChangeEndPageFocused: (Boolean) -> Unit = {},
-    onClickDatePicker: () -> Unit = {},
-    onClickPieceNumber: (Int) -> Unit = {},
-    onClickBackIcon: () -> Unit = {},
-    onClickSplitBtn: () -> Unit = {},
-    onClickCancleIcon: () -> Unit = {},
-    onClickConfirmDateBtn: () -> Unit = {},
-    onClickAgainSplitBtn: (Int) -> Unit = {},
-    onClickAddStudyBtn: () -> Unit = {},
-    onClickDirectEnrollBtn: () -> Unit = {},
+    onStudyContentChange: (String) -> Unit = {},
+    onStartPageChange: (String) -> Unit = {},
+    onEndPageChange: (String) -> Unit = {},
+    onSelectedDateChange: (Date) -> Unit = {},
+    onStudyContentFocusChange: (Boolean) -> Unit = {},
+    onStartPageFocusChange: (Boolean) -> Unit = {},
+    onEndPageFocusChange: (Boolean) -> Unit = {},
+    onDatePickerClick: () -> Unit = {},
+    onPieceNumberClick: (Int) -> Unit = {},
+    onBackIconClick: () -> Unit = {},
+    onSplitBtnClick: () -> Unit = {},
+    onCancleIconClick: () -> Unit = {},
+    onConfirmDateBtnClick: () -> Unit = {},
+    onReSplitBtnClick: (Int) -> Unit = {},
+    onAddStudyBtnClick: () -> Unit = {},
+    onDirectEnrollBtnClick: () -> Unit = {},
 ) {
     val focusManager = LocalFocusManager.current
-
-    Timber.tag("김재민").d("AddStudyScreenExamName : $examName")
 
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundAccent_FFDAA0.toArgb()
 
@@ -99,7 +97,7 @@ fun AddStudyScreen(
                 .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         BbangZipBaseTopBar(
-            onLeadingIconClick = { onClickBackIcon() },
+            onLeadingIconClick = onBackIconClick,
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
             title = subjectTitle,
         )
@@ -126,7 +124,7 @@ fun AddStudyScreen(
                                 radius = 20.dp,
                                 isDisabled = isDatePickerEnable,
                             ) {
-                                if (isDatePickerEnable) onClickDatePicker()
+                                if (isDatePickerEnable) onDatePickerClick()
                             }
                             .fillMaxWidth()
                             .background(
@@ -176,10 +174,10 @@ fun AddStudyScreen(
                     placeholder = R.string.add_study_study_content_placeholder,
                     guideline = R.string.add_study_study_content_guideline,
                     value = studyContent,
-                    onValueChange = { onChangeStudyContent(it) },
-                    onFocusChange = { onChangeStudyContentFocused(it) },
+                    onValueChange = { onStudyContentChange(it) },
+                    onFocusChange = { onStudyContentFocusChange(it) },
                     maxCharacter = 20,
-                    onDeleteButtonClick = { onClickCancleIcon() },
+                    onDeleteButtonClick = { onCancleIconClick() },
                     focusManager = focusManager,
                     bbangZipTextFieldInputState = studyContentTextFieldState,
                 )
@@ -191,20 +189,20 @@ fun AddStudyScreen(
                 AddStudyViewType.DEFAULT -> {
                     DefaultRangeView(
                         startPage = startPage,
-                        onChangeStartPage = onChangeStartPage,
-                        onChangeStartPageFocused = onChangeStartPageFocused,
+                        onStartPageChange = onStartPageChange,
+                        onStartPageFocusChange = onStartPageFocusChange,
                         focusManager = focusManager,
                         endPage = endPage,
-                        onChangeEndPage = onChangeEndPage,
-                        onChangeEndPageFocused = onChangeEndPageFocused,
-                        onClickSplitBtn = onClickSplitBtn,
-                        isSplitBtnEnable = isButtonEnable,
-                        startPageTextFieldState = startPageTextFieldState,
-                        endPageTextFieldState = endPageTextFieldState,
-                        startGuideline = startGuideline,
-                        endGuideline = endGuideline,
+                        onEndPageChange = onEndPageChange,
+                        onEndPageFocusChange = onEndPageFocusChange,
+                        onSplitBtnClick = onSplitBtnClick,
+                        isSplitBtnEnabled = isButtonEnable,
+                        startPageTextFieldInputState = startPageTextFieldState,
+                        endPageTextFieldInputState = endPageTextFieldState,
+                        startPageGuideline = startGuideline,
+                        endPageGuideline = endGuideline,
                         addStudyViewType = addStudyViewType,
-                        onClickDirectEnrollBtn = onClickDirectEnrollBtn,
+                        onDirectEnrollBtnClick = onDirectEnrollBtnClick,
                     )
                 }
 
@@ -212,8 +210,8 @@ fun AddStudyScreen(
                     AgainRangeView(
                         focusManager = focusManager,
                         pieceNumber = pieceNumber,
-                        onClickSplitBtn = onClickAgainSplitBtn,
-                        isSplitBtnEnable = isButtonEnable,
+                        onSplitBtnClick = onReSplitBtnClick,
+                        isSplitBtnEnabled = isButtonEnable,
                     )
                 }
             }
@@ -231,7 +229,7 @@ fun AddStudyScreen(
             BbangZipButton(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
-                onClick = { if (addStudyViewType == AddStudyViewType.DEFAULT) onClickDirectEnrollBtn() else onClickAddStudyBtn() },
+                onClick = { if (addStudyViewType == AddStudyViewType.DEFAULT) onDirectEnrollBtnClick() else onAddStudyBtnClick() },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_enroll_study_label),
                 trailingIcon = R.drawable.ic_plus_thick_24,
@@ -243,9 +241,9 @@ fun AddStudyScreen(
             isBottomSheetVisible = datePickerBottomSheetState,
             bottomSheetTitle = stringResource(R.string.add_study_date_picker_bottomsheet_title),
             selectedDate = selectedDate,
-            onSelectedDateChanged = onChangeSelectedDate,
-            onClickInputButton = onClickConfirmDateBtn,
-            onDismissRequest = onClickDatePicker,
+            onSelectedDateChanged = onSelectedDateChange,
+            onClickInputButton = onConfirmDateBtnClick,
+            onDismissRequest = onDatePickerClick,
         )
 
         BbangZipListPickerBottomSheet(
@@ -256,8 +254,8 @@ fun AddStudyScreen(
                     text = "몇 조각으로 쪼개서 공부할까요?",
                 )
             },
-            onSelectedItemChanged = onClickPieceNumber,
-            onDismissRequest = onClickSplitBtn,
+            onSelectedItemChanged = onPieceNumberClick,
+            onDismissRequest = onSplitBtnClick,
         )
     }
 }
@@ -265,20 +263,20 @@ fun AddStudyScreen(
 @Composable
 private fun DefaultRangeView(
     startPage: String,
-    onChangeStartPage: (String) -> Unit,
-    onChangeStartPageFocused: (Boolean) -> Unit,
+    onStartPageChange: (String) -> Unit,
+    onStartPageFocusChange: (Boolean) -> Unit,
     focusManager: FocusManager,
-    startPageTextFieldState: BbangZipTextFieldInputState,
-    startGuideline: String,
-    endPageTextFieldState: BbangZipTextFieldInputState,
-    endGuideline: String,
+    startPageTextFieldInputState: BbangZipTextFieldInputState,
+    startPageGuideline: String,
+    endPageTextFieldInputState: BbangZipTextFieldInputState,
+    endPageGuideline: String,
     endPage: String,
     addStudyViewType: AddStudyViewType,
-    onChangeEndPage: (String) -> Unit,
-    onChangeEndPageFocused: (Boolean) -> Unit,
-    onClickSplitBtn: () -> Unit,
-    onClickDirectEnrollBtn: () -> Unit,
-    isSplitBtnEnable: Boolean,
+    onEndPageChange: (String) -> Unit,
+    onEndPageFocusChange: (Boolean) -> Unit,
+    onSplitBtnClick: () -> Unit,
+    onDirectEnrollBtnClick: () -> Unit,
+    isSplitBtnEnabled: Boolean,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
@@ -295,30 +293,30 @@ private fun DefaultRangeView(
             BbangZipSimpleTextField(
                 leadingIcon = R.drawable.ic_page_check_default_24,
                 placeholder = R.string.add_study_start_page_placeholder,
-                guideline = startGuideline,
+                guideline = startPageGuideline,
                 value = startPage,
-                bbangZipTextFieldInputState = startPageTextFieldState,
+                bbangZipTextFieldInputState = startPageTextFieldInputState,
                 modifier = Modifier.weight(1f),
                 onValueChange = {
-                    onChangeStartPage(it)
+                    onStartPageChange(it)
                 },
-                onFocusChange = { onChangeStartPageFocused(it) },
+                onFocusChange = { onStartPageFocusChange(it) },
                 focusManager = focusManager,
             )
 
             Spacer(modifier = Modifier.width(16.dp))
-            Timber.tag("error").d("endPage : $endPageTextFieldState")
+
             BbangZipSimpleTextField(
                 leadingIcon = R.drawable.ic_page_check_default_24,
                 placeholder = R.string.add_study_end_page_placeholder,
-                guideline = endGuideline,
+                guideline = endPageGuideline,
                 value = endPage,
-                bbangZipTextFieldInputState = endPageTextFieldState,
+                bbangZipTextFieldInputState = endPageTextFieldInputState,
                 modifier = Modifier.weight(1f),
                 onValueChange = {
-                    onChangeEndPage(it)
+                    onEndPageChange(it)
                 },
-                onFocusChange = { onChangeEndPageFocused(it) },
+                onFocusChange = { onEndPageFocusChange(it) },
                 focusManager = focusManager,
             )
         }
@@ -330,11 +328,11 @@ private fun DefaultRangeView(
         bbangZipButtonType = BbangZipButtonType.Outlined,
         bbangZipButtonSize = BbangZipButtonSize.Medium,
         onClick = {
-            onClickSplitBtn()
+            onSplitBtnClick()
         },
         modifier = Modifier.fillMaxWidth(),
         label = stringResource(R.string.btn_slice_study_label),
-        isEnable = isSplitBtnEnable,
+        isEnable = isSplitBtnEnabled,
     )
 }
 
@@ -342,8 +340,8 @@ private fun DefaultRangeView(
 private fun AgainRangeView(
     focusManager: FocusManager,
     pieceNumber: Int,
-    onClickSplitBtn: (Int) -> Unit,
-    isSplitBtnEnable: Boolean,
+    onSplitBtnClick: (Int) -> Unit,
+    isSplitBtnEnabled: Boolean,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
@@ -377,8 +375,7 @@ private fun AgainRangeView(
                 guideline = stringResource(R.string.add_study_end_page_guideline),
                 value = "${pieceNumber}조각",
                 modifier = Modifier.weight(1f),
-                onValueChange = {
-                },
+                onValueChange = { },
                 onFocusChange = { },
                 focusManager = focusManager,
             )
@@ -391,11 +388,11 @@ private fun AgainRangeView(
         bbangZipButtonType = BbangZipButtonType.Outlined,
         bbangZipButtonSize = BbangZipButtonSize.Medium,
         onClick = {
-            onClickSplitBtn(pieceNumber)
+            onSplitBtnClick(pieceNumber)
         },
         modifier = Modifier.fillMaxWidth(),
         label = "다시 쪼개기",
-        isEnable = isSplitBtnEnable,
+        isEnable = isSplitBtnEnabled,
     )
 }
 
