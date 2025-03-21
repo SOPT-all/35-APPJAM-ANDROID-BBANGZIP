@@ -49,25 +49,6 @@ import timber.log.Timber
 @Composable
 fun AddStudyScreen(
     state: AddStudyContract.AddStudyState,
-    pieceNumber: Int,
-    subjectTitle: String = "",
-    examDate: String = "",
-    examName: String = "",
-    studyContent: String = "",
-    startPage: String = "",
-    startGuideline: String = "",
-    endPage: String = "",
-    endGuideline: String = "",
-    selectedDate: Date,
-    datePickerBottomSheetState: Boolean = false,
-    piecePickerBottomSheetState: Boolean = false,
-    isButtonEnable: Boolean = false,
-    isSplitBtnEnable: Boolean = false,
-    isDatePickerEnable: Boolean,
-    studyContentTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-    startPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-    endPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-    addStudyViewType: AddStudyViewType = AddStudyViewType.DEFAULT,
     onStudyContentChange: (String) -> Unit = {},
     onStartPageChange: (String) -> Unit = {},
     onEndPageChange: (String) -> Unit = {},
@@ -99,7 +80,7 @@ fun AddStudyScreen(
         BbangZipBaseTopBar(
             onLeadingIconClick = onBackIconClick,
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            title = subjectTitle,
+            title = state.subjectName,
         )
 
         Column(
@@ -122,9 +103,9 @@ fun AddStudyScreen(
                         Modifier
                             .applyFilterOnClick(
                                 radius = 20.dp,
-                                isDisabled = isDatePickerEnable,
+                                isDisabled = state.isDatePickerEnabled,
                             ) {
-                                if (isDatePickerEnable) onDatePickerClick()
+                                if (state.isDatePickerEnabled) onDatePickerClick()
                             }
                             .fillMaxWidth()
                             .background(
@@ -140,7 +121,7 @@ fun AddStudyScreen(
                         Icon(
                             imageVector = ImageVector.vectorResource(id = R.drawable.ic_calendar_default_24),
                             contentDescription = null,
-                            tint = if (examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
+                            tint = if (state.examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
                             modifier =
                                 Modifier
                                     .padding(2.dp)
@@ -150,9 +131,9 @@ fun AddStudyScreen(
                         Spacer(modifier = Modifier.width(8.dp))
 
                         Text(
-                            text = examDate,
+                            text = state.examDate,
                             style = BbangZipTheme.typography.label1Medium,
-                            color = if (examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
+                            color = if (state.examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
                         )
                     }
                 }
@@ -173,35 +154,35 @@ fun AddStudyScreen(
                     leadingIcon = R.drawable.ic_book_default_24,
                     placeholder = R.string.add_study_study_content_placeholder,
                     guideline = R.string.add_study_study_content_guideline,
-                    value = studyContent,
+                    value = state.studyContent ?: "",
                     onValueChange = { onStudyContentChange(it) },
                     onFocusChange = { onStudyContentFocusChange(it) },
                     maxCharacter = 20,
                     onDeleteButtonClick = { onCancleIconClick() },
                     focusManager = focusManager,
-                    bbangZipTextFieldInputState = studyContentTextFieldState,
+                    bbangZipTextFieldInputState = state.studyContentTextFieldInputState,
                 )
             }
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            when (addStudyViewType) {
+            when (state.addStudyViewType) {
                 AddStudyViewType.DEFAULT -> {
                     DefaultRangeView(
-                        startPage = startPage,
+                        startPage = state.startPage ?: "",
                         onStartPageChange = onStartPageChange,
                         onStartPageFocusChange = onStartPageFocusChange,
                         focusManager = focusManager,
-                        endPage = endPage,
+                        endPage = state.endPage ?: "",
                         onEndPageChange = onEndPageChange,
                         onEndPageFocusChange = onEndPageFocusChange,
                         onSplitBtnClick = onSplitBtnClick,
-                        isSplitBtnEnabled = isButtonEnable,
-                        startPageTextFieldInputState = startPageTextFieldState,
-                        endPageTextFieldInputState = endPageTextFieldState,
-                        startPageGuideline = startGuideline,
-                        endPageGuideline = endGuideline,
-                        addStudyViewType = addStudyViewType,
+                        isSplitBtnEnabled = state.isSplitBtnEnabled,
+                        startPageTextFieldInputState = state.startPageTextFieldInputState,
+                        endPageTextFieldInputState = state.endPageTextFieldInputState,
+                        startPageGuideline = state.startPageGuideLine,
+                        endPageGuideline = state.endPageGuideLine,
+                        addStudyViewType = state.addStudyViewType,
                         onDirectEnrollBtnClick = onDirectEnrollBtnClick,
                     )
                 }
@@ -209,9 +190,9 @@ fun AddStudyScreen(
                 AddStudyViewType.AGAIN -> {
                     AgainRangeView(
                         focusManager = focusManager,
-                        pieceNumber = pieceNumber,
+                        pieceNumber = state.pieceNumber,
                         onSplitBtnClick = onReSplitBtnClick,
-                        isSplitBtnEnabled = isButtonEnable,
+                        isSplitBtnEnabled = state.isSplitBtnEnabled,
                     )
                 }
             }
@@ -229,25 +210,25 @@ fun AddStudyScreen(
             BbangZipButton(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
-                onClick = { if (addStudyViewType == AddStudyViewType.DEFAULT) onDirectEnrollBtnClick() else onAddStudyBtnClick() },
+                onClick = { if (state.addStudyViewType == AddStudyViewType.DEFAULT) onDirectEnrollBtnClick() else onAddStudyBtnClick() },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_enroll_study_label),
                 trailingIcon = R.drawable.ic_plus_thick_24,
-                isEnable = isButtonEnable,
+                isEnable = state.isEnrollBtnEnabled,
             )
         }
 
         BbangZipDatePickerBottomSheet(
-            isBottomSheetVisible = datePickerBottomSheetState,
+            isBottomSheetVisible = state.isDatePickerBottomSheetVisible,
             bottomSheetTitle = stringResource(R.string.add_study_date_picker_bottomsheet_title),
-            selectedDate = selectedDate,
+            selectedDate = state.selectedDate,
             onSelectedDateChanged = onSelectedDateChange,
             onClickInputButton = onConfirmDateBtnClick,
             onDismissRequest = onDatePickerClick,
         )
 
         BbangZipListPickerBottomSheet(
-            isBottomSheetVisible = piecePickerBottomSheetState,
+            isBottomSheetVisible = state.isPiecePickerBottomSheetVisible,
             itemList = listOf("1조각", "2조각", "3조각", "4조각", "5조각", "6조각"),
             title = {
                 Text(
@@ -400,9 +381,6 @@ private fun AgainRangeView(
 @Composable
 fun AddStudyScreenPreview() {
     AddStudyScreen(
-        state = AddStudyContract.AddStudyState(),
-        selectedDate = Date("2025", "1", "21"),
-        pieceNumber = 3,
-        isDatePickerEnable = true,
+        state = AddStudyContract.AddStudyState()
     )
 }

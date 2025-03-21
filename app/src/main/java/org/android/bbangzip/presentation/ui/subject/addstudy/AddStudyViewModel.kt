@@ -166,7 +166,7 @@ class AddStudyViewModel
                 }
 
                 AddStudyContract.AddStudyEvent.OnDirectEnrollBtnClick -> {
-                    updateState(AddStudyReduce.UpdatePieceList)
+                    updateState(AddStudyReduce.UpdateOnePieceList)
                     postAddStudy()
                     setSideEffect(AddStudyContract.AddStudySideEffect.ShowSnackBar("공부 추가 완료!미룬이 탈출이 코앞이에요"))
                 }
@@ -341,7 +341,7 @@ class AddStudyViewModel
 
                 is AddStudyReduce.UpdateStartPageGuideLine -> {
                     state.copy(
-                        startPageGuideline =
+                        startPageGuideLine =
                             if (state.startPageTextFieldInputState == BbangZipTextFieldInputState.Alert) {
                                 if (state.startPage == "0p") {
                                     "0p는 입력할 수 없어요"
@@ -356,7 +356,7 @@ class AddStudyViewModel
 
                 is AddStudyReduce.UpdateEndPageGuideLine -> {
                     state.copy(
-                        endPageGuideline =
+                        endPageGuideLine =
                             if (state.endPageTextFieldInputState == BbangZipTextFieldInputState.Alert) {
                                 if (state.endPage == "0p") "0p는 입력할 수 없어요" else "까지"
                             } else {
@@ -365,7 +365,7 @@ class AddStudyViewModel
                     )
                 }
 
-                AddStudyReduce.UpdatePieceList -> {
+                AddStudyReduce.UpdateOnePieceList -> {
                     state.copy(
                         startPageList = listOf(currentUiState.startPage!!),
                         endPageList = listOf(currentUiState.endPage!!),
