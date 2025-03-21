@@ -4,20 +4,15 @@ import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusManager
@@ -41,10 +36,10 @@ import org.android.bbangzip.presentation.model.Date
 import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
+import org.android.bbangzip.presentation.util.graphic.Gap
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.ui.theme.BbangZipTheme
-import timber.log.Timber
 
 @Composable
 fun AddStudyScreen(
@@ -96,7 +91,7 @@ fun AddStudyScreen(
                     color = BbangZipTheme.colors.labelNormal_282119,
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Gap(height = 16)
 
                 Box(
                     modifier =
@@ -128,7 +123,7 @@ fun AddStudyScreen(
                                     .size(16.dp),
                         )
 
-                        Spacer(modifier = Modifier.width(8.dp))
+                        Gap(width = 8)
 
                         Text(
                             text = state.examDate,
@@ -139,7 +134,7 @@ fun AddStudyScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(50.dp))
+            Gap(height = 50)
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
@@ -148,7 +143,7 @@ fun AddStudyScreen(
                     color = BbangZipTheme.colors.labelNormal_282119,
                 )
 
-                Spacer(modifier = Modifier.height(16.dp))
+                Gap(height = 16)
 
                 BbangZipBasicTextField(
                     leadingIcon = R.drawable.ic_book_default_24,
@@ -164,7 +159,7 @@ fun AddStudyScreen(
                 )
             }
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Gap(height = 32)
 
             when (state.addStudyViewType) {
                 AddStudyViewType.DEFAULT -> {
@@ -197,7 +192,7 @@ fun AddStudyScreen(
                 }
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Gap(height = 8)
 
             Text(
                 text = "[Tip] 입력하신 학습 범위를 자동으로 분배하여\n꾸준히 공부할 수 있도록 학습 계획을 세워드려요!",
@@ -205,7 +200,7 @@ fun AddStudyScreen(
                 color = BbangZipTheme.colors.labelAssistive_282119_28,
             )
 
-            Spacer(modifier = Modifier.weight(1f))
+            Gap()
 
             BbangZipButton(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
@@ -266,7 +261,7 @@ private fun DefaultRangeView(
             color = BbangZipTheme.colors.labelNormal_282119,
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Gap(height = 16)
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -285,7 +280,7 @@ private fun DefaultRangeView(
                 focusManager = focusManager,
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Gap(width = 16)
 
             BbangZipSimpleTextField(
                 leadingIcon = R.drawable.ic_page_check_default_24,
@@ -301,20 +296,20 @@ private fun DefaultRangeView(
                 focusManager = focusManager,
             )
         }
+
+        Gap(height = 16)
+
+        BbangZipButton(
+            bbangZipButtonType = BbangZipButtonType.Outlined,
+            bbangZipButtonSize = BbangZipButtonSize.Medium,
+            onClick = {
+                onSplitBtnClick()
+            },
+            modifier = Modifier.fillMaxWidth(),
+            label = stringResource(R.string.btn_slice_study_label),
+            isEnable = isSplitBtnEnabled,
+        )
     }
-
-    Spacer(modifier = Modifier.height(16.dp))
-
-    BbangZipButton(
-        bbangZipButtonType = BbangZipButtonType.Outlined,
-        bbangZipButtonSize = BbangZipButtonSize.Medium,
-        onClick = {
-            onSplitBtnClick()
-        },
-        modifier = Modifier.fillMaxWidth(),
-        label = stringResource(R.string.btn_slice_study_label),
-        isEnable = isSplitBtnEnabled,
-    )
 }
 
 @Composable
@@ -331,7 +326,7 @@ private fun AgainRangeView(
             color = BbangZipTheme.colors.labelNormal_282119,
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        Gap(height = 16)
 
         Row(
             modifier = Modifier.fillMaxWidth(),
@@ -348,7 +343,7 @@ private fun AgainRangeView(
                 focusManager = focusManager,
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Gap(width = 16)
 
             BbangZipSimpleTextField(
                 leadingIcon = R.drawable.ic_page_check_default_24,
@@ -361,20 +356,20 @@ private fun AgainRangeView(
                 focusManager = focusManager,
             )
         }
+
+        Gap(height = 16)
+
+        BbangZipButton(
+            bbangZipButtonType = BbangZipButtonType.Outlined,
+            bbangZipButtonSize = BbangZipButtonSize.Medium,
+            onClick = {
+                onSplitBtnClick(pieceNumber)
+            },
+            modifier = Modifier.fillMaxWidth(),
+            label = "다시 쪼개기",
+            isEnable = isSplitBtnEnabled,
+        )
     }
-
-    Spacer(modifier = Modifier.height(16.dp))
-
-    BbangZipButton(
-        bbangZipButtonType = BbangZipButtonType.Outlined,
-        bbangZipButtonSize = BbangZipButtonSize.Medium,
-        onClick = {
-            onSplitBtnClick(pieceNumber)
-        },
-        modifier = Modifier.fillMaxWidth(),
-        label = "다시 쪼개기",
-        isEnable = isSplitBtnEnabled,
-    )
 }
 
 @Preview(showSystemUi = true)
