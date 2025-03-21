@@ -49,7 +49,7 @@ class AddStudyViewModel
                 }
 
                 is AddStudyContract.AddStudyEvent.OnChangeStartPageFocused -> {
-                    updateState(AddStudyReduce.UpdateStartPageFocusedState(startPageFocusedState = event.startPageFocusedState))
+                    updateState(AddStudyReduce.UpdateStartPageFocusedState(startPageFocusedState = event.isStartPageFocused))
                     updateState(AddStudyReduce.UpdateStartPageToString)
                     updateState(AddStudyReduce.UpdateSplitButtonEnabled)
                     updateState(AddStudyReduce.UpdateButtonEnabled)
@@ -60,7 +60,7 @@ class AddStudyViewModel
                 }
 
                 is AddStudyContract.AddStudyEvent.OnChangeEndPageFocused -> {
-                    updateState(AddStudyReduce.UpdateEndPageFocusedState(endPageFocusedState = event.endPageFocusedState))
+                    updateState(AddStudyReduce.UpdateEndPageFocusedState(endPageFocusedState = event.isEndPageFocused))
                     updateState(AddStudyReduce.UpdateEndPageToString)
                     updateState(AddStudyReduce.UpdateSplitButtonEnabled)
                     updateState(AddStudyReduce.UpdateButtonEnabled)
@@ -76,7 +76,7 @@ class AddStudyViewModel
                 }
 
                 is AddStudyContract.AddStudyEvent.OnChangeStudyContentFocused -> {
-                    updateState(AddStudyReduce.UpdateStudyContentFocusedState(studyContentFocusedState = event.studyContentFocusedState))
+                    updateState(AddStudyReduce.UpdateStudyContentFocusedState(studyContentFocusedState = event.isStudyContentFocused))
                     updateState(AddStudyReduce.UpdateStudyContentInputState)
                     updateState(AddStudyReduce.UpdateButtonEnabled)
                 }
@@ -109,7 +109,6 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateAddStudyViewType)
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
                     updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
-                    Timber.tag("김재민").d("addstudy에서 보내는 값$currentUiState")
                     setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
                     setSideEffect(
                         AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
@@ -182,7 +181,6 @@ class AddStudyViewModel
 
                 AddStudyContract.AddStudyEvent.OnClickDirectEnrollBtn -> {
                     updateState(AddStudyReduce.UpdatePieceList)
-                    Timber.tag("김재민").d("자고싶당 : $currentUiState")
                     postAddStudy()
                     setSideEffect(AddStudyContract.AddStudySideEffect.ShowSnackBar("공부 추가 완료!미룬이 탈출이 코앞이에요"))
                 }
@@ -219,11 +217,11 @@ class AddStudyViewModel
                 }
 
                 AddStudyReduce.UpdateDatePickerBottomSheetState -> {
-                    state.copy(datePickerBottomSheetState = !state.datePickerBottomSheetState)
+                    state.copy(isDatePickerBottomSheetVisible = !state.isDatePickerBottomSheetVisible)
                 }
 
                 AddStudyReduce.UpdatePiecePickerBottomSheetState -> {
-                    state.copy(piecePickerBottomSheetState = !state.piecePickerBottomSheetState)
+                    state.copy(isPiecePickerBottomSheetVisible = !state.isPiecePickerBottomSheetVisible)
                 }
 
                 is AddStudyReduce.UpdateExamDate -> {
@@ -256,37 +254,37 @@ class AddStudyViewModel
 
                 is AddStudyReduce.UpdateEndPageFocusedState -> {
                     state.copy(
-                        endPageFocusedState = reduce.endPageFocusedState,
+                        isEndPageFocused = reduce.endPageFocusedState,
                     )
                 }
 
                 AddStudyReduce.UpdateStartPageInputState -> {
                     state.copy(
-                        startPageTextFieldState = determineStartTextFieldType(state.startPage ?: "", state.endPage ?: "", state.startPageFocusedState),
+                        startPageTextFieldInputState = determineStartTextFieldType(state.startPage ?: "", state.endPage ?: "", state.isStartPageFocused),
                     )
                 }
 
                 AddStudyReduce.UpdateEndPageInputState -> {
                     state.copy(
-                        endPageTextFieldState = determineEndTextFieldType(state.endPage ?: "", state.startPage ?: "", state.endPageFocusedState),
+                        endPageTextFieldInputState = determineEndTextFieldType(state.endPage ?: "", state.isEndPageFocused),
                     )
                 }
 
                 is AddStudyReduce.UpdateStartPageFocusedState -> {
                     state.copy(
-                        startPageFocusedState = reduce.startPageFocusedState,
+                        isStartPageFocused = reduce.startPageFocusedState,
                     )
                 }
 
                 is AddStudyReduce.UpdateStudyContentFocusedState -> {
                     state.copy(
-                        studyContentFocusedState = reduce.studyContentFocusedState,
+                        isStudyContentFocused = reduce.studyContentFocusedState,
                     )
                 }
 
                 AddStudyReduce.UpdateStudyContentInputState -> {
-                    val checkedText = determineLongTextFieldType(state.studyContent ?: "", state.studyContentFocusedState)
-                    state.copy(studyContentTextFieldState = checkedText)
+                    val checkedText = determineLongTextFieldType(state.studyContent ?: "", state.isStudyContentFocused)
+                    state.copy(studyContentTextFieldInputState = checkedText)
                 }
 
                 is AddStudyReduce.UpdatePieceNumber -> {
@@ -301,7 +299,7 @@ class AddStudyViewModel
                             if (state.startPage.isNullOrEmpty()) {
                                 ""
                             } else {
-                                if (state.startPageFocusedState) {
+                                if (state.isStartPageFocused) {
                                     state.startPage.filter { it.isDigit() }
                                 } else {
                                     state.startPage + "p"
@@ -316,7 +314,7 @@ class AddStudyViewModel
                             if (state.endPage.isNullOrEmpty()) {
                                 ""
                             } else {
-                                if (state.endPageFocusedState) {
+                                if (state.isEndPageFocused) {
                                     state.endPage.filter { it.isDigit() }
                                 } else {
                                     state.endPage + "p"
@@ -327,13 +325,13 @@ class AddStudyViewModel
 
                 is AddStudyReduce.UpdateSplitButtonEnabled -> {
                     state.copy(
-                        buttonSplitEnabled = !(state.startPage.isNullOrEmpty() || state.endPage.isNullOrEmpty() || unitTextToInt(state.startPage) > unitTextToInt(state.endPage)),
+                        isSplitBtnEnabled = !(state.startPage.isNullOrEmpty() || state.endPage.isNullOrEmpty() || unitTextToInt(state.startPage) > unitTextToInt(state.endPage)),
                     )
                 }
 
                 is AddStudyReduce.UpdateButtonEnabled -> {
                     state.copy(
-                        buttonEnabled = state.examDate != "시험 일자 입력" && !state.studyContent.isNullOrEmpty() && state.buttonSplitEnabled,
+                        isEnrollBtnEnabled = state.examDate != "시험 일자 입력" && !state.studyContent.isNullOrEmpty() && state.isSplitBtnEnabled,
                     )
                 }
 
@@ -358,7 +356,7 @@ class AddStudyViewModel
                 is AddStudyReduce.UpdateStartPageGuideline -> {
                     state.copy(
                         startPageGuideline =
-                            if (state.startPageTextFieldState == BbangZipTextFieldInputState.Alert) {
+                            if (state.startPageTextFieldInputState == BbangZipTextFieldInputState.Alert) {
                                 if (state.startPage == "0p") {
                                     "0p는 입력할 수 없어요"
                                 } else {
@@ -373,7 +371,7 @@ class AddStudyViewModel
                 is AddStudyReduce.UpdateEndPageGuideLine -> {
                     state.copy(
                         endPageGuideline =
-                            if (state.endPageTextFieldState == BbangZipTextFieldInputState.Alert) {
+                            if (state.endPageTextFieldInputState == BbangZipTextFieldInputState.Alert) {
                                 if (state.endPage == "0p") "0p는 입력할 수 없어요" else "까지"
                             } else {
                                 "까지"
@@ -475,7 +473,6 @@ class AddStudyViewModel
 
         private fun determineEndTextFieldType(
             end: String,
-            start: String,
             isFocused: Boolean,
         ): BbangZipTextFieldInputState {
             return when {

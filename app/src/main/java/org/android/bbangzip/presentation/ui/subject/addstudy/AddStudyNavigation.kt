@@ -53,12 +53,10 @@ val SplitStudyDataType =
             bundle: Bundle,
             key: String,
         ): SplitStudyData? {
-            Timber.d("[쪼개기] get -> $key")
             return bundle.getString(key)?.let { Json.decodeFromString(it) }
         }
 
         override fun parseValue(value: String): SplitStudyData {
-            Timber.d("[쪼개기] parse -> $value")
             return Json.decodeFromString(value)
         }
 
@@ -67,12 +65,10 @@ val SplitStudyDataType =
             key: String,
             value: SplitStudyData,
         ) {
-            Timber.d("[쪼개기] put -> $value")
             bundle.putString(key, Json.encodeToString(SplitStudyData.serializer(), value))
         }
 
         override fun serializeAsValue(value: SplitStudyData): String {
-            Timber.d("[쪼개기] serialize ->  $value")
             return Json.encodeToString(SplitStudyData.serializer(), value)
         }
     }

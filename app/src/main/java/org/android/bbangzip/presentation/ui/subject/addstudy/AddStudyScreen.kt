@@ -48,7 +48,7 @@ import timber.log.Timber
 
 @Composable
 fun AddStudyScreen(
-    padding: PaddingValues,
+    state: AddStudyContract.AddStudyState,
     pieceNumber: Int,
     subjectTitle: String = "",
     examDate: String = "",
@@ -403,7 +403,7 @@ private fun AgainRangeView(
 @Composable
 fun AddStudyScreenPreview() {
     AddStudyScreen(
-        padding = PaddingValues(),
+        state = AddStudyContract.AddStudyState(),
         selectedDate = Date("2025", "1", "21"),
         pieceNumber = 3,
         isDatePickerEnable = true,

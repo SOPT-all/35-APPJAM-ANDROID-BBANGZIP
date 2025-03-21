@@ -12,34 +12,34 @@ import org.android.bbangzip.presentation.util.base.BaseContract
 class AddStudyContract {
     @Parcelize
     data class AddStudyState(
+        val isStudyContentFocused: Boolean = false,
+        val isStartPageFocused: Boolean = false,
+        val isEndPageFocused: Boolean = false,
+        val isEnrollBtnEnabled: Boolean = false,
+        val isSplitBtnEnabled: Boolean = false,
+        val isDatePickerBottomSheetVisible: Boolean = false,
+        val isPiecePickerBottomSheetVisible: Boolean = false,
+        val isGetBadgeBottomSheetVisible: Boolean = false,
+        val isDatePickerEnabled: Boolean = true,
+        val isSuccess: Boolean = false,
         val subjectId: Int = 0,
+        val pieceNumber: Int = 0,
         val subjectName: String = "",
         val examDate: String = "시험 일자 입력",
         val examName: String = "",
-        val selectedDate: Date = Date("2025", "1", "21"),
         val studyContent: String? = null,
-        val studyContentTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-        val studyContentFocusedState: Boolean = false,
         val startPage: String? = null,
-        val startPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-        val startPageFocusedState: Boolean = false,
+        val endPage: String? = null,
         val startPageGuideline: String = "부터",
         val endPageGuideline: String = "까지",
-        val startPageList: List<String> = emptyList(),
-        val endPage: String? = null,
-        val endPageTextFieldState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
-        val endPageFocusedState: Boolean = false,
-        val endPageList: List<String> = emptyList(),
-        val buttonEnabled: Boolean = false,
-        val buttonSplitEnabled: Boolean = false,
-        val datePickerBottomSheetState: Boolean = false,
-        val piecePickerBottomSheetState: Boolean = false,
-        val pieceNumber: Int = 0,
-        val deadLineList: List<String> = emptyList(),
+        val selectedDate: Date = Date("2025", "1", "21"),
+        val studyContentTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
+        val startPageTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
+        val endPageTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
         val addStudyViewType: AddStudyViewType = AddStudyViewType.DEFAULT,
-        val isSuccess: Boolean = false,
-        val getBadgeBottomSheetState: Boolean = false,
-        val isDatePickerEnabled: Boolean = true,
+        val startPageList: List<String> = emptyList(),
+        val endPageList: List<String> = emptyList(),
+        val deadLineList: List<String> = emptyList(),
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
@@ -53,11 +53,11 @@ class AddStudyContract {
 
         data class OnChangeEndPage(val endPage: String) : AddStudyEvent
 
-        data class OnChangeStudyContentFocused(val studyContentFocusedState: Boolean) : AddStudyEvent
+        data class OnChangeStudyContentFocused(val isStudyContentFocused: Boolean) : AddStudyEvent
 
-        data class OnChangeStartPageFocused(val startPageFocusedState: Boolean) : AddStudyEvent
+        data class OnChangeStartPageFocused(val isStartPageFocused: Boolean) : AddStudyEvent
 
-        data class OnChangeEndPageFocused(val endPageFocusedState: Boolean) : AddStudyEvent
+        data class OnChangeEndPageFocused(val isEndPageFocused: Boolean) : AddStudyEvent
 
         data class OnChangeSelectedDate(val selectedDate: Date) : AddStudyEvent
 
