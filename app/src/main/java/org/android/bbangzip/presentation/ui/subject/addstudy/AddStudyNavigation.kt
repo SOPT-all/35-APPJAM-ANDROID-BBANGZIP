@@ -15,7 +15,7 @@ import org.android.bbangzip.presentation.model.SplitStudyData
 import timber.log.Timber
 import kotlin.reflect.typeOf
 
-fun NavController.navigateAddStudy(
+fun NavController.navigateToAddStudy(
     splitStudyData: SplitStudyData,
 ) {
     navigate(
@@ -24,21 +24,19 @@ fun NavController.navigateAddStudy(
 }
 
 fun NavGraphBuilder.addStudyNavGraph(
-    padding: PaddingValues,
-    snackBarHostState: SnackbarHostState,
-    popBackStack: () -> Unit,
-    navigateSplitStudy: (AddStudyData) -> Unit,
-    navigateSubjectDetail: (Int, String) -> Unit,
+    snackbarHostState: SnackbarHostState,
+    navigateToBack: () -> Unit,
+    navigateToSplitStudy: (AddStudyData) -> Unit,
+    navigateToSubjectDetail: (Int, String) -> Unit,
 ) {
     composable<AddStudyRoute>(
         typeMap = mapOf(typeOf<SplitStudyData>() to SplitStudyDataType),
     ) {
         AddStudyRoute(
-            padding = padding,
-            snackBarHostState = snackBarHostState,
-            popBackStack = popBackStack,
-            navigateSplitStudy = navigateSplitStudy,
-            navigateSubjectDetail = navigateSubjectDetail,
+            snackbarHostState = snackbarHostState,
+            navigateToBack = navigateToBack,
+            navigateSplitStudy = navigateToSplitStudy,
+            navigateSubjectDetail = navigateToSubjectDetail,
             splitStudyData = it.toRoute<AddStudyRoute>().splitStudyData,
         )
     }

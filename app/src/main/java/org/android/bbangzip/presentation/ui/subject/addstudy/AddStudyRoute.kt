@@ -15,11 +15,10 @@ import org.android.bbangzip.presentation.model.SplitStudyData
 
 @Composable
 fun AddStudyRoute(
-    padding: PaddingValues,
-    snackBarHostState: SnackbarHostState,
+    snackbarHostState: SnackbarHostState,
     splitStudyData: SplitStudyData,
     viewModel: AddStudyViewModel = hiltViewModel(),
-    popBackStack: () -> Unit = {},
+    navigateToBack: () -> Unit = {},
     navigateSplitStudy: (AddStudyData) -> Unit = {},
     navigateSubjectDetail: (Int, String) -> Unit = { _, _ -> },
 ) {
@@ -30,17 +29,19 @@ fun AddStudyRoute(
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest {
             when (it) {
-                is AddStudyContract.AddStudySideEffect.NavigateSplitStudy -> {
+                is AddStudyContract.AddStudySideEffect.NavigateToSplitStudy -> {
                     navigateSplitStudy(it.addStudyData)
                 }
-                is AddStudyContract.AddStudySideEffect.PopBackStack -> popBackStack()
-                is AddStudyContract.AddStudySideEffect.NavigateSubjectDetail -> navigateSubjectDetail(it.subjectId, it.subjectName)
+
+                is AddStudyContract.AddStudySideEffect.NavigateToBack -> navigateToBack()
+
+                is AddStudyContract.AddStudySideEffect.NavigateToSubjectDetail -> navigateSubjectDetail(it.subjectId, it.subjectName)
 
                 is AddStudyContract.AddStudySideEffect.ShowSnackBar -> {
                     val job =
                         launch {
-                            snackBarHostState.currentSnackbarData?.dismiss()
-                            snackBarHostState.showSnackbar(it.message)
+                            snackbarHostState.currentSnackbarData?.dismiss()
+                            snackbarHostState.showSnackbar(it.message)
                         }
                     delay(2000)
                     job.cancel()

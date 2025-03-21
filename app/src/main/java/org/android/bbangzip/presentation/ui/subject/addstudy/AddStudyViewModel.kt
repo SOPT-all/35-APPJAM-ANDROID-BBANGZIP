@@ -99,9 +99,9 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateAddStudyViewType)
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
                     updateState(AddStudyReduce.UpdateIsPiecePickerBottomSheetVisible)
-                    setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
+                    setSideEffect(AddStudyContract.AddStudySideEffect.NavigateToBack)
                     setSideEffect(
-                        AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
+                        AddStudyContract.AddStudySideEffect.NavigateToSplitStudy(
                             addStudyData =
                                 AddStudyData(
                                     subjectId = currentUiState.subjectId,
@@ -121,7 +121,7 @@ class AddStudyViewModel
                 }
 
                 AddStudyContract.AddStudyEvent.OnBackIconClick -> {
-                    setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
+                    setSideEffect(AddStudyContract.AddStudySideEffect.NavigateToBack)
                 }
 
                 AddStudyContract.AddStudyEvent.OnEnrollBtnClick -> {
@@ -141,9 +141,9 @@ class AddStudyViewModel
                 is AddStudyContract.AddStudyEvent.OnReSplitBtnClick -> {
                     updateState(AddStudyReduce.UpdateAddStudyViewType)
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
-                    setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
+                    setSideEffect(AddStudyContract.AddStudySideEffect.NavigateToBack)
                     setSideEffect(
-                        AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
+                        AddStudyContract.AddStudySideEffect.NavigateToSplitStudy(
                             addStudyData =
                                 AddStudyData(
                                     subjectId = currentUiState.subjectId,
@@ -396,8 +396,8 @@ class AddStudyViewModel
                     if (data.badgesList.isNotEmpty()) {
                         // TODO : 뱃지 팝업 띄우기 해야하는건가요? -준희-
                     }
-                    setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
-                    setSideEffect(AddStudyContract.AddStudySideEffect.NavigateSubjectDetail(currentUiState.subjectId, currentUiState.subjectName))
+                    setSideEffect(AddStudyContract.AddStudySideEffect.NavigateToBack)
+                    setSideEffect(AddStudyContract.AddStudySideEffect.NavigateToSubjectDetail(currentUiState.subjectId, currentUiState.subjectName))
                 }.onFailure {
                     Timber.tag("[공부 추가하기]").d(error.toString())
                 }

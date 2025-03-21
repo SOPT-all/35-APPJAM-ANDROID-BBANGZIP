@@ -112,11 +112,10 @@ fun MainNavHost(
             )
 
             addStudyNavGraph(
-                padding = padding,
-                snackBarHostState = snackbarHostState,
-                popBackStack = { navigator.popBackStackIfNotSubject() },
-                navigateSplitStudy = { navigator.navigateToSplitStudy(it) },
-                navigateSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(subjectId = id, subjectName = name) },
+                snackbarHostState = snackbarHostState,
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToSplitStudy = { navigator.navigateToSplitStudy(it) },
+                navigateToSubjectDetail = { id, name -> navigator.navigateToSubjectDetail(subjectId = id, subjectName = name) },
             )
 
             modifySubjectNameNavGraph(

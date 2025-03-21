@@ -137,11 +137,11 @@ class AddStudyContract {
     }
 
     sealed interface AddStudySideEffect : BaseContract.SideEffect {
-        data class NavigateSplitStudy(val addStudyData: AddStudyData) : AddStudySideEffect
+        data class NavigateToSplitStudy(val addStudyData: AddStudyData) : AddStudySideEffect
 
-        data class NavigateSubjectDetail(val subjectId: Int, val subjectName: String) : AddStudySideEffect
+        data class NavigateToSubjectDetail(val subjectId: Int, val subjectName: String) : AddStudySideEffect
 
-        data object PopBackStack : AddStudySideEffect
+        data object NavigateToBack : AddStudySideEffect
 
         data class ShowSnackBar(val message: String) : AddStudySideEffect
     }

@@ -25,7 +25,7 @@ import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboar
 import org.android.bbangzip.presentation.ui.onboarding.navigation.navigateOnboardingStart
 import org.android.bbangzip.presentation.ui.splash.navigation.SplashRoute
 import org.android.bbangzip.presentation.ui.splash.navigation.navigateSplash
-import org.android.bbangzip.presentation.ui.subject.addstudy.navigateAddStudy
+import org.android.bbangzip.presentation.ui.subject.addstudy.navigateToAddStudy
 import org.android.bbangzip.presentation.ui.subject.addsubject.navigation.navigateToAddSubject
 import org.android.bbangzip.presentation.ui.subject.modify.motivationmessage.navigateToModifyMotivationMessage
 import org.android.bbangzip.presentation.ui.subject.modify.subjectname.navigateToModifySubjectName
@@ -97,7 +97,7 @@ class MainNavigator(
     }
 
     fun navigateToAddStudy(splitStudyData: SplitStudyData) {
-        navHostController.navigateAddStudy(splitStudyData = splitStudyData)
+        navHostController.navigateToAddStudy(splitStudyData = splitStudyData)
     }
 
     fun navigateToSplitStudy(addStudyData: AddStudyData) {
