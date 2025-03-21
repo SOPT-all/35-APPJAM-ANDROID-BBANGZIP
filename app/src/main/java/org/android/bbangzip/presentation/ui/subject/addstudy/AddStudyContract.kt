@@ -89,19 +89,19 @@ class AddStudyContract {
 
         data class UpdateStudyContent(val studyContent: String) : AddStudyReduce
 
-        data class UpdateStudyContentFocusedState(val studyContentFocusedState: Boolean) : AddStudyReduce
+        data class UpdateIsStudyContentFocused(val studyContentFocusedState: Boolean) : AddStudyReduce
 
         data object UpdateStudyContentInputState : AddStudyReduce
 
         data class UpdateStartPage(val startPage: String) : AddStudyReduce
 
-        data class UpdateStartPageFocusedState(val startPageFocusedState: Boolean) : AddStudyReduce
+        data class UpdateIsStartPageFocused(val startPageFocusedState: Boolean) : AddStudyReduce
 
         data object UpdateStartPageInputState : AddStudyReduce
 
         data class UpdateEndPage(val endPage: String) : AddStudyReduce
 
-        data class UpdateEndPageFocusedState(val endPageFocusedState: Boolean) : AddStudyReduce
+        data class UpdateIsEndPageFocused(val endPageFocusedState: Boolean) : AddStudyReduce
 
         data object UpdateEndPageInputState : AddStudyReduce
 
@@ -109,25 +109,25 @@ class AddStudyContract {
 
         data class UpdateSelectedDate(val date: Date) : AddStudyReduce
 
-        data object UpdateDatePickerBottomSheetState : AddStudyReduce
+        data object UpdateIsDatePickerBottomSheetVisible : AddStudyReduce
 
-        data object UpdatePiecePickerBottomSheetState : AddStudyReduce
+        data object UpdateIsPiecePickerBottomSheetVisible : AddStudyReduce
 
         data class UpdatePieceNumber(val pieceNumber: Int) : AddStudyReduce
 
-        data object UpdateButtonEnabled : AddStudyReduce
+        data object UpdateIsEnrollBtnEnabled : AddStudyReduce
 
-        data object UpdateSplitButtonEnabled : AddStudyReduce
+        data object UpdateIsSplitBtnEnabled : AddStudyReduce
 
-        data object UpdateStartPageToString : AddStudyReduce
+        data object AddSuffixToStartPage : AddStudyReduce
 
-        data object UpdateEndPageToString : AddStudyReduce
+        data object AddSuffixToEndPage : AddStudyReduce
 
         data object UpdateAddStudyViewType : AddStudyReduce
 
         data object UpdateIsSuccess : AddStudyReduce
 
-        data object UpdateStartPageGuideline : AddStudyReduce
+        data object UpdateStartPageGuideLine : AddStudyReduce
 
         data object UpdateEndPageGuideLine : AddStudyReduce
 

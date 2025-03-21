@@ -36,8 +36,8 @@ class AddStudyViewModel
             when (event) {
                 is AddStudyContract.AddStudyEvent.Initialize -> {
                     updateState(AddStudyReduce.Initialize(splitStudyData = event.splitStudyData))
-                    updateState(AddStudyReduce.UpdateSplitButtonEnabled)
-                    updateState(AddStudyReduce.UpdateButtonEnabled)
+                    updateState(AddStudyReduce.UpdateIsSplitBtnEnabled)
+                    updateState(AddStudyReduce.UpdateIsEnrollBtnEnabled)
                 }
 
                 is AddStudyContract.AddStudyEvent.OnEndPageChange -> {
@@ -49,23 +49,23 @@ class AddStudyViewModel
                 }
 
                 is AddStudyContract.AddStudyEvent.OnStartPageFocusChange -> {
-                    updateState(AddStudyReduce.UpdateStartPageFocusedState(startPageFocusedState = event.isStartPageFocused))
-                    updateState(AddStudyReduce.UpdateStartPageToString)
-                    updateState(AddStudyReduce.UpdateSplitButtonEnabled)
-                    updateState(AddStudyReduce.UpdateButtonEnabled)
+                    updateState(AddStudyReduce.UpdateIsStartPageFocused(startPageFocusedState = event.isStartPageFocused))
+                    updateState(AddStudyReduce.AddSuffixToStartPage)
+                    updateState(AddStudyReduce.UpdateIsSplitBtnEnabled)
+                    updateState(AddStudyReduce.UpdateIsEnrollBtnEnabled)
                     updateState(AddStudyReduce.UpdateStartPageInputState)
-                    updateState(AddStudyReduce.UpdateStartPageGuideline)
+                    updateState(AddStudyReduce.UpdateStartPageGuideLine)
                     updateState(AddStudyReduce.UpdateEndPageInputState)
                     updateState(AddStudyReduce.UpdateEndPageGuideLine)
                 }
 
                 is AddStudyContract.AddStudyEvent.OnEndPageFocusChange -> {
-                    updateState(AddStudyReduce.UpdateEndPageFocusedState(endPageFocusedState = event.isEndPageFocused))
-                    updateState(AddStudyReduce.UpdateEndPageToString)
-                    updateState(AddStudyReduce.UpdateSplitButtonEnabled)
-                    updateState(AddStudyReduce.UpdateButtonEnabled)
+                    updateState(AddStudyReduce.UpdateIsEndPageFocused(endPageFocusedState = event.isEndPageFocused))
+                    updateState(AddStudyReduce.AddSuffixToEndPage)
+                    updateState(AddStudyReduce.UpdateIsSplitBtnEnabled)
+                    updateState(AddStudyReduce.UpdateIsEnrollBtnEnabled)
                     updateState(AddStudyReduce.UpdateStartPageInputState)
-                    updateState(AddStudyReduce.UpdateStartPageGuideline)
+                    updateState(AddStudyReduce.UpdateStartPageGuideLine)
                     updateState(AddStudyReduce.UpdateEndPageInputState)
                     updateState(AddStudyReduce.UpdateEndPageGuideLine)
                 }
@@ -76,15 +76,15 @@ class AddStudyViewModel
                 }
 
                 is AddStudyContract.AddStudyEvent.OnStudyContentFocusChange -> {
-                    updateState(AddStudyReduce.UpdateStudyContentFocusedState(studyContentFocusedState = event.isStudyContentFocused))
+                    updateState(AddStudyReduce.UpdateIsStudyContentFocused(studyContentFocusedState = event.isStudyContentFocused))
                     updateState(AddStudyReduce.UpdateStudyContentInputState)
-                    updateState(AddStudyReduce.UpdateButtonEnabled)
+                    updateState(AddStudyReduce.UpdateIsEnrollBtnEnabled)
                 }
 
                 is AddStudyContract.AddStudyEvent.OnConfirmDateBtnClick -> {
-                    updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
+                    updateState(AddStudyReduce.UpdateIsDatePickerBottomSheetVisible)
                     updateState(AddStudyReduce.UpdateExamDate)
-                    updateState(AddStudyReduce.UpdateButtonEnabled)
+                    updateState(AddStudyReduce.UpdateIsEnrollBtnEnabled)
                 }
 
                 is AddStudyContract.AddStudyEvent.OnSelectedDateChange -> {
@@ -92,13 +92,13 @@ class AddStudyViewModel
                 }
 
                 AddStudyContract.AddStudyEvent.OnDatePickerClick -> {
-                    updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
+                    updateState(AddStudyReduce.UpdateIsDatePickerBottomSheetVisible)
                 }
 
                 is AddStudyContract.AddStudyEvent.OnPieceNumberClick -> {
                     updateState(AddStudyReduce.UpdateAddStudyViewType)
                     updateState(AddStudyReduce.UpdatePieceNumber(pieceNumber = event.pieceNumber))
-                    updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
+                    updateState(AddStudyReduce.UpdateIsPiecePickerBottomSheetVisible)
                     setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
                     setSideEffect(
                         AddStudyContract.AddStudySideEffect.NavigateSplitStudy(
@@ -124,10 +124,6 @@ class AddStudyViewModel
                     setSideEffect(AddStudyContract.AddStudySideEffect.PopBackStack)
                 }
 
-                AddStudyContract.AddStudyEvent.OnDatePickerClick -> {
-                    updateState(AddStudyReduce.UpdateDatePickerBottomSheetState)
-                }
-
                 AddStudyContract.AddStudyEvent.OnEnrollBtnClick -> {
                 }
 
@@ -139,7 +135,7 @@ class AddStudyViewModel
                 }
 
                 AddStudyContract.AddStudyEvent.OnSplitBtnClick -> {
-                    updateState(AddStudyReduce.UpdatePiecePickerBottomSheetState)
+                    updateState(AddStudyReduce.UpdateIsPiecePickerBottomSheetVisible)
                 }
 
                 is AddStudyContract.AddStudyEvent.OnReSplitBtnClick -> {
@@ -206,11 +202,11 @@ class AddStudyViewModel
                     )
                 }
 
-                AddStudyReduce.UpdateDatePickerBottomSheetState -> {
+                AddStudyReduce.UpdateIsDatePickerBottomSheetVisible -> {
                     state.copy(isDatePickerBottomSheetVisible = !state.isDatePickerBottomSheetVisible)
                 }
 
-                AddStudyReduce.UpdatePiecePickerBottomSheetState -> {
+                AddStudyReduce.UpdateIsPiecePickerBottomSheetVisible -> {
                     state.copy(isPiecePickerBottomSheetVisible = !state.isPiecePickerBottomSheetVisible)
                 }
 
@@ -242,7 +238,7 @@ class AddStudyViewModel
                     )
                 }
 
-                is AddStudyReduce.UpdateEndPageFocusedState -> {
+                is AddStudyReduce.UpdateIsEndPageFocused -> {
                     state.copy(
                         isEndPageFocused = reduce.endPageFocusedState,
                     )
@@ -260,13 +256,13 @@ class AddStudyViewModel
                     )
                 }
 
-                is AddStudyReduce.UpdateStartPageFocusedState -> {
+                is AddStudyReduce.UpdateIsStartPageFocused -> {
                     state.copy(
                         isStartPageFocused = reduce.startPageFocusedState,
                     )
                 }
 
-                is AddStudyReduce.UpdateStudyContentFocusedState -> {
+                is AddStudyReduce.UpdateIsStudyContentFocused -> {
                     state.copy(
                         isStudyContentFocused = reduce.studyContentFocusedState,
                     )
@@ -283,7 +279,7 @@ class AddStudyViewModel
                     )
                 }
 
-                is AddStudyReduce.UpdateStartPageToString -> {
+                is AddStudyReduce.AddSuffixToStartPage -> {
                     state.copy(
                         startPage =
                             if (state.startPage.isNullOrEmpty()) {
@@ -298,7 +294,7 @@ class AddStudyViewModel
                     )
                 }
 
-                is AddStudyReduce.UpdateEndPageToString -> {
+                is AddStudyReduce.AddSuffixToEndPage -> {
                     state.copy(
                         endPage =
                             if (state.endPage.isNullOrEmpty()) {
@@ -313,13 +309,13 @@ class AddStudyViewModel
                     )
                 }
 
-                is AddStudyReduce.UpdateSplitButtonEnabled -> {
+                is AddStudyReduce.UpdateIsSplitBtnEnabled -> {
                     state.copy(
                         isSplitBtnEnabled = !(state.startPage.isNullOrEmpty() || state.endPage.isNullOrEmpty() || unitTextToInt(state.startPage) > unitTextToInt(state.endPage)),
                     )
                 }
 
-                is AddStudyReduce.UpdateButtonEnabled -> {
+                is AddStudyReduce.UpdateIsEnrollBtnEnabled -> {
                     state.copy(
                         isEnrollBtnEnabled = state.examDate != "시험 일자 입력" && !state.studyContent.isNullOrEmpty() && state.isSplitBtnEnabled,
                     )
@@ -343,7 +339,7 @@ class AddStudyViewModel
                     )
                 }
 
-                is AddStudyReduce.UpdateStartPageGuideline -> {
+                is AddStudyReduce.UpdateStartPageGuideLine -> {
                     state.copy(
                         startPageGuideline =
                             if (state.startPageTextFieldInputState == BbangZipTextFieldInputState.Alert) {
