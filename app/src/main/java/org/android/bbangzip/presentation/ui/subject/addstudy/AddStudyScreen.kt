@@ -67,10 +67,10 @@ fun AddStudyScreen(
 
     Column(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .addFocusCleaner(focusManager)
-                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
+        Modifier
+            .fillMaxSize()
+            .addFocusCleaner(focusManager)
+            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         BbangZipBaseTopBar(
             onLeadingIconClick = onBackIconClick,
@@ -80,9 +80,9 @@ fun AddStudyScreen(
 
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+            Modifier
+                .fillMaxSize()
+                .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
         ) {
             ShowDatePickerBtn(
                 isDatePickerEnabled = state.isDatePickerEnabled,
@@ -94,7 +94,7 @@ fun AddStudyScreen(
 
             Column(modifier = Modifier.fillMaxWidth()) {
                 Text(
-                    text = "학습 내용",
+                    text = stringResource(R.string.add_study_study_content_field_label),
                     style = BbangZipTheme.typography.body1Bold,
                     color = BbangZipTheme.colors.labelNormal_282119,
                 )
@@ -149,7 +149,7 @@ fun AddStudyScreen(
             Gap(height = 8)
 
             Text(
-                text = "[Tip] 입력하신 학습 범위를 자동으로 분배하여\n꾸준히 공부할 수 있도록 학습 계획을 세워드려요!",
+                text = stringResource(R.string.add_study_split_btn_description),
                 style = BbangZipTheme.typography.caption2Bold,
                 color = BbangZipTheme.colors.labelAssistive_282119_28,
             )
@@ -180,10 +180,10 @@ fun AddStudyScreen(
 
         BbangZipListPickerBottomSheet(
             isBottomSheetVisible = state.isPiecePickerBottomSheetVisible,
-            itemList = listOf("1조각", "2조각", "3조각", "4조각", "5조각", "6조각"),
+            itemList = List(6){ stringResource(R.string.add_study_piece_selection_bottom_sheet_item, it + 1) },
             title = {
                 Text(
-                    text = "몇 조각으로 쪼개서 공부할까요?",
+                    text = stringResource(R.string.add_study_piece_selection_bottom_sheet_description),
                 )
             },
             onSelectedItemChanged = onPieceNumberClick,
@@ -200,7 +200,7 @@ private fun ShowDatePickerBtn(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "시험 일자",
+            text = stringResource(R.string.add_study_show_date_picker_field_label),
             style = BbangZipTheme.typography.body1Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
         )
@@ -267,7 +267,7 @@ private fun DefaultRangeView(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "학습 범위 ",
+            text = stringResource(R.string.add_study_study_range_label),
             style = BbangZipTheme.typography.body1Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
         )
@@ -332,7 +332,7 @@ private fun AgainRangeView(
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
-            text = "학습 범위 ",
+            text = stringResource(R.string.add_study_study_range_label),
             style = BbangZipTheme.typography.body1Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
         )
@@ -346,7 +346,7 @@ private fun AgainRangeView(
                 leadingIcon = R.drawable.ic_page_check_default_24,
                 placeholder = R.string.add_study_start_page_placeholder,
                 guideline = stringResource(R.string.add_study_start_page_guideline),
-                value = "1조각",
+                value = stringResource(R.string.add_study_start_piece_label),
                 modifier = Modifier.weight(1f),
                 onValueChange = {},
                 onFocusChange = { },
@@ -359,7 +359,7 @@ private fun AgainRangeView(
                 leadingIcon = R.drawable.ic_page_check_default_24,
                 placeholder = R.string.add_study_end_page_placeholder,
                 guideline = stringResource(R.string.add_study_end_page_guideline),
-                value = "${pieceNumber}조각",
+                value = stringResource(R.string.add_study_piece_number, pieceNumber),
                 modifier = Modifier.weight(1f),
                 onValueChange = { },
                 onFocusChange = { },
@@ -376,7 +376,7 @@ private fun AgainRangeView(
                 onSplitBtnClick(pieceNumber)
             },
             modifier = Modifier.fillMaxWidth(),
-            label = "다시 쪼개기",
+            label = stringResource(R.string.add_study_re_split_btn_label),
             isEnable = isSplitBtnEnabled,
         )
     }

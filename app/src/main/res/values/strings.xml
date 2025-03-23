@@ -195,4 +195,15 @@
     <!-- add subject -->
     <string name="add_subject_title">과목 추가하기</string>
     <string name="add_subject_textfield_label">과목명</string>
+
+    <!-- add study -->
+    <string name="add_study_re_split_btn_label">다시 쪼개기</string>
+    <string name="add_study_piece_number">%1$s조각</string>
+    <string name="add_study_start_piece_label">1조각</string>
+    <string name="add_study_study_range_label">학습 범위</string>
+    <string name="add_study_show_date_picker_field_label">시험 일자</string>
+    <string name="add_study_piece_selection_bottom_sheet_description">몇 조각으로 쪼개서 공부할까요?</string>
+    <string name="add_study_piece_selection_bottom_sheet_item">%1$s조각</string>
+    <string name="add_study_split_btn_description">[Tip] 입력하신 학습 범위를 자동으로 분배하여\n꾸준히 공부할 수 있도록 학습 계획을 세워드려요!</string>
+    <string name="add_study_study_content_field_label">학습 내용</string>
 </resources>
