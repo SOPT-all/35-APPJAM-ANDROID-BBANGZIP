@@ -36,6 +36,7 @@ import org.android.bbangzip.presentation.model.Date
 import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
+import org.android.bbangzip.presentation.util.constant.TextFieldMaxCharacterConstants
 import org.android.bbangzip.presentation.util.graphic.Gap
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
@@ -108,7 +109,7 @@ fun AddStudyScreen(
                     value = state.studyContent ?: "",
                     onValueChange = { onStudyContentChange(it) },
                     onFocusChange = { onStudyContentFocusChange(it) },
-                    maxCharacter = 20,
+                    maxCharacter = TextFieldMaxCharacterConstants.STUDY_CONTENT,
                     onDeleteButtonClick = { onCancleIconClick() },
                     focusManager = focusManager,
                     bbangZipTextFieldInputState = state.studyContentTextFieldInputState,
