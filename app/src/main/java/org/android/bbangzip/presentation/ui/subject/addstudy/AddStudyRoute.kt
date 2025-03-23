@@ -63,7 +63,7 @@ fun AddStudyRoute(
             onEndPageChange = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnEndPageChange(it)) },
             onEndPageFocusChange = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnEndPageFocusChange(it)) },
             onSplitBtnClick = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnSplitBtnClick) },
-            onDatePickerClick = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnDatePickerClick) },
+            onShowDatePickerBtnClick = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnShowDatePickerBtnClick) },
             onPieceNumberClick = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnPieceNumberClick(it)) },
             onCancleIconClick = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnCancleIconClick) },
             onConfirmDateBtnClick = { viewModel.setEvent(AddStudyContract.AddStudyEvent.OnConfirmDateBtnClick) },

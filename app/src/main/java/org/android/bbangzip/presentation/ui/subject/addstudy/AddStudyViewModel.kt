@@ -54,9 +54,9 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateIsSplitBtnEnabled)
                     updateState(AddStudyReduce.UpdateIsEnrollBtnEnabled)
                     updateState(AddStudyReduce.UpdateStartPageInputState)
-                    updateState(AddStudyReduce.UpdateStartPageGuideLine)
+                    updateState(AddStudyReduce.UpdateStartPageGuideline)
                     updateState(AddStudyReduce.UpdateEndPageInputState)
-                    updateState(AddStudyReduce.UpdateEndPageGuideLine)
+                    updateState(AddStudyReduce.UpdateEndPageGuideline)
                 }
 
                 is AddStudyContract.AddStudyEvent.OnEndPageFocusChange -> {
@@ -65,9 +65,9 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateIsSplitBtnEnabled)
                     updateState(AddStudyReduce.UpdateIsEnrollBtnEnabled)
                     updateState(AddStudyReduce.UpdateStartPageInputState)
-                    updateState(AddStudyReduce.UpdateStartPageGuideLine)
+                    updateState(AddStudyReduce.UpdateStartPageGuideline)
                     updateState(AddStudyReduce.UpdateEndPageInputState)
-                    updateState(AddStudyReduce.UpdateEndPageGuideLine)
+                    updateState(AddStudyReduce.UpdateEndPageGuideline)
                 }
 
                 is AddStudyContract.AddStudyEvent.OnStudyContentChange -> {
@@ -91,7 +91,7 @@ class AddStudyViewModel
                     updateState(AddStudyReduce.UpdateSelectedDate(date = event.selectedDate))
                 }
 
-                AddStudyContract.AddStudyEvent.OnDatePickerClick -> {
+                AddStudyContract.AddStudyEvent.OnShowDatePickerBtnClick -> {
                     updateState(AddStudyReduce.UpdateIsDatePickerBottomSheetVisible)
                 }
 
@@ -339,9 +339,9 @@ class AddStudyViewModel
                     )
                 }
 
-                is AddStudyReduce.UpdateStartPageGuideLine -> {
+                is AddStudyReduce.UpdateStartPageGuideline -> {
                     state.copy(
-                        startPageGuideLine =
+                        startPageGuideline =
                             if (state.startPageTextFieldInputState == BbangZipTextFieldInputState.Alert) {
                                 if (state.startPage == "0p") {
                                     "0p는 입력할 수 없어요"
@@ -354,9 +354,9 @@ class AddStudyViewModel
                     )
                 }
 
-                is AddStudyReduce.UpdateEndPageGuideLine -> {
+                is AddStudyReduce.UpdateEndPageGuideline -> {
                     state.copy(
-                        endPageGuideLine =
+                        endPageGuideline =
                             if (state.endPageTextFieldInputState == BbangZipTextFieldInputState.Alert) {
                                 if (state.endPage == "0p") "0p는 입력할 수 없어요" else "까지"
                             } else {

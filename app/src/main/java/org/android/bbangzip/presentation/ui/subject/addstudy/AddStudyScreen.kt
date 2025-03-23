@@ -51,7 +51,7 @@ fun AddStudyScreen(
     onStudyContentFocusChange: (Boolean) -> Unit = {},
     onStartPageFocusChange: (Boolean) -> Unit = {},
     onEndPageFocusChange: (Boolean) -> Unit = {},
-    onDatePickerClick: () -> Unit = {},
+    onShowDatePickerBtnClick: () -> Unit = {},
     onPieceNumberClick: (Int) -> Unit = {},
     onBackIconClick: () -> Unit = {},
     onSplitBtnClick: () -> Unit = {},
@@ -84,55 +84,11 @@ fun AddStudyScreen(
                     .fillMaxSize()
                     .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
         ) {
-            Column(modifier = Modifier.fillMaxWidth()) {
-                Text(
-                    text = "시험 일자",
-                    style = BbangZipTheme.typography.body1Bold,
-                    color = BbangZipTheme.colors.labelNormal_282119,
-                )
-
-                Gap(height = 16)
-
-                Box(
-                    modifier =
-                        Modifier
-                            .applyFilterOnClick(
-                                radius = 20.dp,
-                                isDisabled = state.isDatePickerEnabled,
-                            ) {
-                                if (state.isDatePickerEnabled) onDatePickerClick()
-                            }
-                            .fillMaxWidth()
-                            .background(
-                                color = BbangZipTheme.colors.fillNormal_68645E_08,
-                                shape = RoundedCornerShape(20.dp),
-                            )
-                            .padding(start = 16.dp)
-                            .padding(vertical = 18.dp),
-                ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically,
-                    ) {
-                        Icon(
-                            imageVector = ImageVector.vectorResource(id = R.drawable.ic_calendar_default_24),
-                            contentDescription = null,
-                            tint = if (state.examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
-                            modifier =
-                                Modifier
-                                    .padding(2.dp)
-                                    .size(16.dp),
-                        )
-
-                        Gap(width = 8)
-
-                        Text(
-                            text = state.examDate,
-                            style = BbangZipTheme.typography.label1Medium,
-                            color = if (state.examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
-                        )
-                    }
-                }
-            }
+            ShowDatePickerBtn(
+                isDatePickerEnabled = state.isDatePickerEnabled,
+                examDate = state.examDate,
+                onShowDatePickerBtnClick = onShowDatePickerBtnClick
+            )
 
             Gap(height = 50)
 
@@ -175,10 +131,8 @@ fun AddStudyScreen(
                         isSplitBtnEnabled = state.isSplitBtnEnabled,
                         startPageTextFieldInputState = state.startPageTextFieldInputState,
                         endPageTextFieldInputState = state.endPageTextFieldInputState,
-                        startPageGuideline = state.startPageGuideLine,
-                        endPageGuideline = state.endPageGuideLine,
-                        addStudyViewType = state.addStudyViewType,
-                        onDirectEnrollBtnClick = onDirectEnrollBtnClick,
+                        startPageGuideline = state.startPageGuideline,
+                        endPageGuideline = state.endPageGuideline,
                     )
                 }
 
@@ -205,7 +159,9 @@ fun AddStudyScreen(
             BbangZipButton(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
-                onClick = { if (state.addStudyViewType == AddStudyViewType.DEFAULT) onDirectEnrollBtnClick() else onAddStudyBtnClick() },
+                onClick = {
+                    if (state.addStudyViewType == AddStudyViewType.DEFAULT) onDirectEnrollBtnClick()
+                    else onAddStudyBtnClick() },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_enroll_study_label),
                 trailingIcon = R.drawable.ic_plus_thick_24,
@@ -219,7 +175,7 @@ fun AddStudyScreen(
             selectedDate = state.selectedDate,
             onSelectedDateChanged = onSelectedDateChange,
             onClickInputButton = onConfirmDateBtnClick,
-            onDismissRequest = onDatePickerClick,
+            onDismissRequest = onShowDatePickerBtnClick,
         )
 
         BbangZipListPickerBottomSheet(
@@ -237,6 +193,63 @@ fun AddStudyScreen(
 }
 
 @Composable
+private fun ShowDatePickerBtn(
+    isDatePickerEnabled: Boolean,
+    examDate: String,
+    onShowDatePickerBtnClick: () -> Unit
+) {
+    Column(modifier = Modifier.fillMaxWidth()) {
+        Text(
+            text = "시험 일자",
+            style = BbangZipTheme.typography.body1Bold,
+            color = BbangZipTheme.colors.labelNormal_282119,
+        )
+
+        Gap(height = 16)
+
+        Box(
+            modifier =
+            Modifier
+                .applyFilterOnClick(
+                    radius = 20.dp,
+                    isDisabled = isDatePickerEnabled,
+                ) {
+                    if (isDatePickerEnabled) onShowDatePickerBtnClick()
+                }
+                .fillMaxWidth()
+                .background(
+                    color = BbangZipTheme.colors.fillNormal_68645E_08,
+                    shape = RoundedCornerShape(20.dp),
+                )
+                .padding(start = 16.dp)
+                .padding(vertical = 18.dp),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                Icon(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_calendar_default_24),
+                    contentDescription = null,
+                    tint = if (examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
+                    modifier =
+                    Modifier
+                        .padding(2.dp)
+                        .size(16.dp),
+                )
+
+                Gap(width = 8)
+
+                Text(
+                    text = examDate,
+                    style = BbangZipTheme.typography.label1Medium,
+                    color = if (examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
+                )
+            }
+        }
+    }
+}
+
+@Composable
 private fun DefaultRangeView(
     startPage: String,
     onStartPageChange: (String) -> Unit,
@@ -247,11 +260,9 @@ private fun DefaultRangeView(
     endPageTextFieldInputState: BbangZipTextFieldInputState,
     endPageGuideline: String,
     endPage: String,
-    addStudyViewType: AddStudyViewType,
     onEndPageChange: (String) -> Unit,
     onEndPageFocusChange: (Boolean) -> Unit,
     onSplitBtnClick: () -> Unit,
-    onDirectEnrollBtnClick: () -> Unit,
     isSplitBtnEnabled: Boolean,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
@@ -337,8 +348,7 @@ private fun AgainRangeView(
                 guideline = stringResource(R.string.add_study_start_page_guideline),
                 value = "1조각",
                 modifier = Modifier.weight(1f),
-                onValueChange = {
-                },
+                onValueChange = {},
                 onFocusChange = { },
                 focusManager = focusManager,
             )

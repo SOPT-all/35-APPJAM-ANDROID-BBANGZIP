@@ -30,8 +30,8 @@ class AddStudyContract {
         val studyContent: String? = null,
         val startPage: String? = null,
         val endPage: String? = null,
-        val startPageGuideLine: String = "부터",
-        val endPageGuideLine: String = "까지",
+        val startPageGuideline: String = "부터",
+        val endPageGuideline: String = "까지",
         val selectedDate: Date = Date("2025", "1", "21"),
         val studyContentTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
         val startPageTextFieldInputState: BbangZipTextFieldInputState = BbangZipTextFieldInputState.Default,
@@ -61,7 +61,7 @@ class AddStudyContract {
 
         data class OnSelectedDateChange(val selectedDate: Date) : AddStudyEvent
 
-        data object OnDatePickerClick : AddStudyEvent
+        data object OnShowDatePickerBtnClick : AddStudyEvent
 
         data class OnPieceNumberClick(val pieceNumber: Int) : AddStudyEvent
 
@@ -127,9 +127,9 @@ class AddStudyContract {
 
         data object UpdateIsSuccess : AddStudyReduce
 
-        data object UpdateStartPageGuideLine : AddStudyReduce
+        data object UpdateStartPageGuideline : AddStudyReduce
 
-        data object UpdateEndPageGuideLine : AddStudyReduce
+        data object UpdateEndPageGuideline : AddStudyReduce
 
         data object UpdateOnePieceList : AddStudyReduce
 
