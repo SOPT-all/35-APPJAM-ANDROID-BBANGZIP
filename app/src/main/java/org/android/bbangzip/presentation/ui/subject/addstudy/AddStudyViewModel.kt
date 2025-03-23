@@ -125,12 +125,6 @@ class AddStudyViewModel
                     setSideEffect(AddStudyContract.AddStudySideEffect.NavigateToBack)
                 }
 
-                AddStudyContract.AddStudyEvent.OnEnrollBtnClick -> {
-                }
-
-                AddStudyContract.AddStudyEvent.OnNextBtnClick -> {
-                }
-
                 AddStudyContract.AddStudyEvent.OnCancleIconClick -> {
                     updateState(AddStudyReduce.ResetStudyContent)
                 }

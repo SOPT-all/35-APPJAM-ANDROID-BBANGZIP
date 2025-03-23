@@ -1,7 +1,6 @@
 package org.android.bbangzip.presentation.ui.subject.addstudy
 
 import android.os.Bundle
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.SnackbarHostState
 import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
@@ -12,7 +11,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.SplitStudyData
-import timber.log.Timber
 import kotlin.reflect.typeOf
 
 fun NavController.navigateToAddStudy(

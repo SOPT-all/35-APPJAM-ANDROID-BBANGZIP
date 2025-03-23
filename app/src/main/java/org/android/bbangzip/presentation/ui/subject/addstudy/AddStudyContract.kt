@@ -71,10 +71,6 @@ class AddStudyContract {
 
         data object OnSplitBtnClick : AddStudyEvent
 
-        data object OnNextBtnClick : AddStudyEvent
-
-        data object OnEnrollBtnClick : AddStudyEvent
-
         data object OnConfirmDateBtnClick : AddStudyEvent
 
         data class OnReSplitBtnClick(val pieceNumber: Int) : AddStudyEvent

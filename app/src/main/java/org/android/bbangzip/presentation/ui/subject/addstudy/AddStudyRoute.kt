@@ -1,6 +1,5 @@
 package org.android.bbangzip.presentation.ui.subject.addstudy
 
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
