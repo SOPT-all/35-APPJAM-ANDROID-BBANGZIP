@@ -12,6 +12,7 @@ import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.type.AddStudyViewType
 import org.android.bbangzip.presentation.ui.subject.addstudy.AddStudyContract.AddStudyReduce
 import org.android.bbangzip.presentation.util.base.BaseViewModel
+import org.android.bbangzip.presentation.util.cache.RegexCaches
 import org.android.bbangzip.presentation.util.casting.pageToInt
 import org.android.bbangzip.presentation.util.date.addLeadingZero
 import org.android.bbangzip.presentation.util.date.formatDate
@@ -437,7 +438,7 @@ class AddStudyViewModel
             return when {
                 text.isEmpty() && !isFocused -> BbangZipTextFieldInputState.Default
                 text.isEmpty() && isFocused -> BbangZipTextFieldInputState.Placeholder
-                text.contains(Regex("[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]")) -> BbangZipTextFieldInputState.Alert
+                text.contains(RegexCaches.NON_KOREAN_ENGLISH_NUMERIC_REGEX) -> BbangZipTextFieldInputState.Alert
                 text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
                 else -> BbangZipTextFieldInputState.Field
             }
