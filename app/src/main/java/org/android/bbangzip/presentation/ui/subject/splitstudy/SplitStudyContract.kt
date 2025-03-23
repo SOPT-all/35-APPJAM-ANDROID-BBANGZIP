@@ -23,16 +23,16 @@ class SplitStudyContract {
         val selectedDate: Date = Date("2025", "1", "21"),
         val selectedPieceIndex: Int = 0,
         val startPageList: List<String> = List(pieceNumber) { "" },
-        val startPageFocusedStateList: List<Boolean> = List(pieceNumber) { false },
-        val startPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
+        val isStartPageFocusedList: List<Boolean> = List(pieceNumber) { false },
+        val startPageTextFieldInputStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
         val startPageGuidelineList: List<String> = List(pieceNumber) { " " },
         val endPageList: List<String> = List(pieceNumber) { "" },
-        val endPageFocusedStateList: List<Boolean> = List(pieceNumber) { false },
-        val endPageTextFieldStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
+        val isEndPageFocusedList: List<Boolean> = List(pieceNumber) { false },
+        val endPageTextFieldInputStateList: List<BbangZipTextFieldInputState> = List(pieceNumber) { BbangZipTextFieldInputState.Default },
         val endPageGuidelineList: List<String> = List(pieceNumber) { "" },
-        val dateList: List<Date> = List(pieceNumber) { Date("2025", "1", "21") },
-        val datePickerBottomSheetState: Boolean = false,
-        val isSaveEnable: Boolean = true,
+        val deadlineList: List<Date> = List(pieceNumber) { Date("2025", "1", "21") },
+        val isDatePickerBottomSheetVisible: Boolean = false,
+        val isSaveEnabled: Boolean = true,
     ) : BaseContract.State, Parcelable {
         override fun toParcelable(): Parcelable = this
     }
