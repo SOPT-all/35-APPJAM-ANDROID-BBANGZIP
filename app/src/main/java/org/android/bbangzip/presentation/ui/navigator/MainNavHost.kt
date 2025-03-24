@@ -62,17 +62,17 @@ fun MainNavHost(
             )
 
             onboardingStartNavGraph(
-                navigateToOnboarding = { navigator.navigateToOnboarding() },
+                navigateToOnboarding = navigator::navigateToOnboarding,
             )
 
             onboardingNavGraph(
-                navigateToOnboardingEnd = { navigator.navigateToOnboardingEnd() },
-                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToOnboardingEnd = navigator::navigateToOnboardingEnd,
+                navigateToBack = navigator::popBackStackIfNotSubject,
             )
 
             onboardingEndNavGraph(
-                navigateToSubject = { navigator.navigateToSubject() },
-                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToSubject = navigator::navigateToSubject,
+                navigateToBack = navigator::popBackStackIfNotSubject,
             )
 
             todoAddNavGraph(

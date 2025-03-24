@@ -40,21 +40,21 @@ fun OnboardingRoute(
         if (pagerState.currentPage != state.currentPage) {
             pagerState.animateScrollToPage(state.currentPage)
             // TODO 로직 확인
-            viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeCurrentPage(state.currentPage))
+            viewModel.setEvent(OnboardingContract.OnboardingEvent.OnCurrentPageChange(state.currentPage))
         }
     }
 
     OnboardingScreen(
         state = state,
         pagerState = pagerState,
-        onBackBtnClick = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickBackBtn) },
-        onNextBtnClick = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickNextBtn) },
-        onUserNameChanged = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeUserName(it)) },
-        onSemesterChanged = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeSemester(it)) },
-        onSubjectChanged = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeSubject(it)) },
-        onChangeUserNameFocused = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeUserNameFocused(it)) },
-        onChangeSubjectFocused = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnChangeSubjectFocused(it)) },
-        clearUserName = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickDeleteUserName) },
-        clearSubject = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnClickDeleteSubject) },
+        onBackBtnClick = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnBackBtnClick) },
+        onNextBtnClick = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnNextBtnClick) },
+        onUserNameChanged = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnUserNameChange(it)) },
+        onSemesterChanged = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnSemesterChange(it)) },
+        onSubjectChanged = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnSubjectChange(it)) },
+        onChangeUserNameFocused = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnUserNameFocusChange(it)) },
+        onChangeSubjectFocused = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnSubjectFocusChange(it)) },
+        clearUserName = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnUserNameDeleteBtnClick) },
+        clearSubject = { viewModel.setEvent(OnboardingContract.OnboardingEvent.OnSubjectDeleteBtnClick) },
     )
 }

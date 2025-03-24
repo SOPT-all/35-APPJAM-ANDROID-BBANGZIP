@@ -40,7 +40,7 @@ class OnboardingViewModel
             when (event) {
                 is OnboardingContract.OnboardingEvent.Initialize -> launch { initDataLoad() }
 
-                is OnboardingContract.OnboardingEvent.OnChangeUserName -> {
+                is OnboardingContract.OnboardingEvent.OnUserNameChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateUserName(
                             userName = event.userName,
@@ -54,7 +54,7 @@ class OnboardingViewModel
                     updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnChangeUserNameFocused -> {
+                is OnboardingContract.OnboardingEvent.OnUserNameFocusChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateUserNameFocused(
                             isFocused = event.isFocused,
@@ -67,7 +67,7 @@ class OnboardingViewModel
                     )
                 }
 
-                is OnboardingContract.OnboardingEvent.OnChangeSemester -> {
+                is OnboardingContract.OnboardingEvent.OnSemesterChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateSemester(
                             semester = event.semester,
@@ -76,7 +76,7 @@ class OnboardingViewModel
                     updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnChangeSubject -> {
+                is OnboardingContract.OnboardingEvent.OnSubjectChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateSubject(
                             subject = event.subject,
@@ -90,7 +90,7 @@ class OnboardingViewModel
                     updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnChangeSubjectFocused -> {
+                is OnboardingContract.OnboardingEvent.OnSubjectFocusChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateSubjectFocused(
                             isFocused = event.isFocused,
@@ -103,7 +103,7 @@ class OnboardingViewModel
                     )
                 }
 
-                is OnboardingContract.OnboardingEvent.OnChangeCurrentPage -> {
+                is OnboardingContract.OnboardingEvent.OnCurrentPageChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateCurrentPage(
                             nextPage = event.currentPage,
@@ -112,15 +112,15 @@ class OnboardingViewModel
                     updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnClickDeleteUserName -> {
+                is OnboardingContract.OnboardingEvent.OnUserNameDeleteBtnClick -> {
                     updateState(OnboardingContract.OnboardingReduce.DeleteUserName)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnClickDeleteSubject -> {
+                is OnboardingContract.OnboardingEvent.OnSubjectDeleteBtnClick -> {
                     updateState(OnboardingContract.OnboardingReduce.DeleteSubject)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnClickBackBtn -> {
+                is OnboardingContract.OnboardingEvent.OnBackBtnClick -> {
                     val previousPage = currentUiState.currentPage - 1
                     when (currentUiState.currentPage) {
                         0 -> {
@@ -144,7 +144,7 @@ class OnboardingViewModel
                     }
                 }
 
-                is OnboardingContract.OnboardingEvent.OnClickNextBtn -> {
+                is OnboardingContract.OnboardingEvent.OnNextBtnClick -> {
                     val nextPage = currentUiState.currentPage + 1
                     when (currentUiState.currentPage) {
                         0 ->

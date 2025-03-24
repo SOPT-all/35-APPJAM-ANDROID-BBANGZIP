@@ -57,7 +57,7 @@ class OnboardingEndViewModel
         private fun postOnboardingInfo(onboardingInfo: org.android.bbangzip.OnboardingInfo?) {
             viewModelScope.launch {
                 Timber.d("[온보딩] 온보딩 POST -> ${onboardingInfo?.userName}, ${onboardingInfo?.year}, ${onboardingInfo?.semester}, ${onboardingInfo?.subjectName} ")
-                postOnboardingUseCase.invoke(
+                postOnboardingUseCase(
                     OnboardingEntity(
                         nickname = onboardingInfo?.userName ?: "",
                         year = onboardingInfo?.year ?: 0,
