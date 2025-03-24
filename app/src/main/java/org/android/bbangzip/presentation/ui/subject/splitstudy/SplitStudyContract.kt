@@ -40,27 +40,25 @@ class SplitStudyContract {
     sealed interface SplitStudyEvent : BaseContract.Event {
         data class Initialize(val addStudyData: AddStudyData) : SplitStudyEvent
 
-        data class OnChangeStartPage(val index: Int, val startPage: String) : SplitStudyEvent
+        data class OnStartPageChange(val index: Int, val startPage: String) : SplitStudyEvent
 
-        data class OnChangeEndPage(val index: Int, val endPage: String) : SplitStudyEvent
+        data class OnEndPageChange(val index: Int, val endPage: String) : SplitStudyEvent
 
-        data class OnChangeStartPageFocused(val index: Int, val startPageFocusedState: Boolean) : SplitStudyEvent
+        data class OnIsStartPageFocusedChange(val index: Int, val isStartPageFocused: Boolean) : SplitStudyEvent
 
-        data class OnChangeEndPageFocused(val index: Int, val endPageFocusedState: Boolean) : SplitStudyEvent
+        data class OnIsEndPageFocusedChange(val index: Int, val isEndPageFocused: Boolean) : SplitStudyEvent
 
-        data class OnChangeSelectedDate(val selectedDate: Date) : SplitStudyEvent
+        data class OnDeadlineChange(val selectedDate: Date) : SplitStudyEvent
 
-        data class OnClickDatePicker(val index: Int) : SplitStudyEvent
+        data class OnDatePickerClick(val index: Int) : SplitStudyEvent
 
-        data class OnClickBackIcon(val splitStudyData: SplitStudyData) : SplitStudyEvent
+        data class OnBackIconClick(val splitStudyData: SplitStudyData) : SplitStudyEvent
 
-        data object OnClickNextBtn : SplitStudyEvent
+        data class OnSaveBtnClick(val splitStudyData: SplitStudyData) : SplitStudyEvent
 
-        data class OnClickSaveBtn(val splitStudyData: SplitStudyData) : SplitStudyEvent
+        data object OnConfirmDateBtnClick : SplitStudyEvent
 
-        data object OnClickConfirmDateBtn : SplitStudyEvent
-
-        data object OnCloseBottomSheet : SplitStudyEvent
+        data object OnDatePickerBottomSheetDismissRequest : SplitStudyEvent
     }
 
     sealed interface SplitStudyReduce : BaseContract.Reduce {

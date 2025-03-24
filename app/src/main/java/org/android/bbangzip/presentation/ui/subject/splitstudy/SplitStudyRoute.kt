@@ -59,35 +59,35 @@ fun SplitStudyRoute(
             endPageGuidelineList = splitStudyState.endPageGuidelineList,
             seletedDateList = splitStudyState.deadlineList,
             isSaveEnable = splitStudyState.isSaveEnabled,
-            onBackBtnClick = {
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickBackIcon(it))
+            onBackIconClick = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnBackIconClick(it))
             },
-            onChangeStartPage = { index, value ->
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPage(index, value))
+            onStartPageChange = { index, value ->
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnStartPageChange(index, value))
             },
-            onChangeEndPage = { index, value ->
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeEndPage(index, value))
+            onEndPageChange = { index, value ->
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnEndPageChange(index, value))
             },
-            onChangeStartPageFocused = { index, value ->
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeStartPageFocused(index, value))
+            onIsStartPageFocusedChange = { index, value ->
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnIsStartPageFocusedChange(index, value))
             },
-            onChangeEndPageFocused = { index, value ->
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeEndPageFocused(index, value))
+            onIsEndPageFocusedChange = { index, value ->
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnIsEndPageFocusedChange(index, value))
             },
-            onClickDatePicker = {
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickDatePicker(it))
+            onDatePickerClick = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnDatePickerClick(it))
             },
-            onCloseBottomSheet = {
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnCloseBottomSheet)
+            onDatePickerBottomSheetDismissRequest = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnDatePickerBottomSheetDismissRequest)
             },
-            onClickConfirmDateBtn = {
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickConfirmDateBtn)
+            onConfirmDateBtnClick = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnConfirmDateBtnClick)
             },
-            onChangeSelectedDate = {
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnChangeSelectedDate(it))
+            onDeadlineChange = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnDeadlineChange(it))
             },
-            onClickSaveButton = {
-                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnClickSaveBtn(it))
+            onSaveBtnClick = {
+                viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnSaveBtnClick(it))
             },
         )
     }

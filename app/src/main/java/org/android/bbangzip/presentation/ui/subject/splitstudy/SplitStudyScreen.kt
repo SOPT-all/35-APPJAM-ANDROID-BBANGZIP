@@ -78,19 +78,19 @@ fun SplitStudyScreen(
     endPageTextFieldStateList: List<BbangZipTextFieldInputState> = emptyList(),
     endPageFocusedStateList: List<Boolean> = emptyList(),
     endPageGuidelineList: List<String> = emptyList(),
-    onChangeStartPage: (Int, String) -> Unit = { _, _ -> },
-    onChangeEndPage: (Int, String) -> Unit = { _, _ -> },
-    onChangeStartPageFocused: (Int, Boolean) -> Unit = { _, _ -> },
-    onChangeEndPageFocused: (Int, Boolean) -> Unit = { _, _ -> },
-    onChangeSelectedDate: (Date) -> Unit = {},
-    onClickDatePicker: (Int) -> Unit = {},
-    onClickConfirmDateBtn: () -> Unit = {},
-    onCloseBottomSheet: () -> Unit = {},
-    onBackBtnClick: (SplitStudyData) -> Unit = {},
-    onClickSaveButton: (SplitStudyData) -> Unit = {},
+    onStartPageChange: (Int, String) -> Unit = { _, _ -> },
+    onEndPageChange: (Int, String) -> Unit = { _, _ -> },
+    onIsStartPageFocusedChange: (Int, Boolean) -> Unit = { _, _ -> },
+    onIsEndPageFocusedChange: (Int, Boolean) -> Unit = { _, _ -> },
+    onDeadlineChange: (Date) -> Unit = {},
+    onDatePickerClick: (Int) -> Unit = {},
+    onConfirmDateBtnClick: () -> Unit = {},
+    onDatePickerBottomSheetDismissRequest: () -> Unit = {},
+    onBackIconClick: (SplitStudyData) -> Unit = {},
+    onSaveBtnClick: (SplitStudyData) -> Unit = {},
 ) {
     BackHandler {
-        onBackBtnClick(
+        onBackIconClick(
             SplitStudyData(
                 subjectName = subjectName,
                 pieceNumber = pieceNumber,
@@ -109,16 +109,12 @@ fun SplitStudyScreen(
     }
     val focusManager = LocalFocusManager.current
 
-    Timber.tag("김재민").d("examName : $examName")
-
     val scrollState = rememberLazyListState()
     val isShadowed by remember {
         derivedStateOf {
             scrollState.firstVisibleItemScrollOffset > 0
         }
     }
-
-    Timber.d("examdate : $examDate")
 
     Box(
         modifier =
@@ -139,7 +135,7 @@ fun SplitStudyScreen(
                     leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
                     title = subjectName,
                     onLeadingIconClick = {
-                        onBackBtnClick(
+                        onBackIconClick(
                             SplitStudyData(
                                 subjectName = subjectName,
                                 pieceNumber = pieceNumber,
@@ -268,9 +264,9 @@ fun SplitStudyScreen(
                             modifier = Modifier.weight(1f),
                             bbangZipTextFieldInputState = startPageTextFieldStateList[index],
                             onValueChange = {
-                                onChangeStartPage(index, it)
+                                onStartPageChange(index, it)
                             },
-                            onFocusChange = { onChangeStartPageFocused(index, it) },
+                            onFocusChange = { onIsStartPageFocusedChange(index, it) },
                             focusManager = focusManager,
                         )
 
@@ -284,9 +280,9 @@ fun SplitStudyScreen(
                             modifier = Modifier.weight(1f),
                             bbangZipTextFieldInputState = endPageTextFieldStateList[index],
                             onValueChange = {
-                                onChangeEndPage(index, it)
+                                onEndPageChange(index, it)
                             },
-                            onFocusChange = { onChangeEndPageFocused(index, it) },
+                            onFocusChange = { onIsEndPageFocusedChange(index, it) },
                             focusManager = focusManager,
                         )
                     }
@@ -297,7 +293,7 @@ fun SplitStudyScreen(
                         bbangZipButtonType = BbangZipButtonType.Outlined,
                         bbangZipButtonSize = BbangZipButtonSize.Medium,
                         onClick = {
-                            onClickDatePicker(index)
+                            onDatePickerClick(index)
                         },
                         modifier = Modifier.fillMaxWidth(),
                         leadingIcon = R.drawable.ic_page_check_default_24,
@@ -313,7 +309,7 @@ fun SplitStudyScreen(
             bbangZipButtonSize = BbangZipButtonSize.Large,
             bbangZipButtonType = BbangZipButtonType.Solid,
             onClick = {
-                onClickSaveButton(
+                onSaveBtnClick(
                     SplitStudyData(
                         subjectName = subjectName,
                         pieceNumber = pieceNumber,
@@ -345,9 +341,9 @@ fun SplitStudyScreen(
         isBottomSheetVisible = datePickerBottomSheetState,
         bottomSheetTitle = stringResource(R.string.add_study_date_picker_bottomsheet_title),
         selectedDate = seletedDateList[selectedIndex + 1],
-        onSelectedDateChanged = onChangeSelectedDate,
-        onClickInputButton = onClickConfirmDateBtn,
-        onDismissRequest = onCloseBottomSheet,
+        onSelectedDateChanged = onDeadlineChange,
+        onClickInputButton = onConfirmDateBtnClick,
+        onDismissRequest = onDatePickerBottomSheetDismissRequest,
     )
 }
 
