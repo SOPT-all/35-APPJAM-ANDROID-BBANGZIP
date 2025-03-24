@@ -47,14 +47,14 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun MyScreen(
     padding: PaddingValues,
     state: MyContract.MyState,
-    onClickBbangZip: () -> Unit,
-    onClickBadgeCount: () -> Unit,
-    onClickLogoutBtn: () -> Unit,
-    onClickWithdrawBtn: () -> Unit,
-    onClickLogoutConfirmBtn: () -> Unit,
-    onClickWithdrawConfirmBtn: () -> Unit,
-    onClickLogoutCancelBtn: () -> Unit,
-    onClickWithdrawCancelBtn: () -> Unit,
+    onBbangZipClick: () -> Unit,
+    onBadgeCountClick: () -> Unit,
+    onLogoutBtnClick: () -> Unit,
+    onWithdrawBtnClick: () -> Unit,
+    onLogoutConfirmBtnClick: () -> Unit,
+    onWithdrawConfirmBtnClick: () -> Unit,
+    onLogoutCancelBtnClick: () -> Unit,
+    onWithdrawCancelBtnClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundAccent_FFDAA0.toArgb()
@@ -74,7 +74,7 @@ fun MyScreen(
                 MainBbangZip(
                     modifier =
                         Modifier
-                            .noRippleClickable { onClickBbangZip() },
+                            .noRippleClickable { onBbangZipClick() },
                     level = state.myBbangZip?.bbangZipLevel ?: 1,
                     currentPoint = state.myBbangZip?.reward ?: 0,
                     maxPoint = state.myBbangZip?.maxReward ?: 0,
@@ -88,7 +88,7 @@ fun MyScreen(
                             .align(Alignment.BottomCenter)
                             .padding(horizontal = 16.dp),
                     currentBadge = state.currentBadge.toString(),
-                    onClickBadgeCount = onClickBadgeCount,
+                    onClickBadgeCount = onBadgeCountClick,
                 )
             }
         }
@@ -145,7 +145,7 @@ fun MyScreen(
             MyMenuTitle(
                 text = stringResource(R.string.my_logout),
                 modifier = Modifier.padding(horizontal = 16.dp),
-                onClickMenu = { onClickLogoutBtn() },
+                onClickMenu = { onLogoutBtnClick() },
             )
 
             Gap(height = 8)
@@ -155,7 +155,7 @@ fun MyScreen(
             MyMenuTitle(
                 text = stringResource(R.string.my_withdraw),
                 modifier = Modifier.padding(horizontal = 16.dp),
-                onClickMenu = { onClickWithdrawBtn() },
+                onClickMenu = { onWithdrawBtnClick() },
             )
         }
 
@@ -168,22 +168,22 @@ fun MyScreen(
 
     BbangZipTwoButtonBottomSheet(
         isBottomSheetVisible = state.logoutBottomSheetState,
-        onDismissRequest = { onClickLogoutBtn() },
+        onDismissRequest = { onLogoutBtnClick() },
         bottomSheetTitle = stringResource(R.string.logout_title),
         interactButtonText = stringResource(R.string.logout_confirm),
         cancelButtonText = stringResource(R.string.cancel),
-        onClickInteractButton = { onClickLogoutConfirmBtn() },
-        onClickCancelButton = { onClickLogoutCancelBtn() },
+        onClickInteractButton = { onLogoutConfirmBtnClick() },
+        onClickCancelButton = { onLogoutCancelBtnClick() },
     )
 
     BbangZipTwoButtonBottomSheet(
         isBottomSheetVisible = state.withdrawBottomSheetState,
-        onDismissRequest = { onClickWithdrawBtn() },
+        onDismissRequest = { onWithdrawBtnClick() },
         bottomSheetTitle = stringResource(R.string.withdraw_title),
         interactButtonText = stringResource(R.string.withdraw_confirm),
         cancelButtonText = stringResource(R.string.cancel),
-        onClickInteractButton = { onClickWithdrawConfirmBtn() },
-        onClickCancelButton = { onClickWithdrawCancelBtn() },
+        onClickInteractButton = { onWithdrawConfirmBtnClick() },
+        onClickCancelButton = { onWithdrawCancelBtnClick() },
     )
 }
 
