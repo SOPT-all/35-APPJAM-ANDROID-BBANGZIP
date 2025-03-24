@@ -22,16 +22,16 @@ fun NavController.navigateSplitStudy(
 }
 
 fun NavGraphBuilder.splitStudyNavGraph(
-    navigateBack: () -> Unit,
-    navigateAddStudy: (SplitStudyData) -> Unit,
+    navigateToBack: () -> Unit,
+    navigateToAddStudy: (SplitStudyData) -> Unit,
 ) {
     composable<SplitStudyRoute>(
         typeMap = mapOf(typeOf<AddStudyData>() to AddStudyDataType),
     ) {
         SplitStudyRoute(
             addStudyData = it.toRoute<SplitStudyRoute>().addStudyData,
-            onBackPress = navigateBack,
-            navigateAddStudy = navigateAddStudy,
+            navigateToBack = navigateToBack,
+            navigateToAddStudy = navigateToAddStudy,
         )
     }
 }
@@ -45,12 +45,10 @@ val AddStudyDataType =
             bundle: Bundle,
             key: String,
         ): AddStudyData? {
-            Timber.d("[쪼개기] get -> $key")
             return bundle.getString(key)?.let { Json.decodeFromString(it) }
         }
 
         override fun parseValue(value: String): AddStudyData {
-            Timber.d("[쪼개기] parse -> $value")
             return Json.decodeFromString(value)
         }
 
@@ -59,12 +57,10 @@ val AddStudyDataType =
             key: String,
             value: AddStudyData,
         ) {
-            Timber.d("[쪼개기] put -> $value")
             bundle.putString(key, Json.encodeToString(AddStudyData.serializer(), value))
         }
 
         override fun serializeAsValue(value: AddStudyData): String {
-            Timber.d("[쪼개기] serialize ->  $value")
             return Json.encodeToString(AddStudyData.serializer(), value)
         }
     }

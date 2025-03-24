@@ -135,8 +135,8 @@ fun MainNavHost(
             )
 
             splitStudyNavGraph(
-                navigateBack = { navigator.popBackStackIfNotSubject() },
-                navigateAddStudy = { navigator.navigateToAddStudy(it) },
+                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToAddStudy = { navigator.navigateToAddStudy(it) },
             )
 
             todoNavGraph(

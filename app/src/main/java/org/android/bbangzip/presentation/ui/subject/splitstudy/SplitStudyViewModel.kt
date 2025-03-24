@@ -280,7 +280,7 @@ class SplitStudyViewModel
                 }
 
                 is SplitStudyContract.SplitStudyEvent.OnBackIconClick -> {
-                    setSideEffect(SplitStudyContract.SplitStudySideEffect.NavigateAddStudy(event.splitStudyData))
+                    setSideEffect(SplitStudyContract.SplitStudySideEffect.NavigateToAddStudy(event.splitStudyData))
                 }
 
                 is SplitStudyContract.SplitStudyEvent.OnConfirmDateBtnClick -> {
@@ -296,7 +296,7 @@ class SplitStudyViewModel
 
                 is SplitStudyContract.SplitStudyEvent.OnSaveBtnClick -> {
                     setSideEffect(
-                        SplitStudyContract.SplitStudySideEffect.NavigateAddStudy(
+                        SplitStudyContract.SplitStudySideEffect.NavigateToAddStudy(
                             splitStudyData =
                                 SplitStudyData(
                                     subjectId = event.splitStudyData.subjectId,

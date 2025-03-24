@@ -98,8 +98,8 @@ class SplitStudyContract {
     }
 
     sealed interface SplitStudySideEffect : BaseContract.SideEffect {
-        data object NavigateBack : SplitStudySideEffect
+        data object NavigateToBack : SplitStudySideEffect
 
-        data class NavigateAddStudy(val splitStudyData: SplitStudyData) : SplitStudySideEffect
+        data class NavigateToAddStudy(val splitStudyData: SplitStudyData) : SplitStudySideEffect
     }
 }

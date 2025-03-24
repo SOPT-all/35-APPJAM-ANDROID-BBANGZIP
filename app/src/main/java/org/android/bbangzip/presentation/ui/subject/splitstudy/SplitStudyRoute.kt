@@ -13,8 +13,8 @@ import org.android.bbangzip.presentation.model.SplitStudyData
 fun SplitStudyRoute(
     viewModel: SplitStudyViewModel = hiltViewModel(),
     addStudyData: AddStudyData,
-    onBackPress: () -> Unit = {},
-    navigateAddStudy: (SplitStudyData) -> Unit = {},
+    navigateToBack: () -> Unit = {},
+    navigateToAddStudy: (SplitStudyData) -> Unit = {},
 ) {
     LaunchedEffect(Unit) {
         viewModel.setEvent(SplitStudyContract.SplitStudyEvent.Initialize(addStudyData = addStudyData))
@@ -23,12 +23,12 @@ fun SplitStudyRoute(
     LaunchedEffect(viewModel.uiSideEffect) {
         viewModel.uiSideEffect.collectLatest { effect ->
             when (effect) {
-                is SplitStudyContract.SplitStudySideEffect.NavigateAddStudy -> {
-                    onBackPress()
-                    navigateAddStudy(effect.splitStudyData)
+                is SplitStudyContract.SplitStudySideEffect.NavigateToAddStudy -> {
+                    navigateToBack()
+                    navigateToAddStudy(effect.splitStudyData)
                 }
-                is SplitStudyContract.SplitStudySideEffect.NavigateBack -> {
-                    onBackPress()
+                is SplitStudyContract.SplitStudySideEffect.NavigateToBack -> {
+                    navigateToBack()
                 }
             }
         }
