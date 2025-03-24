@@ -1,4 +1,4 @@
-package org.android.bbangzip.presentation.ui.onboarding
+package org.android.bbangzip.presentation.ui.onboarding.onboarding
 
 import android.os.Parcelable
 import androidx.lifecycle.SavedStateHandle
@@ -6,14 +6,9 @@ import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
-import kotlinx.coroutines.flow.firstOrNull
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
 import org.android.bbangzip.UserPreferences
-import org.android.bbangzip.domain.model.OnboardingEntity
 import org.android.bbangzip.domain.repository.local.UserLocalRepository
-import org.android.bbangzip.domain.usecase.PostOnboardingUseCase
 import org.android.bbangzip.presentation.model.BbangZipTextFieldInputState
 import org.android.bbangzip.presentation.model.Semester
 import org.android.bbangzip.presentation.type.SemesterType
@@ -26,24 +21,15 @@ class OnboardingViewModel
     @Inject
     constructor(
         private val userLocalRepository: UserLocalRepository,
-        private val postOnboardingUseCase: PostOnboardingUseCase,
         savedStateHandle: SavedStateHandle,
     ) : BaseViewModel<OnboardingContract.OnboardingEvent, OnboardingContract.OnboardingState, OnboardingContract.OnboardingReduce, OnboardingContract.OnboardingSideEffect>(
             savedStateHandle = savedStateHandle,
         ) {
         private val userPreferencesFlow: Flow<UserPreferences> = userLocalRepository.userPreferenceFlow
 
-        private fun setUserOnboardingInfo(
-            userName: String,
-            year: Int,
-            semester: String,
-            subject: String,
-        ) {
-            viewModelScope.launch { userLocalRepository.setOnboardingInfo(userName, year, semester, subject) }
-        }
-
         override fun createInitialState(savedState: Parcelable?): OnboardingContract.OnboardingState {
-            return savedState as? OnboardingContract.OnboardingState ?: OnboardingContract.OnboardingState()
+            return savedState as? OnboardingContract.OnboardingState
+                ?: OnboardingContract.OnboardingState()
         }
 
         init {
@@ -54,7 +40,7 @@ class OnboardingViewModel
             when (event) {
                 is OnboardingContract.OnboardingEvent.Initialize -> launch { initDataLoad() }
 
-                is OnboardingContract.OnboardingEvent.OnChangeUserName -> {
+                is OnboardingContract.OnboardingEvent.OnUserNameChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateUserName(
                             userName = event.userName,
@@ -68,7 +54,7 @@ class OnboardingViewModel
                     updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnChangeUserNameFocused -> {
+                is OnboardingContract.OnboardingEvent.OnUserNameFocusChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateUserNameFocused(
                             isFocused = event.isFocused,
@@ -81,7 +67,7 @@ class OnboardingViewModel
                     )
                 }
 
-                is OnboardingContract.OnboardingEvent.OnChangeSemester -> {
+                is OnboardingContract.OnboardingEvent.OnSemesterChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateSemester(
                             semester = event.semester,
@@ -90,7 +76,7 @@ class OnboardingViewModel
                     updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnChangeSubject -> {
+                is OnboardingContract.OnboardingEvent.OnSubjectChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateSubject(
                             subject = event.subject,
@@ -104,7 +90,7 @@ class OnboardingViewModel
                     updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnChangeSubjectFocused -> {
+                is OnboardingContract.OnboardingEvent.OnSubjectFocusChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateSubjectFocused(
                             isFocused = event.isFocused,
@@ -117,7 +103,7 @@ class OnboardingViewModel
                     )
                 }
 
-                is OnboardingContract.OnboardingEvent.OnChangeCurrentPage -> {
+                is OnboardingContract.OnboardingEvent.OnCurrentPageChange -> {
                     updateState(
                         OnboardingContract.OnboardingReduce.UpdateCurrentPage(
                             nextPage = event.currentPage,
@@ -126,34 +112,55 @@ class OnboardingViewModel
                     updateState(OnboardingContract.OnboardingReduce.UpdateButtonEnabled)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnClickDeleteUserName -> {
+                is OnboardingContract.OnboardingEvent.OnUserNameDeleteBtnClick -> {
                     updateState(OnboardingContract.OnboardingReduce.DeleteUserName)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnClickDeleteSubject -> {
+                is OnboardingContract.OnboardingEvent.OnSubjectDeleteBtnClick -> {
                     updateState(OnboardingContract.OnboardingReduce.DeleteSubject)
                 }
 
-                is OnboardingContract.OnboardingEvent.OnClickBackBtn -> {
+                is OnboardingContract.OnboardingEvent.OnBackBtnClick -> {
                     val previousPage = currentUiState.currentPage - 1
                     when (currentUiState.currentPage) {
                         0 -> {
-                            setSideEffect(OnboardingContract.OnboardingSideEffect.PopBackStack)
+                            setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToBack)
                         }
 
                         1 -> {
-                            updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = previousPage))
+                            updateState(
+                                OnboardingContract.OnboardingReduce.UpdateCurrentPage(
+                                    nextPage = previousPage,
+                                ),
+                            )
                         }
 
-                        2 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = previousPage))
+                        2 ->
+                            updateState(
+                                OnboardingContract.OnboardingReduce.UpdateCurrentPage(
+                                    nextPage = previousPage,
+                                ),
+                            )
                     }
                 }
 
-                is OnboardingContract.OnboardingEvent.OnClickNextBtn -> {
+                is OnboardingContract.OnboardingEvent.OnNextBtnClick -> {
                     val nextPage = currentUiState.currentPage + 1
                     when (currentUiState.currentPage) {
-                        0 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
-                        1 -> updateState(OnboardingContract.OnboardingReduce.UpdateCurrentPage(nextPage = nextPage))
+                        0 ->
+                            updateState(
+                                OnboardingContract.OnboardingReduce.UpdateCurrentPage(
+                                    nextPage = nextPage,
+                                ),
+                            )
+
+                        1 ->
+                            updateState(
+                                OnboardingContract.OnboardingReduce.UpdateCurrentPage(
+                                    nextPage = nextPage,
+                                ),
+                            )
+
                         2 -> {
                             Timber.d("[온보딩] -> ${currentUiState.userName}, ${currentUiState.semester}, ${currentUiState.subjectName}")
                             setUserOnboardingInfo(
@@ -171,20 +178,6 @@ class OnboardingViewModel
                         }
                     }
                 }
-
-                is OnboardingContract.OnboardingEvent.OnClickFinishBtn -> {
-                    val onboardingInfo = runBlocking { userLocalRepository.userPreferenceFlow.map { it.onboardingInfo }.firstOrNull() }
-                    Timber.d("[온보딩] -> $onboardingInfo")
-                    postOnboardingInfo(onboardingInfo = onboardingInfo)
-                }
-
-                is OnboardingContract.OnboardingEvent.OnClickOnboardingNextBtn -> {
-                    setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToOnboarding)
-                }
-
-                is OnboardingContract.OnboardingEvent.OnClickBackFromEndBtn -> {
-                    setSideEffect(OnboardingContract.OnboardingSideEffect.PopBackStack)
-                }
             }
         }
 
@@ -194,9 +187,13 @@ class OnboardingViewModel
         ): OnboardingContract.OnboardingState {
             return when (reduce) {
                 is OnboardingContract.OnboardingReduce.UpdateState -> reduce.state
+
                 is OnboardingContract.OnboardingReduce.UpdateUserName -> state.copy(userName = reduce.userName)
+
                 is OnboardingContract.OnboardingReduce.UpdateSemester -> state.copy(semester = reduce.semester)
+
                 is OnboardingContract.OnboardingReduce.UpdateSubject -> state.copy(subjectName = reduce.subject)
+
                 is OnboardingContract.OnboardingReduce.DeleteUserName -> {
                     Timber.d("[온보딩] -> ${currentUiState.userName}")
                     state.copy(userName = null, buttonEnabled = false)
@@ -212,7 +209,9 @@ class OnboardingViewModel
                 }
 
                 is OnboardingContract.OnboardingReduce.UpdateSubjectFocused -> state.copy(subjectNameFocusedState = reduce.isFocused)
+
                 is OnboardingContract.OnboardingReduce.UpdateCurrentPage -> state.copy(currentPage = reduce.nextPage)
+
                 is OnboardingContract.OnboardingReduce.UpdateUserNameTextFieldSate -> {
                     val checkedText = determineTextFieldType(reduce.userName, currentUiState.userNameFocusedState)
                     state.copy(userNameTextFieldState = checkedText)
@@ -258,7 +257,9 @@ class OnboardingViewModel
                         OnboardingContract.OnboardingReduce.UpdateSemester(
                             Semester(
                                 year = onboardingInfo.year.toString(),
-                                semester = SemesterType.entries.find { it.text == onboardingInfo.semester } ?: SemesterType.FIRST,
+                                semester =
+                                    SemesterType.entries.find { it.text == onboardingInfo.semester }
+                                        ?: SemesterType.FIRST,
                             ),
                         ),
                     )
@@ -270,6 +271,15 @@ class OnboardingViewModel
 
                 setIsOnboardingDonePreferences(isOnboardingDone = false)
             }
+        }
+
+        private fun setUserOnboardingInfo(
+            userName: String,
+            year: Int,
+            semester: String,
+            subject: String,
+        ) {
+            viewModelScope.launch { userLocalRepository.setOnboardingInfo(userName, year, semester, subject) }
         }
 
         private fun setIsOnboardingDonePreferences(isOnboardingDone: Boolean) {
@@ -292,33 +302,6 @@ class OnboardingViewModel
                 text.contains(Regex("[^가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9 ]")) -> BbangZipTextFieldInputState.Alert
                 text.isNotEmpty() && isFocused -> BbangZipTextFieldInputState.Typing
                 else -> BbangZipTextFieldInputState.Field
-            }
-        }
-
-        private fun postOnboardingInfo(onboardingInfo: org.android.bbangzip.OnboardingInfo?) {
-            viewModelScope.launch {
-                Timber.d("[온보딩] 온보딩 POST -> ${onboardingInfo?.userName}, ${onboardingInfo?.year}, ${onboardingInfo?.semester}, ${onboardingInfo?.subjectName} ")
-                postOnboardingUseCase.invoke(
-                    OnboardingEntity(
-                        nickname = onboardingInfo?.userName ?: "",
-                        year = onboardingInfo?.year ?: 0,
-                        semester = onboardingInfo?.semester ?: "",
-                        subjectName = onboardingInfo?.subjectName ?: "",
-                    ),
-                ).onSuccess {
-                    saveIsOnboardingCompleted(isOnboardingCompleted = true)
-                    setSideEffect(OnboardingContract.OnboardingSideEffect.NavigateToSubject)
-                }.onFailure {
-                    Timber.d("[온보딩] 서버통신 실패 -> $error")
-                }
-            }
-        }
-
-        private fun saveIsOnboardingCompleted(
-            isOnboardingCompleted: Boolean,
-        ) {
-            viewModelScope.launch {
-                userLocalRepository.setIsOnboardingCompleted(isOnboardingCompleted)
             }
         }
     }

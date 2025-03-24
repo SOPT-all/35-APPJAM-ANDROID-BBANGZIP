@@ -13,12 +13,12 @@ fun NavController.navigateOnboarding() {
 }
 
 fun NavGraphBuilder.onboardingNavGraph(
-    popBackStack: () -> Unit,
+    navigateToBack: () -> Unit,
     navigateToOnboardingEnd: () -> Unit,
 ) {
     composable<OnboardingRoute> {
         OnboardingRoute(
-            popBackStack = popBackStack,
+            navigateToBack = navigateToBack,
             navigateToOnboardingEnd = navigateToOnboardingEnd,
         )
     }

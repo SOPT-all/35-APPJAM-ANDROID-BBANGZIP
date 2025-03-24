@@ -1,4 +1,4 @@
-package org.android.bbangzip.presentation.ui.onboarding
+package org.android.bbangzip.presentation.ui.onboarding.onboarding
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
@@ -28,31 +28,25 @@ class OnboardingContract {
     sealed interface OnboardingEvent : BaseContract.Event {
         data object Initialize : OnboardingEvent
 
-        data class OnChangeUserName(val userName: String) : OnboardingEvent
+        data class OnUserNameChange(val userName: String) : OnboardingEvent
 
-        data class OnChangeUserNameFocused(val isFocused: Boolean) : OnboardingEvent
+        data class OnUserNameFocusChange(val isFocused: Boolean) : OnboardingEvent
 
-        data class OnChangeSemester(val semester: Semester) : OnboardingEvent
+        data class OnSemesterChange(val semester: Semester) : OnboardingEvent
 
-        data class OnChangeSubject(val subject: String) : OnboardingEvent
+        data class OnSubjectChange(val subject: String) : OnboardingEvent
 
-        data class OnChangeSubjectFocused(val isFocused: Boolean) : OnboardingEvent
+        data class OnSubjectFocusChange(val isFocused: Boolean) : OnboardingEvent
 
-        data class OnChangeCurrentPage(val currentPage: Int) : OnboardingEvent
+        data class OnCurrentPageChange(val currentPage: Int) : OnboardingEvent
 
-        data object OnClickDeleteUserName : OnboardingEvent
+        data object OnUserNameDeleteBtnClick : OnboardingEvent
 
-        data object OnClickDeleteSubject : OnboardingEvent
+        data object OnSubjectDeleteBtnClick : OnboardingEvent
 
-        data object OnClickBackBtn : OnboardingEvent
+        data object OnBackBtnClick : OnboardingEvent
 
-        data object OnClickBackFromEndBtn : OnboardingEvent
-
-        data object OnClickNextBtn : OnboardingEvent
-
-        data object OnClickOnboardingNextBtn : OnboardingEvent
-
-        data object OnClickFinishBtn : OnboardingEvent
+        data object OnNextBtnClick : OnboardingEvent
     }
 
     sealed interface OnboardingReduce : BaseContract.Reduce {
@@ -82,14 +76,8 @@ class OnboardingContract {
     }
 
     sealed interface OnboardingSideEffect : BaseContract.SideEffect {
-        data object PopBackStack : OnboardingSideEffect
-
-        data object NavigateToOnboardingStart : OnboardingSideEffect
-
-        data object NavigateToOnboarding : OnboardingSideEffect
+        data object NavigateToBack : OnboardingSideEffect
 
         data object NavigateToOnboardingEnd : OnboardingSideEffect
-
-        data object NavigateToSubject : OnboardingSideEffect
     }
 }

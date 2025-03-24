@@ -3,11 +3,9 @@ package org.android.bbangzip.presentation.ui.onboarding.onboardingstart
 import android.app.Activity
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -23,6 +21,7 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.button.BbangZipButton
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
+import org.android.bbangzip.presentation.util.graphic.Gap
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
 
@@ -48,7 +47,7 @@ fun OnboardingStartScreen(
             color = BbangZipTheme.colors.labelNormal_282119,
         )
 
-        Spacer(modifier = Modifier.height(32.dp))
+        Gap(height = 32)
 
         Image(
             painter = painterResource(id = R.drawable.img_onboarding_start),
@@ -59,7 +58,7 @@ fun OnboardingStartScreen(
                     .aspectRatio(8f / 9f),
         )
 
-        Spacer(modifier = Modifier.weight(1f))
+        Gap()
 
         BbangZipButton(
             modifier = Modifier.fillMaxWidth(),

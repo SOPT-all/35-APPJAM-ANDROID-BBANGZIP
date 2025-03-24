@@ -4,10 +4,8 @@ import android.app.Activity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
@@ -32,7 +30,7 @@ import org.android.bbangzip.presentation.model.Semester
 import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.OnboardingType
-import org.android.bbangzip.presentation.ui.onboarding.OnboardingContract
+import org.android.bbangzip.presentation.util.graphic.Gap
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.ui.theme.BBANGZIPTheme
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -67,7 +65,7 @@ fun OnboardingScreen(
             onLeadingIconClick = { onBackBtnClick() },
         )
 
-        Spacer(modifier = Modifier.height(11.dp))
+        Gap(height = 11)
 
         OnboardingProgressBar(
             modifier =
@@ -141,7 +139,7 @@ private fun OnboardingPager(
                     .fillMaxSize()
                     .padding(horizontal = 16.dp),
         ) {
-            Spacer(modifier = Modifier.height(37.dp))
+            Gap(height = 37)
 
             OnboardingType.entries[pageIndex].description?.let { descriptionId ->
                 if (pageIndex == 1) {
@@ -160,9 +158,9 @@ private fun OnboardingPager(
             }
 
             if (pageIndex == 0) {
-                Spacer(modifier = Modifier.height(30.dp))
+                Gap(height = 30)
             } else {
-                Spacer(modifier = Modifier.height(8.dp))
+                Gap(height = 8)
             }
 
             Text(
@@ -171,7 +169,7 @@ private fun OnboardingPager(
                 color = BbangZipTheme.colors.labelNormal_282119,
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Gap(height = 32)
 
             when (pageIndex) {
                 0 ->
