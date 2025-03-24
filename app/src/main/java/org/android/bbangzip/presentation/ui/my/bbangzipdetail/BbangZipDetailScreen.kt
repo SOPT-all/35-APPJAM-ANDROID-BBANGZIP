@@ -48,7 +48,7 @@ import timber.log.Timber
 fun BbangZipDetailScreen(
     state: BbangZipDetailContract.BbangZipDetailState,
     pagerState: PagerState,
-    popBackStack: () -> Unit,
+    navigateToBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundAccent_FFDAA0.toArgb()
@@ -61,7 +61,7 @@ fun BbangZipDetailScreen(
         BbangZipBaseTopBar(
             backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = { popBackStack() },
+            onLeadingIconClick = { navigateToBack() },
             title = stringResource(R.string.my_bbangzip),
         )
 

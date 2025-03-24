@@ -34,7 +34,7 @@ fun BbangZipDetailRoute(
                 modifier = modifier,
                 state = state,
                 pagerState = pagerState,
-                popBackStack = navigateToBack,
+                navigateToBack = navigateToBack,
             )
 
         else -> BbangZipLoadingIndicator()

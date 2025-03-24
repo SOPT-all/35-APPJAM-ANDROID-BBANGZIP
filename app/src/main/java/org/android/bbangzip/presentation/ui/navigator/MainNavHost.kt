@@ -91,13 +91,13 @@ fun MainNavHost(
 
             myNavGraph(
                 padding = padding,
-                navigateToBbangZipDetail = { navigator.navigateToBbangZipDetail() },
-                navigateToLogin = { navigator.navigateToLogin() },
-                navigateToBadgeDetail = { navigator.navigateToMyBadgeCategory() },
+                navigateToBbangZipDetail = navigator::navigateToBbangZipDetail,
+                navigateToLogin = navigator::navigateToLogin,
+                navigateToBadgeDetail = navigator::navigateToMyBadgeCategory,
             )
 
             bbangZipDetailNavGraph(
-                navigateToBack = { navigator.popBackStackIfNotSubject() },
+                navigateToBack = navigator::popBackStackIfNotSubject,
             )
 
             myBadgeCategoryNavGraph(
