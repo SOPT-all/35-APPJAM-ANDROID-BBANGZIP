@@ -66,37 +66,29 @@ class SplitStudyContract {
 
         data class UpdateStartPage(val index: Int, val startPage: String) : SplitStudyReduce
 
-        data class UpdateStartPageFocusedState(val index: Int, val startPageFocusedState: Boolean) : SplitStudyReduce
-
-        data object UpdateStartPageInputState : SplitStudyReduce
+        data class UpdateIsStartPageFocused(val index: Int, val isStartPageFocused: Boolean) : SplitStudyReduce
 
         data class UpdateEndPage(val index: Int, val endPage: String) : SplitStudyReduce
 
-        data class UpdateEndPageFocusedState(val index: Int, val endPageFocusedState: Boolean) : SplitStudyReduce
-
-        data object UpdateEndPageInputState : SplitStudyReduce
-
-        data object UpdateExamDate : SplitStudyReduce
+        data class UpdateIsEndPageFocused(val index: Int, val isEndPageFocused: Boolean) : SplitStudyReduce
 
         data class UpdateSelectedDate(val date: Date) : SplitStudyReduce
 
-        data object UpdateDatePickerBottomSheetState : SplitStudyReduce
+        data object UpdateIsDatePickerBottomSheetVisible : SplitStudyReduce
 
-        data object UpdateButtonEnabled : SplitStudyReduce
+        data object UpdateIsSaveBtnEnabled : SplitStudyReduce
 
-        data class UpdateStartPageToString(val index: Int) : SplitStudyReduce
+        data class AddSuffixToStartPage(val index: Int) : SplitStudyReduce
 
-        data class UpdateEndPageToString(val index: Int) : SplitStudyReduce
+        data class AddSuffixToEndPage(val index: Int) : SplitStudyReduce
 
-        data object UpdatePieceNumber : SplitStudyReduce
+        data class UpdateSelectedPieceIndex(val index: Int) : SplitStudyReduce
 
-        data class UpdateSeletedIndex(val index: Int) : SplitStudyReduce
+        data object UpdateDeadlineList : SplitStudyReduce
 
-        data object UpdateSelectedDateList : SplitStudyReduce
+        data class UpdateStartPageTextFieldInputState(val index: Int) : SplitStudyReduce
 
-        data class UpdateStartPageTextFieldState(val index: Int) : SplitStudyReduce
-
-        data class UpdateEndPageTextFieldState(val index: Int) : SplitStudyReduce
+        data class UpdateEndPageTextFieldInputState(val index: Int) : SplitStudyReduce
 
         data class UpdateStartPageGuideline(val index: Int) : SplitStudyReduce
 
