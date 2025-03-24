@@ -9,9 +9,9 @@ interface UserRepository {
 
     suspend fun reissue(): Result<ReissueEntity>
 
-    suspend fun logout(): Result<String>
+    suspend fun logout(): Result<Int>
 
-    suspend fun withdraw(): Result<String>
+    suspend fun withdraw(): Result<Int>
 
-    suspend fun onboardingComplete(onboardingEntity: OnboardingEntity): Result<String>
+    suspend fun onboardingComplete(onboardingEntity: OnboardingEntity): Result<Int>
 }

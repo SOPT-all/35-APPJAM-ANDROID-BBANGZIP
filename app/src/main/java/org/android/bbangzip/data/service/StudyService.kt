@@ -21,5 +21,5 @@ interface StudyService {
     @HTTP(method = "DELETE", path = "$API/$VERSION/$STUDIES/$PIECES", hasBody = true)
     suspend fun deleteStudyPieces(
         @Body requestPieceIdDto: RequestPieceIdDto,
-    ): BaseResponse<String>
+    ): BaseResponse<Int>
 }

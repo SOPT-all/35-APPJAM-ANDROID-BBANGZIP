@@ -5,6 +5,6 @@ import org.android.bbangzip.domain.repository.remote.UserRepository
 class DeleteWithdrawUseCase(
     private val userRepository: UserRepository,
 ) {
-    suspend operator fun invoke(): Result<String> =
+    suspend operator fun invoke(): Result<Int> =
         userRepository.withdraw()
 }

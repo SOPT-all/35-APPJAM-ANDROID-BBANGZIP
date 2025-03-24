@@ -6,6 +6,6 @@ import org.android.bbangzip.domain.repository.remote.StudyRepository
 class DeleteStudyPieceUseCase(
     private val studyRepository: StudyRepository,
 ) {
-    suspend operator fun invoke(pieceIdEntity: PieceIdEntity): Result<String> =
+    suspend operator fun invoke(pieceIdEntity: PieceIdEntity): Result<Int> =
         studyRepository.deleteStudyPiece(pieceIdEntity = pieceIdEntity)
 }
