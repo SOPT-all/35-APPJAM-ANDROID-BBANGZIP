@@ -7,5 +7,5 @@ import org.android.bbangzip.domain.model.PieceIdEntity
 interface StudyRepository {
     suspend fun postAddStudy(addStudyEntity: AddStudyEntity): Result<GetBadgeEntity>
 
-    suspend fun deleteStudyPiece(pieceIdEntity: PieceIdEntity): Result<String>
+    suspend fun deleteStudyPiece(pieceIdEntity: PieceIdEntity): Result<Int>
 }

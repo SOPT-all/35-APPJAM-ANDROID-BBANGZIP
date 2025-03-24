@@ -14,5 +14,5 @@ class StudyRemoteDataSource
     ) {
         suspend fun postStudy(requestAddStudyDto: RequestAddStudyDto): BaseResponse<ResponseGetBadgeDto> = studyService.postStudy(requestAddStudyDto = requestAddStudyDto)
 
-        suspend fun deleteStudyPieces(requestPieceIdDto: RequestPieceIdDto): BaseResponse<String> = studyService.deleteStudyPieces(requestPieceIdDto = requestPieceIdDto)
+        suspend fun deleteStudyPieces(requestPieceIdDto: RequestPieceIdDto): BaseResponse<Int> = studyService.deleteStudyPieces(requestPieceIdDto = requestPieceIdDto)
     }

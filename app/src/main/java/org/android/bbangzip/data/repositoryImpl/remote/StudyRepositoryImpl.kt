@@ -20,15 +20,12 @@ class StudyRepositoryImpl
                 responseData.toGetBadgeEntity()
             }
 
-        override suspend fun deleteStudyPiece(pieceIdEntity: PieceIdEntity): Result<String> =
+        override suspend fun deleteStudyPiece(pieceIdEntity: PieceIdEntity): Result<Int> =
             runCatching {
                 val response = studyRemoteDataSource.deleteStudyPieces(requestPieceIdDto = pieceIdEntity.toPieceIdDto())
                 Timber.tag("[과목 관리]").d(pieceIdEntity.toPieceIdDto().pieceIds.toString())
                 val responseData = response.code ?: throw IllegalStateException(response.message ?: "Null Error")
-                Timber.tag("[과목 관리]").d(responseData)
                 responseData
-            }.onSuccess { throwable ->
-                Timber.tag("[과목 관리] 성공").d(throwable)
             }.onFailure { exception: Throwable ->
                 Timber.tag("[과목 관리] 실패").d(exception)
             }

@@ -20,21 +20,21 @@ class MyContract {
     sealed interface MyEvent : BaseContract.Event {
         data object Initialize : MyEvent
 
-        data object OnClickBbangZip : MyEvent
+        data object OnBbangZipClick : MyEvent
 
-        data object OnClickMyBadgeCount : MyEvent
+        data object OnMyBadgeCountClick : MyEvent
 
-        data object OnClickLogoutBtn : MyEvent
+        data object OnLogoutBtnClick : MyEvent
 
-        data object OnClickWithdrawBtn : MyEvent
+        data object OnWithdrawBtnClick : MyEvent
 
-        data object OnClickLogoutConfirmBtn : MyEvent
+        data object OnLogoutConfirmBtnClick : MyEvent
 
-        data object OnClickLogoutCancelBtn : MyEvent
+        data object OnLogoutCancelBtnClick : MyEvent
 
-        data object OnClickWithdrawConfirmBtn : MyEvent
+        data object OnWithdrawConfirmBtnClick : MyEvent
 
-        data object OnClickWithdrawCancelBtn : MyEvent
+        data object OnWithdrawCancelBtnClick : MyEvent
     }
 
     sealed interface MyReduce : BaseContract.Reduce {

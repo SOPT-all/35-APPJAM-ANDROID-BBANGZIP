@@ -8,6 +8,6 @@ class PostOnboardingUseCase(
 ) {
     suspend operator fun invoke(
         onboardingEntity: OnboardingEntity,
-    ): Result<String> =
+    ): Result<Int> =
         userRepository.onboardingComplete(onboardingEntity = onboardingEntity)
 }

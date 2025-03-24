@@ -16,9 +16,9 @@ class UserRemoteDataSource
 
         suspend fun reissue(): BaseResponse<ResponseReissueDto> = userService.reissue()
 
-        suspend fun logout(): BaseResponse<String> = userService.logout()
+        suspend fun logout(): BaseResponse<Int> = userService.logout()
 
-        suspend fun withDraw(): BaseResponse<String> = userService.withdraw()
+        suspend fun withDraw(): BaseResponse<Int> = userService.withdraw()
 
-        suspend fun onboardingComplete(requestOnboardingDto: RequestOnboardingDto): BaseResponse<String> = userService.onboardingComplete(requestOnboardingDto = requestOnboardingDto)
+        suspend fun onboardingComplete(requestOnboardingDto: RequestOnboardingDto): BaseResponse<Int> = userService.onboardingComplete(requestOnboardingDto = requestOnboardingDto)
     }

@@ -8,13 +8,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.HorizontalDivider
@@ -39,6 +37,7 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.bottomsheet.BbangZipTwoButtonBottomSheet
 import org.android.bbangzip.presentation.type.BbangZipShadowType
 import org.android.bbangzip.presentation.ui.my.component.BbangZipLevelProgressBar
+import org.android.bbangzip.presentation.util.graphic.Gap
 import org.android.bbangzip.presentation.util.modifier.applyFilterOnClick
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.presentation.util.modifier.noRippleClickable
@@ -48,14 +47,14 @@ import org.android.bbangzip.ui.theme.BbangZipTheme
 fun MyScreen(
     padding: PaddingValues,
     state: MyContract.MyState,
-    onClickBbangZip: () -> Unit,
-    onClickBadgeCount: () -> Unit,
-    onClickLogoutBtn: () -> Unit,
-    onClickWithdrawBtn: () -> Unit,
-    onClickLogoutConfirmBtn: () -> Unit,
-    onClickWithdrawConfirmBtn: () -> Unit,
-    onClickLogoutCancelBtn: () -> Unit,
-    onClickWithdrawCancelBtn: () -> Unit,
+    onBbangZipClick: () -> Unit,
+    onBadgeCountClick: () -> Unit,
+    onLogoutBtnClick: () -> Unit,
+    onWithdrawBtnClick: () -> Unit,
+    onLogoutConfirmBtnClick: () -> Unit,
+    onWithdrawConfirmBtnClick: () -> Unit,
+    onLogoutCancelBtnClick: () -> Unit,
+    onWithdrawCancelBtnClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundAccent_FFDAA0.toArgb()
@@ -75,7 +74,7 @@ fun MyScreen(
                 MainBbangZip(
                     modifier =
                         Modifier
-                            .noRippleClickable { onClickBbangZip() },
+                            .noRippleClickable { onBbangZipClick() },
                     level = state.myBbangZip?.bbangZipLevel ?: 1,
                     currentPoint = state.myBbangZip?.reward ?: 0,
                     maxPoint = state.myBbangZip?.maxReward ?: 0,
@@ -89,13 +88,13 @@ fun MyScreen(
                             .align(Alignment.BottomCenter)
                             .padding(horizontal = 16.dp),
                     currentBadge = state.currentBadge.toString(),
-                    onClickBadgeCount = onClickBadgeCount,
+                    onClickBadgeCount = onBadgeCountClick,
                 )
             }
         }
 
         item {
-            Spacer(modifier = Modifier.height(88.dp))
+            Gap(height = 88)
         }
 
         item {
@@ -104,11 +103,11 @@ fun MyScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Gap(height = 16)
 
             MyHorizontalDivider()
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Gap(height = 16)
         }
 
         item {
@@ -117,7 +116,7 @@ fun MyScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Gap(height = 8)
         }
 
         item {
@@ -126,7 +125,7 @@ fun MyScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Gap(height = 8)
         }
 
         item {
@@ -135,55 +134,56 @@ fun MyScreen(
                 modifier = Modifier.padding(horizontal = 16.dp),
             )
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Gap(height = 16)
 
             MyHorizontalDivider()
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Gap(height = 16)
         }
 
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_logout),
                 modifier = Modifier.padding(horizontal = 16.dp),
-                onClickMenu = { onClickLogoutBtn() },
+                onClickMenu = { onLogoutBtnClick() },
             )
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Gap(height = 8)
         }
 
         item {
             MyMenuTitle(
                 text = stringResource(R.string.my_withdraw),
                 modifier = Modifier.padding(horizontal = 16.dp),
-                onClickMenu = { onClickWithdrawBtn() },
+                onClickMenu = { onWithdrawBtnClick() },
             )
         }
 
         item {
-            Spacer(modifier = Modifier.height(padding.calculateBottomPadding()))
-            Spacer(modifier = Modifier.height(16.dp))
+            Gap(height = padding.calculateBottomPadding().value.toInt())
+
+            Gap(height = 16)
         }
     }
 
     BbangZipTwoButtonBottomSheet(
         isBottomSheetVisible = state.logoutBottomSheetState,
-        onDismissRequest = { onClickLogoutBtn() },
+        onDismissRequest = { onLogoutBtnClick() },
         bottomSheetTitle = stringResource(R.string.logout_title),
         interactButtonText = stringResource(R.string.logout_confirm),
         cancelButtonText = stringResource(R.string.cancel),
-        onClickInteractButton = { onClickLogoutConfirmBtn() },
-        onClickCancelButton = { onClickLogoutCancelBtn() },
+        onClickInteractButton = { onLogoutConfirmBtnClick() },
+        onClickCancelButton = { onLogoutCancelBtnClick() },
     )
 
     BbangZipTwoButtonBottomSheet(
         isBottomSheetVisible = state.withdrawBottomSheetState,
-        onDismissRequest = { onClickWithdrawBtn() },
+        onDismissRequest = { onWithdrawBtnClick() },
         bottomSheetTitle = stringResource(R.string.withdraw_title),
         interactButtonText = stringResource(R.string.withdraw_confirm),
         cancelButtonText = stringResource(R.string.cancel),
-        onClickInteractButton = { onClickWithdrawConfirmBtn() },
-        onClickCancelButton = { onClickWithdrawCancelBtn() },
+        onClickInteractButton = { onWithdrawConfirmBtnClick() },
+        onClickCancelButton = { onWithdrawCancelBtnClick() },
     )
 }
 
@@ -274,7 +274,7 @@ private fun MyBadgeInfo(
                 )
             }
 
-            Spacer(modifier = Modifier.height(6.dp))
+            Gap(height = 6)
 
             Text(
                 text = stringResource(R.string.my_badge_setting),
@@ -288,7 +288,7 @@ private fun MyBadgeInfo(
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            Spacer(modifier = Modifier.height(21.dp))
+            Gap(height = 21)
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -299,7 +299,7 @@ private fun MyBadgeInfo(
                     color = BbangZipTheme.colors.labelNormal_282119,
                 )
 
-                Spacer(modifier = Modifier.width(1.dp))
+                Gap(width = 1)
 
                 Text(
                     text = stringResource(R.string.my_badge_book_count),
@@ -307,7 +307,7 @@ private fun MyBadgeInfo(
                     color = BbangZipTheme.colors.labelNormal_282119,
                 )
 
-                Spacer(modifier = Modifier.width(2.dp))
+                Gap(width = 2)
 
                 Icon(
                     imageVector = ImageVector.vectorResource(R.drawable.ic_chevronright_tight_thick_small_24),
@@ -316,7 +316,7 @@ private fun MyBadgeInfo(
                 )
             }
 
-            Spacer(modifier = Modifier.height(27.dp))
+            Gap(height = 27)
 
             Text(
                 text = stringResource(R.string.my_badge_book),

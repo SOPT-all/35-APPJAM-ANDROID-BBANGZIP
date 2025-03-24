@@ -43,36 +43,36 @@ class MyViewModel
                         Timber.tag("[마이페이지] -> ").d("initialize 작동")
                         initDataLoad()
                     }
-                is MyContract.MyEvent.OnClickBbangZip -> setSideEffect(MyContract.MySideEffect.NavigateToBbangZipDetail)
-                is MyContract.MyEvent.OnClickLogoutBtn -> {
+                is MyContract.MyEvent.OnBbangZipClick -> setSideEffect(MyContract.MySideEffect.NavigateToBbangZipDetail)
+                is MyContract.MyEvent.OnLogoutBtnClick -> {
                     updateState(MyContract.MyReduce.UpdateLogoutBottomSheetState)
                 }
 
-                is MyContract.MyEvent.OnClickWithdrawBtn -> {
+                is MyContract.MyEvent.OnWithdrawBtnClick -> {
                     updateState(MyContract.MyReduce.UpdateWithdrawBottomSheetState)
                 }
 
-                is MyContract.MyEvent.OnClickLogoutCancelBtn -> {
+                is MyContract.MyEvent.OnLogoutCancelBtnClick -> {
                     updateState(MyContract.MyReduce.UpdateLogoutBottomSheetState)
                 }
 
-                is MyContract.MyEvent.OnClickLogoutConfirmBtn -> {
+                is MyContract.MyEvent.OnLogoutConfirmBtnClick -> {
                     kakaoAuthService.logoutKakao(
                         logoutListener = { logout() },
                     )
                 }
 
-                is MyContract.MyEvent.OnClickWithdrawCancelBtn -> {
+                is MyContract.MyEvent.OnWithdrawCancelBtnClick -> {
                     updateState(MyContract.MyReduce.UpdateWithdrawBottomSheetState)
                 }
 
-                is MyContract.MyEvent.OnClickWithdrawConfirmBtn -> {
+                is MyContract.MyEvent.OnWithdrawConfirmBtnClick -> {
                     kakaoAuthService.withdrawKakao(
                         withdrawListener = { withdraw() },
                     )
                 }
 
-                is MyContract.MyEvent.OnClickMyBadgeCount -> {
+                is MyContract.MyEvent.OnMyBadgeCountClick -> {
                     setSideEffect(MyContract.MySideEffect.NavigateToBadgeDetail)
                 }
             }

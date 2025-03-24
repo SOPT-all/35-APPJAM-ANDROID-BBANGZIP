@@ -21,7 +21,7 @@ class UserRepositoryImpl
                 responseData.toUserEntity()
             }
 
-        override suspend fun logout(): Result<String> =
+        override suspend fun logout(): Result<Int> =
             runCatching {
                 val response = userRemoteDataSource.logout()
                 val responseData = response.code ?: throw IllegalStateException(response.message ?: "Null Error")
@@ -35,14 +35,14 @@ class UserRepositoryImpl
                 responseData.toReissueEntity()
             }
 
-        override suspend fun withdraw(): Result<String> =
+        override suspend fun withdraw(): Result<Int> =
             runCatching {
                 val response = userRemoteDataSource.withDraw()
                 val responseData = response.code ?: throw IllegalStateException(response.message ?: "Null Error")
                 responseData
             }
 
-        override suspend fun onboardingComplete(onboardingEntity: OnboardingEntity): Result<String> =
+        override suspend fun onboardingComplete(onboardingEntity: OnboardingEntity): Result<Int> =
             runCatching {
                 val response = userRemoteDataSource.onboardingComplete(requestOnboardingDto = onboardingEntity.toOnboardingInfoDto())
                 val responseData = response.code ?: throw IllegalStateException(response.message ?: "Null Error")
