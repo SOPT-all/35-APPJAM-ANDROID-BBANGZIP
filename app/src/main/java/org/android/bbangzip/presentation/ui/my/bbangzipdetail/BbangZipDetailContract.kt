@@ -16,7 +16,7 @@ class BbangZipDetailContract {
     sealed interface BbangZipDetailEvent : BaseContract.Event {
         data object Initialize : BbangZipDetailEvent
 
-        data object OnClickBackBtn : BbangZipDetailEvent
+        data object OnBackIconClick : BbangZipDetailEvent
     }
 
     sealed interface BbangZipDetailReduce : BaseContract.Reduce {
@@ -24,6 +24,6 @@ class BbangZipDetailContract {
     }
 
     sealed interface BbangZipDetailSideEffect : BaseContract.SideEffect {
-        data object PopBackStack : BbangZipDetailSideEffect
+        data object NavigateToBack : BbangZipDetailSideEffect
     }
 }

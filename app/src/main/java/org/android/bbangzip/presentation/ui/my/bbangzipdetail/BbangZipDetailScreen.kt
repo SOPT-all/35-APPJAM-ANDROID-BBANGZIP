@@ -6,14 +6,12 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.aspectRatio
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.shape.CircleShape
@@ -42,6 +40,7 @@ import org.android.bbangzip.R
 import org.android.bbangzip.presentation.component.chip.BbangZipChip
 import org.android.bbangzip.presentation.component.topbar.BbangZipBaseTopBar
 import org.android.bbangzip.presentation.model.BbangZip
+import org.android.bbangzip.presentation.util.graphic.Gap
 import org.android.bbangzip.ui.theme.BbangZipTheme
 import timber.log.Timber
 
@@ -49,7 +48,7 @@ import timber.log.Timber
 fun BbangZipDetailScreen(
     state: BbangZipDetailContract.BbangZipDetailState,
     pagerState: PagerState,
-    popBackStack: () -> Unit,
+    navigateToBack: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
     (LocalView.current.context as Activity).window.statusBarColor = BbangZipTheme.colors.backgroundAccent_FFDAA0.toArgb()
@@ -62,7 +61,7 @@ fun BbangZipDetailScreen(
         BbangZipBaseTopBar(
             backGroundColor = BbangZipTheme.colors.backgroundAccent_FFDAA0,
             leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-            onLeadingIconClick = { popBackStack() },
+            onLeadingIconClick = { navigateToBack() },
             title = stringResource(R.string.my_bbangzip),
         )
 
@@ -132,37 +131,28 @@ private fun BbangZipPager(
 
                     BbangZipPagerIndicator(
                         pagerState = pagerState,
-                        modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 24.dp),
+                        modifier =
+                            Modifier
+                                .align(Alignment.BottomCenter)
+                                .padding(bottom = 24.dp),
                     )
                 }
             }
 
             Column(
                 modifier =
-                    Modifier.fillMaxWidth()
+                    Modifier
+                        .fillMaxWidth()
                         .padding(top = 24.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                Row(
-                    horizontalArrangement = Arrangement.Center,
-                    verticalAlignment = Alignment.CenterVertically,
-                ) {
-                    BbangZipChip(
-                        backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                        text = "Lv " + bbangZipList[page].level,
-                    )
-
-                    Spacer(modifier = Modifier.width(8.dp))
-
-                    Text(
-                        text = bbangZipList[page].name,
-                        style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
-                    )
-                }
+                BbangZipLevelTitle(
+                    bbangZipList = bbangZipList,
+                    page = page,
+                )
 
                 if (!bbangZipList[page].isLocked) {
-                    Spacer(modifier = Modifier.height(78.dp))
+                    Gap(height = 78)
 
                     Text(
                         text = bbangZipList[page].description,
@@ -171,7 +161,7 @@ private fun BbangZipPager(
                         textAlign = TextAlign.Center,
                     )
                 } else {
-                    Spacer(modifier = Modifier.height(62.dp))
+                    Gap(height = 62)
 
                     Box(
                         modifier = Modifier.fillMaxWidth(),
@@ -181,7 +171,11 @@ private fun BbangZipPager(
                             imageVector = ImageVector.vectorResource(R.drawable.ic_lock_default_28),
                             contentDescription = null,
                             tint = BbangZipTheme.colors.lineStrong_68645E_52,
-                            modifier = Modifier.height(70.dp).aspectRatio(0.714f).alpha(0.2f),
+                            modifier =
+                                Modifier
+                                    .height(70.dp)
+                                    .aspectRatio(0.714f)
+                                    .alpha(0.2f),
                         )
 
                         Text(
@@ -194,6 +188,32 @@ private fun BbangZipPager(
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun BbangZipLevelTitle(
+    bbangZipList: List<BbangZip>,
+    page: Int,
+    modifier: Modifier = Modifier,
+) {
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.Center,
+        verticalAlignment = Alignment.CenterVertically,
+    ) {
+        BbangZipChip(
+            backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
+            text = stringResource(R.string.my_bbangzip_level) + bbangZipList[page].level,
+        )
+
+        Gap(width = 8)
+
+        Text(
+            text = bbangZipList[page].name,
+            style = BbangZipTheme.typography.body1Bold,
+            color = BbangZipTheme.colors.labelNormal_282119,
+        )
     }
 }
 
