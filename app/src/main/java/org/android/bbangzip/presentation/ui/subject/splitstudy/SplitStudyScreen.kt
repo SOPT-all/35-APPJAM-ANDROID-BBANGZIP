@@ -23,6 +23,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusManager
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -130,152 +131,43 @@ fun SplitStudyScreen(
             item {
                 Gap(height = 24)
 
-                Box(
-                    modifier =
-                        Modifier
-                            .padding(horizontal = 16.dp)
-                            .fillMaxWidth()
-                            .applyShadows(
-                                shadowType = BbangZipShadowType.EMPHASIZE,
-                                shape = RoundedCornerShape(24.dp),
-                            ),
-                ) {
-                    Box(
-                        modifier =
-                            Modifier
-                                .fillMaxSize()
-                                .background(
-                                    color = BbangZipTheme.colors.backgroundAlternative_F5F5F5,
-                                    shape = RoundedCornerShape(24.dp),
-                                )
-                                .padding(16.dp),
-                    ) {
-                        Column {
-                            Text(
-                                text = "학습 내용",
-                                style = BbangZipTheme.typography.headline2Bold,
-                                color = BbangZipTheme.colors.labelNormal_282119,
-                            )
+                StudyContentSummaryBox(
+                    startPage = state.startPage,
+                    endPage = state.endPage
+                )
 
-                            Gap(height = 8)
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                            ) {
-                                BbangZipChip(
-                                    backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                                    text = state.startPage,
-                                )
-
-                                Gap(width = 4)
-
-                                Text(
-                                    text = "부터",
-                                    style = BbangZipTheme.typography.label1Bold,
-                                    color = BbangZipTheme.colors.labelAlternative_282119_61,
-                                )
-
-                                Gap(width = 8)
-
-                                BbangZipChip(
-                                    backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                                    text = state.endPage,
-                                )
-
-                                Gap(width = 4)
-
-                                Text(
-                                    text = "까지",
-                                    style = BbangZipTheme.typography.label1Bold,
-                                    color = BbangZipTheme.colors.labelAlternative_282119_61,
-                                )
-                            }
-                        }
-                    }
-                }
-            }
-
-            item {
                 Gap(height = 32)
 
                 HorizontalDivider(
                     modifier =
-                        Modifier
-                            .padding(horizontal = 16.dp)
-                            .fillMaxWidth(),
+                    Modifier
+                        .padding(horizontal = 16.dp)
+                        .fillMaxWidth(),
                 )
             }
 
             items(
                 count = state.pieceNumber,
             ) { index ->
-
-                Column(
-                    modifier =
-                        Modifier
-                            .padding(horizontal = 16.dp)
-                            .fillMaxWidth(),
-                ) {
-                    Gap(height = 32)
-
-                    Text(
-                        text = "${index + 1}조각",
-                        style = BbangZipTheme.typography.body1Bold,
-                        color = BbangZipTheme.colors.labelNormal_282119,
-                    )
-
-                    Gap(height = 16)
-
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                    ) {
-                        BbangZipSimpleTextField(
-                            leadingIcon = R.drawable.ic_page_check_default_24,
-                            placeholder = R.string.add_study_start_page_placeholder,
-                            guideline = state.startPageGuidelineList[index],
-                            value = state.startPageList[index],
-                            modifier = Modifier.weight(1f),
-                            bbangZipTextFieldInputState = state.startPageTextFieldInputStateList[index],
-                            onValueChange = {
-                                onStartPageChange(index, it)
-                            },
-                            onFocusChange = { onIsStartPageFocusedChange(index, it) },
-                            focusManager = focusManager,
-                        )
-
-                        Gap(width = 16)
-
-                        BbangZipSimpleTextField(
-                            leadingIcon = R.drawable.ic_page_check_default_24,
-                            placeholder = R.string.add_study_end_page_placeholder,
-                            guideline = state.endPageGuidelineList[index],
-                            value = state.endPageList[index],
-                            modifier = Modifier.weight(1f),
-                            bbangZipTextFieldInputState = state.endPageTextFieldInputStateList[index],
-                            onValueChange = {
-                                onEndPageChange(index, it)
-                            },
-                            onFocusChange = { onIsEndPageFocusedChange(index, it) },
-                            focusManager = focusManager,
-                        )
-                    }
-
-                    Gap(height = 16)
-
-                    BbangZipButton(
-                        bbangZipButtonType = BbangZipButtonType.Outlined,
-                        bbangZipButtonSize = BbangZipButtonSize.Medium,
-                        onClick = {
-                            onDatePickerClick(index)
-                        },
-                        modifier = Modifier.fillMaxWidth(),
-                        leadingIcon = R.drawable.ic_page_check_default_24,
-                        label = "${state.deadlineList[index + 1].year}년 ${state.deadlineList[index + 1].month}월 ${state.deadlineList[index + 1].day}일 까지",
-                    )
-                }
+                PieceCustomField(
+                    index = index,
+                    focusManager = focusManager,
+                    startPageGuidelineList = state.startPageGuidelineList,
+                    endPageGuidelineList = state.endPageGuidelineList,
+                    startPageTextFieldInputStateList = state.startPageTextFieldInputStateList,
+                    endPageTextFieldInputStateList = state.endPageTextFieldInputStateList,
+                    startPageList = state.startPageList,
+                    endPageList = state.endPageList,
+                    deadlineList = state.deadlineList,
+                    onStartPageChange = onStartPageChange,
+                    onIsStartPageFocusedChange = onIsStartPageFocusedChange,
+                    onEndPageChange = onEndPageChange,
+                    onIsEndPageFocusedChange = onIsEndPageFocusedChange,
+                    onDatePickerClick = onDatePickerClick
+                )
             }
 
-            item { Gap(width = 88) }
+            item { Gap(height = 88) }
         }
 
         BbangZipButton(
@@ -318,6 +210,152 @@ fun SplitStudyScreen(
         onClickInputButton = onConfirmDateBtnClick,
         onDismissRequest = onDatePickerBottomSheetDismissRequest,
     )
+}
+
+@Composable
+private fun StudyContentSummaryBox(
+    startPage: String,
+    endPage: String,
+) {
+    Box(
+        modifier =
+        Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth()
+            .applyShadows(
+                shadowType = BbangZipShadowType.EMPHASIZE,
+                shape = RoundedCornerShape(24.dp),
+            )
+            .background(
+                color = BbangZipTheme.colors.backgroundAlternative_F5F5F5,
+                shape = RoundedCornerShape(24.dp),
+            )
+            .padding(16.dp),
+    ) {
+        Column {
+            Text(
+                text = "학습 내용",
+                style = BbangZipTheme.typography.headline2Bold,
+                color = BbangZipTheme.colors.labelNormal_282119,
+            )
+
+            Gap(height = 8)
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+            ) {
+                BbangZipChip(
+                    backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
+                    text = startPage,
+                )
+
+                Gap(width = 4)
+
+                Text(
+                    text = "부터",
+                    style = BbangZipTheme.typography.label1Bold,
+                    color = BbangZipTheme.colors.labelAlternative_282119_61,
+                )
+
+                Gap(width = 8)
+
+                BbangZipChip(
+                    backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
+                    text = endPage,
+                )
+
+                Gap(width = 4)
+
+                Text(
+                    text = "까지",
+                    style = BbangZipTheme.typography.label1Bold,
+                    color = BbangZipTheme.colors.labelAlternative_282119_61,
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun PieceCustomField(
+    index: Int,
+    focusManager: FocusManager,
+    startPageGuidelineList: List<String>,
+    endPageGuidelineList: List<String>,
+    startPageTextFieldInputStateList: List<BbangZipTextFieldInputState>,
+    endPageTextFieldInputStateList: List<BbangZipTextFieldInputState>,
+    startPageList: List<String>,
+    endPageList: List<String>,
+    deadlineList: List<Date>,
+    onStartPageChange: (Int, String) -> Unit,
+    onIsStartPageFocusedChange: (Int, Boolean) -> Unit,
+    onEndPageChange: (Int, String) -> Unit,
+    onIsEndPageFocusedChange: (Int, Boolean) -> Unit,
+    onDatePickerClick: (Int) -> Unit
+) {
+    Column(
+        modifier =
+        Modifier
+            .padding(horizontal = 16.dp)
+            .fillMaxWidth(),
+    ) {
+        Gap(height = 32)
+
+        Text(
+            text = "${index + 1}조각",
+            style = BbangZipTheme.typography.body1Bold,
+            color = BbangZipTheme.colors.labelNormal_282119,
+        )
+
+        Gap(height = 16)
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+        ) {
+            BbangZipSimpleTextField(
+                leadingIcon = R.drawable.ic_page_check_default_24,
+                placeholder = R.string.add_study_start_page_placeholder,
+                guideline = startPageGuidelineList[index],
+                value = startPageList[index],
+                modifier = Modifier.weight(1f),
+                bbangZipTextFieldInputState = startPageTextFieldInputStateList[index],
+                onValueChange = {
+                    onStartPageChange(index, it)
+                },
+                onFocusChange = { onIsStartPageFocusedChange(index, it) },
+                focusManager = focusManager,
+            )
+
+            Gap(width = 16)
+
+            BbangZipSimpleTextField(
+                leadingIcon = R.drawable.ic_page_check_default_24,
+                placeholder = R.string.add_study_end_page_placeholder,
+                guideline = endPageGuidelineList[index],
+                value = endPageList[index],
+                modifier = Modifier.weight(1f),
+                bbangZipTextFieldInputState = endPageTextFieldInputStateList[index],
+                onValueChange = {
+                    onEndPageChange(index, it)
+                },
+                onFocusChange = { onIsEndPageFocusedChange(index, it) },
+                focusManager = focusManager,
+            )
+        }
+
+        Gap(height = 16)
+
+        BbangZipButton(
+            bbangZipButtonType = BbangZipButtonType.Outlined,
+            bbangZipButtonSize = BbangZipButtonSize.Medium,
+            onClick = {
+                onDatePickerClick(index)
+            },
+            modifier = Modifier.fillMaxWidth(),
+            leadingIcon = R.drawable.ic_page_check_default_24,
+            label = "${deadlineList[index + 1].year}년 ${deadlineList[index + 1].month}월 ${deadlineList[index + 1].day}일 까지",
+        )
+    }
 }
 
 @Preview(showSystemUi = true)
