@@ -13,7 +13,7 @@ import org.android.bbangzip.presentation.model.SplitStudyData
 import timber.log.Timber
 import kotlin.reflect.typeOf
 
-fun NavController.navigateSplitStudy(
+fun NavController.navigateToSplitStudy(
     addStudyData: AddStudyData,
 ) {
     navigate(
