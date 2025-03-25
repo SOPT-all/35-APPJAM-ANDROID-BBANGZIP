@@ -206,4 +206,11 @@
     <string name="add_study_piece_selection_bottom_sheet_item">%1$s조각</string>
     <string name="add_study_split_btn_description">[Tip] 입력하신 학습 범위를 자동으로 분배하여\n꾸준히 공부할 수 있도록 학습 계획을 세워드려요!</string>
     <string name="add_study_study_content_field_label">학습 내용</string>
+
+    <!-- split study -->
+    <string name="split_study_show_date_picker_btn_label">%1$s년 %2$s월 %3$s일 까지</string>
+    <string name="split_study_piece_index">%1$s조각</string>
+    <string name="split_study_end_page_suffix">까지</string>
+    <string name="split_study_start_page_suffix">부터</string>
+    <string name="split_study_study_content_summary_box_title">학습 내용</string>
 </resources>

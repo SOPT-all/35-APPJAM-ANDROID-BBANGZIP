@@ -92,10 +92,10 @@ fun SplitStudyScreen(
 
     Box(
         modifier =
-            Modifier
-                .fillMaxSize()
-                .addFocusCleaner(focusManager)
-                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
+        Modifier
+            .fillMaxSize()
+            .addFocusCleaner(focusManager)
+            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         LazyColumn(
             modifier =
@@ -192,10 +192,10 @@ fun SplitStudyScreen(
                 )
             },
             modifier =
-                Modifier
-                    .padding(16.dp)
-                    .fillMaxWidth()
-                    .align(Alignment.BottomCenter),
+            Modifier
+                .padding(16.dp)
+                .fillMaxWidth()
+                .align(Alignment.BottomCenter),
             label = stringResource(R.string.btn_save_label),
             trailingIcon = R.drawable.ic_plus_thick_24,
             isEnable = state.isSaveEnabled,
@@ -234,7 +234,7 @@ private fun StudyContentSummaryBox(
     ) {
         Column {
             Text(
-                text = "학습 내용",
+                text = stringResource(R.string.split_study_study_content_summary_box_title),
                 style = BbangZipTheme.typography.headline2Bold,
                 color = BbangZipTheme.colors.labelNormal_282119,
             )
@@ -252,7 +252,7 @@ private fun StudyContentSummaryBox(
                 Gap(width = 4)
 
                 Text(
-                    text = "부터",
+                    text = stringResource(R.string.split_study_start_page_suffix),
                     style = BbangZipTheme.typography.label1Bold,
                     color = BbangZipTheme.colors.labelAlternative_282119_61,
                 )
@@ -267,7 +267,7 @@ private fun StudyContentSummaryBox(
                 Gap(width = 4)
 
                 Text(
-                    text = "까지",
+                    text = stringResource(R.string.split_study_end_page_suffix),
                     style = BbangZipTheme.typography.label1Bold,
                     color = BbangZipTheme.colors.labelAlternative_282119_61,
                 )
@@ -302,7 +302,7 @@ private fun PieceCustomField(
         Gap(height = 32)
 
         Text(
-            text = "${index + 1}조각",
+            text = stringResource(R.string.split_study_piece_index, index + 1),
             style = BbangZipTheme.typography.body1Bold,
             color = BbangZipTheme.colors.labelNormal_282119,
         )
@@ -353,7 +353,7 @@ private fun PieceCustomField(
             },
             modifier = Modifier.fillMaxWidth(),
             leadingIcon = R.drawable.ic_page_check_default_24,
-            label = "${deadlineList[index + 1].year}년 ${deadlineList[index + 1].month}월 ${deadlineList[index + 1].day}일 까지",
+            label = stringResource(R.string.split_study_show_date_picker_btn_label, deadlineList[index + 1].year, deadlineList[index + 1].month, deadlineList[index + 1].day),
         )
     }
 }
