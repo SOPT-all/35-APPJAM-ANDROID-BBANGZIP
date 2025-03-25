@@ -41,6 +41,7 @@ import org.android.bbangzip.presentation.type.BbangZipButtonSize
 import org.android.bbangzip.presentation.type.BbangZipButtonType
 import org.android.bbangzip.presentation.type.BbangZipShadowType
 import org.android.bbangzip.presentation.util.date.dateToString
+import org.android.bbangzip.presentation.util.graphic.Gap
 import org.android.bbangzip.presentation.util.modifier.addFocusCleaner
 import org.android.bbangzip.presentation.util.modifier.applyShadows
 import org.android.bbangzip.ui.theme.BbangZipTheme
@@ -127,7 +128,7 @@ fun SplitStudyScreen(
                 )
             }
             item {
-                Spacer(modifier = Modifier.height(24.dp))
+                Gap(height = 24)
 
                 Box(
                     modifier =
@@ -156,7 +157,7 @@ fun SplitStudyScreen(
                                 color = BbangZipTheme.colors.labelNormal_282119,
                             )
 
-                            Spacer(modifier = Modifier.height(8.dp))
+                            Gap(height = 8)
 
                             Row(
                                 modifier = Modifier.fillMaxWidth(),
@@ -166,7 +167,7 @@ fun SplitStudyScreen(
                                     text = state.startPage,
                                 )
 
-                                Spacer(modifier = Modifier.width(4.dp))
+                                Gap(width = 4)
 
                                 Text(
                                     text = "부터",
@@ -174,14 +175,14 @@ fun SplitStudyScreen(
                                     color = BbangZipTheme.colors.labelAlternative_282119_61,
                                 )
 
-                                Spacer(modifier = Modifier.width(8.dp))
+                                Gap(width = 8)
 
                                 BbangZipChip(
                                     backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
                                     text = state.endPage,
                                 )
 
-                                Spacer(modifier = Modifier.width(4.dp))
+                                Gap(width = 4)
 
                                 Text(
                                     text = "까지",
@@ -195,7 +196,7 @@ fun SplitStudyScreen(
             }
 
             item {
-                Spacer(modifier = Modifier.height(32.dp))
+                Gap(height = 32)
 
                 HorizontalDivider(
                     modifier =
@@ -215,7 +216,7 @@ fun SplitStudyScreen(
                             .padding(horizontal = 16.dp)
                             .fillMaxWidth(),
                 ) {
-                    Spacer(modifier = Modifier.height(32.dp))
+                    Gap(height = 32)
 
                     Text(
                         text = "${index + 1}조각",
@@ -223,7 +224,7 @@ fun SplitStudyScreen(
                         color = BbangZipTheme.colors.labelNormal_282119,
                     )
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Gap(height = 16)
 
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -242,7 +243,7 @@ fun SplitStudyScreen(
                             focusManager = focusManager,
                         )
 
-                        Spacer(modifier = Modifier.width(16.dp))
+                        Gap(width = 16)
 
                         BbangZipSimpleTextField(
                             leadingIcon = R.drawable.ic_page_check_default_24,
@@ -259,7 +260,7 @@ fun SplitStudyScreen(
                         )
                     }
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                    Gap(height = 16)
 
                     BbangZipButton(
                         bbangZipButtonType = BbangZipButtonType.Outlined,
@@ -274,7 +275,7 @@ fun SplitStudyScreen(
                 }
             }
 
-            item { Spacer(modifier = Modifier.height(88.dp)) }
+            item { Gap(width = 88) }
         }
 
         BbangZipButton(
