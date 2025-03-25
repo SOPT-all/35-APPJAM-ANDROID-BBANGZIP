@@ -88,10 +88,10 @@ fun SplitStudyScreen(
 
     Box(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .addFocusCleaner(focusManager)
-            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
+            Modifier
+                .fillMaxSize()
+                .addFocusCleaner(focusManager)
+                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         LazyColumn(
             modifier =
@@ -129,16 +129,16 @@ fun SplitStudyScreen(
 
                 StudyContentSummaryBox(
                     startPage = state.startPage,
-                    endPage = state.endPage
+                    endPage = state.endPage,
                 )
 
                 Gap(height = 32)
 
                 HorizontalDivider(
                     modifier =
-                    Modifier
-                        .padding(horizontal = 16.dp)
-                        .fillMaxWidth(),
+                        Modifier
+                            .padding(horizontal = 16.dp)
+                            .fillMaxWidth(),
                 )
             }
 
@@ -159,7 +159,7 @@ fun SplitStudyScreen(
                     onIsStartPageFocusedChange = onIsStartPageFocusedChange,
                     onEndPageChange = onEndPageChange,
                     onIsEndPageFocusedChange = onIsEndPageFocusedChange,
-                    onDatePickerClick = onDatePickerClick
+                    onDatePickerClick = onDatePickerClick,
                 )
             }
 
@@ -188,10 +188,10 @@ fun SplitStudyScreen(
                 )
             },
             modifier =
-            Modifier
-                .padding(16.dp)
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter),
+                Modifier
+                    .padding(16.dp)
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter),
             label = stringResource(R.string.btn_save_label),
             trailingIcon = R.drawable.ic_plus_thick_24,
             isEnable = state.isSaveEnabled,
@@ -215,18 +215,18 @@ private fun StudyContentSummaryBox(
 ) {
     Box(
         modifier =
-        Modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth()
-            .applyShadows(
-                shadowType = BbangZipShadowType.EMPHASIZE,
-                shape = RoundedCornerShape(24.dp),
-            )
-            .background(
-                color = BbangZipTheme.colors.backgroundAlternative_F5F5F5,
-                shape = RoundedCornerShape(24.dp),
-            )
-            .padding(16.dp),
+            Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth()
+                .applyShadows(
+                    shadowType = BbangZipShadowType.EMPHASIZE,
+                    shape = RoundedCornerShape(24.dp),
+                )
+                .background(
+                    color = BbangZipTheme.colors.backgroundAlternative_F5F5F5,
+                    shape = RoundedCornerShape(24.dp),
+                )
+                .padding(16.dp),
     ) {
         Column {
             Text(
@@ -287,13 +287,13 @@ private fun PieceCustomField(
     onIsStartPageFocusedChange: (Int, Boolean) -> Unit,
     onEndPageChange: (Int, String) -> Unit,
     onIsEndPageFocusedChange: (Int, Boolean) -> Unit,
-    onDatePickerClick: (Int) -> Unit
+    onDatePickerClick: (Int) -> Unit,
 ) {
     Column(
         modifier =
-        Modifier
-            .padding(horizontal = 16.dp)
-            .fillMaxWidth(),
+            Modifier
+                .padding(horizontal = 16.dp)
+                .fillMaxWidth(),
     ) {
         Gap(height = 32)
 
@@ -358,6 +358,6 @@ private fun PieceCustomField(
 @Composable
 fun SplitStudyScreenPreview() {
     SplitStudyScreen(
-        state = SplitStudyContract.SplitStudyState()
+        state = SplitStudyContract.SplitStudyState(),
     )
 }

@@ -68,10 +68,10 @@ fun AddStudyScreen(
 
     Column(
         modifier =
-        Modifier
-            .fillMaxSize()
-            .addFocusCleaner(focusManager)
-            .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
+            Modifier
+                .fillMaxSize()
+                .addFocusCleaner(focusManager)
+                .background(color = BbangZipTheme.colors.backgroundNormal_FFFFFF),
     ) {
         BbangZipBaseTopBar(
             onLeadingIconClick = onBackIconClick,
@@ -81,14 +81,14 @@ fun AddStudyScreen(
 
         Column(
             modifier =
-            Modifier
-                .fillMaxSize()
-                .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
+                Modifier
+                    .fillMaxSize()
+                    .padding(top = 24.dp, start = 16.dp, end = 16.dp, bottom = 16.dp),
         ) {
             ShowDatePickerBtn(
                 isDatePickerEnabled = state.isDatePickerEnabled,
                 examDate = state.examDate,
-                onShowDatePickerBtnClick = onShowDatePickerBtnClick
+                onShowDatePickerBtnClick = onShowDatePickerBtnClick,
             )
 
             Gap(height = 50)
@@ -161,8 +161,12 @@ fun AddStudyScreen(
                 bbangZipButtonSize = BbangZipButtonSize.Large,
                 bbangZipButtonType = BbangZipButtonType.Solid,
                 onClick = {
-                    if (state.addStudyViewType == AddStudyViewType.DEFAULT) onDirectEnrollBtnClick()
-                    else onAddStudyBtnClick() },
+                    if (state.addStudyViewType == AddStudyViewType.DEFAULT) {
+                        onDirectEnrollBtnClick()
+                    } else {
+                        onAddStudyBtnClick()
+                    }
+                },
                 modifier = Modifier.fillMaxWidth(),
                 label = stringResource(R.string.btn_enroll_study_label),
                 trailingIcon = R.drawable.ic_plus_thick_24,
@@ -181,7 +185,7 @@ fun AddStudyScreen(
 
         BbangZipListPickerBottomSheet(
             isBottomSheetVisible = state.isPiecePickerBottomSheetVisible,
-            itemList = List(6){ stringResource(R.string.add_study_piece_selection_bottom_sheet_item, it + 1) },
+            itemList = List(6) { stringResource(R.string.add_study_piece_selection_bottom_sheet_item, it + 1) },
             title = {
                 Text(
                     text = stringResource(R.string.add_study_piece_selection_bottom_sheet_description),
@@ -197,7 +201,7 @@ fun AddStudyScreen(
 private fun ShowDatePickerBtn(
     isDatePickerEnabled: Boolean,
     examDate: String,
-    onShowDatePickerBtnClick: () -> Unit
+    onShowDatePickerBtnClick: () -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(
@@ -210,20 +214,20 @@ private fun ShowDatePickerBtn(
 
         Box(
             modifier =
-            Modifier
-                .applyFilterOnClick(
-                    radius = 20.dp,
-                    isDisabled = isDatePickerEnabled,
-                ) {
-                    if (isDatePickerEnabled) onShowDatePickerBtnClick()
-                }
-                .fillMaxWidth()
-                .background(
-                    color = BbangZipTheme.colors.fillNormal_68645E_08,
-                    shape = RoundedCornerShape(20.dp),
-                )
-                .padding(start = 16.dp)
-                .padding(vertical = 18.dp),
+                Modifier
+                    .applyFilterOnClick(
+                        radius = 20.dp,
+                        isDisabled = isDatePickerEnabled,
+                    ) {
+                        if (isDatePickerEnabled) onShowDatePickerBtnClick()
+                    }
+                    .fillMaxWidth()
+                    .background(
+                        color = BbangZipTheme.colors.fillNormal_68645E_08,
+                        shape = RoundedCornerShape(20.dp),
+                    )
+                    .padding(start = 16.dp)
+                    .padding(vertical = 18.dp),
         ) {
             Row(
                 verticalAlignment = Alignment.CenterVertically,
@@ -233,9 +237,9 @@ private fun ShowDatePickerBtn(
                     contentDescription = null,
                     tint = if (examDate == "시험 일자 입력") BbangZipTheme.colors.labelAssistive_282119_28 else BbangZipTheme.colors.labelNormal_282119,
                     modifier =
-                    Modifier
-                        .padding(2.dp)
-                        .size(16.dp),
+                        Modifier
+                            .padding(2.dp)
+                            .size(16.dp),
                 )
 
                 Gap(width = 8)
@@ -387,6 +391,6 @@ private fun AgainRangeView(
 @Composable
 fun AddStudyScreenPreview() {
     AddStudyScreen(
-        state = AddStudyContract.AddStudyState()
+        state = AddStudyContract.AddStudyState(),
     )
 }
