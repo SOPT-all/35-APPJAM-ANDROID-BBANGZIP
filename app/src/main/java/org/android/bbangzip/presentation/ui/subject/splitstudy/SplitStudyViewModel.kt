@@ -10,7 +10,6 @@ import org.android.bbangzip.presentation.util.casting.pageToInt
 import org.android.bbangzip.presentation.util.date.dateStringToLocalDate
 import org.android.bbangzip.presentation.util.date.divideDatesByN
 import org.android.bbangzip.presentation.util.date.localDateToDate
-import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
@@ -195,7 +194,7 @@ class SplitStudyViewModel
                     state.copy(
                         endPageTextFieldInputStateList =
                             state.endPageTextFieldInputStateList.mapIndexed { index, value ->
-                                if (index == reduce.index) determineEndTextFieldType(start = state.startPageList[index], end = state.endPageList[index], max = pageToInt(state.endPage), isFocused = state.isEndPageFocusedList[index]) else value
+                                if (index == reduce.index) determineEndTextFieldType(end = state.endPageList[index], max = pageToInt(state.endPage), isFocused = state.isEndPageFocusedList[index]) else value
                             },
                     )
                 }
@@ -339,7 +338,6 @@ private fun determineStartTextFieldType(
 }
 
 private fun determineEndTextFieldType(
-    start: String,
     end: String,
     max: Int,
     isFocused: Boolean,

@@ -39,27 +39,6 @@ fun SplitStudyRoute(
     if (splitStudyState.isSuccess) {
         SplitStudyScreen(
             state = splitStudyState,
-//            subjectId = splitStudyState.subjectId,
-//            pieceNumber = splitStudyState.pieceNumber,
-//            subjectName = splitStudyState.subjectName,
-//            examDate = splitStudyState.examDate,
-//            examName = splitStudyState.examName,
-//            studyContent = splitStudyState.studyContent,
-//            startPage = splitStudyState.startPage,
-//            endPage = splitStudyState.endPage,
-//            selectedDate = splitStudyState.selectedDate,
-//            selectedIndex = splitStudyState.selectedPieceIndex,
-//            datePickerBottomSheetState = splitStudyState.isDatePickerBottomSheetVisible,
-//            startPageList = splitStudyState.startPageList,
-//            startPageTextFieldStateList = splitStudyState.startPageTextFieldInputStateList,
-//            startPageFocusedStateList = splitStudyState.isStartPageFocusedList,
-//            startPageGuidelineList = splitStudyState.startPageGuidelineList,
-//            endPageList = splitStudyState.endPageList,
-//            endPageTextFieldStateList = splitStudyState.endPageTextFieldInputStateList,
-//            endPageFocusedStateList = splitStudyState.isEndPageFocusedList,
-//            endPageGuidelineList = splitStudyState.endPageGuidelineList,
-//            seletedDateList = splitStudyState.deadlineList,
-//            isSaveEnable = splitStudyState.isSaveEnabled,
             onBackIconClick = {
                 viewModel.setEvent(SplitStudyContract.SplitStudyEvent.OnBackIconClick(it))
             },

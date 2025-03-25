@@ -10,7 +10,6 @@ import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import org.android.bbangzip.presentation.model.AddStudyData
 import org.android.bbangzip.presentation.model.SplitStudyData
-import timber.log.Timber
 import kotlin.reflect.typeOf
 
 fun NavController.navigateToSplitStudy(
