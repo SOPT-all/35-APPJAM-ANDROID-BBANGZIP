@@ -49,35 +49,7 @@ import timber.log.Timber
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun SplitStudyScreen(
-    subjectId: Int = 0,
-    pieceNumber: Int = 0,
-    subjectName: String,
-    startPage: String = "",
-    endPage: String = "",
-    examDate: String = "",
-    examName: String = "",
-    studyContent: String = "",
-    selectedIndex: Int = 0,
-    selectedDate: Date = Date("2025", "1", "21"),
-    datePickerBottomSheetState: Boolean = false,
-    isSaveEnable: Boolean = true,
-    startPageList: List<String> = emptyList(),
-    endPageList: List<String> = emptyList(),
-    seletedDateList: List<Date> =
-        listOf(
-            Date("2025", "1", "21"),
-            Date("2025", "1", "21"),
-            Date("2025", "1", "21"),
-            Date("2025", "1", "21"),
-            Date("2025", "1", "21"),
-            Date("2025", "1", "21"),
-        ),
-    startPageTextFieldStateList: List<BbangZipTextFieldInputState> = emptyList(),
-    startPageFocusedStateList: List<Boolean> = emptyList(),
-    startPageGuidelineList: List<String> = List(pieceNumber) { " " },
-    endPageTextFieldStateList: List<BbangZipTextFieldInputState> = emptyList(),
-    endPageFocusedStateList: List<Boolean> = emptyList(),
-    endPageGuidelineList: List<String> = emptyList(),
+    state: SplitStudyContract.SplitStudyState,
     onStartPageChange: (Int, String) -> Unit = { _, _ -> },
     onEndPageChange: (Int, String) -> Unit = { _, _ -> },
     onIsStartPageFocusedChange: (Int, Boolean) -> Unit = { _, _ -> },
@@ -92,18 +64,18 @@ fun SplitStudyScreen(
     BackHandler {
         onBackIconClick(
             SplitStudyData(
-                subjectName = subjectName,
-                pieceNumber = pieceNumber,
-                examDate = examDate,
-                examName = examName,
-                studyContent = studyContent,
-                startPage = startPage.dropLast(1),
-                endPage = endPage.dropLast(1),
-                startPageList = startPageList,
-                endPageList = endPageList,
-                deadLineList = seletedDateList.map { dateToString(it) },
+                subjectName = state.subjectName,
+                pieceNumber = state.pieceNumber,
+                examDate = state.examDate,
+                examName = state.examName,
+                studyContent = state.studyContent,
+                startPage = state.startPage.dropLast(1),
+                endPage = state.endPage.dropLast(1),
+                startPageList = state.startPageList,
+                endPageList = state.endPageList,
+                deadLineList = state.deadlineList.map { dateToString(it) },
                 addStudyViewType = AddStudyViewType.DEFAULT,
-                subjectId = subjectId,
+                subjectId = state.subjectId,
             ),
         )
     }
@@ -133,22 +105,22 @@ fun SplitStudyScreen(
                 BbangZipBaseTopBar(
                     isShadowed = isShadowed,
                     leadingIcon = R.drawable.ic_chevronleft_thick_small_24,
-                    title = subjectName,
+                    title = state.subjectName,
                     onLeadingIconClick = {
                         onBackIconClick(
                             SplitStudyData(
-                                subjectName = subjectName,
-                                pieceNumber = pieceNumber,
-                                examDate = examDate,
-                                examName = examName,
-                                studyContent = studyContent,
-                                startPage = startPage,
-                                endPage = endPage,
-                                startPageList = startPageList,
-                                endPageList = endPageList,
-                                deadLineList = seletedDateList.map { dateToString(it) },
+                                subjectName = state.subjectName,
+                                pieceNumber = state.pieceNumber,
+                                examDate = state.examDate,
+                                examName = state.examName,
+                                studyContent = state.studyContent,
+                                startPage = state.startPage.dropLast(1),
+                                endPage = state.endPage.dropLast(1),
+                                startPageList = state.startPageList,
+                                endPageList = state.endPageList,
+                                deadLineList = state.deadlineList.map { dateToString(it) },
                                 addStudyViewType = AddStudyViewType.DEFAULT,
-                                subjectId = subjectId,
+                                subjectId = state.subjectId,
                             ),
                         )
                     },
@@ -191,7 +163,7 @@ fun SplitStudyScreen(
                             ) {
                                 BbangZipChip(
                                     backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                                    text = startPage,
+                                    text = state.startPage,
                                 )
 
                                 Spacer(modifier = Modifier.width(4.dp))
@@ -206,7 +178,7 @@ fun SplitStudyScreen(
 
                                 BbangZipChip(
                                     backgroundColor = BbangZipTheme.colors.statusPositive_3D3730,
-                                    text = endPage,
+                                    text = state.endPage,
                                 )
 
                                 Spacer(modifier = Modifier.width(4.dp))
@@ -234,7 +206,7 @@ fun SplitStudyScreen(
             }
 
             items(
-                count = pieceNumber,
+                count = state.pieceNumber,
             ) { index ->
 
                 Column(
@@ -259,10 +231,10 @@ fun SplitStudyScreen(
                         BbangZipSimpleTextField(
                             leadingIcon = R.drawable.ic_page_check_default_24,
                             placeholder = R.string.add_study_start_page_placeholder,
-                            guideline = startPageGuidelineList[index],
-                            value = startPageList[index],
+                            guideline = state.startPageGuidelineList[index],
+                            value = state.startPageList[index],
                             modifier = Modifier.weight(1f),
-                            bbangZipTextFieldInputState = startPageTextFieldStateList[index],
+                            bbangZipTextFieldInputState = state.startPageTextFieldInputStateList[index],
                             onValueChange = {
                                 onStartPageChange(index, it)
                             },
@@ -275,10 +247,10 @@ fun SplitStudyScreen(
                         BbangZipSimpleTextField(
                             leadingIcon = R.drawable.ic_page_check_default_24,
                             placeholder = R.string.add_study_end_page_placeholder,
-                            guideline = endPageGuidelineList[index],
-                            value = endPageList[index],
+                            guideline = state.endPageGuidelineList[index],
+                            value = state.endPageList[index],
                             modifier = Modifier.weight(1f),
-                            bbangZipTextFieldInputState = endPageTextFieldStateList[index],
+                            bbangZipTextFieldInputState = state.endPageTextFieldInputStateList[index],
                             onValueChange = {
                                 onEndPageChange(index, it)
                             },
@@ -297,7 +269,7 @@ fun SplitStudyScreen(
                         },
                         modifier = Modifier.fillMaxWidth(),
                         leadingIcon = R.drawable.ic_page_check_default_24,
-                        label = "${seletedDateList[index + 1].year}년 ${seletedDateList[index + 1].month}월 ${seletedDateList[index + 1].day}일 까지",
+                        label = "${state.deadlineList[index + 1].year}년 ${state.deadlineList[index + 1].month}월 ${state.deadlineList[index + 1].day}일 까지",
                     )
                 }
             }
@@ -311,18 +283,18 @@ fun SplitStudyScreen(
             onClick = {
                 onSaveBtnClick(
                     SplitStudyData(
-                        subjectName = subjectName,
-                        pieceNumber = pieceNumber,
-                        examDate = examDate,
-                        examName = examName,
-                        studyContent = studyContent,
-                        startPage = startPage,
-                        endPage = endPage,
-                        startPageList = startPageList,
-                        endPageList = endPageList,
-                        deadLineList = seletedDateList.map { dateToString(it) },
+                        subjectName = state.subjectName,
+                        pieceNumber = state.pieceNumber,
+                        examDate = state.examDate,
+                        examName = state.examName,
+                        studyContent = state.studyContent,
+                        startPage = state.startPage,
+                        endPage = state.endPage,
+                        startPageList = state.startPageList,
+                        endPageList = state.endPageList,
+                        deadLineList = state.deadlineList.map { dateToString(it) },
                         addStudyViewType = AddStudyViewType.AGAIN,
-                        subjectId = subjectId,
+                        subjectId = state.subjectId,
                     ),
                 )
             },
@@ -333,14 +305,14 @@ fun SplitStudyScreen(
                     .align(Alignment.BottomCenter),
             label = stringResource(R.string.btn_save_label),
             trailingIcon = R.drawable.ic_plus_thick_24,
-            isEnable = isSaveEnable,
+            isEnable = state.isSaveEnabled,
         )
     }
 
     BbangZipDatePickerBottomSheet(
-        isBottomSheetVisible = datePickerBottomSheetState,
+        isBottomSheetVisible = state.isDatePickerBottomSheetVisible,
         bottomSheetTitle = stringResource(R.string.add_study_date_picker_bottomsheet_title),
-        selectedDate = seletedDateList[selectedIndex + 1],
+        selectedDate = state.deadlineList[state.selectedPieceIndex + 1],
         onSelectedDateChanged = onDeadlineChange,
         onClickInputButton = onConfirmDateBtnClick,
         onDismissRequest = onDatePickerBottomSheetDismissRequest,
@@ -351,6 +323,6 @@ fun SplitStudyScreen(
 @Composable
 fun SplitStudyScreenPreview() {
     SplitStudyScreen(
-        subjectName = "빵집",
+        state = SplitStudyContract.SplitStudyState()
     )
 }
